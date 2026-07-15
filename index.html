@@ -1,194 +1,250 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ahmet Hamza Mülayim</title>
-<style>
-  :root {
-    color-scheme: light dark;
-    --ink: #1b2733;
-    --paper: #f4f6f8;
-    --line: #b7c4cf;
-    --accent: #c8632c;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --ink: #d7e2ea;
-      --paper: #10161d;
-      --line: #33465a;
-      --accent: #e2894a;
-    }
-  }
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ahmet Hamza Mülayim | Mechanical Engineering Portfolio</title>
+    <meta
+      name="description"
+      content="Ahmet Hamza Mülayim's mechanical engineering portfolio with projects, skills, and contact info. Built for GitHub Pages."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script defer src="script.js"></script>
+  </head>
+  <body>
+    <div class="noise"></div>
+    <header class="site-header">
+      <a class="brand" href="#top">
+        <span class="brand-mark">A</span>
+        <span>
+          <strong>Ahmet Hamza Mülayim</strong>
+          <small>Marmara University</small>
+        </span>
+      </a>
+      <nav class="site-nav">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#timeline">Timeline</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
 
-  * { box-sizing: border-box; }
-
-  body {
-    font-family: "Consolas", "SF Mono", "Courier New", monospace;
-    color: var(--ink);
-    background:
-      repeating-linear-gradient(0deg, transparent, transparent 27px, var(--line) 28px),
-      repeating-linear-gradient(90deg, transparent, transparent 27px, var(--line) 28px),
-      var(--paper);
-    background-size: 28px 28px;
-    margin: 0;
-    padding: 4vh 1.25rem 6vh;
-  }
-
-  main {
-    max-width: 680px;
-    margin: 0 auto;
-    background: var(--paper);
-    border: 1px solid var(--line);
-    padding: 2rem 2rem 2.5rem;
-    position: relative;
-  }
-  .corner {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    border: 1px solid var(--accent);
-  }
-  .corner.tl { top: -1px; left: -1px; border-right: none; border-bottom: none; }
-  .corner.tr { top: -1px; right: -1px; border-left: none; border-bottom: none; }
-  .corner.bl { bottom: -1px; left: -1px; border-right: none; border-top: none; }
-  .corner.br { bottom: -1px; right: -1px; border-left: none; border-top: none; }
-
-  .label {
-    font-size: 0.7rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--accent);
-    border-bottom: 1px solid var(--line);
-    padding-bottom: 0.4rem;
-    margin-bottom: 1.25rem;
-  }
-
-  h1 {
-    margin: 0 0 0.15rem;
-    font-size: 1.9rem;
-    letter-spacing: 0.02em;
-  }
-  .subtitle {
-    margin: 0 0 1.75rem;
-    color: var(--accent);
-    font-size: 0.95rem;
-  }
-
-  .spec {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.85rem;
-    margin-bottom: 2rem;
-  }
-  .spec td {
-    padding: 0.35rem 0.5rem;
-    border: 1px solid var(--line);
-  }
-  .spec td:first-child {
-    width: 9rem;
-    color: var(--accent);
-    text-transform: uppercase;
-    font-size: 0.75rem;
-    letter-spacing: 0.08em;
-  }
-
-  section { margin-bottom: 2.25rem; }
-  section h2 {
-    font-size: 0.75rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--accent);
-    border-bottom: 1px solid var(--line);
-    padding-bottom: 0.4rem;
-    margin: 0 0 1rem;
-  }
-
-  .projects {
-    display: grid;
-    gap: 0.9rem;
-  }
-  .project {
-    border: 1px solid var(--line);
-    padding: 0.9rem 1rem;
-  }
-  .project h3 {
-    margin: 0 0 0.25rem;
-    font-size: 1rem;
-  }
-  .project p {
-    margin: 0;
-    font-size: 0.85rem;
-    opacity: 0.85;
-  }
-
-  .links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem;
-  }
-  .links a {
-    text-decoration: none;
-    color: var(--ink);
-    border: 1px solid var(--line);
-    padding: 0.4rem 0.85rem;
-    font-size: 0.85rem;
-  }
-  .links a:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-  }
-
-  footer {
-    margin-top: 2rem;
-    font-size: 0.7rem;
-    color: var(--line);
-    letter-spacing: 0.05em;
-  }
-</style>
-</head>
-<body>
-  <main>
-    <span class="corner tl"></span><span class="corner tr"></span>
-    <span class="corner bl"></span><span class="corner br"></span>
-
-    <div class="label">Spec Sheet — Rev. 01</div>
-
-    <h1>Ahmet Hamza Mülayim</h1>
-    <p class="subtitle">Mechanical Engineering — Marmara University</p>
-
-    <table class="spec">
-      <tr><td>Discipline</td><td>Mechanical Engineering</td></tr>
-      <tr><td>Institution</td><td>Marmara University</td></tr>
-      <tr><td>Contact</td><td><a href="mailto:ahmet.mulayim@marun.edu.tr">ahmet.mulayim@marun.edu.tr</a></td></tr>
-      <tr><td>Status</td><td>Work in progress — more soon</td></tr>
-    </table>
-
-    <section>
-      <h2>Projects</h2>
-      <div class="projects">
-        <div class="project">
-          <h3>Project name — placeholder</h3>
-          <p>One-line description of what it does and what tools/software were used.</p>
+    <main id="top">
+      <section class="hero">
+        <div class="hero-copy" data-reveal>
+          <p class="eyebrow">GitHub Pages portfolio</p>
+          <h1>Mechanical engineering, built around design, analysis, and proof.</h1>
+          <p class="hero-text">
+            I’m Ahmet Hamza Mülayim, a mechanical engineering student at Marmara
+            University focused on CAD, prototyping, data-driven analysis, and
+            turning ideas into testable results. This portfolio is a compact place
+            to show real engineering work.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#projects">See projects</a>
+            <a class="button secondary" href="mailto:ahmet.mulayim@marun.edu.tr">Email me</a>
+          </div>
+          <div class="hero-metrics">
+            <article>
+              <strong>UGV</strong>
+              <span>competition experience</span>
+            </article>
+            <article>
+              <strong>ML</strong>
+              <span>bearing failure prediction</span>
+            </article>
+            <article>
+              <strong>ME</strong>
+              <span>mechanical engineering student</span>
+            </article>
+          </div>
         </div>
-        <div class="project">
-          <h3>Project name — placeholder</h3>
-          <p>One-line description of what it does and what tools/software were used.</p>
+
+        <div class="hero-panel" data-reveal>
+          <div class="panel-shell">
+            <div class="panel-top">
+              <span class="status-dot"></span>
+              <span>Engineering dashboard</span>
+            </div>
+            <div class="gauge">
+              <svg viewBox="0 0 220 220" aria-hidden="true">
+                <circle class="gauge-track" cx="110" cy="110" r="84"></circle>
+                <circle class="gauge-fill" cx="110" cy="110" r="84"></circle>
+              </svg>
+              <div class="gauge-center">
+                <strong>87</strong>
+                <span>design focus</span>
+              </div>
+            </div>
+            <div class="mini-grid">
+              <div>
+                <span>Thermal</span>
+                <strong>72%</strong>
+              </div>
+              <div>
+                <span>Structures</span>
+                <strong>81%</strong>
+              </div>
+              <div>
+                <span>CAD speed</span>
+                <strong>94%</strong>
+              </div>
+              <div>
+                <span>Prototyping</span>
+                <strong>68%</strong>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section>
-      <h2>Links</h2>
-      <div class="links">
-        <a href="mailto:ahmet.mulayim@marun.edu.tr">Email</a>
-        <a href="#" title="add your GitHub URL">GitHub</a>
-        <a href="#" title="add your LinkedIn URL">LinkedIn</a>
-        <a href="#" title="add a CV link">CV</a>
-      </div>
-    </section>
+      <section class="section" id="about" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">About</p>
+          <h2>Built for a mechanical engineering student with real projects to show.</h2>
+        </div>
+        <div class="about-grid">
+          <p>
+            I’m Ahmet Hamza Mülayim, a mechanical engineering student at Marmara
+            University interested in design, systems thinking, and practical
+            problem solving. I like work that starts in physics, moves through
+            analysis, and ends in something you can test and improve.
+          </p>
+          <p>
+            Right now I have competition experience with unmanned ground vehicles
+            and I’m building a data science side project using NASA bearing data to
+            predict failures with machine learning.
+          </p>
+        </div>
+      </section>
 
-    <footer>Last updated manually — edit index.html to change anything on this page.</footer>
-  </main>
-</body>
+      <section class="section" id="projects">
+        <div class="section-heading" data-reveal>
+          <p class="eyebrow">Selected work</p>
+          <h2>Projects that show engineering judgment, not just buzzwords.</h2>
+        </div>
+        <div class="project-grid">
+          <article class="card" data-reveal>
+            <p class="card-tag">Robotics / Competition</p>
+            <h3>Unmanned Ground Vehicle competition</h3>
+            <p>
+              I participated in a competition focused on unmanned ground vehicles,
+              where the work involved design tradeoffs, integration, and getting a
+              system to perform under real constraints.
+            </p>
+            <ul>
+              <li>Mechatronic system thinking</li>
+              <li>Integration and troubleshooting</li>
+              <li>Team-based engineering under pressure</li>
+            </ul>
+          </article>
+          <article class="card" data-reveal>
+            <p class="card-tag">Data Science / ML</p>
+            <h3>IMS bearing failure prediction</h3>
+            <p>
+              A machine learning side project using public IMS bearing vibration
+              data to predict failures. The dataset comes from test-to-failure
+              experiments with 1-second vibration snapshots recorded at 20 kHz.
+            </p>
+            <ul>
+              <li>3 data sets and 20,480-point samples</li>
+              <li>Feature extraction from raw vibration signals</li>
+              <li>Outer race and roller defect prediction</li>
+            </ul>
+          </article>
+          <article class="card" data-reveal>
+            <p class="card-tag">Fabrication / Iteration</p>
+            <h3>Prototype fixture and test rig</h3>
+            <p>
+              A shop-built setup for repeated measurements, validation, and
+              iteration. Useful for showing practical lab work and the habits that
+              make a design dependable.
+            </p>
+            <ul>
+              <li>Laser cut or 3D printed parts</li>
+              <li>Fast iteration cycle</li>
+              <li>Data-driven revisions</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section split" id="skills" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Skills</p>
+          <h2>Tools and strengths that matter in the real world.</h2>
+        </div>
+        <div class="skill-list">
+          <span>SolidWorks</span>
+          <span>AutoCAD</span>
+          <span>Inventor</span>
+          <span>Creo</span>
+          <span>Siemens NX</span>
+          <span>Python</span>
+          <span>Machine learning</span>
+          <span>Data analysis</span>
+          <span>Thermodynamics</span>
+          <span>Manufacturing</span>
+          <span>3D printing</span>
+          <span>Robotics</span>
+        </div>
+      </section>
+
+      <section class="section timeline-section" id="timeline">
+        <div class="section-heading" data-reveal>
+          <p class="eyebrow">Timeline</p>
+          <h2>A path that connects engineering, robotics, and data science.</h2>
+        </div>
+        <div class="timeline" data-reveal>
+          <div class="timeline-item">
+            <span>2025-2030</span>
+            <div>
+              <h3>Mechanical engineering student at Marmara University</h3>
+              <p>Started in 2025, so the four-year path points toward a 2029 or 2030 graduation depending on the academic calendar. Building a portfolio around design, analysis, fabrication, and applied computation.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <span>Now</span>
+            <div>
+              <h3>UGV competition and bearing ML side project</h3>
+              <p>Working on robotics competition experience and a public bearing failure prediction project based on vibration data.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <span>Next</span>
+            <div>
+              <h3>Internships and stronger case studies</h3>
+              <p>Turning current work into polished pages that help with recruiters, clubs, and collaborators.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section contact" id="contact" data-reveal>
+        <div>
+          <p class="eyebrow">Contact</p>
+          <h2>Make the domain do something useful.</h2>
+          <p>
+            Reach me at my school email or use the domain as a live portfolio for
+            engineering, robotics, and data science work.
+          </p>
+        </div>
+        <div class="contact-actions">
+          <a class="button primary" href="mailto:ahmet.mulayim@marun.edu.tr">ahmet.mulayim@marun.edu.tr</a>
+          <a class="button secondary" href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Built for a mechanical engineering portfolio on GitHub Pages.</p>
+      <p id="year"></p>
+    </footer>
+  </body>
 </html>
