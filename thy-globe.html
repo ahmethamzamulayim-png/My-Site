@@ -29,6 +29,34 @@
         position: relative;
         z-index: 2;
       }
+      .plane {
+        pointer-events: auto;
+        cursor: pointer;
+        color: #e81932;
+        filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.9));
+        transition: opacity 300ms ease;
+      }
+      .plane.cargo { color: #4a90d9; }
+      .plane.selected {
+        color: #fff;
+        filter: drop-shadow(0 0 6px rgba(232, 25, 50, 0.95));
+      }
+      .plane svg { display: block; }
+      #tip {
+        position: fixed;
+        z-index: 5;
+        pointer-events: none;
+        display: none;
+        background: rgba(38, 17, 22, 0.95);
+        border: 1px solid rgba(233, 186, 196, 0.18);
+        border-radius: 12px;
+        padding: 8px 12px;
+        font-size: 0.82rem;
+        line-height: 1.5;
+        color: var(--muted);
+        max-width: 240px;
+      }
+      #tip b { color: var(--text); font-family: "Space Grotesk", sans-serif; }
       .globe-panel {
         position: fixed;
         left: 24px;
@@ -42,9 +70,7 @@
         box-shadow: var(--shadow);
         backdrop-filter: blur(14px);
       }
-      .globe-panel .eyebrow {
-        margin-bottom: 8px;
-      }
+      .globe-panel .eyebrow { margin-bottom: 8px; }
       .big-count {
         font-family: "Space Grotesk", sans-serif;
         font-size: 3.4rem;
@@ -90,9 +116,7 @@
         font: inherit;
         outline: none;
       }
-      .flight-search:focus {
-        border-color: var(--accent-2);
-      }
+      .flight-search:focus { border-color: var(--accent-2); }
       .status-row {
         display: flex;
         align-items: center;
@@ -118,15 +142,69 @@
         color: var(--muted);
         opacity: 0.75;
       }
-      @media (max-width: 720px) {
+      .detail {
+        position: fixed;
+        right: 24px;
+        bottom: 24px;
+        z-index: 3;
+        width: 300px;
+        padding: 20px 22px;
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(14px);
+      }
+      .detail h3 {
+        margin: 4px 0 2px;
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.5rem;
+        letter-spacing: -0.02em;
+      }
+      .detail .dmodel { margin: 0 0 12px; font-size: 0.9rem; color: var(--muted); }
+      .detail .droute {
+        padding: 12px 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        font-size: 0.9rem;
+        line-height: 1.6;
+        color: var(--muted);
+      }
+      .detail .droute b { color: var(--text); font-family: "Space Grotesk", sans-serif; }
+      .detail .dstats {
+        padding-top: 10px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        font-size: 0.85rem;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+      .detail .dstats b { color: var(--text); }
+      #dclose {
+        position: absolute;
+        top: 12px;
+        right: 14px;
+        background: none;
+        border: 0;
+        color: var(--muted);
+        font-size: 1.3rem;
+        cursor: pointer;
+        line-height: 1;
+      }
+      #dclose:hover { color: var(--text); }
+      @media (max-width: 900px) {
         .globe-panel {
           left: 12px;
-          right: 12px;
+          right: auto;
           bottom: 12px;
-          width: auto;
+          width: 220px;
           padding: 16px;
         }
         .big-count { font-size: 2.4rem; }
+        .detail {
+          right: 12px;
+          bottom: 12px;
+          width: min(300px, calc(100vw - 260px));
+          padding: 16px;
+        }
       }
     </style>
     <script src="https://unpkg.com/globe.gl"></script>
@@ -134,6 +212,7 @@
   <body>
     <div class="noise"></div>
     <div id="globe"></div>
+    <div id="tip"></div>
 
     <header class="site-header">
       <a class="brand" href="index.html">
@@ -158,45 +237,121 @@
       </div>
       <input class="flight-search" id="search" type="search" placeholder="Filter flight, e.g. 1951" aria-label="Filter by flight number" />
       <div class="status-row" id="statusrow"><span class="dot"></span><span id="statustext">connecting…</span></div>
-      <p class="hint">Drag to rotate · scroll to zoom · click a plane to focus</p>
+      <p class="hint">Drag to rotate · scroll to zoom · click a plane for its route &amp; model</p>
+    </aside>
+
+    <aside class="detail" id="detail" hidden>
+      <button id="dclose" aria-label="Close">×</button>
+      <p class="eyebrow" id="dtag">Passenger</p>
+      <h3 id="dcallsign"></h3>
+      <p class="dmodel" id="dmodel">looking up aircraft…</p>
+      <div class="droute" id="droute">looking up route…</div>
+      <div class="dstats" id="dstats"></div>
     </aside>
 
     <script>
       // Deno Deploy proxy (thy-globe-proxy-deno.ts). For local dev against
       // node server.js, set to "" (same-origin /api/states).
       const API_BASE = "https://civil-nightingale-6719.ahmethamzamulayim-png.deno.net";
+      const ADSBDB = "https://api.adsbdb.com/v0";
 
       const M_TO_FT = 3.28084, MS_TO_KT = 1.94384;
-      let planes = [];
+      const PLANE_SVG = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>';
 
-      // OpenSky extended category → size class. Most THY aircraft don't report
-      // it, so it's tooltip-only; point size stays altitude-based.
-      const SIZE_LABEL = { 2: "Light", 3: "Small", 4: "Large — narrow-body", 5: "Large — high vortex", 6: "Heavy — wide-body" };
+      let planes = [];
+      let selected = null; // callsign of selected plane
+
       // ponytail: Turkish Cargo = TK6xxx flight-number block; alphanumeric
       // cargo callsigns (THY6xx letter-suffixed) slip through as passenger.
       const isCargo = cs => { const n = parseInt((cs.match(/\d+/) || [""])[0], 10); return n >= 6000 && n <= 6999; };
 
+      // --- adsbdb lookups, cached in localStorage (airframes are static) ---
+      const store = k => { try { return JSON.parse(localStorage.getItem(k)) || {}; } catch { return {}; } };
+      const AC = store("thy_ac");   // hex -> {model, reg, t} | null (known-unknown)
+      const RT = store("thy_rt");   // callsign -> {oi,on,om,di,dn,dm,olat,olng,dlat,dlng} | null
+      const save = () => { try { localStorage.setItem("thy_ac", JSON.stringify(AC)); localStorage.setItem("thy_rt", JSON.stringify(RT)); } catch {} };
+
+      async function getAircraft(hex) {
+        if (AC[hex] !== undefined) return AC[hex];
+        try {
+          const j = await (await fetch(`${ADSBDB}/aircraft/${hex}`)).json();
+          const a = j.response && j.response.aircraft;
+          AC[hex] = a ? { model: `${a.manufacturer} ${a.type}`, reg: a.registration, t: a.icao_type || "" } : null;
+          save();
+          return AC[hex];
+        } catch { return null; } // network error: not cached, retried later
+      }
+
+      async function getRoute(cs) {
+        if (RT[cs] !== undefined) return RT[cs];
+        try {
+          const j = await (await fetch(`${ADSBDB}/callsign/${cs}`)).json();
+          const f = j.response && j.response.flightroute;
+          RT[cs] = f && f.origin && f.destination ? {
+            oi: f.origin.iata_code, on: f.origin.name, om: f.origin.municipality,
+            di: f.destination.iata_code, dn: f.destination.name, dm: f.destination.municipality,
+            olat: f.origin.latitude, olng: f.origin.longitude,
+            dlat: f.destination.latitude, dlng: f.destination.longitude,
+          } : null;
+          save();
+          return RT[cs];
+        } catch { return null; }
+      }
+
+      // icon size (px) from airframe class; unknown types get the middle size
+      function sizeFor(p) {
+        const t = (AC[p.hex] || {}).t || "";
+        if (/^(A33|A34|A35|B74|B76|B77|B78)/.test(t)) return 30; // wide-body
+        if (/^(A31|A32|B72|B73|E1|E2|C91)/.test(t)) return 20;   // narrow-body
+        return t ? 16 : 20;
+      }
+
+      // --- globe ---
       const globe = Globe()(document.getElementById("globe"))
-        .globeImageUrl("https://unpkg.com/three-globe/example/img/earth-night.jpg")
+        .globeImageUrl(null)
         .backgroundColor("rgba(0,0,0,0)")
         .showAtmosphere(true)
         .atmosphereColor("#e81932")
         .atmosphereAltitude(0.18)
-        .pointColor(p => (p.cargo ? "#4a90d9" : "#e81932"))
-        .pointAltitude(0.015)
-        .pointRadius(p => 0.18 + Math.min(p.alt_m || 0, 13000) / 13000 * 0.45)
-        .pointLabel(p => `
-          <div style="background:rgba(38,17,22,.95);border:1px solid rgba(233,186,196,.18);
-              border-radius:12px;padding:10px 14px;font:500 13px/1.5 Manrope,sans-serif;color:#f9eff1">
-            <div style="font-family:'Space Grotesk',sans-serif;font-size:15px;margin-bottom:4px">
-              <span style="display:inline-block;width:8px;height:8px;border-radius:99px;background:${p.cargo ? "#4a90d9" : "#e81932"};margin-right:6px"></span>${p.callsign}
-            </div>
-            <div style="color:#c4abb1;margin-bottom:4px">${p.cargo ? "Cargo" : "Passenger"}${SIZE_LABEL[p.cat] ? " · " + SIZE_LABEL[p.cat] : ""}</div>
-            <div style="color:#c4abb1">Altitude&nbsp; <b style="color:#f9eff1">${Math.round(p.alt_m * M_TO_FT).toLocaleString()} ft</b></div>
-            <div style="color:#c4abb1">Speed&nbsp;&nbsp;&nbsp;&nbsp; <b style="color:#f9eff1">${Math.round(p.spd_ms * MS_TO_KT)} kts</b></div>
-            <div style="color:#c4abb1">Heading&nbsp;&nbsp; <b style="color:#f9eff1">${Math.round(p.hdg)}°</b></div>
-          </div>`)
-        .onPointClick(p => globe.pointOfView({ lat: p.lat, lng: p.lng, altitude: 0.6 }, 1000));
+        .polygonCapColor(f => (f.properties.ADM0_A3 === "TUR" ? "rgba(232,25,50,0.30)" : "rgba(48,26,32,0.85)"))
+        .polygonSideColor(() => "rgba(0,0,0,0)")
+        .polygonStrokeColor(() => "rgba(233,186,196,0.30)")
+        .polygonAltitude(0.006)
+        .polygonsTransitionDuration(0)
+        .htmlLat("lat").htmlLng("lng").htmlAltitude(0.01)
+        .htmlElement(p => {
+          const el = document.createElement("div");
+          el.className = "plane" + (p.cargo ? " cargo" : "") + (p.callsign === selected ? " selected" : "");
+          el.innerHTML = PLANE_SVG;
+          const s = sizeFor(p);
+          el.firstChild.setAttribute("width", s);
+          el.firstChild.setAttribute("height", s);
+          el.firstChild.style.transform = `rotate(${p.hdg}deg)`;
+          el.onclick = e => { e.stopPropagation(); select(p); };
+          el.onmouseenter = e => showTip(p, e);
+          el.onmousemove = e => moveTip(e);
+          el.onmouseleave = hideTip;
+          return el;
+        })
+        .arcColor(() => "#ff7d8e")
+        .arcStroke(0.5)
+        .arcAltitudeAutoScale(0.4)
+        .arcDashLength(0.5)
+        .arcDashGap(0.2)
+        .arcDashAnimateTime(1600)
+        .labelColor(() => "#ff7d8e")
+        .labelSize(1.1)
+        .labelDotRadius(0.35)
+        .labelText("text");
+
+      globe.globeMaterial().color.set("#12080b");
+      if (globe.htmlElementVisibilityModifier) {
+        globe.htmlElementVisibilityModifier((el, visible) => { el.style.opacity = visible ? 1 : 0; el.style.pointerEvents = visible ? "auto" : "none"; });
+      }
+
+      fetch("countries-110m.geojson")
+        .then(r => r.json())
+        .then(geo => globe.polygonsData(geo.features));
 
       // slow auto-rotate; pauses while dragging, resumes after 10s idle;
       // stays off entirely for reduced-motion users
@@ -211,7 +366,63 @@
       });
       globe.pointOfView({ lat: 41, lng: 29, altitude: 1.9 }); // start over Istanbul
 
+      // --- tooltip ---
       const $ = id => document.getElementById(id);
+      const tip = $("tip");
+      function showTip(p, e) {
+        const ac = AC[p.hex];
+        tip.innerHTML = `<b>${p.callsign}</b> · ${p.cargo ? "Cargo" : "Passenger"}<br>` +
+          (ac ? `${ac.model}<br>` : "") +
+          `${Math.round(p.alt_m * M_TO_FT).toLocaleString()} ft · ${Math.round(p.spd_ms * MS_TO_KT)} kts`;
+        tip.style.display = "block";
+        moveTip(e);
+      }
+      function moveTip(e) { tip.style.left = e.clientX + 14 + "px"; tip.style.top = e.clientY + 14 + "px"; }
+      function hideTip() { tip.style.display = "none"; }
+
+      // --- selection / detail card ---
+      async function select(p) {
+        selected = p.callsign;
+        render();
+        globe.pointOfView({ lat: p.lat, lng: p.lng, altitude: 0.7 }, 1000);
+        $("detail").hidden = false;
+        $("dtag").textContent = p.cargo ? "Cargo" : "Passenger";
+        $("dcallsign").textContent = p.callsign;
+        $("dmodel").textContent = "looking up aircraft…";
+        $("droute").textContent = "looking up route…";
+        updStats(p);
+        globe.arcsData([]); globe.labelsData([]);
+
+        getAircraft(p.hex).then(ac => {
+          if (selected !== p.callsign) return;
+          $("dmodel").textContent = ac ? `${ac.model} · ${ac.reg}` : "Aircraft not in database";
+          render(); // size may have changed now that the type is known
+        });
+        getRoute(p.callsign).then(rt => {
+          if (selected !== p.callsign) return;
+          if (!rt) { $("droute").textContent = "Route not in database (common for letter-suffix callsigns)"; return; }
+          $("droute").innerHTML = `<b>${rt.oi}</b> ${rt.om || rt.on} <br>→ <b>${rt.di}</b> ${rt.dm || rt.dn}`;
+          globe.arcsData([{ startLat: rt.olat, startLng: rt.olng, endLat: rt.dlat, endLng: rt.dlng }]);
+          globe.labelsData([
+            { lat: rt.olat, lng: rt.olng, text: rt.oi },
+            { lat: rt.dlat, lng: rt.dlng, text: rt.di },
+          ]);
+        });
+      }
+      function updStats(p) {
+        $("dstats").innerHTML =
+          `Altitude <b>${Math.round(p.alt_m * M_TO_FT).toLocaleString()} ft</b><br>` +
+          `Speed <b>${Math.round(p.spd_ms * MS_TO_KT)} kts</b> · Heading <b>${Math.round(p.hdg)}°</b>`;
+      }
+      function deselect() {
+        selected = null;
+        $("detail").hidden = true;
+        globe.arcsData([]); globe.labelsData([]);
+        render();
+      }
+      $("dclose").onclick = deselect;
+
+      // --- data + render ---
       function setStatus(cls, text) {
         $("statusrow").className = "status-row " + cls;
         $("statustext").textContent = text;
@@ -222,7 +433,7 @@
         const shown = q
           ? planes.filter(p => p.callsign.includes(q) || p.callsign.replace("THY", "TK").includes(q))
           : planes;
-        globe.pointsData(shown);
+        globe.htmlElementsData(shown);
         $("count").textContent = planes.length;
         $("countlabel").textContent = q ? `airborne · ${shown.length} match filter` : "aircraft airborne";
       }
@@ -238,13 +449,18 @@
           planes = (data.states || [])
             .filter(s => s[1] && s[1].trim().startsWith("THY") && !s[8] && s[5] != null && s[6] != null)
             .map(s => ({
-              callsign: s[1].trim(), lng: s[5], lat: s[6],
+              hex: s[0], callsign: s[1].trim(), lng: s[5], lat: s[6],
               alt_m: s[13] ?? s[7] ?? 0, spd_ms: s[9] ?? 0, hdg: s[10] ?? 0,
-              cat: s[17] || 0, cargo: isCargo(s[1]),
+              cargo: isCargo(s[1]),
             }));
           render();
           $("updated").textContent = "updated " + new Date().toLocaleTimeString();
           setStatus("ok", "live · OpenSky Network");
+          const sel = planes.find(p => p.callsign === selected);
+          if (sel) updStats(sel);
+          // fill in airframe types a few at a time so icon sizes converge
+          const unknown = planes.filter(p => AC[p.hex] === undefined).slice(0, 4);
+          if (unknown.length) Promise.all(unknown.map(p => getAircraft(p.hex))).then(render);
         } catch {
           setStatus("err", "network error — retrying");
         }
