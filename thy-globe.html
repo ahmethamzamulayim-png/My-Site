@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Live Turkish Airlines Flight Globe | Ahmet Hamza Mülayim</title>
+    <meta
+      name="description"
+      content="Every Turkish Airlines flight currently in the air, live on an interactive 3D globe. Real-time ADS-B data from the OpenSky Network."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      body {
+        overflow: hidden;
+        height: 100vh;
+      }
+      #globe {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+      }
+      .site-header {
+        position: relative;
+        z-index: 2;
+      }
+      .globe-panel {
+        position: fixed;
+        left: 24px;
+        bottom: 24px;
+        z-index: 2;
+        width: 264px;
+        padding: 22px;
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(14px);
+      }
+      .globe-panel .eyebrow {
+        margin-bottom: 8px;
+      }
+      .big-count {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 3.4rem;
+        line-height: 1;
+        letter-spacing: -0.03em;
+      }
+      .big-count small {
+        display: block;
+        margin-top: 4px;
+        font-family: "Manrope", sans-serif;
+        font-size: 0.88rem;
+        font-weight: 500;
+        color: var(--muted);
+        letter-spacing: 0;
+      }
+      .updated {
+        margin: 10px 0 12px;
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+      .legend {
+        display: flex;
+        gap: 14px;
+        margin: 0 0 12px;
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .legend i {
+        display: inline-block;
+        width: 9px;
+        height: 9px;
+        border-radius: 999px;
+        margin-right: 6px;
+      }
+      .flight-search {
+        width: 100%;
+        min-height: 44px;
+        padding: 0 16px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--text);
+        font: inherit;
+        outline: none;
+      }
+      .flight-search:focus {
+        border-color: var(--accent-2);
+      }
+      .status-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 14px;
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+      .status-row .dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 999px;
+        background: #8a7a7e;
+        flex: none;
+        transition: background 300ms ease, box-shadow 300ms ease;
+      }
+      .status-row.ok .dot { background: #3fd68f; box-shadow: 0 0 12px rgba(63, 214, 143, 0.7); }
+      .status-row.load .dot { background: var(--accent-2); box-shadow: 0 0 12px rgba(255, 125, 142, 0.6); }
+      .status-row.err .dot { background: var(--accent); box-shadow: 0 0 12px rgba(232, 25, 50, 0.7); }
+      .hint {
+        margin-top: 12px;
+        font-size: 0.78rem;
+        color: var(--muted);
+        opacity: 0.75;
+      }
+      @media (max-width: 720px) {
+        .globe-panel {
+          left: 12px;
+          right: 12px;
+          bottom: 12px;
+          width: auto;
+          padding: 16px;
+        }
+        .big-count { font-size: 2.4rem; }
+      }
+    </style>
+    <script src="https://unpkg.com/globe.gl"></script>
+  </head>
+  <body>
+    <div class="noise"></div>
+    <div id="globe"></div>
+
+    <header class="site-header">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">A</span>
+        <span>
+          <strong>Live THY flight globe</strong>
+          <small>real-time ADS-B · OpenSky Network</small>
+        </span>
+      </a>
+      <nav class="site-nav">
+        <a class="button secondary" href="index.html#projects">← Back to portfolio</a>
+      </nav>
+    </header>
+
+    <aside class="globe-panel">
+      <p class="eyebrow">Turkish Airlines · live</p>
+      <div class="big-count"><span id="count">–</span><small id="countlabel">aircraft airborne</small></div>
+      <p class="updated" id="updated">waiting for first data…</p>
+      <div class="legend">
+        <span><i style="background: #e81932"></i>Passenger</span>
+        <span><i style="background: #4a90d9"></i>Cargo</span>
+      </div>
+      <input class="flight-search" id="search" type="search" placeholder="Filter flight, e.g. 1951" aria-label="Filter by flight number" />
+      <div class="status-row" id="statusrow"><span class="dot"></span><span id="statustext">connecting…</span></div>
+      <p class="hint">Drag to rotate · scroll to zoom · click a plane to focus</p>
+    </aside>
+
+    <script>
+      // Deno Deploy proxy (thy-globe-proxy-deno.ts). For local dev against
+      // node server.js, set to "" (same-origin /api/states).
+      const API_BASE = "https://civil-nightingale-6719.ahmethamzamulayim-png.deno.net";
+
+      const M_TO_FT = 3.28084, MS_TO_KT = 1.94384;
+      let planes = [];
+
+      // OpenSky extended category → size class. Most THY aircraft don't report
+      // it, so it's tooltip-only; point size stays altitude-based.
+      const SIZE_LABEL = { 2: "Light", 3: "Small", 4: "Large — narrow-body", 5: "Large — high vortex", 6: "Heavy — wide-body" };
+      // ponytail: Turkish Cargo = TK6xxx flight-number block; alphanumeric
+      // cargo callsigns (THY6xx letter-suffixed) slip through as passenger.
+      const isCargo = cs => { const n = parseInt((cs.match(/\d+/) || [""])[0], 10); return n >= 6000 && n <= 6999; };
+
+      const globe = Globe()(document.getElementById("globe"))
+        .globeImageUrl("https://unpkg.com/three-globe/example/img/earth-night.jpg")
+        .backgroundColor("rgba(0,0,0,0)")
+        .showAtmosphere(true)
+        .atmosphereColor("#e81932")
+        .atmosphereAltitude(0.18)
+        .pointColor(p => (p.cargo ? "#4a90d9" : "#e81932"))
+        .pointAltitude(0.015)
+        .pointRadius(p => 0.18 + Math.min(p.alt_m || 0, 13000) / 13000 * 0.45)
+        .pointLabel(p => `
+          <div style="background:rgba(38,17,22,.95);border:1px solid rgba(233,186,196,.18);
+              border-radius:12px;padding:10px 14px;font:500 13px/1.5 Manrope,sans-serif;color:#f9eff1">
+            <div style="font-family:'Space Grotesk',sans-serif;font-size:15px;margin-bottom:4px">
+              <span style="display:inline-block;width:8px;height:8px;border-radius:99px;background:${p.cargo ? "#4a90d9" : "#e81932"};margin-right:6px"></span>${p.callsign}
+            </div>
+            <div style="color:#c4abb1;margin-bottom:4px">${p.cargo ? "Cargo" : "Passenger"}${SIZE_LABEL[p.cat] ? " · " + SIZE_LABEL[p.cat] : ""}</div>
+            <div style="color:#c4abb1">Altitude&nbsp; <b style="color:#f9eff1">${Math.round(p.alt_m * M_TO_FT).toLocaleString()} ft</b></div>
+            <div style="color:#c4abb1">Speed&nbsp;&nbsp;&nbsp;&nbsp; <b style="color:#f9eff1">${Math.round(p.spd_ms * MS_TO_KT)} kts</b></div>
+            <div style="color:#c4abb1">Heading&nbsp;&nbsp; <b style="color:#f9eff1">${Math.round(p.hdg)}°</b></div>
+          </div>`)
+        .onPointClick(p => globe.pointOfView({ lat: p.lat, lng: p.lng, altitude: 0.6 }, 1000));
+
+      // slow auto-rotate; pauses while dragging, resumes after 10s idle;
+      // stays off entirely for reduced-motion users
+      const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const controls = globe.controls();
+      controls.autoRotate = !reduceMotion;
+      controls.autoRotateSpeed = 0.4;
+      let idleT;
+      controls.addEventListener("start", () => { controls.autoRotate = false; clearTimeout(idleT); });
+      controls.addEventListener("end", () => {
+        if (!reduceMotion) idleT = setTimeout(() => (controls.autoRotate = true), 10000);
+      });
+      globe.pointOfView({ lat: 41, lng: 29, altitude: 1.9 }); // start over Istanbul
+
+      const $ = id => document.getElementById(id);
+      function setStatus(cls, text) {
+        $("statusrow").className = "status-row " + cls;
+        $("statustext").textContent = text;
+      }
+
+      function render() {
+        const q = $("search").value.trim().toUpperCase();
+        const shown = q
+          ? planes.filter(p => p.callsign.includes(q) || p.callsign.replace("THY", "TK").includes(q))
+          : planes;
+        globe.pointsData(shown);
+        $("count").textContent = planes.length;
+        $("countlabel").textContent = q ? `airborne · ${shown.length} match filter` : "aircraft airborne";
+      }
+      $("search").addEventListener("input", render);
+
+      async function poll() {
+        setStatus("load", "updating…");
+        try {
+          const res = await fetch(API_BASE + "/api/states");
+          if (res.status === 429) { setStatus("err", "rate limited — retrying"); return; }
+          if (!res.ok) { setStatus("err", `API error ${res.status}`); return; }
+          const data = await res.json();
+          planes = (data.states || [])
+            .filter(s => s[1] && s[1].trim().startsWith("THY") && !s[8] && s[5] != null && s[6] != null)
+            .map(s => ({
+              callsign: s[1].trim(), lng: s[5], lat: s[6],
+              alt_m: s[13] ?? s[7] ?? 0, spd_ms: s[9] ?? 0, hdg: s[10] ?? 0,
+              cat: s[17] || 0, cargo: isCargo(s[1]),
+            }));
+          render();
+          $("updated").textContent = "updated " + new Date().toLocaleTimeString();
+          setStatus("ok", "live · OpenSky Network");
+        } catch {
+          setStatus("err", "network error — retrying");
+        }
+      }
+      poll();
+      setInterval(poll, 15000);
+    </script>
+  </body>
+</html>

@@ -1,14 +1,14 @@
 :root {
-  --bg: #08111d;
-  --bg-alt: #0d1829;
-  --panel: rgba(15, 25, 41, 0.72);
-  --panel-strong: rgba(18, 31, 52, 0.92);
-  --text: #eef3fb;
-  --muted: #a8b6cb;
-  --line: rgba(186, 206, 233, 0.14);
-  --accent: #6ee7d8;
-  --accent-2: #f7c873;
-  --shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+  --bg: #0d0608;
+  --bg-alt: #170a0e;
+  --panel: rgba(30, 14, 18, 0.72);
+  --panel-strong: rgba(38, 17, 22, 0.92);
+  --text: #f9eff1;
+  --muted: #c4abb1;
+  --line: rgba(233, 186, 196, 0.14);
+  --accent: #e81932;
+  --accent-2: #ff7d8e;
+  --shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
   --radius: 24px;
 }
 
@@ -26,9 +26,9 @@ body {
   color: var(--text);
   font-family: "Manrope", sans-serif;
   background:
-    radial-gradient(circle at top left, rgba(110, 231, 216, 0.16), transparent 30%),
-    radial-gradient(circle at top right, rgba(247, 200, 115, 0.14), transparent 26%),
-    linear-gradient(180deg, #06101b 0%, #091322 55%, #050a12 100%);
+    radial-gradient(circle at top left, rgba(232, 25, 50, 0.16), transparent 30%),
+    radial-gradient(circle at top right, rgba(255, 125, 142, 0.1), transparent 26%),
+    linear-gradient(180deg, #0b0507 0%, #130810 55%, #070304 100%);
 }
 
 body::before {
@@ -84,8 +84,8 @@ body::before {
   display: grid;
   place-items: center;
   border-radius: 14px;
-  background: linear-gradient(145deg, rgba(110, 231, 216, 0.95), rgba(247, 200, 115, 0.95));
-  color: #08111d;
+  background: linear-gradient(145deg, rgba(232, 25, 50, 0.95), rgba(255, 125, 142, 0.95));
+  color: #14050a;
   font-family: "Space Grotesk", sans-serif;
   font-weight: 700;
 }
@@ -199,8 +199,8 @@ body::before {
 }
 
 .button.primary {
-  color: #06101b;
-  background: linear-gradient(135deg, var(--accent), #a2ffe6);
+  color: #fff5f6;
+  background: linear-gradient(135deg, #c0122a, var(--accent));
 }
 
 .button.secondary {
@@ -247,7 +247,7 @@ body::before {
 .hero-panel {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(180deg, rgba(17, 30, 50, 0.92), rgba(10, 19, 32, 0.82));
+  background: linear-gradient(180deg, rgba(44, 19, 25, 0.92), rgba(24, 10, 14, 0.82));
 }
 
 .panel-shell {
@@ -268,7 +268,7 @@ body::before {
   height: 10px;
   border-radius: 999px;
   background: var(--accent);
-  box-shadow: 0 0 14px rgba(110, 231, 216, 0.75);
+  box-shadow: 0 0 14px rgba(232, 25, 50, 0.75);
 }
 
 .gauge {
@@ -298,7 +298,6 @@ body::before {
 }
 
 .gauge-fill {
-  stroke: url(#gaugeGradient);
   stroke: var(--accent);
   stroke-linecap: round;
   stroke-dasharray: 528;
@@ -351,7 +350,7 @@ body::before {
 
 .project-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 18px;
   margin-top: 18px;
 }
@@ -380,6 +379,18 @@ body::before {
   padding-left: 18px;
   color: var(--muted);
   line-height: 1.7;
+}
+
+.card-link {
+  display: inline-block;
+  margin-top: 18px;
+  color: var(--accent-2);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.card-link:hover {
+  text-decoration: underline;
 }
 
 .split {
@@ -411,7 +422,7 @@ body::before {
   padding: 8px;
   display: grid;
   gap: 8px;
-  background: rgba(12, 21, 35, 0.85);
+  background: rgba(28, 13, 17, 0.85);
 }
 
 .timeline-item {
