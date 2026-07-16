@@ -21,10 +21,37 @@
     />
     <link rel="stylesheet" href="styles.css" />
     <style>
+      /* this page keeps the dark THY-red theme; the shared sheet is light */
+      :root {
+        --panel: rgba(30, 14, 18, 0.72);
+        --panel-strong: rgba(38, 17, 22, 0.92);
+        --text: #f9eff1;
+        --muted: #c4abb1;
+        --line: rgba(233, 186, 196, 0.14);
+        --accent: #e81932;
+        --accent-2: #ff7d8e;
+        --shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+      }
       body {
         overflow: hidden;
         height: 100vh;
         height: 100dvh; /* mobile browser chrome */
+        background:
+          radial-gradient(circle at top left, rgba(232, 25, 50, 0.16), transparent 30%),
+          radial-gradient(circle at top right, rgba(255, 125, 142, 0.1), transparent 26%),
+          linear-gradient(180deg, #0b0507 0%, #130810 55%, #070304 100%);
+      }
+      body::before {
+        background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      }
+      .brand-mark {
+        background: linear-gradient(145deg, rgba(232, 25, 50, 0.95), rgba(255, 125, 142, 0.95));
+        color: #14050a;
+      }
+      .button.secondary {
+        border-color: rgba(238, 243, 251, 0.18);
+        background: rgba(255, 255, 255, 0.03);
       }
       #globe {
         position: fixed;
@@ -53,8 +80,8 @@
         z-index: 5;
         pointer-events: none;
         display: none;
-        background: rgba(46, 37, 28, 0.95);
-        border: 1px solid rgba(232, 210, 178, 0.18);
+        background: rgba(38, 17, 22, 0.95);
+        border: 1px solid rgba(233, 186, 196, 0.18);
         border-radius: 12px;
         padding: 8px 12px;
         font-size: 0.82rem;
@@ -342,9 +369,9 @@
         .showAtmosphere(true)
         .atmosphereColor("#e81932")
         .atmosphereAltitude(0.18)
-        .polygonCapColor(f => (f.properties.ADM0_A3 === "TUR" ? "rgba(232,25,50,0.30)" : "rgba(46,36,26,0.85)"))
+        .polygonCapColor(f => (f.properties.ADM0_A3 === "TUR" ? "rgba(232,25,50,0.30)" : "rgba(48,26,32,0.85)"))
         .polygonSideColor(() => "rgba(0,0,0,0)")
-        .polygonStrokeColor(() => "rgba(232,210,178,0.30)")
+        .polygonStrokeColor(() => "rgba(233,186,196,0.30)")
         .polygonAltitude(0.006)
         .polygonsTransitionDuration(0)
         .htmlLat("lat").htmlLng("lng").htmlAltitude(0.01)
@@ -379,7 +406,7 @@
         .labelDotRadius(0.35)
         .labelText("text");
 
-      globe.globeMaterial().color.set("#140d09");
+      globe.globeMaterial().color.set("#12080b");
       if (globe.htmlElementVisibilityModifier) {
         globe.htmlElementVisibilityModifier((el, visible) => { el.style.opacity = visible ? 1 : 0; el.style.pointerEvents = visible ? "auto" : "none"; });
       }
