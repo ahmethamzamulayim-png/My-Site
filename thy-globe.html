@@ -53,8 +53,8 @@
         z-index: 5;
         pointer-events: none;
         display: none;
-        background: rgba(38, 17, 22, 0.95);
-        border: 1px solid rgba(233, 186, 196, 0.18);
+        background: rgba(46, 37, 28, 0.95);
+        border: 1px solid rgba(232, 210, 178, 0.18);
         border-radius: 12px;
         padding: 8px 12px;
         font-size: 0.82rem;
@@ -141,7 +141,7 @@
       }
       .status-row.ok .dot { background: #3fd68f; box-shadow: 0 0 12px rgba(63, 214, 143, 0.7); }
       .status-row.load .dot { background: var(--accent-2); box-shadow: 0 0 12px rgba(255, 125, 142, 0.6); }
-      .status-row.err .dot { background: var(--accent); box-shadow: 0 0 12px rgba(232, 25, 50, 0.7); }
+      .status-row.err .dot { background: #e81932; box-shadow: 0 0 12px rgba(232, 25, 50, 0.7); }
       .hint {
         margin-top: 12px;
         font-size: 0.78rem;
@@ -196,6 +196,20 @@
         line-height: 1;
       }
       #dclose:hover { color: var(--text); }
+      /* original emblem, not the THY logo (that's trademarked): ring + our plane mark */
+      .wm {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        pointer-events: none;
+      }
+      .wm svg {
+        width: min(115vmin, 1000px);
+        color: #e81932;
+        opacity: 0.07;
+        transform: translate(5%, -3%);
+      }
       @media (max-width: 900px) {
         .globe-panel {
           left: 12px;
@@ -217,6 +231,12 @@
   </head>
   <body>
     <div class="noise"></div>
+    <div class="wm" aria-hidden="true">
+      <svg viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="0.5"></circle>
+        <path fill="currentColor" transform="rotate(45 24 24) translate(12 12)" d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"></path>
+      </svg>
+    </div>
     <div id="globe"></div>
     <div id="tip"></div>
 
@@ -322,9 +342,9 @@
         .showAtmosphere(true)
         .atmosphereColor("#e81932")
         .atmosphereAltitude(0.18)
-        .polygonCapColor(f => (f.properties.ADM0_A3 === "TUR" ? "rgba(232,25,50,0.30)" : "rgba(48,26,32,0.85)"))
+        .polygonCapColor(f => (f.properties.ADM0_A3 === "TUR" ? "rgba(232,25,50,0.30)" : "rgba(46,36,26,0.85)"))
         .polygonSideColor(() => "rgba(0,0,0,0)")
-        .polygonStrokeColor(() => "rgba(233,186,196,0.30)")
+        .polygonStrokeColor(() => "rgba(232,210,178,0.30)")
         .polygonAltitude(0.006)
         .polygonsTransitionDuration(0)
         .htmlLat("lat").htmlLng("lng").htmlAltitude(0.01)
@@ -359,7 +379,7 @@
         .labelDotRadius(0.35)
         .labelText("text");
 
-      globe.globeMaterial().color.set("#12080b");
+      globe.globeMaterial().color.set("#140d09");
       if (globe.htmlElementVisibilityModifier) {
         globe.htmlElementVisibilityModifier((el, visible) => { el.style.opacity = visible ? 1 : 0; el.style.pointerEvents = visible ? "auto" : "none"; });
       }
