@@ -41,9 +41,9 @@ body::before {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  /* çini geometry: eight-pointed star tessellation, faint cobalt */
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Cg fill='none' stroke='%2324439b' stroke-opacity='0.45'%3E%3Crect x='30' y='30' width='36' height='36'/%3E%3Crect x='30' y='30' width='36' height='36' transform='rotate(45 48 48)'/%3E%3C/g%3E%3C/svg%3E");
-  background-size: 96px 96px;
+  /* çini wallpaper: faint scattered tulips (both pages share this) */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cg fill='%23e81932' fill-opacity='.5' stroke-opacity='.5' transform='translate(20 12) rotate(10 8 8) scale(1.5)'%3E%3Cpath d='M8 1.5C6.8 4 6.8 7 8 9.5C9.2 7 9.2 4 8 1.5Z'/%3E%3Cpath d='M8 9.5C5.8 8.5 4.5 6.5 4.6 3.5C6.5 5 7.6 7 8 9.5Z'/%3E%3Cpath d='M8 9.5C8.4 7 9.5 5 11.4 3.5C11.5 6.5 10.2 8.5 8 9.5Z'/%3E%3Cpath fill='none' stroke='%233e8e4e' stroke-width='1.1' stroke-linecap='round' d='M8 9.5V16M8 12.5C6.5 12 5.5 11 5.2 9.8M8 13.5C9.5 13 10.5 12 10.8 10.8'/%3E%3C/g%3E%3Cg fill='%23e81932' fill-opacity='.5' stroke-opacity='.5' transform='translate(80 70) rotate(-14 8 8) scale(1.5)'%3E%3Cpath d='M8 1.5C6.8 4 6.8 7 8 9.5C9.2 7 9.2 4 8 1.5Z'/%3E%3Cpath d='M8 9.5C5.8 8.5 4.5 6.5 4.6 3.5C6.5 5 7.6 7 8 9.5Z'/%3E%3Cpath d='M8 9.5C8.4 7 9.5 5 11.4 3.5C11.5 6.5 10.2 8.5 8 9.5Z'/%3E%3Cpath fill='none' stroke='%233e8e4e' stroke-width='1.1' stroke-linecap='round' d='M8 9.5V16M8 12.5C6.5 12 5.5 11 5.2 9.8M8 13.5C9.5 13 10.5 12 10.8 10.8'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 120px 120px;
   mask-image: radial-gradient(circle at center, black 35%, transparent 100%);
   opacity: 0.2;
 }
