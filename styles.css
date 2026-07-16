@@ -131,7 +131,7 @@ body::before {
   grid-template-columns: 1.1fr 0.9fr;
   gap: 28px;
   padding: 44px 0 18px;
-  align-items: center;
+  align-items: stretch; /* panel matches the copy's height */
 }
 
 .hero-copy,
@@ -248,7 +248,9 @@ body::before {
 
 .panel-shell {
   display: grid;
+  grid-template-rows: auto 1fr; /* treemap absorbs whatever height the copy sets */
   gap: 18px;
+  height: 100%;
 }
 
 .panel-top {
@@ -272,8 +274,9 @@ body::before {
 .treemap {
   display: grid;
   grid-template-columns: 1.7fr 1fr 0.8fr;
-  grid-template-rows: 150px 84px 72px;
+  grid-template-rows: 1.8fr 1fr 0.9fr;
   gap: 10px;
+  min-height: 320px; /* floor for when the hero stacks to one column */
 }
 
 .treemap .tile {
@@ -535,7 +538,7 @@ body::before {
   }
 
   .treemap {
-    grid-template-rows: 116px 70px 64px;
+    min-height: 260px;
   }
 
   .treemap .tile {
