@@ -485,7 +485,7 @@ body::before {
   padding: 8px;
   display: grid;
   gap: 8px;
-  background: rgba(28, 13, 17, 0.85);
+  background: rgba(43, 39, 50, 0.05);
 }
 
 .timeline-item {

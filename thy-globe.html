@@ -21,39 +21,11 @@
     />
     <link rel="stylesheet" href="styles.css" />
     <style>
-      /* this page keeps the dark THY-red theme; the shared sheet is light */
-      :root {
-        --panel: rgba(30, 14, 18, 0.72);
-        --panel-strong: rgba(38, 17, 22, 0.92);
-        --text: #f9eff1;
-        --muted: #c4abb1;
-        --line: rgba(233, 186, 196, 0.14);
-        --accent: #e81932;
-        --accent-2: #ff7d8e;
-        --shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
-      }
       body {
         overflow: hidden;
         height: 100vh;
         height: 100dvh; /* mobile browser chrome */
-        background:
-          radial-gradient(circle at top left, rgba(232, 25, 50, 0.16), transparent 30%),
-          radial-gradient(circle at top right, rgba(255, 125, 142, 0.1), transparent 26%),
-          linear-gradient(180deg, #0b0507 0%, #130810 55%, #070304 100%);
       }
-      body::before {
-        background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-      }
-      .brand-mark {
-        background: linear-gradient(145deg, rgba(232, 25, 50, 0.95), rgba(255, 125, 142, 0.95));
-        color: #14050a;
-      }
-      .button.secondary {
-        border-color: rgba(238, 243, 251, 0.18);
-        background: rgba(255, 255, 255, 0.03);
-      }
-      .eyebrow { color: var(--muted); }
       #globe {
         position: fixed;
         inset: 0;
@@ -67,12 +39,12 @@
         pointer-events: auto;
         cursor: pointer;
         color: #e81932;
-        filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.9));
+        filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.85));
         transition: opacity 300ms ease;
       }
-      .plane.cargo { color: #4a90d9; }
+      .plane.cargo { color: #24439b; }
       .plane.selected {
-        color: #fff;
+        color: #2b2732;
         filter: drop-shadow(0 0 6px rgba(232, 25, 50, 0.95));
       }
       .plane svg { display: block; }
@@ -81,8 +53,8 @@
         z-index: 5;
         pointer-events: none;
         display: none;
-        background: rgba(38, 17, 22, 0.95);
-        border: 1px solid rgba(233, 186, 196, 0.18);
+        background: rgba(255, 255, 255, 0.95);
+        border: 1px solid rgba(43, 39, 50, 0.15);
         border-radius: 12px;
         padding: 8px 12px;
         font-size: 0.82rem;
@@ -144,8 +116,8 @@
         min-height: 44px;
         padding: 0 16px;
         border-radius: 999px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(43, 39, 50, 0.18);
+        background: rgba(255, 255, 255, 0.6);
         color: var(--text);
         font: inherit;
         outline: none;
@@ -167,7 +139,7 @@
         flex: none;
         transition: background 300ms ease, box-shadow 300ms ease;
       }
-      .status-row.ok .dot { background: #3fd68f; box-shadow: 0 0 12px rgba(63, 214, 143, 0.7); }
+      .status-row.ok .dot { background: #3e8e4e; box-shadow: 0 0 12px rgba(62, 142, 78, 0.6); }
       .status-row.load .dot { background: var(--accent-2); box-shadow: 0 0 12px rgba(255, 125, 142, 0.6); }
       .status-row.err .dot { background: #e81932; box-shadow: 0 0 12px rgba(232, 25, 50, 0.7); }
       .hint {
@@ -198,7 +170,7 @@
       .detail .dmodel { margin: 0 0 12px; font-size: 0.9rem; color: var(--muted); }
       .detail .droute {
         padding: 12px 0;
-        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        border-top: 1px solid rgba(43, 39, 50, 0.1);
         font-size: 0.9rem;
         line-height: 1.6;
         color: var(--muted);
@@ -206,7 +178,7 @@
       .detail .droute b { color: var(--text); font-family: "Space Grotesk", sans-serif; }
       .detail .dstats {
         padding-top: 10px;
-        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        border-top: 1px solid rgba(43, 39, 50, 0.1);
         font-size: 0.85rem;
         color: var(--muted);
         line-height: 1.7;
@@ -287,7 +259,7 @@
       <p class="updated" id="updated">waiting for first data…</p>
       <div class="legend">
         <span><i style="background: #e81932"></i>Passenger</span>
-        <span><i style="background: #4a90d9"></i>Cargo</span>
+        <span><i style="background: #24439b"></i>Cargo</span>
       </div>
       <input class="flight-search" id="search" type="search" placeholder="Filter flight, e.g. 1951" aria-label="Filter by flight number" />
       <div class="status-row" id="statusrow"><span class="dot"></span><span id="statustext">connecting…</span></div>
@@ -368,11 +340,11 @@
         .globeImageUrl(null)
         .backgroundColor("rgba(0,0,0,0)")
         .showAtmosphere(true)
-        .atmosphereColor("#e81932")
-        .atmosphereAltitude(0.18)
-        .polygonCapColor(f => (f.properties.ADM0_A3 === "TUR" ? "rgba(232,25,50,0.30)" : "rgba(48,26,32,0.85)"))
+        .atmosphereColor("#1f9e93")
+        .atmosphereAltitude(0.16)
+        .polygonCapColor(f => (f.properties.ADM0_A3 === "TUR" ? "rgba(232,25,50,0.40)" : "rgba(250,247,242,0.95)"))
         .polygonSideColor(() => "rgba(0,0,0,0)")
-        .polygonStrokeColor(() => "rgba(233,186,196,0.30)")
+        .polygonStrokeColor(() => "rgba(36,67,155,0.45)")
         .polygonAltitude(0.006)
         .polygonsTransitionDuration(0)
         .htmlLat("lat").htmlLng("lng").htmlAltitude(0.01)
@@ -396,18 +368,18 @@
           el.onmouseleave = hideTip;
           return el;
         })
-        .arcColor(() => "#ff7d8e")
+        .arcColor(() => "#24439b")
         .arcStroke(0.5)
         .arcAltitudeAutoScale(0.4)
         .arcDashLength(0.5)
         .arcDashGap(0.2)
         .arcDashAnimateTime(1600)
-        .labelColor(() => "#ff7d8e")
+        .labelColor(() => "#24439b")
         .labelSize(1.1)
         .labelDotRadius(0.35)
         .labelText("text");
 
-      globe.globeMaterial().color.set("#12080b");
+      globe.globeMaterial().color.set("#cde6e2"); // pale turquoise sea, çini-plate style
       if (globe.htmlElementVisibilityModifier) {
         globe.htmlElementVisibilityModifier((el, visible) => { el.style.opacity = visible ? 1 : 0; el.style.pointerEvents = visible ? "auto" : "none"; });
       }
