@@ -8,6 +8,11 @@
       name="description"
       content="Every Turkish Airlines flight currently in the air, live on an interactive 3D globe. Real-time ADS-B data from the OpenSky Network."
     />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e81932'/%3E%3Ctext x='32' y='45' font-size='38' font-family='sans-serif' font-weight='700' text-anchor='middle' fill='%23fff'%3EA%3C/text%3E%3C/svg%3E" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Live Turkish Airlines Flight Globe" />
+    <meta property="og:description" content="Every airborne Turkish Airlines flight on an interactive 3D globe, from live ADS-B data." />
+    <meta property="og:url" content="https://ahmethmzamlym.engineer/thy-globe.html" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -19,6 +24,7 @@
       body {
         overflow: hidden;
         height: 100vh;
+        height: 100dvh; /* mobile browser chrome */
       }
       #globe {
         position: fixed;
@@ -207,7 +213,7 @@
         }
       }
     </style>
-    <script src="https://unpkg.com/globe.gl"></script>
+    <script src="https://unpkg.com/globe.gl@2.46.1/dist/globe.gl.min.js"></script>
   </head>
   <body>
     <div class="noise"></div>
@@ -268,8 +274,11 @@
       // --- adsbdb lookups, cached in localStorage (airframes are static) ---
       const store = k => { try { return JSON.parse(localStorage.getItem(k)) || {}; } catch { return {}; } };
       const AC = store("thy_ac");   // hex -> {model, reg, t} | null (known-unknown)
-      const RT = store("thy_rt");   // callsign -> {oi,on,om,di,dn,dm,olat,olng,dlat,dlng} | null
-      const save = () => { try { localStorage.setItem("thy_ac", JSON.stringify(AC)); localStorage.setItem("thy_rt", JSON.stringify(RT)); } catch {} };
+      // routes change seasonally: discard the route cache when the month rolls over
+      const MONTH = new Date().toISOString().slice(0, 7);
+      const rtRaw = store("thy_rt");
+      const RT = rtRaw.m === MONTH ? rtRaw.d : {}; // callsign -> {oi,on,om,di,dn,dm,olat,olng,dlat,dlng} | null
+      const save = () => { try { localStorage.setItem("thy_ac", JSON.stringify(AC)); localStorage.setItem("thy_rt", JSON.stringify({ m: MONTH, d: RT })); } catch {} };
 
       async function getAircraft(hex) {
         if (AC[hex] !== undefined) return AC[hex];
@@ -327,7 +336,11 @@
           el.firstChild.setAttribute("width", s);
           el.firstChild.setAttribute("height", s);
           el.firstChild.style.transform = `rotate(${p.hdg}deg)`;
+          el.tabIndex = 0;
+          el.setAttribute("role", "button");
+          el.setAttribute("aria-label", `Flight ${p.callsign}`);
           el.onclick = e => { e.stopPropagation(); select(p); };
+          el.onkeydown = e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(p); } };
           el.onmouseenter = e => showTip(p, e);
           el.onmousemove = e => moveTip(e);
           el.onmouseleave = hideTip;

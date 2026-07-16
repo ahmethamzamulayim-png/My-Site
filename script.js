@@ -9,14 +9,13 @@ if (yearElement) {
 
 if (gaugeFill) {
   const circumference = 2 * Math.PI * 84;
-  const targetValue = 87;
-  const dashOffset = circumference - (targetValue / 100) * circumference;
+  const dashOffset = circumference - 0.87 * circumference; // decorative arc
   gaugeFill.style.strokeDasharray = `${circumference}`;
   gaugeFill.style.strokeDashoffset = `${dashOffset}`;
 }
 
 if (gaugeCenter) {
-  const targetValue = 87;
+  const targetValue = Number(gaugeCenter.textContent) || 0;
   let currentValue = 0;
 
   const animate = () => {
