@@ -196,20 +196,6 @@
         line-height: 1;
       }
       #dclose:hover { color: var(--text); }
-      /* original emblem, not the THY logo (that's trademarked): ring + our plane mark */
-      .wm {
-        position: fixed;
-        inset: 0;
-        display: grid;
-        place-items: center;
-        pointer-events: none;
-      }
-      .wm svg {
-        width: min(115vmin, 1000px);
-        color: #e81932;
-        opacity: 0.07;
-        transform: translate(5%, -3%);
-      }
       @media (max-width: 900px) {
         .globe-panel {
           left: 12px;
@@ -231,12 +217,6 @@
   </head>
   <body>
     <div class="noise"></div>
-    <div class="wm" aria-hidden="true">
-      <svg viewBox="0 0 48 48" fill="none">
-        <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="0.5"></circle>
-        <path fill="currentColor" transform="rotate(45 24 24) translate(12 12)" d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"></path>
-      </svg>
-    </div>
     <div id="globe"></div>
     <div id="tip"></div>
 
