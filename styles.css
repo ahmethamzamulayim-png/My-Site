@@ -166,8 +166,18 @@ body::before {
   color: var(--cobalt);
 }
 
+/* the tulip: national symbol, our own drawing (the THY livery tulip is trade dress) */
+.tulip {
+  display: inline-block;
+  width: 15px;
+  height: 16px;
+  vertical-align: -2px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 17'%3E%3Cpath fill='%23e81932' d='M8 1.5C6.8 4 6.8 7 8 9.5C9.2 7 9.2 4 8 1.5Z'/%3E%3Cpath fill='%23e81932' d='M8 9.5C5.8 8.5 4.5 6.5 4.6 3.5C6.5 5 7.6 7 8 9.5Z'/%3E%3Cpath fill='%23e81932' d='M8 9.5C8.4 7 9.5 5 11.4 3.5C11.5 6.5 10.2 8.5 8 9.5Z'/%3E%3Cpath fill='none' stroke='%233e8e4e' stroke-width='1.1' stroke-linecap='round' d='M8 9.5V16M8 12.5C6.5 12 5.5 11 5.2 9.8M8 13.5C9.5 13 10.5 12 10.8 10.8'/%3E%3C/svg%3E") no-repeat center / contain;
+}
+
 /* tulip divider under section headings, drawn from the çini motif */
-.section-heading h2::after {
+.section-heading h2::after,
+.contact h2::after {
   content: "";
   display: block;
   width: 132px;
