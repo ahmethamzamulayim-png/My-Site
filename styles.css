@@ -209,8 +209,7 @@ body::before {
   background: rgba(255, 255, 255, 0.03);
 }
 
-.hero-metrics,
-.mini-grid {
+.hero-metrics {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
@@ -220,24 +219,21 @@ body::before {
   margin-top: 28px;
 }
 
-.hero-metrics article,
-.mini-grid div {
+.hero-metrics article {
   padding: 14px;
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.035);
   border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.hero-metrics strong,
-.mini-grid strong {
+.hero-metrics strong {
   display: block;
   font-size: 1.25rem;
   color: var(--text);
   font-family: "Space Grotesk", sans-serif;
 }
 
-.hero-metrics span,
-.mini-grid span {
+.hero-metrics span {
   display: block;
   margin-top: 4px;
   font-size: 0.88rem;
@@ -271,55 +267,67 @@ body::before {
   box-shadow: 0 0 14px rgba(232, 25, 50, 0.75);
 }
 
-.gauge {
-  position: relative;
-  width: min(320px, 100%);
-  aspect-ratio: 1;
-  margin: 0 auto;
+/* treemap: tile area and tint scale with project scope */
+.treemap {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: 96px;
+  gap: 10px;
 }
 
-.gauge svg {
-  width: 100%;
-  height: 100%;
-  transform: rotate(-90deg);
+.treemap .tile {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 3px;
+  min-width: 0;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  text-decoration: none;
+  transition: filter 200ms ease, transform 200ms ease;
 }
 
-.gauge-track,
-.gauge-fill {
-  fill: none;
-  stroke-width: 18;
-  cx: 110;
-  cy: 110;
-  r: 84;
+.treemap .tile:hover {
+  filter: brightness(1.35);
+  transform: translateY(-2px);
 }
 
-.gauge-track {
-  stroke: rgba(255, 255, 255, 0.08);
-}
-
-.gauge-fill {
-  stroke: var(--accent);
-  stroke-linecap: round;
-  stroke-dasharray: 528;
-  stroke-dashoffset: 68;
-}
-
-.gauge-center {
-  position: absolute;
-  inset: 50% auto auto 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-}
-
-.gauge-center strong {
-  display: block;
+.treemap .tile strong {
   font-family: "Space Grotesk", sans-serif;
-  font-size: clamp(3.5rem, 11vw, 5rem);
-  line-height: 0.95;
+  font-size: 1.05rem;
+  line-height: 1.2;
+  color: var(--text);
 }
 
-.gauge-center span {
+.treemap .tile-tag,
+.treemap .tile-note {
+  font-size: 0.78rem;
   color: var(--muted);
+}
+
+.t-globe {
+  grid-column: span 2;
+  grid-row: span 2;
+  background: rgba(232, 25, 50, 0.3);
+}
+
+.t-globe strong {
+  font-size: 1.4rem;
+}
+
+.t-ml {
+  grid-row: span 2;
+  background: rgba(232, 25, 50, 0.18);
+}
+
+.t-ugv {
+  grid-column: span 2;
+  background: rgba(232, 25, 50, 0.12);
+}
+
+.t-rig {
+  background: rgba(232, 25, 50, 0.07);
 }
 
 .section {
@@ -521,9 +529,12 @@ body::before {
     padding: 22px;
   }
 
-  .hero-metrics,
-  .mini-grid {
+  .hero-metrics {
     grid-template-columns: 1fr;
+  }
+
+  .treemap {
+    grid-auto-rows: 78px;
   }
 
   .footer {
