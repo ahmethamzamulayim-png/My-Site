@@ -83,9 +83,10 @@
                 <strong>THY flight globe</strong>
                 <span class="tile-note">130+ flights on a 3D globe</span>
               </a>
-              <a class="tile t-ml" href="#projects">
+              <a class="tile t-ml" href="bearing.html">
                 <span class="tile-tag">Data / ML</span>
                 <strong>Bearing failure prediction</strong>
+                <span class="tile-note">RUL model, 7.4 h mean error</span>
               </a>
               <a class="tile t-ugv" href="#projects">
                 <span class="tile-tag">Robotics</span>
@@ -114,8 +115,8 @@
           </p>
           <p>
             Right now I have competition experience with unmanned ground vehicles
-            and I’m building a data science side project using NASA bearing data to
-            predict failures with machine learning.
+            and a data science side project that predicts bearing failures from
+            NASA run-to-failure vibration data with machine learning.
           </p>
         </div>
       </section>
@@ -144,15 +145,17 @@
             <p class="card-tag">Data Science / ML</p>
             <h3>IMS bearing failure prediction</h3>
             <p>
-              A machine learning side project using public IMS bearing vibration
-              data to predict failures. The dataset comes from test-to-failure
-              experiments with 1-second vibration snapshots recorded at 20 kHz.
+              Predicting bearing failures on the NASA/IMS run-to-failure
+              vibration dataset — statistical condition monitoring for detection
+              and forecasting, plus a random forest predicting remaining useful
+              life on a bearing it never trained on.
             </p>
             <ul>
-              <li>3 data sets and 20,480-point samples</li>
-              <li>Feature extraction from raw vibration signals</li>
-              <li>Outer race and roller defect prediction</li>
+              <li>Detected all 4 documented failures, 2.5–17 days early</li>
+              <li>Best failure-date forecast off by 5.5 h on a 45-day test</li>
+              <li>ML remaining-life error: 7.4 h mean in the final 24 h</li>
             </ul>
+            <a class="card-link" href="bearing.html">Open the project page →</a>
           </article>
           <article class="card" data-reveal>
             <p class="card-tag">Web / Live Data</p>

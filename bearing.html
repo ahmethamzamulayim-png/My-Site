@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bearing Failure Prediction | Ahmet Hamza Mülayim</title>
+    <meta
+      name="description"
+      content="Predicting rolling-element bearing failures on the NASA IMS run-to-failure dataset — statistical condition monitoring plus a random-forest RUL model."
+    />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e81932'/%3E%3Ctext x='32' y='45' font-size='38' font-family='sans-serif' font-weight='700' text-anchor='middle' fill='%23fff'%3EA%3C/text%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script defer src="script.js"></script>
+    <style>
+      /* page-local additions on top of the site tokens — cobalt is this project's color */
+      .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+        margin-top: 26px;
+      }
+      .stat {
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 20px 22px;
+      }
+      .stat strong {
+        display: block;
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.9rem;
+        letter-spacing: -0.03em;
+        color: var(--cobalt);
+      }
+      .stat span { color: var(--muted); font-size: 0.88rem; }
+      .step-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 16px;
+        margin-top: 26px;
+      }
+      .step {
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 22px;
+      }
+      .step h3 {
+        font-family: "Space Grotesk", sans-serif;
+        letter-spacing: -0.03em;
+        margin: 0 0 10px;
+      }
+      .step h3 small {
+        display: block;
+        color: var(--cobalt);
+        font-size: 0.8rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+      }
+      .step p { margin: 0; color: var(--muted); font-size: 0.95rem; line-height: 1.6; }
+      .fig {
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 22px;
+        margin-top: 22px;
+      }
+      .fig h3 {
+        font-family: "Space Grotesk", sans-serif;
+        letter-spacing: -0.03em;
+        margin: 0 0 14px;
+      }
+      .fig img {
+        width: 100%;
+        height: auto;
+        border-radius: 12px;
+        border: 1px solid var(--line);
+      }
+      .fig p { color: var(--muted); font-size: 0.92rem; line-height: 1.6; margin: 14px 0 0; }
+      .limits {
+        margin: 26px 0 0;
+        padding-left: 20px;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="noise"></div>
+    <header class="site-header">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">A</span>
+        <span>
+          <strong>Ahmet Hamza Mülayim</strong>
+          <small>Marmara University</small>
+        </span>
+      </a>
+      <nav class="site-nav">
+        <a href="index.html#projects">← Portfolio</a>
+        <a href="bearing/ML_Presentation.pptx" download>Presentation (.pptx)</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Data / ML project</p>
+          <h2>Predicting bearing failures from vibration data.</h2>
+          <p class="hero-text">
+            The NASA/IMS dataset ran bearings to actual failure: 3 tests, 4
+            bearings each, 2000&nbsp;RPM under 6000&nbsp;lbs radial load,
+            accelerometers sampled at 20&nbsp;kHz. A healthy bearing hums quietly;
+            once a crack forms on a race, every ball passing over it produces a
+            sharp impact. This project turns that physics into a working early
+            warning system — first with classical statistics, then with machine
+            learning — and grades both against the documented teardowns.
+          </p>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat"><strong>4/4</strong><span>failed bearings detected — matched NASA's teardown in every test</span></div>
+          <div class="stat"><strong>2.5–17 days</strong><span>early warning before functional failure (the P–F interval)</span></div>
+          <div class="stat"><strong>5.5 h</strong><span>best failure-date forecast error, on a 45-day test</span></div>
+          <div class="stat"><strong>7.4 h</strong><span>ML mean error in the final 24 h, on a bearing it never trained on</span></div>
+        </div>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Method</p>
+          <h2>Three steps, from raw signal to a countdown.</h2>
+        </div>
+        <div class="step-grid">
+          <article class="step">
+            <h3><small>Step 1 · Features</small>Compress the signal</h3>
+            <p>
+              Each 10-minute snapshot (20,480 points per channel) is reduced to
+              four health numbers: RMS (overall energy, the ISO 10816 standard),
+              kurtosis (spikiness — impacts push it above the Gaussian value of 3,
+              usually the earliest warning), peak, and crest factor.
+            </p>
+          </article>
+          <article class="step">
+            <h3><small>Step 2 · Detect &amp; forecast</small>Statistics, no ML</h3>
+            <p>
+              The first 15% of each test is certified healthy. Smoothed RMS
+              crossing baseline&nbsp;+&nbsp;6σ for 5 consecutive snapshots raises
+              the alarm. From then on, an exponential fit to the damage growth is
+              extrapolated to the failure level — repeated at every snapshot, so
+              the forecast sharpens like a hurricane track.
+            </p>
+          </article>
+          <article class="step">
+            <h3><small>Step 3 · Machine learning</small>Random forest RUL</h3>
+            <p>
+              5,296 snapshots from the failed bearings of tests 1–2 become
+              training examples: "vibration looked like this → death in X hours".
+              Features are normalized to each bearing's own healthy baseline so
+              the model learns damage patterns, not bearing identities. It is
+              graded on test 3 — a bearing it never saw.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Results</p>
+          <h2>The plots are the outcome.</h2>
+        </div>
+
+        <div class="fig">
+          <h3>One bearing takes off, three stay flat</h3>
+          <img src="bearing/test2_overview.png" alt="Test 2 overview: RMS and kurtosis of all four bearings; bearing 1 rises sharply near day 7 while the others stay flat" loading="lazy" />
+          <p>
+            Test 2, all four bearings. Bearing 1 (outer race defect) leaves the
+            healthy band around day 4 and accelerates to failure at day 6.8 —
+            exactly the bearing NASA's teardown found spalled. The other three
+            hum along at their baselines the whole week.
+          </p>
+        </div>
+
+        <div class="fig">
+          <h3>Detection + a converging failure forecast</h3>
+          <img src="bearing/test2_bearing1_prediction.png" alt="Test 2 bearing 1: degradation detected at 3.8 days; predicted failure dates converge onto the actual failure at 6.8 days" loading="lazy" />
+          <p>
+            Top: the alarm fires at 3.8 days — 3 days before failure. Bottom:
+            standing at each day, the exponential fit predicts the failure date
+            (blue dots); as damage grows the prediction converges onto the truth
+            (red line), like a hurricane forecast cone narrowing.
+          </p>
+        </div>
+
+        <div class="fig">
+          <h3>The famous "healing" bearing</h3>
+          <img src="bearing/test1_bearing3_prediction.png" alt="Test 1 bearing 3: health curve temporarily recovers before worsening, making early forecasts wander before converging" loading="lazy" />
+          <p>
+            Test 1 bearing 3 temporarily "heals" — the spall edges get smoothed
+            over before the damage resumes — so early forecasts wander before
+            converging. A good reminder that degradation is physics, not a tidy
+            exponential.
+          </p>
+        </div>
+
+        <div class="fig">
+          <h3>Random forest on a bearing it never saw</h3>
+          <img src="bearing/ml_rul_test3.png" alt="Random forest predicting remaining useful life of test 3 bearing 3, versus the true remaining life; feature importance dominated by smoothed RMS" loading="lazy" />
+          <p>
+            The model predicts remaining useful life hour by hour on test 3.
+            Labels are capped at 120&nbsp;h because healthy vibration carries no
+            information about the future — the flat red line is honesty, not a
+            bug. Once degradation starts near day 40, the countdown locks on:
+            mean error 7.4 hours over the final day. Feature importance puts
+            ~75% on smoothed RMS and ~15% on smoothed kurtosis — the forest
+            independently rediscovered the indicators the physics suggested.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Honest limitations</p>
+          <h2>What this doesn't do.</h2>
+        </div>
+        <ul class="limits">
+          <li>The failure level is taken from the end of each test; a deployed system would need ISO standards or fleet history instead.</li>
+          <li>No forecast is possible before damage starts — a healthy bearing's vibration contains nothing about its future. Identical bearings scatter 10×+ in lifetime; that's why catalogs quote statistical L10 ratings, never per-unit dates.</li>
+          <li>Time-domain features only. The classic next step is envelope spectrum analysis, which identifies <em>which</em> defect (inner race / outer race / roller) from the impact repetition frequency.</li>
+          <li>Absolute-hours predictions don't transfer to other rigs — the open research problem (cross-domain prognostics) that a life-fraction formulation would be the first step toward.</li>
+        </ul>
+      </section>
+
+      <section class="section contact" data-reveal>
+        <div>
+          <p class="eyebrow">Materials</p>
+          <h2>Slides and write-up.</h2>
+          <p>
+            The full walkthrough — method, plots, and the ML explained from a
+            mechanical engineer's point of view — is in the presentation.
+          </p>
+        </div>
+        <div class="contact-actions">
+          <a class="button primary" href="bearing/ML_Presentation.pptx" download>Download the presentation</a>
+          <a class="button secondary" href="index.html#projects">Back to projects</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Data: NASA/IMS bearing run-to-failure dataset · Python, NumPy, scikit-learn</p>
+      <p id="year"></p>
+    </footer>
+  </body>
+</html>
