@@ -91,9 +91,9 @@
                 <span class="tile-tag">Robotics</span>
                 <strong>UGV competition</strong>
               </a>
-              <a class="tile t-rig" href="#projects">
-                <span class="tile-tag">Fabrication</span>
-                <strong>Test rig</strong>
+              <a class="tile t-rig" href="ist-rotar.html">
+                <span class="tile-tag">Data · daily pipeline</span>
+                <strong>IST delay dataset</strong>
               </a>
             </div>
           </div>
@@ -170,18 +170,20 @@
             <a class="card-link" href="thy-globe.html">Open the live globe →</a>
           </article>
           <article class="card" data-reveal>
-            <p class="card-tag">Fabrication / Iteration</p>
-            <h3>Prototype fixture and test rig</h3>
+            <p class="card-tag">Data Engineering / Live Pipeline</p>
+            <h3>IST flight delay dataset</h3>
             <p>
-              A shop-built setup for repeated measurements, validation, and
-              iteration. Useful for showing practical lab work and the habits that
-              make a design dependable.
+              There is no public historical delay dataset for Istanbul Airport —
+              so I'm building one. A zero-maintenance GitHub Actions pipeline
+              collects every IST flight daily, joins actual movements with
+              schedules, and archives METAR weather alongside.
             </p>
             <ul>
-              <li>Laser cut or 3D printed parts</li>
-              <li>Fast iteration cycle</li>
-              <li>Data-driven revisions</li>
+              <li>OpenSky + aviationstack joined on callsign</li>
+              <li>Append-only CSVs with quality flags</li>
+              <li>Phase 2: a delay prediction model</li>
             </ul>
+            <a class="card-link" href="ist-rotar.html">Open the status dashboard →</a>
           </article>
         </div>
       </section>

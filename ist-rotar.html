@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>IST Rötar Veri Seti | Ahmet Hamza Mülayim</title>
+    <meta
+      name="description"
+      content="İstanbul Havalimanı (IST/LTFM) için günlük toplanan açık uçuş rötarı veri seti — canlı durum panosu."
+    />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e81932'/%3E%3Ctext x='32' y='45' font-size='38' font-family='sans-serif' font-weight='700' text-anchor='middle' fill='%23fff'%3EA%3C/text%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script defer src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <style>
+      /* page-local additions on top of the site tokens */
+      .dash-badge {
+        display: inline-block;
+        padding: 4px 14px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        font-size: 0.85rem;
+        color: var(--muted);
+        background: var(--panel);
+      }
+      .dash-badge.ok { color: var(--leaf); border-color: var(--leaf); }
+      .dash-badge.stale { color: var(--accent-2); border-color: var(--accent-2); }
+      .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+        margin-top: 26px;
+      }
+      .stat {
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 20px 22px;
+      }
+      .stat strong {
+        display: block;
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.9rem;
+        letter-spacing: -0.03em;
+      }
+      .stat span { color: var(--muted); font-size: 0.88rem; }
+      .stat.late strong { color: var(--accent); }
+      .stat.ontime strong { color: var(--leaf); }
+      .warmup {
+        margin: 10px 0 0;
+        font-size: 0.85rem;
+        font-style: italic;
+        color: var(--muted);
+      }
+      .chart-panel {
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 22px;
+        margin-top: 22px;
+      }
+      .chart-panel h3 {
+        font-family: "Space Grotesk", sans-serif;
+        letter-spacing: -0.03em;
+        margin: 0 0 14px;
+      }
+      .metar {
+        margin-top: 26px;
+        font-size: 0.82rem;
+        color: var(--muted);
+        word-break: break-all;
+      }
+      .offline {
+        display: none;
+        background: var(--panel);
+        border: 1px dashed var(--line);
+        border-radius: var(--radius);
+        padding: 24px;
+        margin-top: 22px;
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="noise"></div>
+    <header class="site-header">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">A</span>
+        <span>
+          <strong>Ahmet Hamza Mülayim</strong>
+          <small>Marmara University</small>
+        </span>
+      </a>
+      <nav class="site-nav">
+        <a href="index.html#projects">← Portfolio</a>
+        <a href="https://github.com/ahmethamzamulayim-png/ist-delay-dataset" target="_blank" rel="noreferrer">GitHub repo</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Canlı veri projesi</p>
+          <h2>IST rötar veri seti <span id="badge" class="dash-badge">yükleniyor…</span></h2>
+          <p class="hero-text">
+            İstanbul Havalimanı (LTFM) için herkese açık tarihsel bir rötar veri
+            seti yok — bu proje her sabah dünün tüm uçuşlarını OpenSky ve
+            aviationstack'ten toplayıp birleştirerek o veri setini inşa ediyor.
+            Faz 2'de bu veriyle bir rötar tahmin modeli eğitilecek.
+          </p>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat"><strong id="days">—</strong><span>Veri toplanıyor (gün)</span></div>
+          <div class="stat"><strong id="total">—</strong><span>Kaydedilen uçuş</span></div>
+          <div class="stat late"><strong id="late">—</strong><span>Rötarlı (15+ dk)</span></div>
+          <div class="stat ontime"><strong id="ontime">—</strong><span>Zamanında</span></div>
+        </div>
+        <p class="warmup" id="warm" hidden>ısınma dönemi — yüzdeler henüz oturmadı</p>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="offline" id="offline">
+          Veri kaynağı henüz yayında değil — toplama başladığında bu sayfa
+          kendiliğinden dolacak.
+        </div>
+        <div id="charts">
+          <div class="chart-panel">
+            <h3>Toplanan uçuş sayısı (kümülatif)</h3>
+            <canvas id="c1" height="110"></canvas>
+          </div>
+          <div class="chart-panel">
+            <h3>Günlük ortalama kalkış rötarı (dk)</h3>
+            <canvas id="c2" height="110"></canvas>
+          </div>
+        </div>
+        <p class="metar" id="metar"></p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Veri: OpenSky Network + aviationstack + aviationweather.gov · günlük GitHub Actions</p>
+      <p id="year"></p>
+    </footer>
+
+    <script>
+      const DATA_URL =
+        "https://raw.githubusercontent.com/ahmethamzamulayim-png/ist-delay-dataset/main/data/summary.json";
+      const tr = (n) => (n ?? 0).toLocaleString("tr-TR");
+
+      fetch(DATA_URL, { cache: "no-store" })
+        .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+        .then((s) => {
+          document.getElementById("days").textContent = tr(s.days);
+          document.getElementById("total").textContent = tr(s.total_flights);
+          document.getElementById("late").textContent =
+            s.pct_delayed == null ? tr(s.delayed_15) : `${tr(s.delayed_15)} (%${tr(s.pct_delayed)})`;
+          document.getElementById("ontime").textContent =
+            s.pct_ontime == null ? tr(s.ontime) : `${tr(s.ontime)} (%${tr(s.pct_ontime)})`;
+          if ((s.days || 0) < 14) document.getElementById("warm").hidden = false;
+
+          const badge = document.getElementById("badge");
+          if (s.generated_utc) {
+            const ageH = (Date.now() - new Date(s.generated_utc)) / 36e5;
+            const d = Math.floor(ageH / 24);
+            badge.textContent =
+              "son toplama: " + (d === 0 ? "bugün" : d === 1 ? "dün" : `${d} gün önce`);
+            badge.className = "dash-badge " + (ageH < 48 ? "ok" : "stale");
+          } else {
+            badge.textContent = "henüz veri yok";
+            badge.className = "dash-badge stale";
+          }
+
+          const daily = s.daily || [];
+          const labels = daily.map((d) => d.date.slice(5));
+          let cum = 0;
+          const cumData = daily.map((d) => (cum += d.flights));
+
+          Chart.defaults.color = "#6f6878";
+          Chart.defaults.borderColor = "rgba(43, 39, 50, 0.12)";
+          Chart.defaults.font.family = '"Manrope", sans-serif';
+          const scales = { x: { grid: { display: false } }, y: { beginAtZero: true } };
+
+          /* chart cobalt #2b50b5: brand cobalt lightened to pass the contrast/
+             lightness checks on the cream surface */
+          new Chart(document.getElementById("c1"), {
+            type: "bar",
+            data: { labels, datasets: [{ label: "uçuş", data: cumData,
+              backgroundColor: "#2b50b5", borderRadius: 4, maxBarThickness: 18 }] },
+            options: { plugins: { legend: { display: false } }, scales },
+          });
+          new Chart(document.getElementById("c2"), {
+            type: "line",
+            data: { labels, datasets: [{ label: "ort. rötar (dk)",
+              data: daily.map((d) => d.avg_dep_delay),
+              borderColor: "#e81932", backgroundColor: "#e81932",
+              borderWidth: 2, pointRadius: 2, tension: 0.2, spanGaps: true }] },
+            options: { plugins: { legend: { display: false } }, scales },
+          });
+
+          if (s.latest_metar) {
+            document.getElementById("metar").textContent = s.latest_metar;
+          }
+        })
+        .catch(() => {
+          const badge = document.getElementById("badge");
+          badge.textContent = "henüz yayında değil";
+          badge.className = "dash-badge stale";
+          document.getElementById("charts").style.display = "none";
+          document.getElementById("offline").style.display = "block";
+        });
+    </script>
+  </body>
+</html>
