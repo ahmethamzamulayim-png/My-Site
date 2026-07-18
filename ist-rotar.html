@@ -16,6 +16,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
+    <script src="i18n.js"></script>
     <script defer src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
     <style>
@@ -100,45 +101,46 @@
         </span>
       </a>
       <nav class="site-nav">
-        <a href="index.html#projects">← Portfolio</a>
+        <a href="index.html#projects" data-i18n="nav.back">← Portföy</a>
         <a href="https://github.com/ahmethamzamulayim-png/ist-delay-dataset" target="_blank" rel="noreferrer">GitHub repo</a>
+        <button class="lang-toggle" type="button">EN</button>
       </nav>
     </header>
 
     <main>
       <section class="section" data-reveal>
         <div class="section-heading">
-          <p class="eyebrow">Canlı veri projesi</p>
-          <h2>IST rötar veri seti <span id="badge" class="dash-badge">yükleniyor…</span></h2>
-          <p class="hero-text">
+          <p class="eyebrow" data-i18n="hero.eyebrow">Canlı veri projesi</p>
+          <h2><span data-i18n="hero.h2">IST rötar veri seti</span> <span id="badge" class="dash-badge" data-i18n="badge.loading">yükleniyor…</span></h2>
+          <p class="hero-text" data-i18n="hero.text">
             İstanbul Havalimanı (LTFM) için herkese açık tarihsel bir rötar veri
-            seti yok — bu proje her sabah dünün tüm uçuşlarını OpenSky ve
+            seti yok — bu proje her gece günün tüm uçuşlarını OpenSky ve
             aviationstack'ten toplayıp birleştirerek o veri setini inşa ediyor.
             Faz 2'de bu veriyle bir rötar tahmin modeli eğitilecek.
           </p>
         </div>
 
         <div class="stat-grid">
-          <div class="stat"><strong id="days">—</strong><span>Veri toplanıyor (gün)</span></div>
-          <div class="stat"><strong id="total">—</strong><span>Kaydedilen uçuş</span></div>
-          <div class="stat late"><strong id="late">—</strong><span>Rötarlı (15+ dk)</span></div>
-          <div class="stat ontime"><strong id="ontime">—</strong><span>Zamanında</span></div>
+          <div class="stat"><strong id="days">—</strong><span data-i18n="stat.days">Veri toplanıyor (gün)</span></div>
+          <div class="stat"><strong id="total">—</strong><span data-i18n="stat.total">Kaydedilen uçuş</span></div>
+          <div class="stat late"><strong id="late">—</strong><span data-i18n="stat.late">Rötarlı (15+ dk)</span></div>
+          <div class="stat ontime"><strong id="ontime">—</strong><span data-i18n="stat.ontime">Zamanında</span></div>
         </div>
-        <p class="warmup" id="warm" hidden>ısınma dönemi — yüzdeler henüz oturmadı</p>
+        <p class="warmup" id="warm" hidden data-i18n="warm">ısınma dönemi — yüzdeler henüz oturmadı</p>
       </section>
 
       <section class="section" data-reveal>
-        <div class="offline" id="offline">
+        <div class="offline" id="offline" data-i18n="offline">
           Veri kaynağı henüz yayında değil — toplama başladığında bu sayfa
           kendiliğinden dolacak.
         </div>
         <div id="charts">
           <div class="chart-panel">
-            <h3>Toplanan uçuş sayısı (kümülatif)</h3>
+            <h3 data-i18n="chart.cum">Toplanan uçuş sayısı (kümülatif)</h3>
             <canvas id="c1" height="110"></canvas>
           </div>
           <div class="chart-panel">
-            <h3>Günlük ortalama kalkış rötarı (dk)</h3>
+            <h3 data-i18n="chart.delay">Günlük ortalama kalkış rötarı (dk)</h3>
             <canvas id="c2" height="110"></canvas>
           </div>
         </div>
@@ -147,37 +149,77 @@
     </main>
 
     <footer class="footer">
-      <p>Veri: OpenSky Network + aviationstack + aviationweather.gov · günlük GitHub Actions</p>
+      <p data-i18n="footer.p">Veri: OpenSky Network + aviationstack + aviationweather.gov · günlük GitHub Actions</p>
       <p id="year"></p>
     </footer>
 
     <script>
+      window.I18N_LANG = "en";
+      window.I18N = {
+        "nav.back": "← Portfolio",
+        "hero.eyebrow": "Live data project",
+        "hero.h2": "IST delay dataset",
+        "badge.loading": "loading…",
+        "hero.text": "There is no public historical delay dataset for Istanbul Airport (LTFM) — this project is building one, collecting and joining the day's flights from OpenSky and aviationstack every night. Phase 2 will train a delay prediction model on it.",
+        "stat.days": "Days collecting",
+        "stat.total": "Flights recorded",
+        "stat.late": "Delayed (15+ min)",
+        "stat.ontime": "On time",
+        "warm": "warm-up period — percentages haven't settled yet",
+        "offline": "The data source isn't live yet — this page will fill itself once collection starts.",
+        "chart.cum": "Flights collected (cumulative)",
+        "chart.delay": "Daily average departure delay (min)",
+        "footer.p": "Data: OpenSky Network + aviationstack + aviationweather.gov · daily GitHub Actions"
+      };
+    </script>
+    <script>
       const DATA_URL =
         "https://raw.githubusercontent.com/ahmethamzamulayim-png/ist-delay-dataset/main/data/summary.json";
-      const tr = (n) => (n ?? 0).toLocaleString("tr-TR");
+      let S = null, failed = false, chart1 = null, chart2 = null;
+      const pct = (v) => (getLang() === "tr" ? "%" + fmt(v) : fmt(v) + "%");
+
+      function renderStats() {
+        document.getElementById("days").textContent = fmt(S.days);
+        document.getElementById("total").textContent = fmt(S.total_flights);
+        document.getElementById("late").textContent =
+          S.pct_delayed == null ? fmt(S.delayed_15) : `${fmt(S.delayed_15)} (${pct(S.pct_delayed)})`;
+        document.getElementById("ontime").textContent =
+          S.pct_ontime == null ? fmt(S.ontime) : `${fmt(S.ontime)} (${pct(S.pct_ontime)})`;
+        if ((S.days || 0) < 14) document.getElementById("warm").hidden = false;
+
+        const badge = document.getElementById("badge");
+        badge.removeAttribute("data-i18n"); // dynamic from here on
+        if (S.generated_utc) {
+          const ageH = (Date.now() - new Date(S.generated_utc)) / 36e5;
+          const d = Math.floor(ageH / 24);
+          const when = d === 0 ? t("today", "bugün")
+                     : d === 1 ? t("yesterday", "dün")
+                     : t(`${d} days ago`, `${d} gün önce`);
+          badge.textContent = t("last collection: ", "son toplama: ") + when;
+          badge.className = "dash-badge " + (ageH < 48 ? "ok" : "stale");
+        } else {
+          badge.textContent = t("no data yet", "henüz veri yok");
+          badge.className = "dash-badge stale";
+        }
+        if (S.latest_metar) {
+          document.getElementById("metar").textContent = S.latest_metar;
+        }
+      }
+
+      function renderFail() {
+        const badge = document.getElementById("badge");
+        badge.removeAttribute("data-i18n");
+        badge.textContent = t("not live yet", "henüz yayında değil");
+        badge.className = "dash-badge stale";
+        document.getElementById("charts").style.display = "none";
+        document.getElementById("offline").style.display = "block";
+      }
 
       fetch(DATA_URL, { cache: "no-store" })
         .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
         .then((s) => {
-          document.getElementById("days").textContent = tr(s.days);
-          document.getElementById("total").textContent = tr(s.total_flights);
-          document.getElementById("late").textContent =
-            s.pct_delayed == null ? tr(s.delayed_15) : `${tr(s.delayed_15)} (%${tr(s.pct_delayed)})`;
-          document.getElementById("ontime").textContent =
-            s.pct_ontime == null ? tr(s.ontime) : `${tr(s.ontime)} (%${tr(s.pct_ontime)})`;
-          if ((s.days || 0) < 14) document.getElementById("warm").hidden = false;
-
-          const badge = document.getElementById("badge");
-          if (s.generated_utc) {
-            const ageH = (Date.now() - new Date(s.generated_utc)) / 36e5;
-            const d = Math.floor(ageH / 24);
-            badge.textContent =
-              "son toplama: " + (d === 0 ? "bugün" : d === 1 ? "dün" : `${d} gün önce`);
-            badge.className = "dash-badge " + (ageH < 48 ? "ok" : "stale");
-          } else {
-            badge.textContent = "henüz veri yok";
-            badge.className = "dash-badge stale";
-          }
+          S = s;
+          renderStats();
 
           const daily = s.daily || [];
           const labels = daily.map((d) => d.date.slice(5));
@@ -187,36 +229,36 @@
           Chart.defaults.color = "#6f6878";
           Chart.defaults.borderColor = "rgba(43, 39, 50, 0.12)";
           Chart.defaults.font.family = '"Manrope", sans-serif';
-          const scales = { x: { grid: { display: false } }, y: { beginAtZero: true } };
+          const scales = () => ({ x: { grid: { display: false } },
+            y: { beginAtZero: true, title: { display: true, text: t("min", "dk") } } });
 
           /* chart cobalt #2b50b5: brand cobalt lightened to pass the contrast/
              lightness checks on the cream surface */
-          new Chart(document.getElementById("c1"), {
+          chart1 = new Chart(document.getElementById("c1"), {
             type: "bar",
-            data: { labels, datasets: [{ label: "uçuş", data: cumData,
+            data: { labels, datasets: [{ data: cumData,
               backgroundColor: "#2b50b5", borderRadius: 4, maxBarThickness: 18 }] },
-            options: { plugins: { legend: { display: false } }, scales },
+            options: { plugins: { legend: { display: false } },
+              scales: { x: { grid: { display: false } }, y: { beginAtZero: true } } },
           });
-          new Chart(document.getElementById("c2"), {
+          chart2 = new Chart(document.getElementById("c2"), {
             type: "line",
-            data: { labels, datasets: [{ label: "ort. rötar (dk)",
-              data: daily.map((d) => d.avg_dep_delay),
+            data: { labels, datasets: [{ data: daily.map((d) => d.avg_dep_delay),
               borderColor: "#e81932", backgroundColor: "#e81932",
               borderWidth: 2, pointRadius: 2, tension: 0.2, spanGaps: true }] },
-            options: { plugins: { legend: { display: false } }, scales },
+            options: { plugins: { legend: { display: false } }, scales: scales() },
           });
-
-          if (s.latest_metar) {
-            document.getElementById("metar").textContent = s.latest_metar;
-          }
         })
-        .catch(() => {
-          const badge = document.getElementById("badge");
-          badge.textContent = "henüz yayında değil";
-          badge.className = "dash-badge stale";
-          document.getElementById("charts").style.display = "none";
-          document.getElementById("offline").style.display = "block";
-        });
+        .catch(() => { failed = true; renderFail(); });
+
+      document.addEventListener("langchange", () => {
+        if (S) renderStats();
+        else if (failed) renderFail();
+        if (chart2) {
+          chart2.options.scales.y.title.text = t("min", "dk");
+          chart2.update();
+        }
+      });
     </script>
   </body>
 </html>

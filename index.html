@@ -20,6 +20,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
+    <script src="i18n.js"></script>
     <script defer src="script.js"></script>
   </head>
   <body>
@@ -33,40 +34,41 @@
         </span>
       </a>
       <nav class="site-nav">
-        <a href="#about">About</a>
-        <a href="#projects">Projects</a>
-        <a href="#timeline">Timeline</a>
-        <a href="#contact">Contact</a>
+        <a href="#about" data-i18n="nav.about">About</a>
+        <a href="#projects" data-i18n="nav.projects">Projects</a>
+        <a href="#timeline" data-i18n="nav.timeline">Timeline</a>
+        <a href="#contact" data-i18n="nav.contact">Contact</a>
+        <button class="lang-toggle" type="button">TR</button>
       </nav>
     </header>
 
     <main id="top">
       <section class="hero">
         <div class="hero-copy" data-reveal>
-          <p class="eyebrow">GitHub Pages portfolio</p>
-          <h1>Mechanical engineering, built around design, analysis, and proof.</h1>
-          <p class="hero-text">
+          <p class="eyebrow" data-i18n="hero.eyebrow">GitHub Pages portfolio</p>
+          <h1 data-i18n="hero.h1">Mechanical engineering, built around design, analysis, and proof.</h1>
+          <p class="hero-text" data-i18n="hero.text">
             I’m Ahmet Hamza Mülayim, a mechanical engineering student at Marmara
             University focused on CAD, prototyping, data-driven analysis, and
             turning ideas into testable results. This portfolio is a compact place
             to show real engineering work.
           </p>
           <div class="hero-actions">
-            <a class="button primary" href="#projects">See projects</a>
-            <a class="button secondary" href="mailto:ahmet.mulayim@marun.edu.tr">Email me</a>
+            <a class="button primary" href="#projects" data-i18n="hero.see">See projects</a>
+            <a class="button secondary" href="mailto:ahmet.mulayim@marun.edu.tr" data-i18n="hero.email">Email me</a>
           </div>
           <div class="hero-metrics">
             <article>
               <strong>UGV</strong>
-              <span>competition experience</span>
+              <span data-i18n="metric.ugv">competition experience</span>
             </article>
             <article>
               <strong>ML</strong>
-              <span>bearing failure prediction</span>
+              <span data-i18n="metric.ml">bearing failure prediction</span>
             </article>
             <article>
               <strong>ME</strong>
-              <span>mechanical engineering student</span>
+              <span data-i18n="metric.me">mechanical engineering student</span>
             </article>
           </div>
         </div>
@@ -75,26 +77,25 @@
           <div class="panel-shell">
             <div class="panel-top">
               <span class="status-dot"></span>
-              <span>Projects, sized by scope</span>
+              <span data-i18n="panel.top">Projects, sized by scope</span>
             </div>
             <div class="treemap">
               <a class="tile t-globe" href="thy-globe.html">
-                <span class="tile-tag">Web · live now</span>
-                <strong>THY flight globe</strong>
-                <span class="tile-note">130+ flights on a 3D globe</span>
+                <span class="tile-tag" data-i18n="tile.globe.tag">Web · live now</span>
+                <strong data-i18n="tile.globe.name">THY flight globe</strong>
+                <span class="tile-note" data-i18n="tile.globe.note">130+ flights on a 3D globe</span>
               </a>
               <a class="tile t-ml" href="bearing.html">
-                <span class="tile-tag">Data / ML</span>
-                <strong>Bearing failure prediction</strong>
-                <span class="tile-note">RUL model, 7.4 h mean error</span>
+                <span class="tile-tag" data-i18n="tile.ml.tag">Data / ML</span>
+                <strong data-i18n="tile.ml.name">Bearing failure prediction</strong>
               </a>
               <a class="tile t-ugv" href="#projects">
-                <span class="tile-tag">Robotics</span>
-                <strong>UGV competition</strong>
+                <span class="tile-tag" data-i18n="tile.ugv.tag">Robotics</span>
+                <strong data-i18n="tile.ugv.name">UGV competition</strong>
               </a>
               <a class="tile t-rig" href="ist-rotar.html">
-                <span class="tile-tag">Data · daily pipeline</span>
-                <strong>IST delay dataset</strong>
+                <span class="tile-tag" data-i18n="tile.ist.tag">Data · daily pipeline</span>
+                <strong data-i18n="tile.ist.name">IST delay dataset</strong>
               </a>
             </div>
           </div>
@@ -103,100 +104,99 @@
 
       <section class="section" id="about" data-reveal>
         <div class="section-heading">
-          <p class="eyebrow">About</p>
-          <h2>Built for a mechanical engineering student with real projects to show.</h2>
+          <p class="eyebrow" data-i18n="about.eyebrow">About</p>
+          <h2 data-i18n="about.h2">Built for a mechanical engineering student with real projects to show.</h2>
         </div>
         <div class="about-grid">
-          <p>
+          <p data-i18n="about.p1">
             I’m Ahmet Hamza Mülayim, a mechanical engineering student at Marmara
             University interested in design, systems thinking, and practical
             problem solving. I like work that starts in physics, moves through
             analysis, and ends in something you can test and improve.
           </p>
-          <p>
+          <p data-i18n="about.p2">
             Right now I have competition experience with unmanned ground vehicles
-            and a data science side project that predicts bearing failures from
-            NASA run-to-failure vibration data with machine learning.
+            and I’m building a data science side project using NASA bearing data to
+            predict failures with machine learning.
           </p>
         </div>
       </section>
 
       <section class="section" id="projects">
         <div class="section-heading" data-reveal>
-          <p class="eyebrow">Selected work</p>
-          <h2>Projects that show engineering judgment, not just buzzwords.</h2>
+          <p class="eyebrow" data-i18n="projects.eyebrow">Selected work</p>
+          <h2 data-i18n="projects.h2">Projects that show engineering judgment, not just buzzwords.</h2>
         </div>
         <div class="project-grid">
           <article class="card" data-reveal>
-            <p class="card-tag">Robotics / Competition</p>
-            <h3>Unmanned Ground Vehicle competition</h3>
-            <p>
+            <p class="card-tag" data-i18n="ugv.tag">Robotics / Competition</p>
+            <h3 data-i18n="ugv.h3">Unmanned Ground Vehicle competition</h3>
+            <p data-i18n="ugv.p">
               I participated in a competition focused on unmanned ground vehicles,
               where the work involved design tradeoffs, integration, and getting a
               system to perform under real constraints.
             </p>
-            <ul>
+            <ul data-i18n="ugv.ul">
               <li>Mechatronic system thinking</li>
               <li>Integration and troubleshooting</li>
               <li>Team-based engineering under pressure</li>
             </ul>
           </article>
           <article class="card" data-reveal>
-            <p class="card-tag">Data Science / ML</p>
-            <h3>IMS bearing failure prediction</h3>
-            <p>
-              Predicting bearing failures on the NASA/IMS run-to-failure
-              vibration dataset — statistical condition monitoring for detection
-              and forecasting, plus a random forest predicting remaining useful
-              life on a bearing it never trained on.
+            <p class="card-tag" data-i18n="ml.tag">Data Science / ML</p>
+            <h3 data-i18n="ml.h3">IMS bearing failure prediction</h3>
+            <p data-i18n="ml.p">
+              A machine learning side project using public IMS bearing vibration
+              data to predict failures. The dataset comes from test-to-failure
+              experiments with 1-second vibration snapshots recorded at 20 kHz.
             </p>
-            <ul>
-              <li>Detected all 4 documented failures, 2.5–17 days early</li>
-              <li>Best failure-date forecast off by 5.5 h on a 45-day test</li>
-              <li>ML remaining-life error: 7.4 h mean in the final 24 h</li>
+            <ul data-i18n="ml.ul">
+              <li>3 data sets and 20,480-point samples</li>
+              <li>Feature extraction from raw vibration signals</li>
+              <li>Outer race and roller defect prediction</li>
             </ul>
-            <a class="card-link" href="bearing.html">Open the project page →</a>
+            <a class="card-link" href="bearing.html" data-i18n="ml.link">Open the case study →</a>
           </article>
           <article class="card" data-reveal>
-            <p class="card-tag">Web / Live Data</p>
-            <h3>Live Turkish Airlines flight globe</h3>
-            <p>
+            <p class="card-tag" data-i18n="globe.tag">Web / Live Data</p>
+            <h3 data-i18n="globe.h3">Live Turkish Airlines flight globe</h3>
+            <p data-i18n="globe.p">
               A real-time web app that plots every airborne Turkish Airlines
               flight on an interactive 3D globe, using live ADS-B transponder
               data from the OpenSky Network.
             </p>
-            <ul>
+            <ul data-i18n="globe.ul">
               <li>WebGL globe with 130+ flights tracked live</li>
               <li>Aircraft size classes and cargo vs passenger split</li>
               <li>15-second polling, search, camera focus on click</li>
             </ul>
-            <a class="card-link" href="thy-globe.html">Open the live globe →</a>
+            <a class="card-link" href="thy-globe.html" data-i18n="globe.link">Open the live globe →</a>
           </article>
           <article class="card" data-reveal>
-            <p class="card-tag">Data Engineering / Live Pipeline</p>
-            <h3>IST flight delay dataset</h3>
-            <p>
+            <p class="card-tag" data-i18n="ist.tag">Data Engineering / Live Pipeline</p>
+            <h3 data-i18n="ist.h3">IST flight delay dataset</h3>
+            <p data-i18n="ist.p">
               There is no public historical delay dataset for Istanbul Airport —
               so I'm building one. A zero-maintenance GitHub Actions pipeline
               collects every IST flight daily, joins actual movements with
               schedules, and archives METAR weather alongside.
             </p>
-            <ul>
+            <ul data-i18n="ist.ul">
               <li>OpenSky + aviationstack joined on callsign</li>
               <li>Append-only CSVs with quality flags</li>
               <li>Phase 2: a delay prediction model</li>
             </ul>
-            <a class="card-link" href="ist-rotar.html">Open the status dashboard →</a>
+            <a class="card-link" href="ist-rotar.html" data-i18n="ist.link">Open the status dashboard →</a>
           </article>
         </div>
       </section>
 
       <section class="section split" id="skills" data-reveal>
         <div class="section-heading">
-          <p class="eyebrow">Skills</p>
-          <h2>Tools and strengths that matter in the real world.</h2>
+          <p class="eyebrow" data-i18n="skills.eyebrow">Skills</p>
+          <h2 data-i18n="skills.h2">Tools and strengths that matter in the real world.</h2>
         </div>
-        <div class="skill-list">
+        <div class="skill-list" data-i18n="skills.list">
           <span>SolidWorks</span>
           <span>AutoCAD</span>
           <span>Inventor</span>
@@ -214,29 +214,29 @@
 
       <section class="section timeline-section" id="timeline">
         <div class="section-heading" data-reveal>
-          <p class="eyebrow">Timeline</p>
-          <h2>A path that connects engineering, robotics, and data science.</h2>
+          <p class="eyebrow" data-i18n="tl.eyebrow">Timeline</p>
+          <h2 data-i18n="tl.h2">A path that connects engineering, robotics, and data science.</h2>
         </div>
         <div class="timeline" data-reveal>
           <div class="timeline-item">
             <span>2025-2030</span>
             <div>
-              <h3>Mechanical engineering student at Marmara University</h3>
-              <p>Started in 2025, so the four-year path points toward a 2029 or 2030 graduation depending on the academic calendar. Building a portfolio around design, analysis, fabrication, and applied computation.</p>
+              <h3 data-i18n="tl1.h3">Mechanical engineering student at Marmara University</h3>
+              <p data-i18n="tl1.p">Started in 2025, so the four-year path points toward a 2029 or 2030 graduation depending on the academic calendar. Building a portfolio around design, analysis, fabrication, and applied computation.</p>
             </div>
           </div>
           <div class="timeline-item">
-            <span>Now</span>
+            <span data-i18n="tl2.when">Now</span>
             <div>
-              <h3>UGV competition and bearing ML side project</h3>
-              <p>Working on robotics competition experience and a public bearing failure prediction project based on vibration data.</p>
+              <h3 data-i18n="tl2.h3">UGV competition and bearing ML side project</h3>
+              <p data-i18n="tl2.p">Working on robotics competition experience and a public bearing failure prediction project based on vibration data.</p>
             </div>
           </div>
           <div class="timeline-item">
-            <span>Next</span>
+            <span data-i18n="tl3.when">Next</span>
             <div>
-              <h3>Internships and stronger case studies</h3>
-              <p>Turning current work into polished pages that help with recruiters, clubs, and collaborators.</p>
+              <h3 data-i18n="tl3.h3">Internships and stronger case studies</h3>
+              <p data-i18n="tl3.p">Turning current work into polished pages that help with recruiters, clubs, and collaborators.</p>
             </div>
           </div>
         </div>
@@ -244,9 +244,9 @@
 
       <section class="section contact" id="contact" data-reveal>
         <div>
-          <p class="eyebrow">Contact</p>
-          <h2>Make the domain do something useful.</h2>
-          <p>
+          <p class="eyebrow" data-i18n="contact.eyebrow">Contact</p>
+          <h2 data-i18n="contact.h2">Make the domain do something useful.</h2>
+          <p data-i18n="contact.p">
             Reach me at my school email or use the domain as a live portfolio for
             engineering, robotics, and data science work.
           </p>
@@ -259,8 +259,78 @@
     </main>
 
     <footer class="footer">
-      <p>Built for a mechanical engineering portfolio on GitHub Pages.</p>
+      <p data-i18n="footer.p">Built for a mechanical engineering portfolio on GitHub Pages.</p>
       <p id="year"></p>
     </footer>
+
+    <script>
+      window.I18N_LANG = "tr";
+      window.I18N = {
+        "nav.about": "Hakkımda",
+        "nav.projects": "Projeler",
+        "nav.timeline": "Zaman çizelgesi",
+        "nav.contact": "İletişim",
+        "hero.eyebrow": "GitHub Pages portföyü",
+        "hero.h1": "Tasarım, analiz ve kanıt üzerine kurulu makine mühendisliği.",
+        "hero.text": "Ben Ahmet Hamza Mülayim, Marmara Üniversitesi'nde makine mühendisliği öğrencisiyim; CAD, prototipleme, veriye dayalı analiz ve fikirleri test edilebilir sonuçlara dönüştürmeye odaklanıyorum. Bu portföy, gerçek mühendislik işlerini göstermek için derli toplu bir yer.",
+        "hero.see": "Projelere bak",
+        "hero.email": "E-posta gönder",
+        "metric.ugv": "yarışma deneyimi",
+        "metric.ml": "rulman arızası tahmini",
+        "metric.me": "makine mühendisliği öğrencisi",
+        "panel.top": "Projeler, kapsama göre boyutlu",
+        "tile.globe.tag": "Web · şu an canlı",
+        "tile.globe.name": "THY uçuş küresi",
+        "tile.globe.note": "3B kürede 130+ uçuş",
+        "tile.ml.tag": "Veri / ML",
+        "tile.ml.name": "Rulman arızası tahmini",
+        "tile.ugv.tag": "Robotik",
+        "tile.ugv.name": "İKA yarışması",
+        "tile.ist.tag": "Veri · günlük toplama",
+        "tile.ist.name": "IST rötar veri seti",
+        "about.eyebrow": "Hakkımda",
+        "about.h2": "Gösterecek gerçek projeleri olan bir makine mühendisliği öğrencisi için kuruldu.",
+        "about.p1": "Ben Ahmet Hamza Mülayim, Marmara Üniversitesi'nde makine mühendisliği öğrencisiyim; tasarım, sistem düşüncesi ve pratik problem çözmeyle ilgileniyorum. Fizikle başlayıp analizden geçen ve test edip geliştirebileceğin bir şeyle biten işleri seviyorum.",
+        "about.p2": "Şu anda insansız kara araçlarıyla yarışma deneyimim var ve NASA rulman verisiyle makine öğrenmesi kullanarak arıza tahmini yapan bir veri bilimi yan projesi geliştiriyorum.",
+        "projects.eyebrow": "Seçilmiş işler",
+        "projects.h2": "Moda kelimeler değil, mühendislik muhakemesi gösteren projeler.",
+        "ugv.tag": "Robotik / Yarışma",
+        "ugv.h3": "İnsansız Kara Aracı yarışması",
+        "ugv.p": "İnsansız kara araçları odaklı bir yarışmaya katıldım; iş, tasarım ödünleşimleri, entegrasyon ve bir sistemi gerçek kısıtlar altında çalıştırmayı içeriyordu.",
+        "ugv.ul": "<li>Mekatronik sistem düşüncesi</li><li>Entegrasyon ve arıza giderme</li><li>Baskı altında takım mühendisliği</li>",
+        "ml.tag": "Veri Bilimi / ML",
+        "ml.h3": "IMS rulman arızası tahmini",
+        "ml.p": "Herkese açık IMS rulman titreşim verisiyle arıza tahmini yapan bir makine öğrenmesi yan projesi. Veri seti, 20 kHz'de kaydedilmiş 1 saniyelik titreşim kesitleriyle yapılan bozulana-kadar-çalıştırma deneylerinden geliyor.",
+        "ml.ul": "<li>3 veri seti, 20.480 noktalık örnekler</li><li>Ham titreşim sinyalinden öznitelik çıkarımı</li><li>Dış bilezik ve makara kusuru tahmini</li>",
+        "ml.link": "Vaka çalışmasını aç →",
+        "globe.tag": "Web / Canlı Veri",
+        "globe.h3": "Canlı Türk Hava Yolları uçuş küresi",
+        "globe.p": "Havadaki her Türk Hava Yolları uçuşunu, OpenSky Network'ün canlı ADS-B verisiyle etkileşimli bir 3B küre üzerinde gösteren gerçek zamanlı bir web uygulaması.",
+        "globe.ul": "<li>130+ uçuşun canlı izlendiği WebGL küre</li><li>Uçak boyut sınıfları ve kargo/yolcu ayrımı</li><li>15 saniyede bir güncelleme, arama, tıklayınca kamera odağı</li>",
+        "globe.link": "Canlı küreyi aç →",
+        "ist.tag": "Veri Mühendisliği / Canlı Boru Hattı",
+        "ist.h3": "IST uçuş rötarı veri seti",
+        "ist.p": "İstanbul Havalimanı için herkese açık tarihsel bir rötar veri seti yok — ben de kendiminkini yapıyorum. Bakım gerektirmeyen bir GitHub Actions hattı her gün IST uçuşlarını topluyor, gerçek hareketleri tarifelerle birleştiriyor ve yanına METAR hava durumunu arşivliyor.",
+        "ist.ul": "<li>Çağrı koduyla birleştirilen OpenSky + aviationstack</li><li>Kalite bayraklı, yalnızca eklenen CSV'ler</li><li>Faz 2: rötar tahmin modeli</li>",
+        "ist.link": "Durum panosunu aç →",
+        "skills.eyebrow": "Beceriler",
+        "skills.h2": "Gerçek dünyada işe yarayan araçlar ve güçlü yönler.",
+        "skills.list": "<span>SolidWorks</span><span>AutoCAD</span><span>Inventor</span><span>Creo</span><span>Siemens NX</span><span>Python</span><span>Makine öğrenmesi</span><span>Veri analizi</span><span>Termodinamik</span><span>İmalat</span><span>3B baskı</span><span>Robotik</span>",
+        "tl.eyebrow": "Zaman çizelgesi",
+        "tl.h2": "Mühendisliği, robotiği ve veri bilimini birleştiren bir yol.",
+        "tl1.h3": "Marmara Üniversitesi'nde makine mühendisliği öğrencisi",
+        "tl1.p": "2025'te başladım; dört yıllık yol, akademik takvime göre 2029 ya da 2030 mezuniyetine işaret ediyor. Portföyü tasarım, analiz, imalat ve uygulamalı hesaplama üzerine kuruyorum.",
+        "tl2.when": "Şimdi",
+        "tl2.h3": "İKA yarışması ve rulman ML yan projesi",
+        "tl2.p": "Robotik yarışma deneyimi ve titreşim verisine dayalı, herkese açık bir rulman arızası tahmin projesi üzerinde çalışıyorum.",
+        "tl3.when": "Sırada",
+        "tl3.h3": "Stajlar ve daha güçlü vaka çalışmaları",
+        "tl3.p": "Mevcut işleri; işverenlere, kulüplere ve iş birlikçilerine hitap eden derli toplu sayfalara dönüştürüyorum.",
+        "contact.eyebrow": "İletişim",
+        "contact.h2": "Alan adı işe yarasın.",
+        "contact.p": "Bana okul e-postamdan ulaşabilirsin; bu alan adı mühendislik, robotik ve veri bilimi işleri için canlı bir portföy.",
+        "footer.p": "GitHub Pages üzerinde bir makine mühendisliği portföyü için yapıldı."
+      };
+    </script>
   </body>
 </html>

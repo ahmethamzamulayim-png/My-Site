@@ -20,6 +20,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
+    <script src="i18n.js"></script>
     <style>
       body {
         overflow: hidden;
@@ -224,36 +225,54 @@
       <a class="brand" href="index.html">
         <span class="brand-mark">A</span>
         <span>
-          <strong>Live THY flight globe</strong>
-          <small>real-time ADS-B · OpenSky Network</small>
+          <strong data-i18n="brand.name">Live THY flight globe</strong>
+          <small data-i18n="brand.sub">real-time ADS-B · OpenSky Network</small>
         </span>
       </a>
       <nav class="site-nav">
-        <a class="button secondary" href="index.html#projects">← Back to portfolio</a>
+        <a class="button secondary" href="index.html#projects" data-i18n="nav.back">← Back to portfolio</a>
+        <button class="lang-toggle" type="button">TR</button>
       </nav>
     </header>
 
     <aside class="globe-panel">
-      <p class="eyebrow"><span class="tulip" aria-hidden="true"></span> Turkish Airlines · live</p>
-      <div class="big-count"><span id="count">–</span><small id="countlabel">aircraft airborne</small></div>
-      <p class="updated" id="updated">waiting for first data…</p>
+      <p class="eyebrow" data-i18n="panel.eyebrow"><span class="tulip" aria-hidden="true"></span> Turkish Airlines · live</p>
+      <div class="big-count"><span id="count">–</span><small id="countlabel" data-i18n="panel.airborne">aircraft airborne</small></div>
+      <p class="updated" id="updated" data-i18n="panel.waiting">waiting for first data…</p>
       <div class="legend">
-        <span><i style="background: #e81932"></i>Passenger</span>
-        <span><i style="background: #24439b"></i>Cargo</span>
+        <span><i style="background: #e81932"></i><span data-i18n="legend.pax">Passenger</span></span>
+        <span><i style="background: #24439b"></i><span data-i18n="legend.cargo">Cargo</span></span>
       </div>
-      <input class="flight-search" id="search" type="search" placeholder="Filter flight, e.g. 1951" aria-label="Filter by flight number" />
-      <div class="status-row" id="statusrow"><span class="dot"></span><span id="statustext">connecting…</span></div>
-      <p class="hint">Drag to rotate · scroll to zoom · click a plane for its route &amp; model</p>
+      <input class="flight-search" id="search" type="search" placeholder="Filter flight, e.g. 1951" data-i18n-placeholder="search.ph" aria-label="Filter by flight number" />
+      <div class="status-row" id="statusrow"><span class="dot"></span><span id="statustext" data-i18n="status.connecting">connecting…</span></div>
+      <p class="hint" data-i18n="panel.hint">Drag to rotate · scroll to zoom · click a plane for its route &amp; model</p>
     </aside>
 
     <aside class="detail" id="detail" hidden>
       <button id="dclose" aria-label="Close">×</button>
       <p class="eyebrow" id="dtag">Passenger</p>
       <h3 id="dcallsign"></h3>
-      <p class="dmodel" id="dmodel">looking up aircraft…</p>
-      <div class="droute" id="droute">looking up route…</div>
+      <p class="dmodel" id="dmodel"></p>
+      <div class="droute" id="droute"></div>
       <div class="dstats" id="dstats"></div>
     </aside>
+
+    <script>
+      window.I18N_LANG = "tr";
+      window.I18N = {
+        "brand.name": "Canlı THY uçuş küresi",
+        "brand.sub": "gerçek zamanlı ADS-B · OpenSky Network",
+        "nav.back": "← Portföye dön",
+        "panel.eyebrow": '<span class="tulip" aria-hidden="true"></span> Türk Hava Yolları · canlı',
+        "panel.airborne": "uçak havada",
+        "panel.waiting": "ilk veri bekleniyor…",
+        "legend.pax": "Yolcu",
+        "legend.cargo": "Kargo",
+        "search.ph": "Uçuş filtrele, örn. 1951",
+        "status.connecting": "bağlanıyor…",
+        "panel.hint": "Döndürmek için sürükle · yakınlaşmak için kaydır · rota ve model için uçağa tıkla"
+      };
+    </script>
 
     <script>
       // Deno Deploy proxy (thy-globe-proxy-deno.ts). For local dev against
@@ -386,7 +405,7 @@
       const tip = $("tip");
       function showTip(p, e) {
         const ac = AC[p.hex];
-        tip.innerHTML = `<b>${p.callsign}</b> · ${p.cargo ? "Cargo" : "Passenger"}<br>` +
+        tip.innerHTML = `<b>${p.callsign}</b> · ${p.cargo ? t("Cargo", "Kargo") : t("Passenger", "Yolcu")}<br>` +
           (ac ? `${ac.model}<br>` : "") +
           `${Math.round(p.alt_m * M_TO_FT).toLocaleString()} ft · ${Math.round(p.spd_ms * MS_TO_KT)} kts`;
         tip.style.display = "block";
@@ -401,21 +420,21 @@
         render();
         globe.pointOfView({ lat: p.lat, lng: p.lng, altitude: 0.7 }, 1000);
         $("detail").hidden = false;
-        $("dtag").textContent = p.cargo ? "Cargo" : "Passenger";
+        $("dtag").textContent = p.cargo ? t("Cargo", "Kargo") : t("Passenger", "Yolcu");
         $("dcallsign").textContent = p.callsign;
-        $("dmodel").textContent = "looking up aircraft…";
-        $("droute").textContent = "looking up route…";
+        $("dmodel").textContent = t("looking up aircraft…", "uçak aranıyor…");
+        $("droute").textContent = t("looking up route…", "rota aranıyor…");
         updStats(p);
         globe.arcsData([]); globe.labelsData([]);
 
         getAircraft(p.hex).then(ac => {
           if (selected !== p.callsign) return;
-          $("dmodel").textContent = ac ? `${ac.model} · ${ac.reg}` : "Aircraft not in database";
+          $("dmodel").textContent = ac ? `${ac.model} · ${ac.reg}` : t("Aircraft not in database", "Uçak veritabanında yok");
           render(); // size may have changed now that the type is known
         });
         getRoute(p.callsign).then(rt => {
           if (selected !== p.callsign) return;
-          if (!rt) { $("droute").textContent = "Route not in database (common for letter-suffix callsigns)"; return; }
+          if (!rt) { $("droute").textContent = t("Route not in database (common for letter-suffix callsigns)", "Rota veritabanında yok (harf ekli çağrı kodlarında sık görülür)"); return; }
           $("droute").innerHTML = `<b>${rt.oi}</b> ${rt.om || rt.on} <br>→ <b>${rt.di}</b> ${rt.dm || rt.dn}`;
           globe.arcsData([{ startLat: rt.olat, startLng: rt.olng, endLat: rt.dlat, endLng: rt.dlng }]);
           globe.labelsData([
@@ -426,8 +445,8 @@
       }
       function updStats(p) {
         $("dstats").innerHTML =
-          `Altitude <b>${Math.round(p.alt_m * M_TO_FT).toLocaleString()} ft</b><br>` +
-          `Speed <b>${Math.round(p.spd_ms * MS_TO_KT)} kts</b> · Heading <b>${Math.round(p.hdg)}°</b>`;
+          `${t("Altitude", "İrtifa")} <b>${Math.round(p.alt_m * M_TO_FT).toLocaleString()} ft</b><br>` +
+          `${t("Speed", "Hız")} <b>${Math.round(p.spd_ms * MS_TO_KT)} kts</b> · ${t("Heading", "Yön")} <b>${Math.round(p.hdg)}°</b>`;
       }
       function deselect() {
         selected = null;
@@ -438,9 +457,13 @@
       $("dclose").onclick = deselect;
 
       // --- data + render ---
-      function setStatus(cls, text) {
+      let lastStatus = null, lastUpd = null;
+      function setStatus(cls, en, tr) {
+        lastStatus = [cls, en, tr];
         $("statusrow").className = "status-row " + cls;
-        $("statustext").textContent = text;
+        const el = $("statustext");
+        el.removeAttribute("data-i18n"); // dynamic from here on
+        el.textContent = t(en, tr);
       }
 
       function render() {
@@ -450,16 +473,20 @@
           : planes;
         globe.htmlElementsData(shown);
         $("count").textContent = planes.length;
-        $("countlabel").textContent = q ? `airborne · ${shown.length} match filter` : "aircraft airborne";
+        const cl = $("countlabel");
+        cl.removeAttribute("data-i18n");
+        cl.textContent = q
+          ? t(`airborne · ${shown.length} match filter`, `havada · ${shown.length} filtreyle eşleşiyor`)
+          : t("aircraft airborne", "uçak havada");
       }
       $("search").addEventListener("input", render);
 
       async function poll() {
-        setStatus("load", "updating…");
+        setStatus("load", "updating…", "güncelleniyor…");
         try {
           const res = await fetch(API_BASE + "/api/states");
-          if (res.status === 429) { setStatus("err", "rate limited — retrying"); return; }
-          if (!res.ok) { setStatus("err", `API error ${res.status}`); return; }
+          if (res.status === 429) { setStatus("err", "rate limited — retrying", "hız sınırı — yeniden denenecek"); return; }
+          if (!res.ok) { setStatus("err", `API error ${res.status}`, `API hatası ${res.status}`); return; }
           const data = await res.json();
           planes = (data.states || [])
             .filter(s => s[1] && s[1].trim().startsWith("THY") && !s[8] && s[5] != null && s[6] != null)
@@ -469,19 +496,36 @@
               cargo: isCargo(s[1]),
             }));
           render();
-          $("updated").textContent = "updated " + new Date().toLocaleTimeString();
-          setStatus("ok", "live · OpenSky Network");
+          lastUpd = new Date();
+          const upd = $("updated");
+          upd.removeAttribute("data-i18n");
+          upd.textContent = t("updated ", "güncellendi: ") +
+            lastUpd.toLocaleTimeString(getLang() === "tr" ? "tr-TR" : "en-US");
+          setStatus("ok", "live · OpenSky Network", "canlı · OpenSky Network");
           const sel = planes.find(p => p.callsign === selected);
           if (sel) updStats(sel);
           // fill in airframe types a few at a time so icon sizes converge
           const unknown = planes.filter(p => AC[p.hex] === undefined).slice(0, 4);
           if (unknown.length) Promise.all(unknown.map(p => getAircraft(p.hex))).then(render);
         } catch {
-          setStatus("err", "network error — retrying");
+          setStatus("err", "network error — retrying", "ağ hatası — yeniden denenecek");
         }
       }
       poll();
       setInterval(poll, 15000);
+
+      // re-render the dynamic texts when the language toggles
+      document.addEventListener("langchange", () => {
+        render();
+        if (lastStatus) setStatus(...lastStatus);
+        if (lastUpd) $("updated").textContent = t("updated ", "güncellendi: ") +
+          lastUpd.toLocaleTimeString(getLang() === "tr" ? "tr-TR" : "en-US");
+        const sel = planes.find(p => p.callsign === selected);
+        if (sel) {
+          $("dtag").textContent = sel.cargo ? t("Cargo", "Kargo") : t("Passenger", "Yolcu");
+          updStats(sel);
+        }
+      });
     </script>
   </body>
 </html>
