@@ -63,8 +63,8 @@
               <span data-i18n="metric.ugv">competition experience</span>
             </article>
             <article>
-              <strong>ML</strong>
-              <span data-i18n="metric.ml">bearing failure prediction</span>
+              <strong>36</strong>
+              <span data-i18n="metric.ml">bearings in a cross-dataset RUL study</span>
             </article>
             <article>
               <strong>ME</strong>
@@ -84,6 +84,11 @@
                 <span class="tile-tag" data-i18n="tile.globe.tag">Web · live now</span>
                 <strong data-i18n="tile.globe.name">THY flight globe</strong>
                 <span class="tile-note" data-i18n="tile.globe.note">130+ flights on a 3D globe</span>
+              </a>
+              <a class="tile t-xds" href="bearing-universal.html">
+                <span class="tile-tag" data-i18n="tile.xds.tag">Data / ML · new</span>
+                <strong data-i18n="tile.xds.name">Universal bearing RUL</strong>
+                <span class="tile-note" data-i18n="tile.xds.note">3 rigs · 36 bearings</span>
               </a>
               <a class="tile t-ml" href="bearing.html">
                 <span class="tile-tag" data-i18n="tile.ml.tag">Data / ML</span>
@@ -116,8 +121,9 @@
           </p>
           <p data-i18n="about.p2">
             Right now I have competition experience with unmanned ground vehicles
-            and I’m building a data science side project using NASA bearing data to
-            predict failures with machine learning.
+            and a two-part bearing prognostics project: failure prediction on NASA
+            vibration data, extended into a cross-dataset remaining-useful-life
+            study over three test rigs and 36 run-to-failure bearings.
           </p>
         </div>
       </section>
@@ -156,6 +162,22 @@
               <li>Outer race and roller defect prediction</li>
             </ul>
             <a class="card-link" href="bearing.html" data-i18n="ml.link">Open the case study →</a>
+          </article>
+          <article class="card" data-reveal>
+            <p class="card-tag" data-i18n="xds.tag">Data Science / ML · Part 2</p>
+            <h3 data-i18n="xds.h3">Universal bearing RUL — cross-dataset study</h3>
+            <p data-i18n="xds.p">
+              Does a prognostics model transfer to a rig it has never seen? Three
+              public run-to-failure datasets (IMS, XJTU-SY, FEMTO — 36 bearings,
+              lifetimes from 37 minutes to 45 days) pooled into one life-fraction
+              model, with the generalization gap measured directly.
+            </p>
+            <ul data-i18n="xds.ul">
+              <li>Geometry-derived envelope features, physics-validated</li>
+              <li>Leave-one-bearing-out vs leave-one-dataset-out</li>
+              <li>Honest reporting: worst cases and leakage checks included</li>
+            </ul>
+            <a class="card-link" href="bearing-universal.html" data-i18n="xds.link">Open the study →</a>
           </article>
           <article class="card" data-reveal>
             <p class="card-tag" data-i18n="globe.tag">Web / Live Data</p>
@@ -228,8 +250,8 @@
           <div class="timeline-item">
             <span data-i18n="tl2.when">Now</span>
             <div>
-              <h3 data-i18n="tl2.h3">UGV competition and bearing ML side project</h3>
-              <p data-i18n="tl2.p">Working on robotics competition experience and a public bearing failure prediction project based on vibration data.</p>
+              <h3 data-i18n="tl2.h3">UGV competition and a two-part bearing prognostics project</h3>
+              <p data-i18n="tl2.p">Robotics competition experience, plus bearing failure prediction on NASA data extended into a cross-dataset RUL study — groundwork for a physical test rig whose data will become dataset #4.</p>
             </div>
           </div>
           <div class="timeline-item">
@@ -276,12 +298,15 @@
         "hero.see": "Projelere bak",
         "hero.email": "E-posta gönder",
         "metric.ugv": "yarışma deneyimi",
-        "metric.ml": "rulman arızası tahmini",
+        "metric.ml": "veri setleri arası RUL çalışmasındaki rulman sayısı",
         "metric.me": "makine mühendisliği öğrencisi",
         "panel.top": "Projeler, kapsama göre boyutlu",
         "tile.globe.tag": "Web · şu an canlı",
         "tile.globe.name": "THY uçuş küresi",
         "tile.globe.note": "3B kürede 130+ uçuş",
+        "tile.xds.tag": "Veri / ML · yeni",
+        "tile.xds.name": "Evrensel rulman RUL",
+        "tile.xds.note": "3 düzenek · 36 rulman",
         "tile.ml.tag": "Veri / ML",
         "tile.ml.name": "Rulman arızası tahmini",
         "tile.ugv.tag": "Robotik",
@@ -291,7 +316,7 @@
         "about.eyebrow": "Hakkımda",
         "about.h2": "Gösterecek gerçek projeleri olan bir makine mühendisliği öğrencisi için kuruldu.",
         "about.p1": "Ben Ahmet Hamza Mülayim, Marmara Üniversitesi'nde makine mühendisliği öğrencisiyim; tasarım, sistem düşüncesi ve pratik problem çözmeyle ilgileniyorum. Fizikle başlayıp analizden geçen ve test edip geliştirebileceğin bir şeyle biten işleri seviyorum.",
-        "about.p2": "Şu anda insansız kara araçlarıyla yarışma deneyimim var ve NASA rulman verisiyle makine öğrenmesi kullanarak arıza tahmini yapan bir veri bilimi yan projesi geliştiriyorum.",
+        "about.p2": "Şu anda insansız kara araçlarıyla yarışma deneyimim ve iki bölümlü bir rulman prognostiği projem var: NASA titreşim verisiyle arıza tahmini, üç test düzeneği ve bozulana kadar çalıştırılan 36 rulmanı kapsayan veri setleri arası bir kalan-ömür çalışmasına genişletildi.",
         "projects.eyebrow": "Seçilmiş işler",
         "projects.h2": "Moda kelimeler değil, mühendislik muhakemesi gösteren projeler.",
         "ugv.tag": "Robotik / Yarışma",
@@ -303,6 +328,11 @@
         "ml.p": "Herkese açık IMS rulman titreşim verisiyle arıza tahmini yapan bir makine öğrenmesi yan projesi. Veri seti, 20 kHz'de kaydedilmiş 1 saniyelik titreşim kesitleriyle yapılan bozulana-kadar-çalıştırma deneylerinden geliyor.",
         "ml.ul": "<li>3 veri seti, 20.480 noktalık örnekler</li><li>Ham titreşim sinyalinden öznitelik çıkarımı</li><li>Dış bilezik ve makara kusuru tahmini</li>",
         "ml.link": "Vaka çalışmasını aç →",
+        "xds.tag": "Veri Bilimi / ML · Bölüm 2",
+        "xds.h3": "Evrensel rulman RUL — veri setleri arası çalışma",
+        "xds.p": "Bir prognostik model hiç görmediği bir düzeneğe taşınır mı? Üç herkese açık bozulana-kadar-çalıştırma veri seti (IMS, XJTU-SY, FEMTO — 36 rulman, 37 dakikadan 45 güne ömürler) tek bir ömür-oranı modelinde birleştirildi ve genelleme açığı doğrudan ölçüldü.",
+        "xds.ul": "<li>Geometriden türetilen, fizikle doğrulanan zarf öznitelikleri</li><li>Bir-rulmanı-dışarıda-bırak vs bir-veri-setini-dışarıda-bırak</li><li>Dürüst raporlama: en kötü durumlar ve sızıntı kontrolleri dahil</li>",
+        "xds.link": "Çalışmayı aç →",
         "globe.tag": "Web / Canlı Veri",
         "globe.h3": "Canlı Türk Hava Yolları uçuş küresi",
         "globe.p": "Havadaki her Türk Hava Yolları uçuşunu, OpenSky Network'ün canlı ADS-B verisiyle etkileşimli bir 3B küre üzerinde gösteren gerçek zamanlı bir web uygulaması.",
@@ -321,8 +351,8 @@
         "tl1.h3": "Marmara Üniversitesi'nde makine mühendisliği öğrencisi",
         "tl1.p": "2025'te başladım; dört yıllık yol, akademik takvime göre 2029 ya da 2030 mezuniyetine işaret ediyor. Portföyü tasarım, analiz, imalat ve uygulamalı hesaplama üzerine kuruyorum.",
         "tl2.when": "Şimdi",
-        "tl2.h3": "İKA yarışması ve rulman ML yan projesi",
-        "tl2.p": "Robotik yarışma deneyimi ve titreşim verisine dayalı, herkese açık bir rulman arızası tahmin projesi üzerinde çalışıyorum.",
+        "tl2.h3": "İKA yarışması ve iki bölümlü rulman prognostiği projesi",
+        "tl2.p": "Robotik yarışma deneyimi; ayrıca NASA verisiyle rulman arızası tahmini, veri setleri arası bir RUL çalışmasına genişletildi — verisi 4. veri seti olacak fiziksel bir test düzeneğinin ön hazırlığı.",
         "tl3.when": "Sırada",
         "tl3.h3": "Stajlar ve daha güçlü vaka çalışmaları",
         "tl3.p": "Mevcut işleri; işverenlere, kulüplere ve iş birlikçilerine hitap eden derli toplu sayfalara dönüştürüyorum.",

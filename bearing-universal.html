@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Universal Bearing RUL | Ahmet Hamza Mülayim</title>
+    <meta
+      name="description"
+      content="Does a bearing prognostics model transfer to a rig it has never seen? A cross-dataset remaining-useful-life study on IMS, XJTU-SY and FEMTO — 36 run-to-failure bearings, honest numbers."
+    />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e81932'/%3E%3Ctext x='32' y='45' font-size='38' font-family='sans-serif' font-weight='700' text-anchor='middle' fill='%23fff'%3EA%3C/text%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="i18n.js"></script>
+    <script defer src="script.js"></script>
+    <style>
+      /* page-local additions on top of the site tokens — plum is this project's color */
+      .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+        margin-top: 26px;
+      }
+      .stat {
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 20px 22px;
+      }
+      .stat strong {
+        display: block;
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.9rem;
+        letter-spacing: -0.03em;
+        color: var(--plum);
+      }
+      .stat span { color: var(--muted); font-size: 0.88rem; }
+      .step-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 16px;
+        margin-top: 26px;
+      }
+      .step {
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 22px;
+      }
+      .step h3 {
+        font-family: "Space Grotesk", sans-serif;
+        letter-spacing: -0.03em;
+        margin: 0 0 10px;
+      }
+      .step h3 small {
+        display: block;
+        color: var(--plum);
+        font-size: 0.8rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+      }
+      .step p { margin: 0; color: var(--muted); font-size: 0.95rem; line-height: 1.6; }
+      .fig {
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 22px;
+        margin-top: 22px;
+      }
+      .fig h3 {
+        font-family: "Space Grotesk", sans-serif;
+        letter-spacing: -0.03em;
+        margin: 0 0 14px;
+      }
+      .fig img {
+        width: 100%;
+        height: auto;
+        border-radius: 12px;
+        border: 1px solid var(--line);
+      }
+      .fig p { color: var(--muted); font-size: 0.92rem; line-height: 1.6; margin: 14px 0 0; }
+      .rtable {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 14px;
+        font-size: 0.92rem;
+      }
+      .rtable th, .rtable td {
+        text-align: left;
+        padding: 8px 10px;
+        border-bottom: 1px solid var(--line);
+      }
+      .rtable th { color: var(--plum); font-family: "Space Grotesk", sans-serif; font-weight: 600; }
+      .rtable td { color: var(--muted); }
+      .limits {
+        margin: 26px 0 0;
+        padding-left: 20px;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="noise"></div>
+    <header class="site-header">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">A</span>
+        <span>
+          <strong>Ahmet Hamza Mülayim</strong>
+          <small>Marmara University</small>
+        </span>
+      </a>
+      <nav class="site-nav">
+        <a href="index.html#projects" data-i18n="nav.back">← Portfolio</a>
+        <a href="bearing.html" data-i18n="nav.part1">Part 1: IMS study</a>
+        <button class="lang-toggle" type="button">TR</button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="hero.eyebrow">Data / ML project · Part 2</p>
+          <h2 data-i18n="hero.h2">Does a bearing model transfer to a rig it has never seen?</h2>
+          <p class="hero-text" data-i18n="hero.text">
+            Part 1 predicted failures on one test rig. The open research question
+            is whether any of that transfers: every rig colors the vibration
+            differently, and lifetimes span 100× — from 37 minutes to 45 days.
+            This study pools three public run-to-failure datasets (NASA IMS
+            roller bearings, XJTU-SY and FEMTO ball bearings, 36 lifetimes
+            total), converts remaining life to a dimensionless life fraction,
+            and measures the generalization gap directly: how much worse does a
+            model get when the entire test rig — not just the bearing — is held
+            out of training?
+          </p>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat"><strong>36</strong><span data-i18n="stat.1">run-to-failure bearings, 3 rigs, roller + ball, lifetimes 37 min to 45 days</span></div>
+          <div class="stat"><strong>≈ 0</strong><span data-i18n="stat.2">generalization gap: median life-fraction error 0.186 (bearing unseen) vs 0.173 (whole rig unseen)</span></div>
+          <div class="stat"><strong>21.7×</strong><span data-i18n="stat.3">physics check passed: the BPFO envelope band lights up at a documented outer-race failure</span></div>
+          <div class="stat"><strong>0.35</strong><span data-i18n="stat.4">worst single-bearing error — the number the median hides</span></div>
+        </div>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="method.eyebrow">Method</p>
+          <h2 data-i18n="method.h2">Make three rigs speak one language, then hide one.</h2>
+        </div>
+        <div class="step-grid">
+          <article class="step">
+            <h3 data-i18n="step1.h3"><small>Step 1 · One table</small>Life fraction, not hours</h3>
+            <p data-i18n="step1.p">
+              Absolute-hour labels would teach the model to identify datasets
+              (a FEMTO bearing never has 40 days left). The target becomes
+              remaining life fraction (1 → 0), every feature is normalized to
+              that bearing's own healthy baseline, and all three datasets land
+              in one table with a shared schema — adding a fourth rig later is
+              a drop-in loader.
+            </p>
+          </article>
+          <article class="step">
+            <h3 data-i18n="step2.h3"><small>Step 2 · Physics features</small>Envelope spectrum from geometry</h3>
+            <p data-i18n="step2.p">
+              Each defect type impacts at a frequency computable from bearing
+              geometry (BPFO, BPFI, BSF). Band energies in the Hilbert-envelope
+              spectrum at those frequencies are the most rig-transferable
+              features available — and they were validated on a known failure
+              before use, not assumed to work.
+            </p>
+          </article>
+          <article class="step">
+            <h3 data-i18n="step3.h3"><small>Step 3 · Honest labels</small>Train only after onset</h3>
+            <p data-i18n="step3.p">
+              Healthy vibration carries no information about the future, and in
+              fraction space no single label cap exists (the healthy phase is
+              30–90% of life depending on the bearing). So the 6σ detector from
+              Part 1 defines the model's jurisdiction: the forest trains and
+              predicts only after degradation onset.
+            </p>
+          </article>
+          <article class="step">
+            <h3 data-i18n="step4.h3"><small>Step 4 · The exam</small>LOBO vs LODO</h3>
+            <p data-i18n="step4.p">
+              Leave-one-bearing-out (LOBO): the model has seen the rig, not the
+              bearing. Leave-one-dataset-out (LODO): the entire rig is new. The
+              difference between those two scores is the generalization gap —
+              the single number this study exists to measure.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="results.eyebrow">Results</p>
+          <h2 data-i18n="results.h2">The gap is small. The reasons are interesting.</h2>
+        </div>
+
+        <div class="fig">
+          <h3 data-i18n="fig1.h3">First, prove the physics feature works</h3>
+          <img src="bearing-universal/envelope_validation_ims_test2.png" alt="Envelope spectrum of IMS test 2 bearing 1 near failure showing sharp peaks at exactly BPFO ×1, ×2, ×3, and the BPFO band energy trend rising 21.7× over the test" loading="lazy" />
+          <p data-i18n="fig1.p">
+            Unit test for physics: IMS test 2 bearing 1 died of a documented
+            outer-race defect, so its envelope spectrum must peak at the
+            computed outer-race frequency (236 Hz) and harmonics — and it does,
+            sharply, while inner-race and roller bands stay quiet. The band
+            energy rises 21.7× over the test. Only after this check did
+            envelope features enter the model.
+          </p>
+        </div>
+
+        <div class="fig">
+          <h3 data-i18n="fig2.h3">The headline: bearing unseen vs whole rig unseen</h3>
+          <img src="bearing-universal/fig3_lobo_vs_lodo.png" alt="Bar chart comparing LOBO and LODO median life-fraction error per dataset; FEMTO is hardest in both, IMS shows only a modest gap" loading="lazy" />
+          <p data-i18n="fig2.p">
+            Median error barely moves when the whole rig is hidden (0.186 →
+            0.173). Two surprises: the expected roller-vs-ball wall never
+            appeared — IMS held-out scored a middling 0.166 — and the hardest
+            dataset both ways is FEMTO, whose 0.1-second snapshots are simply
+            the noisiest data. Data quality beat bearing-type physics as the
+            dominant difficulty.
+          </p>
+          <table class="rtable">
+            <thead><tr><th data-i18n="tbl.h1">Protocol</th><th data-i18n="tbl.h2">Median error</th><th data-i18n="tbl.h3">Late-stage (Q4)</th><th data-i18n="tbl.h4">Worst bearing</th></tr></thead>
+            <tbody>
+              <tr><td data-i18n="tbl.r1">LOBO — bearing unseen</td><td>0.186</td><td>0.115</td><td>0.346</td></tr>
+              <tr><td data-i18n="tbl.r2">LODO — IMS (roller) held out</td><td>0.166</td><td>0.172</td><td>0.222</td></tr>
+              <tr><td data-i18n="tbl.r3">LODO — XJTU held out</td><td>0.112</td><td>0.051</td><td>0.368</td></tr>
+              <tr><td data-i18n="tbl.r4">LODO — FEMTO held out</td><td>0.248</td><td>0.318</td><td>0.434</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="fig">
+          <h3 data-i18n="fig3.h3">Best, median — and the worst, on purpose</h3>
+          <img src="bearing-universal/fig2_trajectories.png" alt="Three predicted-versus-true life fraction trajectories with 5th to 95th percentile uncertainty bands: an accurate best case, a noisy FEMTO median case, and a failed worst case where the model calls the bearing nearly dead from onset" loading="lazy" />
+          <p data-i18n="fig3.p">
+            Predicted vs true life fraction with 5–95% forest-spread bands.
+            Best case locks on. The median case (a FEMTO bearing) tracks the
+            trend through heavy noise. The worst case is shown because it is
+            the honest one: onset fired at 16% of life, degradation then
+            crawled, and the model called the bearing nearly dead the whole
+            time — a full trajectory miss. Medians hide bearings like this;
+            the report doesn't.
+          </p>
+        </div>
+
+        <div class="fig">
+          <h3 data-i18n="fig4.h3">Population model vs curve extrapolation — no winner declared</h3>
+          <img src="bearing-universal/fig4_error_vs_stage.png" alt="Error versus post-onset life stage for the random forest, exponential extrapolation, and a fusion; forest error is U-shaped, extrapolation appears flat but only answers on a minority of snapshots" loading="lazy" />
+          <p data-i18n="fig4.p">
+            Literature says curve extrapolation fails early and shines late.
+            Our data refused the clean story: the extrapolator only produces a
+            forecast when an exponential actually fits — 17–33% of early
+            snapshots — so its flattering early error is graded on a
+            self-selected easy subset. The forest answers always, with U-shaped
+            error (worst right after onset). With 36 lifetimes we report the
+            curves and the coverage instead of declaring a crossover.
+          </p>
+        </div>
+
+        <div class="fig">
+          <h3 data-i18n="fig5.h3">Leakage guard: is it secretly identifying datasets?</h3>
+          <img src="bearing-universal/fig6_feature_importance.png" alt="Top 20 feature importances led by smoothed RMS and kurtosis with envelope band features spread throughout; absolute-time rate features carry 0.3 percent" loading="lazy" />
+          <p data-i18n="fig5.p">
+            The suspicious features — degradation rates in absolute per-hour
+            units, which differ 100× between rigs and could fingerprint the
+            dataset — carry 0.3% of total importance. The forest leans on
+            smoothed RMS (27%), smoothed kurtosis, and a broad spread of
+            geometry-derived envelope bands: damage signals, not dataset IDs.
+            Two ablations complete the picture: removing the roller-bearing
+            data <em>hurts</em> ball-bearing predictions (0.192 → 0.205, mild
+            positive transfer), and excluding cage-failure bearings changes
+            nothing (0.188 both ways).
+          </p>
+        </div>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="limits.eyebrow">Honest limitations</p>
+          <h2 data-i18n="limits.h2">Read these before quoting the numbers.</h2>
+        </div>
+        <ul class="limits" data-i18n="limits.ul">
+          <li>"Failure time" is a chosen convention, not a fact: IMS ends when the rig stopped itself; XJTU and FEMTO end at the first 20&nbsp;g peak (XJTU's published criterion, extended to FEMTO — whose failure definition is genuinely debated in the literature). Every label is conditional on that choice.</li>
+          <li>Life fraction is only knowable in hindsight. Hour-translations of the errors use the true total life — information no live system would have.</li>
+          <li>The 6σ onset detector gates everything: where it fires early (XJTU bearings have a warm-up drift), near-healthy data enters training; the model's jurisdiction is defined by the detector, not by the forest.</li>
+          <li>FEMTO's 0.1&nbsp;s snapshots give 10&nbsp;Hz envelope resolution against 100–170&nbsp;Hz fault frequencies, and its NSK&nbsp;6804 geometry is a literature assumption, not a verified drawing. FEMTO being the hardest dataset is partly a data-quality statement.</li>
+          <li>36 lifetimes is small. That's why there is deliberately no deep learning here (it would memorize rigs, not physics — a scoping decision, not a gap), and why medians, IQRs and worst cases are reported instead of single means.</li>
+          <li>All three rigs run constant, accelerated load. Real machines vary speed and load, which moves every feature with zero damage present. Nothing here tests that.</li>
+        </ul>
+      </section>
+
+      <section class="section contact" data-reveal>
+        <div>
+          <p class="eyebrow" data-i18n="next.eyebrow">What's next</p>
+          <h2 data-i18n="next.h2">Dataset #4 will be my own rig.</h2>
+          <p data-i18n="next.p">
+            The pipeline was built so a new dataset is a drop-in loader. The
+            plan: a desktop run-to-failure rig around an SKF 6204 bearing with
+            seeded defects — my own data, collected with the lessons above
+            (fixed-duration healthy baseline, explicit stop criterion), graded
+            by the same LOBO/LODO protocol.
+          </p>
+        </div>
+        <div class="contact-actions">
+          <a class="button primary" href="bearing.html" data-i18n="next.part1">Read Part 1: the IMS study</a>
+          <a class="button secondary" href="index.html#projects" data-i18n="next.back">Back to projects</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p data-i18n="footer.p">Data: NASA IMS · XJTU-SY · FEMTO (PHM 2012) run-to-failure datasets · Python, NumPy, SciPy, scikit-learn</p>
+      <p id="year"></p>
+    </footer>
+
+    <script>
+      window.I18N_LANG = "tr";
+      window.I18N = {
+        "nav.back": "← Portföy",
+        "nav.part1": "Bölüm 1: IMS çalışması",
+        "hero.eyebrow": "Veri / ML projesi · Bölüm 2",
+        "hero.h2": "Bir rulman modeli hiç görmediği bir düzeneğe taşınır mı?",
+        "hero.text": "Bölüm 1, tek bir test düzeneğinde arıza tahmin ediyordu. Açık araştırma sorusu bunun ne kadarının taşındığı: her düzenek titreşimi farklı renklendirir ve ömürler 100 kat saçılır — 37 dakikadan 45 güne. Bu çalışma üç herkese açık bozulana-kadar-çalıştırma veri setini (NASA IMS makaralı rulmanlar, XJTU-SY ve FEMTO bilyeli rulmanlar, toplam 36 ömür) birleştiriyor, kalan ömrü boyutsuz bir ömür oranına çeviriyor ve genelleme açığını doğrudan ölçüyor: yalnızca rulman değil, test düzeneğinin tamamı eğitimden saklanınca model ne kadar kötüleşiyor?",
+        "stat.1": "bozulana kadar çalıştırılan rulman; 3 düzenek, makaralı + bilyeli, ömürler 37 dk – 45 gün",
+        "stat.2": "genelleme açığı: medyan ömür-oranı hatası 0,186 (rulman görülmemiş) vs 0,173 (düzeneğin tamamı görülmemiş)",
+        "stat.3": "fizik testi geçildi: belgelenmiş dış bilezik arızasında BPFO zarf bandı parlıyor",
+        "stat.4": "en kötü tek rulman hatası — medyanın sakladığı sayı",
+        "method.eyebrow": "Yöntem",
+        "method.h2": "Üç düzeneğe aynı dili konuştur, sonra birini sakla.",
+        "step1.h3": "<small>Adım 1 · Tek tablo</small>Saat değil, ömür oranı",
+        "step1.p": "Mutlak saat etiketleri modele veri setlerini tanımayı öğretirdi (bir FEMTO rulmanının hiçbir zaman 40 gün ömrü kalmaz). Hedef, kalan ömür oranı (1 → 0) oluyor; her öznitelik o rulmanın kendi sağlıklı taban çizgisine normalize ediliyor ve üç veri seti ortak şemalı tek bir tabloda buluşuyor — ileride dördüncü bir düzenek eklemek tak-çalıştır bir yükleyiciden ibaret.",
+        "step2.h3": "<small>Adım 2 · Fizik öznitelikleri</small>Geometriden zarf spektrumu",
+        "step2.p": "Her kusur tipi, rulman geometrisinden hesaplanabilen bir frekansta darbe üretir (BPFO, BPFI, BSF). Hilbert zarf spektrumunda bu frekanslardaki bant enerjileri, düzenekler arasında en iyi taşınan özniteliklerdir — ve kullanılmadan önce bilinen bir arızada doğrulandılar, çalıştıkları varsayılmadı.",
+        "step3.h3": "<small>Adım 3 · Dürüst etiketler</small>Yalnızca başlangıçtan sonra eğit",
+        "step3.p": "Sağlıklı titreşim gelecek hakkında bilgi taşımaz ve oran uzayında tek bir etiket sınırı yoktur (sağlıklı evre rulmana göre ömrün %30–90'ı olabilir). Bu yüzden Bölüm 1'in 6σ dedektörü modelin yetki alanını çiziyor: orman yalnızca bozulma başladıktan sonra eğitiliyor ve tahmin ediyor.",
+        "step4.h3": "<small>Adım 4 · Sınav</small>LOBO vs LODO",
+        "step4.p": "Bir-rulmanı-dışarıda-bırak (LOBO): model düzeneği görmüş, rulmanı görmemiş. Bir-veri-setini-dışarıda-bırak (LODO): düzeneğin tamamı yeni. Bu iki notun farkı genelleme açığı — bu çalışmanın ölçmek için var olduğu tek sayı.",
+        "results.eyebrow": "Sonuçlar",
+        "results.h2": "Açık küçük. Nedenleri ilginç.",
+        "fig1.h3": "Önce fizik özniteliğinin çalıştığını kanıtla",
+        "fig1.p": "Fizik için birim testi: IMS test 2 rulman 1, belgelenmiş bir dış bilezik kusurundan öldü; öyleyse zarf spektrumu hesaplanan dış bilezik frekansında (236 Hz) ve harmoniklerinde tepe yapmalı — ve yapıyor, hem de keskin biçimde; iç bilezik ve makara bantları sessiz kalıyor. Bant enerjisi test boyunca 21,7 kat yükseliyor. Zarf öznitelikleri modele ancak bu kontrolden sonra girdi.",
+        "fig2.h3": "Ana sonuç: rulman görülmemiş vs düzeneğin tamamı görülmemiş",
+        "fig2.p": "Düzeneğin tamamı saklandığında medyan hata neredeyse kımıldamıyor (0,186 → 0,173). İki sürpriz: beklenen makaralı-bilyeli duvarı hiç ortaya çıkmadı — IMS dışarıda bırakıldığında not orta halli bir 0,166 — ve iki protokolde de en zor veri seti, 0,1 saniyelik kesitleri düpedüz en gürültülü veri olan FEMTO. Baskın zorluk olarak veri kalitesi, rulman tipi fiziğini yendi.",
+        "tbl.h1": "Protokol", "tbl.h2": "Medyan hata", "tbl.h3": "Geç evre (Q4)", "tbl.h4": "En kötü rulman",
+        "tbl.r1": "LOBO — rulman görülmemiş",
+        "tbl.r2": "LODO — IMS (makaralı) dışarıda",
+        "tbl.r3": "LODO — XJTU dışarıda",
+        "tbl.r4": "LODO — FEMTO dışarıda",
+        "fig3.h3": "En iyi, medyan — ve bilerek gösterilen en kötü",
+        "fig3.p": "Tahmin vs gerçek ömür oranı, %5–95 orman-yayılımı bantlarıyla. En iyi durum kilitleniyor. Medyan durum (bir FEMTO rulmanı) yoğun gürültünün içinden eğilimi izliyor. En kötü durum dürüst olduğu için gösteriliyor: alarm ömrün %16'sında çaldı, bozulma sonra emekledi ve model rulmanı baştan sona neredeyse ölü saydı — tam bir yörünge kaçırma. Medyanlar böyle rulmanları saklar; bu rapor saklamıyor.",
+        "fig4.h3": "Popülasyon modeli vs eğri ekstrapolasyonu — kazanan ilan edilmedi",
+        "fig4.p": "Literatür, eğri ekstrapolasyonunun erken dönemde başarısız olup geç dönemde parladığını söyler. Verimiz bu temiz hikâyeyi reddetti: ekstrapolatör yalnızca ortada gerçekten üstel bir büyüme varken tahmin üretiyor — erken kesitlerin %17–33'ü — yani gösterişli erken hatası kendi seçtiği kolay bir alt kümede notlanıyor. Orman her zaman cevap veriyor ve hatası U şeklinde (en kötüsü başlangıçtan hemen sonra). 36 ömürle, bir kesişme noktası ilan etmek yerine eğrileri ve kapsama oranını raporluyoruz.",
+        "fig5.h3": "Sızıntı kontrolü: veri setlerini gizlice tanıyor mu?",
+        "fig5.p": "Şüpheli öznitelikler — düzenekler arasında 100 kat farklı olan ve veri setinin parmak izi olabilecek mutlak saat-başına bozulma hızları — toplam önemin %0,3'ünü taşıyor. Orman yumuşatılmış RMS'e (%27), yumuşatılmış basıklığa ve geometriden türetilen zarf bantlarının geniş bir yelpazesine yaslanıyor: veri seti kimlikleri değil, hasar sinyalleri. İki ablasyon tabloyu tamamlıyor: makaralı rulman verisini çıkarmak bilyeli tahminleri <em>kötüleştiriyor</em> (0,192 → 0,205, hafif pozitif transfer) ve kafes arızalı rulmanları dışlamak hiçbir şeyi değiştirmiyor (iki yönde de 0,188).",
+        "limits.eyebrow": "Dürüst sınırlar",
+        "limits.h2": "Sayıları alıntılamadan önce bunları oku.",
+        "limits.ul": "<li>\"Arıza zamanı\" bir tercih, bir gerçek değil: IMS düzenek kendini durdurduğunda bitiyor; XJTU ve FEMTO ilk 20&nbsp;g tepede bitiyor (XJTU'nun yayımlanmış kriteri, FEMTO'ya da uygulandı — ki FEMTO'nun arıza tanımı literatürde gerçekten tartışmalı). Her etiket bu tercihe koşullu.</li><li>Ömür oranı ancak geriye bakınca bilinir. Hataların saat karşılıkları gerçek toplam ömrü kullanıyor — canlı hiçbir sistemin sahip olamayacağı bilgi.</li><li>6σ başlangıç dedektörü her şeyin kapısı: erken çaldığı yerde (XJTU rulmanlarında ısınma kayması var) neredeyse sağlıklı veri eğitime giriyor; modelin yetki alanını orman değil dedektör çiziyor.</li><li>FEMTO'nun 0,1&nbsp;s kesitleri, 100–170&nbsp;Hz arıza frekanslarına karşı 10&nbsp;Hz zarf çözünürlüğü veriyor ve NSK&nbsp;6804 geometrisi doğrulanmış bir çizim değil, literatür varsayımı. FEMTO'nun en zor veri seti olması kısmen bir veri kalitesi ifadesi.</li><li>36 ömür azdır. Bu yüzden burada bilerek derin öğrenme yok (fiziği değil düzenekleri ezberlerdi — bir kapsam kararı, bir eksik değil) ve bu yüzden tek ortalamalar yerine medyanlar, IQR'ler ve en kötü durumlar raporlanıyor.</li><li>Üç düzenek de sabit, hızlandırılmış yük altında çalışıyor. Gerçek makineler hız ve yükü değiştirir; bu, sıfır hasarla bile her özniteliği oynatır. Burada bunu test eden hiçbir şey yok.</li>",
+        "next.eyebrow": "Sırada ne var",
+        "next.h2": "4. veri seti kendi düzeneğim olacak.",
+        "next.p": "Boru hattı, yeni bir veri seti tak-çalıştır bir yükleyici olsun diye kuruldu. Plan: SKF 6204 rulmanı ve ekilmiş kusurlarla masaüstü bir bozulana-kadar-çalıştırma düzeneği — yukarıdaki derslerle toplanan (sabit süreli sağlıklı taban çizgisi, açık durdurma kriteri) kendi verim, aynı LOBO/LODO protokolüyle notlanacak.",
+        "next.part1": "Bölüm 1'i oku: IMS çalışması",
+        "next.back": "Projelere dön",
+        "footer.p": "Veri: NASA IMS · XJTU-SY · FEMTO (PHM 2012) bozulana-kadar-çalıştırma veri setleri · Python, NumPy, SciPy, scikit-learn"
+      };
+    </script>
+  </body>
+</html>
