@@ -1024,25 +1024,28 @@
         planeObj.visible = true;
       }
 
-      // Follow-cam: keep the camera locked on the plane through the flight, at a
-      // slight oblique so the arc's height reads. Small tween = smooth trailing.
-      let flyTilt = -20, flyAlt = 0.6;
-      const clampLat = v => Math.max(-80, Math.min(80, v));
+      // Chase-cam: sit behind and above the plane, looking along the route, with
+      // the plane centred. A true oblique 3D view (not a top-down map) that works
+      // at any route size. camDist (scene units) is set per-flight in startFly.
+      let camDist = 90;
       function followCam(p) {
-        if (!curPaths) return;
+        if (!curPaths || !THREE) return;
         const pts = curPaths[0];
         const fp = p * (pts.length - 1);
         const i = Math.min(pts.length - 2, Math.floor(fp));
         const frac = fp - i;
-        const lat = pts[i][0] + (pts[i + 1][0] - pts[i][0]) * frac;
-        // take the SHORT way around when the segment crosses the ±180° line
-        // (naive lerp there put the camera on the far side of the planet)
-        let dl = pts[i + 1][1] - pts[i][1];
-        if (dl > 180) dl -= 360; else if (dl < -180) dl += 360;
-        const lng = pts[i][1] + dl * frac;
-        // duration 0: set the camera directly each frame — overlapping tweens
-        // (one launched per frame) were fighting and yanking the view around
-        globe.pointOfView({ lat: clampLat(lat + flyTilt), lng, altitude: flyAlt }, 0);
+        const a = globe.getCoords(pts[i][0], pts[i][1], pts[i][2]);
+        const b = globe.getCoords(pts[i + 1][0], pts[i + 1][1], pts[i + 1][2]);
+        const plane = new THREE.Vector3(a.x + (b.x - a.x) * frac, a.y + (b.y - a.y) * frac, a.z + (b.z - a.z) * frac);
+        const forward = new THREE.Vector3(b.x - a.x, b.y - a.y, b.z - a.z).normalize();
+        const up = plane.clone().normalize(); // radial out from globe centre
+        const camPos = plane.clone()
+          .addScaledVector(forward, -camDist * 0.7)  // behind the plane
+          .addScaledVector(up, camDist * 0.6);       // and above it
+        const controls = globe.controls();
+        globe.camera().position.lerp(camPos, 0.18);  // ease → smooth trailing chase
+        controls.target.lerp(plane, 0.25);
+        controls.update();
       }
 
       // Moon's shadow on the ground beneath Concorde (eclipse flight only)
@@ -1097,19 +1100,10 @@
         $("hud").hidden = false;
         progress = 0;
         globe.htmlElementsData([]); // pull the pins so they don't block the route
-        // set the follow-cam's oblique angle + distance from the route's size;
-        // the camera then tracks the plane each frame (see followCam)
+        // chase distance scales with route size (local circuit → close; a
+        // transatlantic → far). The camera then tracks the plane each frame.
         const v = centroidView(f.paths);
-        if (f.local) {
-          // tiny circuit over one field: zoom in close, almost no tilt (a big
-          // tilt here would swing the camera off the route entirely)
-          flyAlt = 0.34;
-          flyTilt = (v.lat >= 0 ? -1 : 1) * 4;
-        } else {
-          // scale the oblique angle with route size so short routes don't overshoot
-          flyAlt = Math.max(0.5, Math.min(0.95, v.altitude * 0.62));
-          flyTilt = (v.lat >= 0 ? -1 : 1) * Math.min(22, 4 + (v.altitude - 0.5) * 16);
-        }
+        camDist = Math.max(26, Math.min(190, 16 + (v.altitude - 0.4) * 105));
         duration = Math.min(32000, Math.max(16000, curPaths[0].length * 110));
 
         if (reduceMotion) {
@@ -1149,6 +1143,8 @@
         progress = 0;
         if (planeObj) planeObj.visible = false;
         if (shadowDisc) shadowDisc.visible = false;
+        const ctrl = globe.controls(); // chase-cam moved the orbit target off centre
+        if (ctrl) ctrl.target.set(0, 0, 0);
         refreshBubbles(); // bring the pins back after the flight
         if (!silent && current) {
           drawPaths(current.memorial ? 0 : 1, true); // back to faint preview
