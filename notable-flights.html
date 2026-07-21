@@ -1024,13 +1024,31 @@
         planeObj.visible = true;
       }
 
-      // True chase-cam. globe.gl runs OrbitControls with damping, so its loop
-      // calls controls.update() every frame — but update() re-derives the offset
-      // from (camera.position - target) and, with no user input, writes it back
-      // unchanged. So directly setting BOTH camera.position and target each frame
-      // survives. We sit behind + above the plane, looking along the route.
+      // True chase-cam. globe.gl HARD-LOCKS the camera to look at the globe centre
+      // (its loop sets controls.target = centre every frame). The only way to look
+      // AT the plane is to replace the controls.update() method it calls each frame
+      // with our own that points the camera behind+above the plane, looking along
+      // the route. Installed on fly, restored on exit.
       let camDist = 90;
-      let camClampSaved = false, camPrevMin, camPrevMax, camPrevPolMin, camPrevPolMax;
+      let camDesiredPos = null, camDesiredTgt = null, camOrigUpdate = null;
+      function installChaseCam() {
+        const c = globe.controls();
+        if (!c || camOrigUpdate) return;
+        camOrigUpdate = c.update.bind(c);
+        c.update = function () {
+          if (camDesiredPos) {
+            const cam = globe.camera();
+            cam.up.copy(camDesiredTgt).normalize(); // radial "up" → level horizon
+            cam.position.copy(camDesiredPos);
+            cam.lookAt(camDesiredTgt);
+          } else camOrigUpdate();
+        };
+      }
+      function removeChaseCam() {
+        const c = globe.controls();
+        if (c && camOrigUpdate) c.update = camOrigUpdate;
+        camOrigUpdate = null; camDesiredPos = null; camDesiredTgt = null;
+      }
       function followCam(p) {
         if (!curPaths || !THREE) return;
         const pts = curPaths[0];
@@ -1044,13 +1062,10 @@
         if (forward.lengthSq() < 1e-9) forward.set(0, 0, 1);
         forward.normalize();
         const up = plane.clone().normalize(); // radial out from globe centre
-        const camPos = plane.clone()
+        camDesiredTgt = plane;
+        camDesiredPos = plane.clone()
           .addScaledVector(forward, -camDist * 0.7)  // behind the plane
           .addScaledVector(up, camDist * 0.6);       // and above it (~40° look-down)
-        const controls = globe.controls();
-        globe.camera().position.copy(camPos);
-        controls.target.copy(plane);
-        controls.update();
       }
 
       // Moon's shadow on the ground beneath Concorde (eclipse flight only)
@@ -1109,14 +1124,7 @@
         // transatlantic → far). The camera then tracks the plane each frame.
         const v = centroidView(f.paths);
         camDist = Math.max(28, Math.min(220, 20 + (v.altitude - 0.4) * 110)); // scale to route
-        // widen OrbitControls clamps so the chase distance/angle isn't capped
-        const ctrl = globe.controls();
-        if (ctrl && !camClampSaved) {
-          camPrevMin = ctrl.minDistance; camPrevMax = ctrl.maxDistance;
-          camPrevPolMin = ctrl.minPolarAngle; camPrevPolMax = ctrl.maxPolarAngle;
-          camClampSaved = true;
-        }
-        if (ctrl) { ctrl.minDistance = 0.5; ctrl.maxDistance = 6000; ctrl.minPolarAngle = 0; ctrl.maxPolarAngle = Math.PI; }
+        installChaseCam();
         duration = Math.min(32000, Math.max(16000, curPaths[0].length * 110));
 
         if (reduceMotion) {
@@ -1157,16 +1165,7 @@
         progress = 0;
         if (planeObj) planeObj.visible = false;
         if (shadowDisc) shadowDisc.visible = false;
-        // hand the camera back to normal centre-orbit: restore clamps + target
-        const ctrl = globe.controls();
-        if (ctrl) {
-          ctrl.target.set(0, 0, 0);
-          if (camClampSaved) {
-            ctrl.minDistance = camPrevMin; ctrl.maxDistance = camPrevMax;
-            ctrl.minPolarAngle = camPrevPolMin; ctrl.maxPolarAngle = camPrevPolMax;
-            camClampSaved = false;
-          }
-        }
+        removeChaseCam(); // hand the camera back to globe.gl's centre-orbit
         refreshBubbles(); // bring the pins back after the flight
         if (!silent && current) {
           drawPaths(current.memorial ? 0 : 1, true); // back to faint preview
