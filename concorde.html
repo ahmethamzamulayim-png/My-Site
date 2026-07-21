@@ -250,15 +250,17 @@
           <p class="eyebrow" data-i18n="story.eyebrow">The life of an aircraft</p>
           <h2 data-i18n="story.h2">Born of a treaty, retired to a museum — the story of Concorde.</h2>
         </div>
-        <div class="timeline" data-reveal>
-          <div class="timeline-item">
+        <!-- reveal per-item: one reveal on the whole (very tall) timeline never
+             hit its 16% trigger early enough, leaving a blank gap -->
+        <div class="timeline">
+          <div class="timeline-item" data-reveal>
             <span>1962</span>
             <div>
               <h3 data-i18n="t1.h3">Two governments, one gamble</h3>
               <p data-i18n="t1.p">On 29 November 1962, Britain and France signed a treaty to build a supersonic airliner together. Sharing the enormous cost and risk, they bet that the future of flight was faster, not just bigger — a bet no single company would have made alone.</p>
             </div>
           </div>
-          <div class="timeline-item">
+          <div class="timeline-item" data-reveal>
             <span>1967</span>
             <div>
               <h3 data-i18n="t2.h3">Rolled into the light</h3>
@@ -269,7 +271,7 @@
               </figure>
             </div>
           </div>
-          <div class="timeline-item">
+          <div class="timeline-item" data-reveal>
             <span>1969</span>
             <div>
               <h3 data-i18n="t3.h3">She flies</h3>
@@ -280,7 +282,7 @@
               </figure>
             </div>
           </div>
-          <div class="timeline-item">
+          <div class="timeline-item" data-reveal>
             <span>1969</span>
             <div>
               <h3 data-i18n="t4.h3">Through the barrier</h3>
@@ -291,7 +293,7 @@
               </figure>
             </div>
           </div>
-          <div class="timeline-item">
+          <div class="timeline-item" data-reveal>
             <span>1976</span>
             <div>
               <h3 data-i18n="t5.h3">Open for business</h3>
@@ -302,7 +304,7 @@
               </figure>
             </div>
           </div>
-          <div class="timeline-item">
+          <div class="timeline-item" data-reveal>
             <span data-i18n="t6.when">1976–2000</span>
             <div>
               <h3 data-i18n="t6.h3">Twenty-seven years above Mach 2</h3>
@@ -313,7 +315,7 @@
               </figure>
             </div>
           </div>
-          <div class="timeline-item somber">
+          <div class="timeline-item somber" data-reveal>
             <span>2000</span>
             <div>
               <h3 data-i18n="t7.h3">A day that changed everything</h3>
@@ -324,7 +326,7 @@
               </figure>
             </div>
           </div>
-          <div class="timeline-item">
+          <div class="timeline-item" data-reveal>
             <span>2001</span>
             <div>
               <h3 data-i18n="t8.h3">Back in the air</h3>
@@ -335,7 +337,7 @@
               </figure>
             </div>
           </div>
-          <div class="timeline-item">
+          <div class="timeline-item" data-reveal>
             <span>2003</span>
             <div>
               <h3 data-i18n="t9.h3">The last landing</h3>
@@ -346,7 +348,7 @@
               </figure>
             </div>
           </div>
-          <div class="timeline-item">
+          <div class="timeline-item" data-reveal>
             <span data-i18n="t10.when">Since</span>
             <div>
               <h3 data-i18n="t10.h3">Nothing has replaced it</h3>

@@ -466,6 +466,46 @@ body::before {
   align-items: start;
 }
 
+/* "Off the clock" — a passion project, kept apart from the engineering grid */
+.offclock-card {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  margin-top: 18px;
+  overflow: hidden;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--gold);
+  background: var(--panel-strong);
+  box-shadow: var(--shadow);
+  text-decoration: none;
+  color: var(--text);
+  transition: transform 200ms ease;
+}
+.offclock-card:hover { transform: translateY(-3px); }
+.offclock-media { position: relative; min-height: 260px; background: #23262c; }
+.offclock-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.offclock-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 60%, rgba(255, 255, 255, 0.14));
+}
+.offclock-body { padding: 30px; }
+.offclock-body .card-tag { color: var(--gold); }
+.offclock-body h3 {
+  margin: 0 0 10px;
+  font-family: "Space Grotesk", sans-serif;
+  letter-spacing: -0.02em;
+  font-size: 1.5rem;
+}
+.offclock-body ul { margin: 18px 0 0; padding-left: 18px; color: var(--muted); line-height: 1.7; }
+.offclock-body .card-link { color: var(--accent-2); }
+
+@media (max-width: 720px) {
+  .offclock-card { grid-template-columns: 1fr; }
+  .offclock-media { min-height: 200px; }
+}
+
 .skill-list {
   display: flex;
   flex-wrap: wrap;
