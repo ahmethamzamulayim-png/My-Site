@@ -1024,23 +1024,33 @@
         planeObj.visible = true;
       }
 
-      // Follow-cam. globe.gl only honours its own pointOfView orbit (it overrides
-      // any direct camera edits), so this keeps the plane high in frame with an
-      // oblique lean by focusing a bit "below" it. Set instantly (duration 0) so a
-      // single call — on pause/scrub — frames correctly, not just during playback.
-      let flyAlt = 0.7, flyOff = 14;
+      // True chase-cam. globe.gl runs OrbitControls with damping, so its loop
+      // calls controls.update() every frame — but update() re-derives the offset
+      // from (camera.position - target) and, with no user input, writes it back
+      // unchanged. So directly setting BOTH camera.position and target each frame
+      // survives. We sit behind + above the plane, looking along the route.
+      let camDist = 90;
+      let camClampSaved = false, camPrevMin, camPrevMax, camPrevPolMin, camPrevPolMax;
       function followCam(p) {
-        if (!curPaths) return;
+        if (!curPaths || !THREE) return;
         const pts = curPaths[0];
         const fp = p * (pts.length - 1);
         const i = Math.min(pts.length - 2, Math.floor(fp));
         const frac = fp - i;
-        const lat = pts[i][0] + (pts[i + 1][0] - pts[i][0]) * frac;
-        let dl = pts[i + 1][1] - pts[i][1]; // shortest way across the ±180° seam
-        if (dl > 180) dl -= 360; else if (dl < -180) dl += 360;
-        const lng = pts[i][1] + dl * frac;
-        const lat2 = Math.max(-82, Math.min(82, lat + (lat >= 0 ? -flyOff : flyOff)));
-        globe.pointOfView({ lat: lat2, lng, altitude: flyAlt }, 0);
+        const a = globe.getCoords(pts[i][0], pts[i][1], pts[i][2]);
+        const b = globe.getCoords(pts[i + 1][0], pts[i + 1][1], pts[i + 1][2]);
+        const plane = new THREE.Vector3(a.x + (b.x - a.x) * frac, a.y + (b.y - a.y) * frac, a.z + (b.z - a.z) * frac);
+        const forward = new THREE.Vector3(b.x - a.x, b.y - a.y, b.z - a.z);
+        if (forward.lengthSq() < 1e-9) forward.set(0, 0, 1);
+        forward.normalize();
+        const up = plane.clone().normalize(); // radial out from globe centre
+        const camPos = plane.clone()
+          .addScaledVector(forward, -camDist * 0.7)  // behind the plane
+          .addScaledVector(up, camDist * 0.6);       // and above it (~40° look-down)
+        const controls = globe.controls();
+        globe.camera().position.copy(camPos);
+        controls.target.copy(plane);
+        controls.update();
       }
 
       // Moon's shadow on the ground beneath Concorde (eclipse flight only)
@@ -1098,8 +1108,15 @@
         // chase distance scales with route size (local circuit → close; a
         // transatlantic → far). The camera then tracks the plane each frame.
         const v = centroidView(f.paths);
-        flyAlt = Math.max(0.4, Math.min(1.5, v.altitude * 0.72));
-        flyOff = Math.min(20, 9 + (v.altitude - 0.4) * 13); // lean, scaled to route size
+        camDist = Math.max(28, Math.min(220, 20 + (v.altitude - 0.4) * 110)); // scale to route
+        // widen OrbitControls clamps so the chase distance/angle isn't capped
+        const ctrl = globe.controls();
+        if (ctrl && !camClampSaved) {
+          camPrevMin = ctrl.minDistance; camPrevMax = ctrl.maxDistance;
+          camPrevPolMin = ctrl.minPolarAngle; camPrevPolMax = ctrl.maxPolarAngle;
+          camClampSaved = true;
+        }
+        if (ctrl) { ctrl.minDistance = 0.5; ctrl.maxDistance = 6000; ctrl.minPolarAngle = 0; ctrl.maxPolarAngle = Math.PI; }
         duration = Math.min(32000, Math.max(16000, curPaths[0].length * 110));
 
         if (reduceMotion) {
@@ -1108,6 +1125,7 @@
           drawPaths(1, false);
           orientPlane(1);
           positionShadow(1);
+          followCam(1); // frame the end of the route (no animation for reduced motion)
           $("hudCap").innerHTML = `<b>${f.num}.</b> ${t(f.beats[f.beats.length - 1].en, f.beats[f.beats.length - 1].tr)}`;
           $("scrub").value = 1000;
           pause();
@@ -1139,6 +1157,16 @@
         progress = 0;
         if (planeObj) planeObj.visible = false;
         if (shadowDisc) shadowDisc.visible = false;
+        // hand the camera back to normal centre-orbit: restore clamps + target
+        const ctrl = globe.controls();
+        if (ctrl) {
+          ctrl.target.set(0, 0, 0);
+          if (camClampSaved) {
+            ctrl.minDistance = camPrevMin; ctrl.maxDistance = camPrevMax;
+            ctrl.minPolarAngle = camPrevPolMin; ctrl.maxPolarAngle = camPrevPolMax;
+            camClampSaved = false;
+          }
+        }
         refreshBubbles(); // bring the pins back after the flight
         if (!silent && current) {
           drawPaths(current.memorial ? 0 : 1, true); // back to faint preview
