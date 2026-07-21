@@ -1,0 +1,1191 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fly the Routes — Concorde's Notable Flights | Ahmet Hamza Mülayim</title>
+    <meta
+      name="description"
+      content="Concorde's most famous flights on an interactive 3D globe — pick a mission, read the briefing, and fly the route. A non-commercial fan tribute."
+    />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e81932'/%3E%3Ctext x='32' y='45' font-size='38' font-family='sans-serif' font-weight='700' text-anchor='middle' fill='%23fff'%3EA%3C/text%3E%3C/svg%3E" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Fly the Routes — Concorde's Notable Flights" />
+    <meta property="og:description" content="Concorde's most famous flights on an interactive 3D globe. A non-commercial tribute." />
+    <meta property="og:url" content="https://ahmethmzamlym.engineer/notable-flights.html" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="i18n.js"></script>
+    <style>
+      body { overflow: hidden; height: 100vh; height: 100dvh; }
+      #globe { position: fixed; inset: 0; z-index: 0; }
+      .site-header { position: relative; z-index: 6; }
+
+      /* ---- mission roster (left) ---- */
+      .roster {
+        position: fixed;
+        left: 24px;
+        top: 138px;
+        bottom: 24px;
+        z-index: 4;
+        width: 310px;
+        display: flex;
+        flex-direction: column;
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(14px);
+        overflow: hidden;
+      }
+      .roster-head { padding: 18px 20px 12px; }
+      .roster-head .eyebrow { margin-bottom: 6px; }
+      .roster-head h1 {
+        margin: 0;
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.35rem;
+        letter-spacing: -0.02em;
+      }
+      .roster-list {
+        overflow-y: auto;
+        padding: 6px 12px 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .mission {
+        display: grid;
+        grid-template-columns: 30px 1fr;
+        gap: 10px;
+        align-items: center;
+        text-align: left;
+        padding: 11px 12px;
+        border-radius: 14px;
+        border: 1px solid rgba(43, 39, 50, 0.1);
+        border-left: 3px solid var(--accent);
+        background: rgba(255, 255, 255, 0.6);
+        font: inherit;
+        color: var(--text);
+        cursor: pointer;
+        transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+      }
+      .mission:hover { transform: translateX(2px); background: rgba(255, 255, 255, 0.9); }
+      .mission:focus-visible { outline: 3px solid var(--cobalt); outline-offset: 2px; }
+      .mission.active { background: #fff; border-color: var(--cobalt); box-shadow: 0 6px 20px rgba(36, 67, 155, 0.16); }
+      .mission .num {
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: var(--accent-2);
+        text-align: center;
+      }
+      .mission .mtitle { font-family: "Space Grotesk", sans-serif; font-size: 0.98rem; line-height: 1.2; }
+      .mission .mmeta { font-size: 0.76rem; color: var(--muted); margin-top: 2px; }
+      .mission.memorial { border-left-color: #8a7a7e; background: rgba(43, 39, 50, 0.045); }
+      .mission.memorial .num { color: var(--muted); }
+
+      /* ---- briefing panel (right) ---- */
+      .briefing {
+        position: fixed;
+        right: 24px;
+        top: 92px;
+        z-index: 5;
+        width: 340px;
+        max-height: calc(100dvh - 140px);
+        overflow-y: auto;
+        padding: 22px 24px;
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        border-top: 3px solid var(--accent);
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(14px);
+      }
+      .briefing[hidden] { display: none; }
+      .briefing.memorial { border-top-color: #8a7a7e; background: rgba(247, 244, 240, 0.96); }
+      #bclose {
+        position: absolute; top: 12px; right: 14px;
+        background: none; border: 0; color: var(--muted);
+        font-size: 1.4rem; line-height: 1; cursor: pointer;
+      }
+      #bclose:hover { color: var(--text); }
+      .briefing .eyebrow { margin-bottom: 6px; }
+      .briefing h2 {
+        margin: 0 0 4px;
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.5rem;
+        letter-spacing: -0.02em;
+        line-height: 1.05;
+        max-width: 15ch;
+      }
+      .briefing .bdate { margin: 0 0 12px; font-size: 0.9rem; color: var(--muted); }
+      .briefing .bcraft {
+        padding: 10px 0;
+        border-top: 1px solid rgba(43, 39, 50, 0.1);
+        font-size: 0.9rem; color: var(--muted); line-height: 1.55;
+      }
+      .briefing .bcraft b { color: var(--text); font-family: "Space Grotesk", sans-serif; }
+      .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+      .chip {
+        padding: 7px 12px; border-radius: 999px;
+        background: rgba(36, 67, 155, 0.08);
+        border: 1px solid rgba(36, 67, 155, 0.2);
+        font-size: 0.8rem; line-height: 1.15;
+      }
+      .chip b { display: block; font-family: "Space Grotesk", sans-serif; color: var(--text); font-size: 0.92rem; }
+      .chip span { color: var(--muted); }
+      .briefing .bdesc { font-size: 0.92rem; line-height: 1.65; color: var(--muted); margin: 4px 0 16px; }
+      .briefing.memorial .bdesc { color: var(--text); }
+      .fly-btn { width: 100%; }
+      .memorial-note {
+        margin: 14px 0 0; padding: 12px 14px; border-radius: 12px;
+        background: rgba(43, 39, 50, 0.05); border: 1px solid rgba(43, 39, 50, 0.1);
+        font-size: 0.82rem; color: var(--muted); line-height: 1.6;
+      }
+
+      /* ---- flight HUD (bottom) ---- */
+      .flighthud {
+        position: fixed;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 24px;
+        z-index: 7;
+        width: min(560px, calc(100vw - 48px));
+        padding: 16px 20px;
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(14px);
+      }
+      .flighthud[hidden] { display: none; }
+      .hud-cap {
+        min-height: 3.1em;
+        font-size: 0.98rem;
+        line-height: 1.5;
+        color: var(--text);
+      }
+      .hud-cap b { font-family: "Space Grotesk", sans-serif; }
+      .hud-controls { display: flex; align-items: center; gap: 12px; margin-top: 12px; }
+      .hud-icon {
+        flex: none;
+        width: 42px; height: 42px;
+        border-radius: 999px;
+        border: 1px solid rgba(43, 39, 50, 0.18);
+        background: rgba(255, 255, 255, 0.7);
+        color: var(--text);
+        cursor: pointer;
+        display: grid; place-items: center;
+        font-size: 1rem;
+      }
+      .hud-icon:hover { border-color: var(--accent-2); color: var(--accent-2); }
+      .hud-icon:focus-visible { outline: 3px solid var(--cobalt); outline-offset: 2px; }
+      #scrub {
+        flex: 1;
+        accent-color: var(--accent);
+        height: 6px;
+        cursor: pointer;
+      }
+      .hud-exit { margin-left: 2px; }
+
+      #tip {
+        position: fixed; z-index: 8; pointer-events: none; display: none;
+        background: rgba(255, 255, 255, 0.95);
+        border: 1px solid rgba(43, 39, 50, 0.15);
+        border-radius: 12px; padding: 8px 12px;
+        font-size: 0.82rem; color: var(--muted); max-width: 220px;
+      }
+      #tip b { color: var(--text); font-family: "Space Grotesk", sans-serif; }
+
+      /* model attribution — shown only when the real .glb loads (CC BY) */
+      #modelCredit {
+        position: fixed;
+        right: 14px;
+        bottom: 8px;
+        z-index: 3;
+        font-size: 0.72rem;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.7);
+        padding: 3px 9px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+      }
+      #modelCredit[hidden] { display: none; }
+      #modelCredit a { color: var(--cobalt); }
+
+      /* clickable mission pins on the globe (primary selector) */
+      /* NB: globe.gl drives each pin's `transform` for positioning every frame,
+         so we must NOT transition/override transform here (that caused the lag
+         + jiggle). Hover/active feedback uses box-shadow & colour only. */
+      .mbubble {
+        width: 30px; height: 30px; border-radius: 999px;
+        border: 2px solid #fff; background: var(--accent); color: #fff;
+        font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 0.92rem;
+        display: grid; place-items: center; cursor: pointer;
+        box-shadow: 0 3px 10px rgba(43, 39, 50, 0.35);
+        transition: box-shadow 150ms ease, background 150ms ease, filter 150ms ease;
+      }
+      .mbubble:hover { filter: brightness(1.1); box-shadow: 0 0 0 4px rgba(232, 25, 50, 0.25), 0 3px 10px rgba(43, 39, 50, 0.4); }
+      .mbubble:focus-visible { outline: 3px solid var(--cobalt); outline-offset: 2px; }
+      .mbubble.active { background: var(--cobalt); box-shadow: 0 0 0 5px rgba(36, 67, 155, 0.3), 0 3px 12px rgba(43, 39, 50, 0.45); }
+      .mbubble.memorial { background: #6f6878; font-size: 0.8rem; }
+
+      .roster-toggle { position: fixed; left: 24px; top: 90px; z-index: 8; }
+      .roster.collapsed { display: none; }
+
+      @media (max-width: 900px) {
+        .roster-toggle { left: 12px; top: auto; bottom: 12px; }
+        .roster {
+          left: 12px; right: 12px; width: auto;
+          top: auto; bottom: 64px; max-height: 46dvh;
+        }
+        .briefing {
+          left: 12px; right: 12px; width: auto;
+          top: auto; bottom: 12px; max-height: 62dvh;
+        }
+        .flighthud { bottom: 12px; width: calc(100vw - 24px); }
+      }
+    </style>
+    <!-- lets the (dormant) GLB loader resolve `three` when a model is added -->
+    <script type="importmap">
+      { "imports": { "three": "https://unpkg.com/three@0.149.0/build/three.module.js" } }
+    </script>
+    <!-- globe stack: identical to thy-globe.html (globe.gl / three-globe / WebGL) -->
+    <script src="https://unpkg.com/globe.gl@2.46.1/dist/globe.gl.min.js"></script>
+    <!-- three (global) only for the low-poly Concorde riding the arc; page still
+         works if this fails to load (arcs + camera + beats degrade gracefully). -->
+    <script src="https://unpkg.com/three@0.149.0/build/three.min.js"></script>
+  </head>
+  <body>
+    <div class="noise"></div>
+    <div id="globe"></div>
+    <div id="tip"></div>
+    <p id="modelCredit" hidden></p>
+
+    <header class="site-header">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">A</span>
+        <span>
+          <strong data-i18n="brand.name">Fly the routes</strong>
+          <small data-i18n="brand.sub">Concorde · notable flights</small>
+        </span>
+      </a>
+      <nav class="site-nav">
+        <a class="button secondary" href="concorde.html" data-i18n="nav.back">← Back to the homage</a>
+        <button class="lang-toggle" type="button">TR</button>
+      </nav>
+    </header>
+
+    <button class="button secondary roster-toggle" id="rosterToggle" type="button" data-i18n="roster.toggle">Missions</button>
+
+    <aside class="roster" id="roster">
+      <div class="roster-head">
+        <p class="eyebrow" data-i18n="roster.eyebrow"><span class="tulip" aria-hidden="true"></span> Mission select</p>
+        <h1 data-i18n="roster.title">The famous flights</h1>
+      </div>
+      <div class="roster-list" id="rosterList" role="list"></div>
+    </aside>
+
+    <aside class="briefing" id="briefing" hidden aria-live="polite">
+      <button id="bclose" aria-label="Close briefing">×</button>
+      <p class="eyebrow" id="btag"></p>
+      <h2 id="btitle"></h2>
+      <p class="bdate" id="bdate"></p>
+      <div class="bcraft" id="bcraft"></div>
+      <div class="chips" id="bchips"></div>
+      <p class="bdesc" id="bdesc"></p>
+      <button class="button primary fly-btn" id="flyBtn" type="button" data-i18n="briefing.fly">Fly it →</button>
+      <p class="memorial-note" id="bmemorial" hidden></p>
+    </aside>
+
+    <div class="flighthud" id="hud" hidden>
+      <div class="hud-cap" id="hudCap"></div>
+      <div class="hud-controls">
+        <button class="hud-icon" id="playBtn" type="button" aria-label="Play or pause">❚❚</button>
+        <input id="scrub" type="range" min="0" max="1000" value="0" step="1" aria-label="Scrub the flight" />
+        <button class="button secondary hud-icon hud-exit" id="exitBtn" type="button" aria-label="Exit fly-through">✕</button>
+      </div>
+    </div>
+
+    <script>
+      window.I18N_LANG = "tr";
+      window.I18N = {
+        "brand.name": "Rotaları uç",
+        "brand.sub": "Concorde · önemli uçuşlar",
+        "nav.back": "← Anma sayfasına dön",
+        "roster.toggle": "Uçuşlar",
+        "roster.eyebrow": '<span class="tulip" aria-hidden="true"></span> Görev seç',
+        "roster.title": "Ünlü uçuşlar",
+        "briefing.fly": "Rotayı uç →"
+      };
+    </script>
+
+    <script>
+      // ============================================================
+      //  Concorde — Notable Flights
+      //  Everything data-driven from FLIGHTS below. Coords are (lat,lng).
+      //  Airport coords: spec list + a few added for documented multi-leg
+      //  routes (KWI, DXB, DMK, GUM, HNL, ACA), each verified from the
+      //  documented itinerary. Copy is bilingual via t(en, tr).
+      // ============================================================
+      const C = {
+        TLS: [43.63, 1.37],  LPA: [27.93, -15.39], NDJ: [12.13, 15.03],
+        LHR: [51.47, -0.46], BAH: [26.27, 50.63],  CDG: [49.01, 2.55],
+        GIG: [-22.81, -43.25], DKR: [14.74, -17.49], JFK: [40.64, -73.78],
+        SIN: [1.36, 103.99], BGI: [13.07, -59.49], KWI: [29.24, 47.97],
+        DXB: [25.25, 55.36], DMK: [13.91, 100.61], GUM: [13.48, 144.80],
+        HNL: [21.32, -157.92], ACA: [16.76, -99.75],
+      };
+
+      // Each flight: paths is a list of leg-chains (airport codes). The 3D
+      // Concorde rides paths[0]; extra paths (simultaneous services) are drawn
+      // alongside. `local` = a short flight shown as a circuit over the field.
+      // `memorial` = sober treatment, no fly-through (isolated; delete freely).
+      const FLIGHTS = [
+        {
+          id: "firsts", num: 1, local: "TLS", localBig: true,
+          name: "The First Flights", nameTr: "İlk Uçuşlar",
+          date: "2 March & 1 October 1969", dateTr: "2 Mart ve 1 Ekim 1969",
+          craft: "Concorde 001", reg: "F-WTSS",
+          paths: [["TLS"]],
+          stats: [
+            { l: "First flight", lTr: "İlk uçuş", v: "≈27 min", vTr: "≈27 dk" },
+            { l: "First Mach 1", lTr: "İlk Mach 1", v: "1 Oct 1969", vTr: "1 Ekim 1969" },
+            { l: "Command", lTr: "Pilot", v: "André Turcat" },
+          ],
+          desc: "Two firsts, seven months apart, both out of Toulouse. On 2 March 1969 André Turcat lifted prototype 001 off for a careful 27-minute maiden flight; on 1 October she slipped past the speed of sound for the first time — the moment Concorde became what it was built to be.",
+          descTr: "Yedi ay arayla, ikisi de Toulouse'dan kalkan iki ilk. 2 Mart 1969'da André Turcat, prototip 001'i sakin, 27 dakikalık ilk uçuşuna kaldırdı; 1 Ekim'de ise 001 ilk kez ses hızını aştı — Concorde'un yapılış amacına kavuştuğu an.",
+          beats: [
+            { en: "Toulouse, 2 March 1969 — after years of Anglo-French work, prototype 001 sits at the end of the runway.", tr: "Toulouse, 2 Mart 1969 — yıllarca süren İngiliz-Fransız çalışmasının ardından prototip 001 pistin ucunda bekliyor." },
+            { en: "André Turcat lifts her off for a gentle 27-minute circuit, gear down. \"The big bird flies,\" he radios.", tr: "André Turcat onu sakin, 27 dakikalık bir tur için havalandırıyor; iniş takımı açık. Telsizden sesi geliyor: \"Büyük kuş uçuyor.\"" },
+            { en: "Through the summer, flight after flight, 001 carefully expands the envelope.", tr: "Yaz boyunca 001, her uçuşta uçuş zarfını biraz daha genişletiyor." },
+            { en: "1 October: out over the Bay of Biscay, 001 slips past Mach 1 — smoothly, without drama.", tr: "1 Ekim: Biskay Körfezi açıklarında 001, Mach 1'i geçiyor — pürüzsüz, dramsız." },
+            { en: "The design works. From here the goal becomes Mach 2, twice the speed of sound.", tr: "Tasarım işe yarıyor. Buradan sonra hedef Mach 2 — sesin iki katı hız." },
+          ],
+        },
+        {
+          id: "eclipse", num: 2, flagship: true,
+          name: "The Eclipse Chase", nameTr: "Güneş Tutulması Kovalamacası",
+          date: "30 June 1973", dateTr: "30 Haziran 1973",
+          craft: "Concorde 001", reg: "F-WTSS",
+          paths: [["LPA", "NDJ"]],
+          stats: [
+            { l: "Totality", lTr: "Tam tutulma", v: "74 min", vTr: "74 dk" },
+            { l: "Speed", lTr: "Hız", v: "Mach 2.02", vTr: "Mach 2,02" },
+            { l: "Altitude", lTr: "İrtifa", v: "58,000 ft", vTr: "58.000 ft" },
+          ],
+          desc: "Concorde's most extraordinary flight. To watch a total solar eclipse, prototype 001 raced the Moon's shadow across the Sahara at Mach 2 — stretching 7 minutes of totality on the ground into 74 minutes in the air, a record that still stands.",
+          descTr: "Concorde'un en olağanüstü uçuşu. Tam güneş tutulmasını izlemek için prototip 001, Ay'ın gölgesini Sahra üzerinde Mach 2 hızıyla kovaladı — yerden en fazla 7 dakika izlenebilen tam tutulmayı havada 74 dakikaya çıkardı; bu rekor hâlâ kırılmış değil.",
+          beats: [
+            { en: "30 June 1973. On the ground, this eclipse's totality lasts at most 7 minutes. Astronomers want more.", tr: "30 Haziran 1973. Bu tutulmanın tam evresi yerden en fazla 7 dakika izlenebiliyor. Gökbilimcilerin gözü daha yukarıda." },
+            { en: "001 has been fitted with roof portholes and cameras. It launches from Las Palmas to meet the shadow.", tr: "001'in tavanına gözlem pencereleri ve kameralar yerleştirildi. Uçak, gölgeyle buluşmak için Las Palmas'tan havalanıyor." },
+            { en: "It intercepts the path of totality over Mauritania within one second of the plan.", tr: "Tam tutulma yolunu Moritanya üzerinde, plandan yalnızca bir saniye sapmayla yakalıyor." },
+            { en: "At Mach 2 and 58,000 ft, Concorde flies inside the Moon's umbra, chasing it east across the Sahara.", tr: "Mach 2'de, 58.000 fit irtifada Concorde, Ay'ın tam gölgesinin içinde uçuyor; gölgeyi Sahra boyunca doğuya doğru kovalıyor." },
+            { en: "74 minutes of totality — ten times what anyone below sees — before landing at Fort-Lamy (today N'Djamena).", tr: "74 dakikalık tam tutulma — aşağıdaki herkesin gördüğünün on katı — ardından Fort-Lamy'ye (bugünkü N'Djamena) iniş." },
+          ],
+        },
+        {
+          id: "service", num: 3, pin: "BAH",
+          name: "First Scheduled Service", nameTr: "İlk Tarifeli Sefer",
+          date: "21 January 1976", dateTr: "21 Ocak 1976",
+          craft: "G-BOAA (BA) · F-BVFA (AF)", reg: "BA300 / AF025",
+          paths: [["LHR", "BAH"], ["CDG", "DKR", "GIG"]],
+          stats: [
+            { l: "London →", lTr: "Londra →", v: "Bahrain", vTr: "Bahreyn" },
+            { l: "Paris →", lTr: "Paris →", v: "Rio via Dakar", vTr: "Dakar üzerinden Rio" },
+            { l: "Airlines", lTr: "Havayolu", v: "2, same minute", vTr: "2 · aynı dakika" },
+          ],
+          desc: "Supersonic travel goes commercial. At the exact same moment, British Airways lifted off from London for Bahrain and Air France left Paris for Rio via Dakar — two airlines starting the world's first scheduled supersonic services together.",
+          descTr: "Süpersonik uçuş tarifeli sefere dönüşüyor. Aynı dakikada British Airways Londra'dan Bahreyn'e, Air France Paris'ten Dakar üzerinden Rio'ya havalandı — iki havayolu, dünyanın ilk tarifeli süpersonik seferlerini birlikte başlattı.",
+          beats: [
+            { en: "21 January 1976, 11:40. Two Concordes wait on two runways, 340 miles apart.", tr: "21 Ocak 1976, 11:40. İki Concorde, 550 km arayla iki pistte bekliyor." },
+            { en: "They roll together: BA300 out of Heathrow for Bahrain, AF025 out of Paris for Rio via Dakar.", tr: "Birlikte kalkıyorlar: Heathrow'dan Bahreyn'e BA300, Paris'ten Dakar üzerinden Rio'ya AF025." },
+            { en: "Cabins of paying passengers cross the Mediterranean and the Atlantic at twice the speed of sound.", tr: "Bilet almış yolcularla dolu kabinler, Akdeniz'i ve Atlantik'i ses hızının iki katında geçiyor." },
+            { en: "Twelve years of development become a timetable. The supersonic airline era has begun.", tr: "On iki yıllık geliştirme bir tarifeye dönüşüyor. Süpersonik havayolu çağı başladı." },
+          ],
+        },
+        {
+          id: "jfk", num: 4, pin: "JFK",
+          name: "First New York Service", nameTr: "İlk New York Seferi",
+          date: "22 November 1977", dateTr: "22 Kasım 1977",
+          craft: "British Airways · Air France", reg: "LHR & CDG → JFK",
+          paths: [["LHR", "JFK"], ["CDG", "JFK"]],
+          stats: [
+            { l: "Route", lTr: "Rota", v: "→ New York JFK" },
+            { l: "Crossing", lTr: "Geçiş", v: "≈3.5 h", vTr: "≈3,5 sa" },
+          ],
+          desc: "The route Concorde was made for. After a long fight over noise, both airlines finally began flying to New York — a sub-3.5-hour Atlantic crossing that made a same-day return to London or Paris genuinely possible.",
+          descTr: "Concorde'un asıl yapılış sebebi olan rota. Gürültü yüzünden yıllarca süren tartışmaların ardından iki havayolu da sonunda New York'a uçmaya başladı — Londra'ya ya da Paris'e aynı gün dönmeyi gerçekten mümkün kılan, 3,5 saatin altında bir Atlantik geçişi.",
+          beats: [
+            { en: "New York had resisted Concorde for years, worried about the noise. In late 1977 the doors finally open.", tr: "New York, gürültüden endişelenerek yıllarca Concorde'a direndi. 1977 sonunda kapılar nihayet açılıyor." },
+            { en: "22 November 1977: London and Paris both launch for John F. Kennedy airport.", tr: "22 Kasım 1977: Londra ve Paris, ikisi de John F. Kennedy havalimanına doğru havalanıyor." },
+            { en: "Westbound at Mach 2, Concorde almost keeps pace with the clock across the time zones.", tr: "Mach 2'yle batıya uçan Concorde, saat dilimlerini geçerken âdeta zamana karşı yarışıyor." },
+            { en: "This becomes the flagship route — the reason Concorde existed — for the next 26 years.", tr: "Bu rota, sonraki 26 yıl boyunca Concorde'un amiral gemisi — ve var oluş sebebi — olacak." },
+          ],
+        },
+        {
+          id: "singapore", num: 5, pin: "SIN",
+          name: "Singapore Service", nameTr: "Singapur Seferi",
+          date: "1977–1980", dateTr: "1977–1980",
+          craft: "British Airways", reg: "via Bahrain",
+          paths: [["LHR", "BAH", "SIN"]],
+          stats: [
+            { l: "Route", lTr: "Rota", v: "LHR–BAH–SIN" },
+            { l: "Livery", lTr: "Boyama", v: "Two airlines", vTr: "İki havayolu" },
+            { l: "Era", lTr: "Dönem", v: "1977–80" },
+          ],
+          desc: "Concorde goes east. British Airways extended the London–Bahrain run all the way to Singapore, flying an aircraft painted in Singapore Airlines colours on one side and British Airways on the other — a genuine two-flag Concorde.",
+          descTr: "Concorde doğuya açılıyor. British Airways, Londra–Bahreyn seferini Singapur'a kadar uzattı; uçağın bir tarafı Singapore Airlines, diğer tarafı British Airways renklerindeydi — gerçek anlamda iki bayraklı bir Concorde.",
+          beats: [
+            { en: "British Airways pushes Concorde beyond the Atlantic, eastward toward Asia.", tr: "British Airways, Concorde'u Atlantik'in ötesine, doğuya — Asya'ya uzatıyor." },
+            { en: "London to Singapore, with a stop in Bahrain to refuel the thirsty supersonic engines.", tr: "Londra'dan Singapur'a; yakıta doymayan süpersonik motorlar için Bahreyn'de bir ikmal molası." },
+            { en: "One aircraft wears Singapore Airlines colours to port and British Airways to starboard.", tr: "Bir uçak sol tarafında Singapore Airlines, sağ tarafında British Airways renklerini taşıyor." },
+            { en: "Diplomatic overflight rows cut the route short by 1980 — but the two-flag jet is unforgettable.", tr: "Diplomatik hava sahası anlaşmazlıkları rotayı 1980'de sonlandırıyor — ama iki bayraklı jet akıllardan çıkmıyor." },
+          ],
+        },
+        {
+          id: "record", num: 6,
+          name: "Atlantic Speed Record", nameTr: "Atlantik Hız Rekoru",
+          date: "7 February 1996", dateTr: "7 Şubat 1996",
+          craft: "British Airways", reg: "G-BOAD",
+          paths: [["JFK", "LHR"]],
+          stats: [
+            { l: "Time", lTr: "Süre", v: "2h 52m 59s", vTr: "2 sa 52 dk 59 sn" },
+            { l: "Avg speed", lTr: "Ort. hız", v: "≈1,250 mph", vTr: "≈2.010 km/s" },
+            { l: "Aircraft", lTr: "Uçak", v: "G-BOAD" },
+          ],
+          desc: "The fastest civil Atlantic crossing ever flown. Helped by a ferocious tailwind, G-BOAD ran from New York to London in 2 hours, 52 minutes and 59 seconds — a record no passenger aircraft has touched since.",
+          descTr: "Bugüne dek uçulmuş en hızlı sivil Atlantik geçişi. Sert bir kuyruk rüzgârının da yardımıyla G-BOAD, New York'tan Londra'ya 2 saat 52 dakika 59 saniyede uçtu — o günden beri hiçbir yolcu uçağının yaklaşamadığı bir rekor.",
+          beats: [
+            { en: "7 February 1996. A powerful jet-stream tailwind is pushing east across the Atlantic.", tr: "7 Şubat 1996. Güçlü bir jet akımı, Atlantik üzerinde doğuya doğru esiyor." },
+            { en: "G-BOAD leaves New York and climbs to cruise at Mach 2, riding winds gusting past 175 mph.", tr: "G-BOAD New York'tan kalkıp Mach 2 seyrine tırmanıyor; arkasında 280 km/s'yi aşan kuyruk rüzgârı var." },
+            { en: "Ground speed soars toward 1,250 mph — the sea below crawls past astonishingly fast.", tr: "Yer hızı 2.000 km/s'ye dayanıyor — altındaki okyanus şaşırtıcı bir hızla akıp gidiyor." },
+            { en: "Wheels down at Heathrow: 2h 52m 59s. Nearly 30 years on, nothing has beaten it.", tr: "Heathrow'a teker koyuş: 2 sa 52 dk 59 sn. Aradan geçen otuz yıla yakın sürede bu rekoru kimse geçemedi." },
+          ],
+        },
+        {
+          id: "world", num: 7,
+          name: "Round-the-World Record", nameTr: "Dünya Turu Rekoru",
+          date: "15–16 August 1995", dateTr: "15–16 Ağustos 1995",
+          craft: "Air France (charter)", reg: "F-BTSD",
+          paths: [["JFK", "TLS", "DXB", "DMK", "GUM", "HNL", "ACA", "JFK"]],
+          stats: [
+            { l: "Time", lTr: "Süre", v: "31h 27m 49s", vTr: "31 sa 27 dk 49 sn" },
+            { l: "Fuel stops", lTr: "Yakıt molası", v: "6" },
+            { l: "Aircraft", lTr: "Uçak", v: "F-BTSD" },
+          ],
+          desc: "A whole planet at Mach 2. On a chartered eastbound circumnavigation, F-BTSD flew around the world from New York in 31 hours, 27 minutes and 49 seconds — six refuelling stops, one supersonic lap of the Earth, a record that still stands.",
+          descTr: "Koca bir gezegen, Mach 2 hızında. Doğu yönlü bir charter dünya turunda F-BTSD, New York'tan başlayarak dünyanın çevresini 31 saat 27 dakika 49 saniyede dolaştı — altı yakıt molasıyla tek bir süpersonik tur; rekor bugün de geçerli.",
+          beats: [
+            { en: "August 1995. A charter sets out to circle the globe eastbound, as fast as a Concorde can.", tr: "Ağustos 1995. Bir charter uçuşu, dünyayı bir Concorde'un dolaşabileceği en yüksek hızla doğuya doğru turlamak için yola çıkıyor." },
+            { en: "From New York it hops Toulouse, Dubai, Bangkok, Guam, Honolulu, Acapulco — six quick fuel stops.", tr: "New York'tan Toulouse, Dubai, Bangkok, Guam, Honolulu, Acapulco'ya sıçrıyor — altı hızlı yakıt molası." },
+            { en: "Between each stop it cruises at twice the speed of sound, chasing daylight around the world.", tr: "Her molanın arasında sesin iki katı hızda seyrederek gün ışığını dünya çevresinde kovalıyor." },
+            { en: "Back at New York in 31h 27m 49s — the fastest circumnavigation by an airliner, then and now.", tr: "31 sa 27 dk 49 sn sonra yeniden New York — bir yolcu uçağıyla yapılmış gelmiş geçmiş en hızlı dünya turu." },
+          ],
+        },
+        {
+          id: "royal", num: 8, pin: "KWI",
+          name: "A Royal Charter", nameTr: "Kraliyet Seferi",
+          date: "12 February 1979", dateTr: "12 Şubat 1979",
+          craft: "British Airways", reg: "G-BOAE",
+          paths: [["LHR", "KWI"]],
+          stats: [
+            { l: "Route", lTr: "Rota", v: "London → Kuwait", vTr: "Londra → Kuveyt" },
+            { l: "Occasion", lTr: "Vesile", v: "State visit", vTr: "Devlet ziyareti" },
+            { l: "Aircraft", lTr: "Uçak", v: "G-BOAE" },
+          ],
+          desc: "Concorde as a flying head of state. Queen Elizabeth II used Concorde for several royal tours; on 12 February 1979 she flew from London to Kuwait aboard G-BOAE to begin a state visit to the Gulf.",
+          descTr: "Kraliyet hizmetinde bir Concorde. Kraliçe II. Elizabeth birçok resmî gezisinde Concorde'la uçtu; 12 Şubat 1979'da, Körfez'e yapacağı devlet ziyaretinin başlangıcında G-BOAE ile Londra'dan Kuveyt'e uçtu.",
+          beats: [
+            { en: "For the grandest state visits, the fastest airliner in the world becomes a royal transport.", tr: "En görkemli devlet ziyaretleri için dünyanın en hızlı yolcu uçağı bir kraliyet aracına dönüşüyor." },
+            { en: "12 February 1979: Queen Elizabeth II boards G-BOAE at Heathrow, bound for Kuwait.", tr: "12 Şubat 1979: Kraliçe II. Elizabeth, Kuveyt'e gitmek üzere Heathrow'da G-BOAE'ye biniyor." },
+            { en: "A supersonic dash down Europe and across Arabia opens her tour of the Gulf states.", tr: "Avrupa'nın ve Arabistan'ın üzerinden süpersonik bir sıçrayışla Körfez ülkeleri turu başlıyor." },
+            { en: "Concorde carried her again — to Barbados, the US and beyond — a jet fit for a queen.", tr: "Concorde onu tekrar taşıdı — Barbados'a, ABD'ye ve ötesine — bir kraliçeye yakışan bir jet." },
+          ],
+        },
+        {
+          id: "barbados", num: 9,
+          name: "The Barbados Run", nameTr: "Barbados Seferi",
+          date: "BA seasonal", dateTr: "BA · sezonluk",
+          craft: "British Airways", reg: "LHR → BGI",
+          paths: [["LHR", "BGI"]],
+          stats: [
+            { l: "Route", lTr: "Rota", v: "London → Bridgetown", vTr: "Londra → Bridgetown" },
+            { l: "Style", lTr: "Tarz", v: "Winter sun", vTr: "Kış güneşi" },
+            { l: "Distance", lTr: "Mesafe", v: "≈4,200 mi", vTr: "≈6.800 km" },
+          ],
+          desc: "The glamorous holiday route. For years British Airways flew a seasonal Concorde service from London to Barbados — Friday-afternoon London, Friday-evening Caribbean, the most stylish way to reach the winter sun.",
+          descTr: "Gösterişli tatil rotası. British Airways yıllarca Londra'dan Barbados'a sezonluk bir Concorde seferi uçurdu — Cuma öğleden sonra Londra, Cuma akşamı Karayipler; kış güneşine ulaşmanın en şık yolu.",
+          beats: [
+            { en: "Concorde wasn't only for business — it also flew Britain to the beach.", tr: "Concorde yalnızca iş için değildi — Britanya'yı sahile de uçurdu." },
+            { en: "A seasonal service left London for Bridgetown, Barbados, out across the open Atlantic.", tr: "Sezonluk bir sefer, açık Atlantik üzerinden Londra'dan Barbados'un başkenti Bridgetown'a kalkıyordu." },
+            { en: "Passengers left a grey London afternoon and stepped into Caribbean evening the same day.", tr: "Yolcular gri bir Londra öğleden sonrasını bırakıp aynı gün Karayip akşamına adım atıyordu." },
+            { en: "For a generation it was the most glamorous holiday flight in the world.", tr: "Bir kuşak için dünyanın en gösterişli tatil uçuşuydu." },
+          ],
+        },
+        {
+          id: "paris", num: 10, memorial: true,
+          name: "The Paris Accident", nameTr: "Paris Kazası",
+          date: "25 July 2000", dateTr: "25 Temmuz 2000",
+          craft: "Air France Flight 4590", reg: "F-BTSC",
+          paths: [["CDG"]],
+          stats: [],
+          desc: "On 25 July 2000, Air France Flight 4590 crashed shortly after take-off from Paris. All 109 people on board and four on the ground were killed. It was the only fatal accident in Concorde's career, and it led directly to the fleet being grounded.",
+          descTr: "25 Temmuz 2000'de Air France 4590 sefer sayılı uçak, Paris'ten kalkıştan kısa süre sonra düştü. Uçaktaki 109 kişinin tümü ve yerdeki dört kişi hayatını kaybetti. Bu, Concorde'un kariyerindeki tek ölümlü kazaydı ve doğrudan filonun uçuştan alınmasına yol açtı.",
+          memorialNote: "Remembered here without a fly-through, in respect for those who died. An investigation traced the cause to debris on the runway that ruptured a fuel tank on take-off.",
+          memorialNoteTr: "Hayatını kaybedenlere saygıyla; bu uçuş burada animasyonsuz anılıyor. Soruşturma, kazanın nedenini pistteki bir parçanın kalkış sırasında yakıt tankını yırtmasına bağladı.",
+        },
+        {
+          id: "last", num: 11, pin: "LHR",
+          name: "The Last Flight", nameTr: "Son Uçuş",
+          date: "24 October 2003", dateTr: "24 Ekim 2003",
+          craft: "British Airways", reg: "G-BOAG",
+          paths: [["JFK", "LHR"]],
+          stats: [
+            { l: "Final service", lTr: "Son sefer", v: "JFK → LHR" },
+            { l: "At Heathrow", lTr: "Heathrow'da", v: "3 landed together", vTr: "3'ü birlikte indi" },
+            { l: "Service", lTr: "Hizmet", v: "27 years", vTr: "27 yıl" },
+          ],
+          desc: "The end of the supersonic age. On 24 October 2003 British Airways flew Concorde's last commercial service from New York to London, where three Concordes landed at Heathrow within minutes of each other before crowds of thousands — closing 27 years of scheduled supersonic flight.",
+          descTr: "Süpersonik çağın sonu. 24 Ekim 2003'te British Airways, Concorde'un son ticari seferini New York'tan Londra'ya uçurdu; Heathrow'a binlerce kişinin önünde dakikalar arayla üç Concorde indi — 27 yıllık tarifeli süpersonik uçuş böyle kapandı.",
+          beats: [
+            { en: "24 October 2003. Rising costs and falling demand have ended the programme. This is the last day.", tr: "24 Ekim 2003. Artan maliyetler ve azalan talep programın sonunu getirdi. Bugün, son gün." },
+            { en: "The final commercial Concorde leaves New York for London one last time.", tr: "Son ticari Concorde, son kez New York'tan Londra'ya kalkıyor." },
+            { en: "Three Concordes converge on Heathrow and land within minutes of each other.", tr: "Üç Concorde Heathrow'a yönelip dakikalar arayla iniyor." },
+            { en: "Thousands watch. After 27 years, scheduled supersonic passenger flight comes to an end.", tr: "Binlerce kişi izliyor. 27 yılın ardından tarifeli süpersonik yolcu uçuşu son buluyor." },
+          ],
+        },
+      ];
+
+      // ============================================================
+      //  Globe (same look as thy-globe: pale çini sea, near-white land)
+      // ============================================================
+      const globeEl = document.getElementById("globe");
+      const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      const globe = Globe()(globeEl)
+        .globeImageUrl(null)
+        .backgroundColor("rgba(0,0,0,0)")
+        .showAtmosphere(true)
+        .atmosphereColor("#1f9e93")
+        .atmosphereAltitude(0.16)
+        .polygonCapColor(() => "rgba(250,247,242,0.95)")
+        .polygonSideColor(() => "rgba(0,0,0,0)")
+        .polygonStrokeColor(() => "rgba(36,67,155,0.75)")
+        .polygonAltitude(0.006)
+        .polygonsTransitionDuration(0)
+        .pathColor(d => d.color)
+        .pathStroke(d => d.stroke)
+        .pathPointLat(p => p[0])
+        .pathPointLng(p => p[1])
+        .pathPointAlt(p => p[2])
+        .pathTransitionDuration(0)
+        .labelLat(d => d.lat).labelLng(d => d.lng)
+        .labelText(d => d.text)
+        .labelColor(() => "#1b3a86")
+        .labelSize(1.5).labelDotRadius(0.75).labelResolution(2)
+        .ringLat(d => d[0]).ringLng(d => d[1])
+        .ringColor(() => (tt) => `rgba(232,25,50,${Math.max(0, 1 - tt)})`)
+        .ringMaxRadius(2.6).ringPropagationSpeed(1.8).ringRepeatPeriod(1500)
+        .htmlLat(d => d.lat).htmlLng(d => d.lng).htmlAltitude(0.02)
+        .htmlElement(d => makeBubble(d));
+
+      globe.globeMaterial().color.set("#cde6e2"); // pale turquoise sea
+      if (globe.htmlElementVisibilityModifier) {
+        globe.htmlElementVisibilityModifier((el, vis) => { el.style.opacity = vis ? 1 : 0; el.style.pointerEvents = vis ? "auto" : "none"; });
+      }
+
+      // same 110m map as thy-globe: light, stable, proven
+      fetch("countries-110m.geojson")
+        .then(r => r.json())
+        .then(geo => globe.polygonsData(geo.features));
+
+      const controls = globe.controls();
+      controls.autoRotate = false;   // stay put when the user lets go of the mouse
+      // SolidWorks-style orbit: left OR middle mouse rotates; wheel zooms; right pans.
+      // 0 = ROTATE, 1 = DOLLY, 2 = PAN in three's MOUSE enum.
+      controls.mouseButtons = { LEFT: 0, MIDDLE: 0, RIGHT: 2 };
+      globe.pointOfView({ lat: 30, lng: 5, altitude: 2.5 });
+
+      // ============================================================
+      //  3D low-poly Concorde (primitive fallback; GLB is a 1-flag swap)
+      // ============================================================
+      // Real Concorde model (Sketchfab glTF bundle installed under assets/). The
+      // loader handles a .gltf with external .bin/textures directly — no .glb
+      // conversion needed. Page falls back to the primitive if it can't load,
+      // then shows the CC BY attribution below (required wherever the work is used).
+      const CONCORDE_GLB_URL = "assets/concorde-model/scene.gltf";
+      const MODEL_CREDIT = {
+        en: '3D model: “Concorde” by manilov.ap · CC BY 4.0',
+        tr: '3B model: manilov.ap’ın “Concorde” modeli · CC BY 4.0',
+        url: "https://sketchfab.com/3d-models/concorde-6d95290363474798a429a38bbf9ad49d",
+      };
+
+      const THREE = window.THREE;
+      let planeObj = null;      // THREE.Group riding the arc
+      let shadowDisc = null;    // Moon's umbra for the eclipse flight
+      const GLOBE_R = 100;      // three-globe radius (scene units)
+
+      // graphite so the aircraft reads as a crisp silhouette on the pale globe
+      // (plain white was invisible against the near-white land)
+      const PLANE_COLOR = 0x2b2f36;
+      function buildPrimitiveConcorde() {
+        if (!THREE) return null;
+        const g = new THREE.Group();
+        const white = new THREE.MeshStandardMaterial({ color: PLANE_COLOR, roughness: 0.5, metalness: 0.2 });
+        const wingMat = new THREE.MeshStandardMaterial({ color: 0x3b4048, roughness: 0.55, metalness: 0.15 });
+        // fuselage: a long thin needle, nose along +Z
+        const fus = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.16, 3.2, 12), white);
+        fus.rotation.x = Math.PI / 2;
+        g.add(fus);
+        const nose = new THREE.Mesh(new THREE.ConeGeometry(0.16, 1.1, 12), white);
+        nose.rotation.x = Math.PI / 2;
+        nose.position.z = 2.1;
+        g.add(nose);
+        const tailCone = new THREE.Mesh(new THREE.ConeGeometry(0.16, 0.7, 12), white);
+        tailCone.rotation.x = -Math.PI / 2;
+        tailCone.position.z = -1.9;
+        g.add(tailCone);
+        // delta wing: a flat triangle, widest at the back (ogival-ish)
+        const wingShape = new THREE.Shape();
+        wingShape.moveTo(0, 1.5); wingShape.lineTo(1.5, -1.6); wingShape.lineTo(-1.5, -1.6); wingShape.lineTo(0, 1.5);
+        const wing = new THREE.Mesh(new THREE.ShapeGeometry(wingShape), wingMat);
+        wing.rotation.x = -Math.PI / 2;
+        wing.position.y = -0.08;
+        g.add(wing);
+        // tail fin: vertical triangle at the back
+        const finShape = new THREE.Shape();
+        finShape.moveTo(0, 0); finShape.lineTo(0, 0.9); finShape.lineTo(-1.0, 0); finShape.lineTo(0, 0);
+        const fin = new THREE.Mesh(new THREE.ShapeGeometry(finShape), wingMat);
+        fin.position.set(0, 0.1, -1.8);
+        g.add(fin);
+        g.scale.setScalar(0.62);
+        g.visible = false;
+        return g;
+      }
+
+      // The Moon's shadow for flight #3: a dark umbra ringed by a softer penumbra,
+      // laid flat on the globe surface. Rides under Concorde during the fly-through.
+      function buildShadowDisc() {
+        if (!THREE) return null;
+        const grp = new THREE.Group();
+        const pen = new THREE.Mesh(new THREE.CircleGeometry(7.5, 48),
+          new THREE.MeshBasicMaterial({ color: 0x10131c, transparent: true, opacity: 0.22, depthWrite: false }));
+        const umb = new THREE.Mesh(new THREE.CircleGeometry(4.2, 48),
+          new THREE.MeshBasicMaterial({ color: 0x05070d, transparent: true, opacity: 0.55, depthWrite: false }));
+        pen.position.z = -0.02;
+        grp.add(pen); grp.add(umb);
+        grp.visible = false;
+        return grp;
+      }
+
+      function initScene() {
+        if (!THREE) return;
+        try {
+          const scene = globe.scene();
+          scene.add(new THREE.AmbientLight(0xffffff, 0.85));
+          const dir = new THREE.DirectionalLight(0xffffff, 0.9);
+          dir.position.set(1, 1, 1);
+          scene.add(dir);
+          planeObj = buildPrimitiveConcorde();
+          if (planeObj) scene.add(planeObj);
+          shadowDisc = buildShadowDisc();
+          if (shadowDisc) scene.add(shadowDisc);
+          // Optional GLB swap (kept dormant unless a file is provided).
+          if (CONCORDE_GLB_URL) loadConcordeGlb(CONCORDE_GLB_URL);
+        } catch (e) { planeObj = null; } // any WebGL/version hiccup: degrade to no model
+      }
+
+      // If the model rides sideways / backwards / rolled, nudge these radians
+      // [pitch X, yaw Y, roll Z] — applied AFTER the fuselage is auto-aligned to
+      // +Z. e.g. flying tail-first → [0, Math.PI, 0]; knife-edge → [0,0,Math.PI/2].
+      const MODEL_ROT = [0, 0, 0];
+
+      // Replaces the primitive with a loaded model. Whitened, centred, scaled,
+      // and auto-oriented so its longest (fuselage) axis points forward.
+      function loadConcordeGlb(url) {
+        import("https://unpkg.com/three@0.149.0/examples/jsm/loaders/GLTFLoader.js")
+          .then(m => new m.GLTFLoader().load(url, gltf => {
+            const model = gltf.scene;
+            model.traverse(o => { if (o.isMesh) o.material = new THREE.MeshStandardMaterial({ color: PLANE_COLOR, roughness: 0.5, metalness: 0.2 }); });
+            // centre at origin, scale to ~2.2 units on the long axis
+            let box = new THREE.Box3().setFromObject(model);
+            const center = box.getCenter(new THREE.Vector3());
+            const size = box.getSize(new THREE.Vector3());
+            model.position.sub(center);
+            const inner = new THREE.Group();
+            inner.add(model);
+            inner.scale.setScalar(2.2 / Math.max(size.x, size.y, size.z || 1));
+            // This model bakes an arbitrary tilt into its root node, so its nose is
+            // NOT axis-aligned — a bbox heuristic can't orient it. Correct it exactly:
+            // map the model's real nose/up/wing directions (derived from its glTF
+            // node matrices) onto +Z / +Y / +X. ponytail: hardcoded for THIS model.
+            const B = new THREE.Matrix4().makeBasis(
+              new THREE.Vector3(0.6262, -0.1414, 0.7667),  // wing → +X
+              new THREE.Vector3(0.2203,  0.9754, 0),        // up   → +Y
+              new THREE.Vector3(-0.7479, 0.1689, 0.642)     // nose → +Z
+            ).transpose();
+            inner.quaternion.setFromRotationMatrix(B);
+            inner.rotateX(MODEL_ROT[0]); inner.rotateY(MODEL_ROT[1]); inner.rotateZ(MODEL_ROT[2]);
+            const holder = new THREE.Group();
+            holder.add(inner);
+            holder.visible = false;
+            const scene = globe.scene();
+            if (planeObj) scene.remove(planeObj);
+            scene.add(holder);
+            planeObj = holder;
+            showModelCredit(); // attribution only once the real model is in use
+          }, undefined, () => {/* load failed: keep primitive */}))
+          .catch(() => {/* import failed: keep primitive */});
+      }
+
+      let modelLoaded = false;
+      function showModelCredit() {
+        modelLoaded = true;
+        const el = document.getElementById("modelCredit");
+        el.hidden = false;
+        el.innerHTML = `<a href="${MODEL_CREDIT.url}" target="_blank" rel="noreferrer">${t(MODEL_CREDIT.en, MODEL_CREDIT.tr)}</a>`;
+      }
+
+      initScene();
+
+      // ============================================================
+      //  Great-circle geometry
+      // ============================================================
+      const D2R = Math.PI / 180, R2D = 180 / Math.PI;
+      const toVec = ([lat, lng]) => {
+        const a = lat * D2R, b = lng * D2R, c = Math.cos(a);
+        return [c * Math.cos(b), c * Math.sin(b), Math.sin(a)];
+      };
+      const toLatLng = ([x, y, z]) => [Math.asin(Math.max(-1, Math.min(1, z))) * R2D, Math.atan2(y, x) * R2D];
+      function slerp(v0, v1, t) {
+        let dot = v0[0] * v1[0] + v0[1] * v1[1] + v0[2] * v1[2];
+        dot = Math.max(-1, Math.min(1, dot));
+        const om = Math.acos(dot);
+        if (om < 1e-6) return v0.slice();
+        const s = Math.sin(om), a = Math.sin((1 - t) * om) / s, b = Math.sin(t * om) / s;
+        return [a * v0[0] + b * v1[0], a * v0[1] + b * v1[1], a * v0[2] + b * v1[2]];
+      }
+      const angBetween = (p, q) => {
+        const v0 = toVec(p), v1 = toVec(q);
+        return Math.acos(Math.max(-1, Math.min(1, v0[0] * v1[0] + v0[1] * v1[1] + v0[2] * v1[2])));
+      };
+
+      // Sample a chain of airports into [lat,lng,alt] points, with an altitude
+      // bump that rises and falls along the whole chain (peak scales with length).
+      function samplePath(codes, flight) {
+        if (codes.length === 1) return sampleLocalLoop(codes[0], flight && flight.localBig);
+        const segs = [];
+        let total = 0;
+        for (let i = 0; i < codes.length - 1; i++) {
+          const ang = angBetween(C[codes[i]], C[codes[i + 1]]);
+          segs.push(ang); total += ang;
+        }
+        const peak = Math.min(0.5, 0.15 + 0.62 * (total / Math.PI));
+        const pts = [];
+        let acc = 0;
+        for (let i = 0; i < codes.length - 1; i++) {
+          const v0 = toVec(C[codes[i]]), v1 = toVec(C[codes[i + 1]]);
+          const n = Math.max(10, Math.round(segs[i] * R2D * 1.4));
+          for (let j = 0; j <= n; j++) {
+            if (i > 0 && j === 0) continue; // avoid duplicate waypoint
+            const local = j / n;
+            const frac = (acc + segs[i] * local) / total;
+            const [lat, lng] = toLatLng(slerp(v0, v1, local));
+            pts.push([lat, lng, peak * Math.sin(Math.PI * frac)]);
+          }
+          acc += segs[i];
+        }
+        return pts;
+      }
+      // Local flights. Maiden: a small circuit over the field. First supersonic
+      // (big=true): a long elongated dash out west over the Atlantic coast and
+      // back — visually distinct from the maiden's gentle circle.
+      function sampleLocalLoop(code, big) {
+        const [lat, lng] = C[code];
+        const n = 80, pts = [];
+        if (!big) {
+          for (let j = 0; j <= n; j++) {
+            const a = 2 * Math.PI * (j / n);
+            const alt = 0.03 + 0.05 * Math.sin(Math.PI * (j / n)); // gentle climb & descent
+            pts.push([lat + 0.9 * Math.sin(a) * 0.6, lng + 0.9 * Math.cos(a), alt]);
+          }
+          return pts;
+        }
+        // ellipse reaching ~6° west of the field (over the Bay of Biscay)
+        const cx = lng - 3.1, cy = lat + 0.4, a2 = 3.3, b2 = 1.15;
+        for (let j = 0; j <= n; j++) {
+          const a = 2 * Math.PI * (j / n);
+          const alt = 0.05 + 0.1 * Math.sin(Math.PI * (j / n)); // higher: the Mach run
+          pts.push([cy + b2 * Math.sin(a), cx + a2 * Math.cos(a), alt]);
+        }
+        return pts;
+      }
+
+      // ============================================================
+      //  Selection + briefing
+      // ============================================================
+      const $ = id => document.getElementById(id);
+      const rosterList = $("rosterList");
+      let current = null;   // selected flight
+      let curPaths = null;  // sampled point arrays for current flight
+      let flying = false;
+
+      function label(codes) {
+        if (codes.length === 1) return t("local flight", "yerel uçuş");
+        return codes.join(" → ");
+      }
+
+      // build roster
+      FLIGHTS.forEach(f => {
+        const b = document.createElement("button");
+        b.className = "mission" + (f.memorial ? " memorial" : "");
+        b.setAttribute("role", "listitem");
+        b.dataset.id = f.id;
+        b.innerHTML =
+          `<span class="num">${f.num}</span>` +
+          `<span><span class="mtitle">${t(f.name, f.nameTr)}</span>` +
+          `<span class="mmeta">${t(f.date, f.dateTr)} · ${label(f.paths[0])}</span></span>`;
+        b.onclick = () => selectFlight(f);
+        rosterList.appendChild(b);
+      });
+      $("roster").classList.add("collapsed"); // bubbles are primary; list is opt-in
+
+      // ---- clickable mission pins on the globe ----
+      const tip = $("tip");
+      function showTip(f, e) {
+        tip.innerHTML = `<b>${f.num}. ${t(f.name, f.nameTr)}</b><br>${t(f.date, f.dateTr)}`;
+        tip.style.display = "block"; moveTip(e);
+      }
+      function moveTip(e) { tip.style.left = e.clientX + 14 + "px"; tip.style.top = e.clientY + 14 + "px"; }
+      function hideTip() { tip.style.display = "none"; }
+
+      // Pin placement: `pin` on a flight anchors it at that airport (used where
+      // a great-circle midpoint lands somewhere confusing — LHR→BAH's midpoint
+      // is over Turkey — or where same-corridor routes would stack). Otherwise:
+      // multi-stop routes pin at their middle waypoint, simple routes at the
+      // route midpoint, local/memorial flights at their field.
+      function anchorOf(f) {
+        if (f.pin) return C[f.pin].slice();
+        const wp = f.paths[0];
+        if (wp.length === 1) return C[wp[0]].slice();
+        if (wp.length > 2) return C[wp[Math.floor(wp.length / 2)]].slice();
+        return toLatLng(slerp(toVec(C[wp[0]]), toVec(C[wp[1]]), 0.5));
+      }
+      const bubbleData = FLIGHTS.map(f => { const a = anchorOf(f); return { flight: f, lat: a[0], lng: a[1] }; });
+
+      function makeBubble(d) {
+        const f = d.flight;
+        const el = document.createElement("button");
+        el.type = "button";
+        el.className = "mbubble" + (f.memorial ? " memorial" : "") + (current && current.id === f.id ? " active" : "");
+        el.textContent = f.memorial ? "✤" : f.num;
+        el.setAttribute("aria-label", `${t("Mission", "Görev")} ${f.num}: ${t(f.name, f.nameTr)}`);
+        el.onclick = e => { e.stopPropagation(); selectFlight(f); };
+        el.onmouseenter = e => showTip(f, e);
+        el.onmousemove = e => moveTip(e);
+        el.onmouseleave = hideTip;
+        el.onwheel = e => { e.preventDefault(); globe.renderer().domElement.dispatchEvent(new WheelEvent(e.type, e)); };
+        return el;
+      }
+      function refreshBubbles() { globe.htmlElementsData([...bubbleData]); }
+      refreshBubbles();
+
+      function centroidView(codes) {
+        const all = [].concat(...current.paths.map(p => p.map(c => C[c])));
+        let x = 0, y = 0, z = 0;
+        all.forEach(c => { const v = toVec(c); x += v[0]; y += v[1]; z += v[2]; });
+        // NORMALIZE the summed vector: toLatLng assumes a unit vector and clamps
+        // z into asin(), so an unnormalized sum (z>1) snapped the camera to the
+        // pole — the "why am I looking at Greenland" bug.
+        const n = Math.hypot(x, y, z) || 1;
+        const [lat, lng] = toLatLng([x / n, y / n, z / n]);
+        // spread → altitude
+        let maxAng = 0.15;
+        all.forEach(a => all.forEach(bb => { maxAng = Math.max(maxAng, angBetween(a, bb)); }));
+        const alt = Math.max(0.5, Math.min(1.85, 0.3 + maxAng * 1.0));
+        return { lat, lng, altitude: alt };
+      }
+
+      function selectFlight(f) {
+        current = f;
+        exitFly(true);
+        [...rosterList.children].forEach(c => c.classList.toggle("active", c.dataset.id === f.id));
+
+        const br = $("briefing");
+        br.hidden = false;
+        br.classList.toggle("memorial", !!f.memorial);
+        br.scrollTop = 0;
+        $("btag").innerHTML = f.memorial
+          ? t("In memory", "Anısına")
+          : `<span class="tulip" aria-hidden="true"></span> ${t("Mission", "Görev")} ${f.num}`;
+        $("btitle").textContent = t(f.name, f.nameTr);
+        $("bdate").textContent = t(f.date, f.dateTr);
+        $("bcraft").innerHTML =
+          `<b>${f.craft}</b>${f.reg ? " · " + f.reg : ""}<br>${label(f.paths[0])}`;
+        const chips = $("bchips");
+        chips.innerHTML = "";
+        f.stats.forEach(s => {
+          const c = document.createElement("span");
+          c.className = "chip";
+          c.innerHTML = `<b>${t(s.v, s.vTr || s.v)}</b><span>${t(s.l, s.lTr)}</span>`;
+          chips.appendChild(c);
+        });
+        chips.style.display = f.stats.length ? "flex" : "none";
+        $("bdesc").textContent = t(f.desc, f.descTr);
+
+        // memorial vs flyable
+        $("flyBtn").hidden = !!f.memorial;
+        const mem = $("bmemorial");
+        if (f.memorial) {
+          mem.hidden = false;
+          mem.textContent = t(f.memorialNote, f.memorialNoteTr);
+        } else mem.hidden = true;
+
+        // draw the route (faint preview) + endpoint labels/rings + focus camera
+        curPaths = f.paths.map(p => samplePath(p, f));
+        drawPaths(f.memorial ? 0 : 1, true); // memorial: no arc, just the point
+        const eps = endpointLabels(f);
+        globe.labelsData(eps);
+        globe.ringsData(eps.map(l => [l.lat, l.lng]));
+        globe.pointOfView(centroidView(f.paths), 1100);
+        if (planeObj) planeObj.visible = false;
+        refreshBubbles(); // update the active pin highlight
+
+        $("roster").classList.add("collapsed");
+      }
+
+      function endpointLabels(f) {
+        const seen = {}, out = [];
+        f.paths.forEach(p => p.forEach(code => {
+          if (seen[code]) return; seen[code] = 1;
+          out.push({ lat: C[code][0], lng: C[code][1], text: code });
+        }));
+        return out;
+      }
+
+      // reveal fraction 0..1 of every path; preview=faint, else white
+      function drawPaths(frac, preview) {
+        if (!curPaths) return;
+        const data = curPaths.map(pts => {
+          const k = Math.max(2, Math.ceil(frac * pts.length));
+          return {
+            pts: pts.slice(0, k),
+            color: preview ? "rgba(36,67,155,0.6)" : "#e81932",
+            stroke: preview ? 1.8 : 2.8,
+          };
+        }).filter(d => frac > 0);
+        // globe reads pathPointLat/Lng/Alt off each point; give it the arrays
+        globe.pathsData(data.map(d => Object.assign(d.pts, { color: d.color, stroke: d.stroke })));
+      }
+
+      $("bclose").onclick = () => {
+        current = null; curPaths = null;
+        exitFly(true);
+        $("briefing").hidden = true;
+        [...rosterList.children].forEach(c => c.classList.remove("active"));
+        globe.pathsData([]); globe.labelsData([]); globe.ringsData([]);
+        refreshBubbles();
+      };
+
+      // ============================================================
+      //  Fly-through engine
+      // ============================================================
+      let progress = 0, playing = false, rafId = null, lastTs = 0, duration = 8000;
+
+      function beatFor(f, p) {
+        const n = f.beats.length;
+        const idx = Math.min(n - 1, Math.floor(p * n));
+        return f.beats[idx];
+      }
+
+      function orientPlane(p) {
+        if (!planeObj || !curPaths || !THREE) return;
+        const pts = curPaths[0];
+        const fp = p * (pts.length - 1);
+        const i = Math.min(pts.length - 2, Math.floor(fp));
+        const frac = fp - i; // interpolate WITHIN the segment so motion is smooth
+        const here = pts[i], next = pts[i + 1];
+        const a = globe.getCoords(here[0], here[1], here[2]);
+        const b = globe.getCoords(next[0], next[1], next[2]);
+        const pos = new THREE.Vector3(a.x + (b.x - a.x) * frac, a.y + (b.y - a.y) * frac, a.z + (b.z - a.z) * frac);
+        planeObj.position.copy(pos);
+        const forward = new THREE.Vector3(b.x - a.x, b.y - a.y, b.z - a.z).normalize();
+        const up = pos.clone().normalize(); // radial out (globe at origin)
+        const right = new THREE.Vector3().crossVectors(up, forward).normalize();
+        const up2 = new THREE.Vector3().crossVectors(forward, right).normalize();
+        const m = new THREE.Matrix4().makeBasis(right, up2, forward);
+        planeObj.quaternion.setFromRotationMatrix(m);
+        planeObj.visible = true;
+      }
+
+      // Follow-cam: keep the camera locked on the plane through the flight, at a
+      // slight oblique so the arc's height reads. Small tween = smooth trailing.
+      let flyTilt = -20, flyAlt = 0.6;
+      const clampLat = v => Math.max(-80, Math.min(80, v));
+      function followCam(p) {
+        if (!curPaths) return;
+        const pts = curPaths[0];
+        const fp = p * (pts.length - 1);
+        const i = Math.min(pts.length - 2, Math.floor(fp));
+        const frac = fp - i;
+        const lat = pts[i][0] + (pts[i + 1][0] - pts[i][0]) * frac;
+        // take the SHORT way around when the segment crosses the ±180° line
+        // (naive lerp there put the camera on the far side of the planet)
+        let dl = pts[i + 1][1] - pts[i][1];
+        if (dl > 180) dl -= 360; else if (dl < -180) dl += 360;
+        const lng = pts[i][1] + dl * frac;
+        // duration 0: set the camera directly each frame — overlapping tweens
+        // (one launched per frame) were fighting and yanking the view around
+        globe.pointOfView({ lat: clampLat(lat + flyTilt), lng, altitude: flyAlt }, 0);
+      }
+
+      // Moon's shadow on the ground beneath Concorde (eclipse flight only)
+      function positionShadow(p) {
+        if (!shadowDisc) return;
+        if (!(current && current.id === "eclipse")) { shadowDisc.visible = false; return; }
+        const pts = curPaths[0];
+        const i = Math.min(pts.length - 1, Math.round(p * (pts.length - 1)));
+        const g = globe.getCoords(pts[i][0], pts[i][1], 0.015);
+        shadowDisc.position.set(g.x, g.y, g.z);
+        const up = new THREE.Vector3(g.x, g.y, g.z).normalize();
+        shadowDisc.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), up); // lie flat on the surface
+        shadowDisc.visible = true;
+      }
+
+      function renderFrame() {
+        drawPaths(progress, false);
+        orientPlane(progress);
+        positionShadow(progress);
+        if (flying) followCam(progress); // camera stays locked on the plane
+        const b = beatFor(current, progress);
+        $("hudCap").innerHTML = `<b>${current.num}.</b> ${t(b.en, b.tr)}`;
+        $("scrub").value = Math.round(progress * 1000);
+      }
+
+      function tick(ts) {
+        if (!playing) return;
+        if (!lastTs) lastTs = ts;
+        const dt = ts - lastTs; lastTs = ts;
+        progress = Math.min(1, progress + dt / duration);
+        renderFrame();
+        if (progress >= 1) { pause(); return; }
+        rafId = requestAnimationFrame(tick);
+      }
+
+      function play() {
+        if (progress >= 1) { progress = 0; }
+        playing = true; lastTs = 0;
+        $("playBtn").textContent = "❚❚";
+        rafId = requestAnimationFrame(tick);
+      }
+      function pause() {
+        playing = false;
+        if (rafId) cancelAnimationFrame(rafId);
+        $("playBtn").textContent = "►";
+      }
+
+      $("flyBtn").onclick = () => startFly(current);
+      function startFly(f) {
+        if (!f || f.memorial) return;
+        flying = true;
+        $("hud").hidden = false;
+        progress = 0;
+        globe.htmlElementsData([]); // pull the pins so they don't block the route
+        // set the follow-cam's oblique angle + distance from the route's size;
+        // the camera then tracks the plane each frame (see followCam)
+        const v = centroidView(f.paths);
+        if (f.local) {
+          // tiny circuit over one field: zoom in close, almost no tilt (a big
+          // tilt here would swing the camera off the route entirely)
+          flyAlt = 0.34;
+          flyTilt = (v.lat >= 0 ? -1 : 1) * 4;
+        } else {
+          // scale the oblique angle with route size so short routes don't overshoot
+          flyAlt = Math.max(0.5, Math.min(0.95, v.altitude * 0.62));
+          flyTilt = (v.lat >= 0 ? -1 : 1) * Math.min(22, 4 + (v.altitude - 0.5) * 16);
+        }
+        duration = Math.min(32000, Math.max(16000, curPaths[0].length * 110));
+
+        if (reduceMotion) {
+          // no animation: draw full route, park the plane at the end, last beat
+          progress = 1;
+          drawPaths(1, false);
+          orientPlane(1);
+          positionShadow(1);
+          $("hudCap").innerHTML = `<b>${f.num}.</b> ${t(f.beats[f.beats.length - 1].en, f.beats[f.beats.length - 1].tr)}`;
+          $("scrub").value = 1000;
+          pause();
+        } else {
+          renderFrame();
+          play();
+        }
+      }
+
+      $("playBtn").onclick = () => { if (playing) pause(); else play(); };
+      $("scrub").oninput = e => {
+        pause();
+        progress = e.target.value / 1000;
+        renderFrame();
+      };
+      $("exitBtn").onclick = () => exitFly(false);
+
+      // Esc ends the fly-through (or closes the briefing if not flying)
+      document.addEventListener("keydown", e => {
+        if (e.key !== "Escape") return;
+        if (flying) exitFly(false);
+        else if (current) $("bclose").click();
+      });
+
+      function exitFly(silent) {
+        pause();
+        flying = false;
+        $("hud").hidden = true;
+        progress = 0;
+        if (planeObj) planeObj.visible = false;
+        if (shadowDisc) shadowDisc.visible = false;
+        refreshBubbles(); // bring the pins back after the flight
+        if (!silent && current) {
+          drawPaths(current.memorial ? 0 : 1, true); // back to faint preview
+          globe.pointOfView(centroidView(current.paths), 900);
+        }
+      }
+
+      // roster toggle (mobile)
+      $("rosterToggle").onclick = () => $("roster").classList.toggle("collapsed");
+
+      // re-render text on language switch
+      document.addEventListener("langchange", () => {
+        // rebuild roster labels
+        [...rosterList.children].forEach((c, i) => {
+          const f = FLIGHTS[i];
+          c.querySelector(".mtitle").textContent = t(f.name, f.nameTr);
+          c.querySelector(".mmeta").textContent = `${t(f.date, f.dateTr)} · ${label(f.paths[0])}`;
+        });
+        if (current) selectFlightTextRefresh();
+        if (modelLoaded) showModelCredit();
+        refreshBubbles(); // pin aria-labels follow the language
+      });
+      function selectFlightTextRefresh() {
+        const f = current;
+        $("btag").innerHTML = f.memorial ? t("In memory", "Anısına")
+          : `<span class="tulip" aria-hidden="true"></span> ${t("Mission", "Görev")} ${f.num}`;
+        $("btitle").textContent = t(f.name, f.nameTr);
+        $("bdate").textContent = t(f.date, f.dateTr);
+        $("bcraft").innerHTML = `<b>${f.craft}</b>${f.reg ? " · " + f.reg : ""}<br>${label(f.paths[0])}`;
+        $("bdesc").textContent = t(f.desc, f.descTr);
+        [...$("bchips").children].forEach((c, i) => {
+          c.querySelector("b").textContent = t(f.stats[i].v, f.stats[i].vTr || f.stats[i].v);
+          c.querySelector("span").textContent = t(f.stats[i].l, f.stats[i].lTr);
+        });
+        if (f.memorial) $("bmemorial").textContent = t(f.memorialNote, f.memorialNoteTr);
+        if (flying) renderFrame();
+      }
+    </script>
+  </body>
+</html>
