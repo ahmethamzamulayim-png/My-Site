@@ -1006,21 +1006,12 @@
 
       function orientPlane(p) {
         if (!planeObj || !curPaths || !THREE) return;
-        const pts = curPaths[0];
-        const fp = p * (pts.length - 1);
-        const i = Math.min(pts.length - 2, Math.floor(fp));
-        const frac = fp - i; // interpolate WITHIN the segment so motion is smooth
-        const here = pts[i], next = pts[i + 1];
-        const a = globe.getCoords(here[0], here[1], here[2]);
-        const b = globe.getCoords(next[0], next[1], next[2]);
-        const pos = new THREE.Vector3(a.x + (b.x - a.x) * frac, a.y + (b.y - a.y) * frac, a.z + (b.z - a.z) * frac);
+        const { pos, fwd } = planeAt(p); // shared smooth position + tangent
         planeObj.position.copy(pos);
-        const forward = new THREE.Vector3(b.x - a.x, b.y - a.y, b.z - a.z).normalize();
         const up = pos.clone().normalize(); // radial out (globe at origin)
-        const right = new THREE.Vector3().crossVectors(up, forward).normalize();
-        const up2 = new THREE.Vector3().crossVectors(forward, right).normalize();
-        const m = new THREE.Matrix4().makeBasis(right, up2, forward);
-        planeObj.quaternion.setFromRotationMatrix(m);
+        const right = new THREE.Vector3().crossVectors(up, fwd).normalize();
+        const up2 = new THREE.Vector3().crossVectors(fwd, right).normalize();
+        planeObj.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeBasis(right, up2, fwd));
         planeObj.visible = true;
       }
 
@@ -1030,42 +1021,52 @@
       // with our own that points the camera behind+above the plane, looking along
       // the route. Installed on fly, restored on exit.
       let camDist = 90;
-      let camDesiredPos = null, camDesiredTgt = null, camOrigUpdate = null;
+      let camOrigUpdate = null;
+
+      // Position + smooth tangent at fractional progress p (0..1). The tangent is
+      // a centred difference over a small window, so heading varies continuously
+      // instead of snapping to each straight segment (that snapping = the jitter).
+      function planeAt(p) {
+        const pts = curPaths[0], N = pts.length;
+        const posAt = x => {
+          x = Math.max(0, Math.min(N - 1, x));
+          const i = Math.min(N - 2, Math.floor(x)), fr = x - i;
+          const a = globe.getCoords(pts[i][0], pts[i][1], pts[i][2]);
+          const b = globe.getCoords(pts[i + 1][0], pts[i + 1][1], pts[i + 1][2]);
+          return new THREE.Vector3(a.x + (b.x - a.x) * fr, a.y + (b.y - a.y) * fr, a.z + (b.z - a.z) * fr);
+        };
+        const fp = p * (N - 1);
+        const pos = posAt(fp);
+        const fwd = posAt(fp + 1.5).sub(posAt(fp - 1.5));
+        if (fwd.lengthSq() < 1e-9) fwd.set(0, 0, 1);
+        fwd.normalize();
+        return { pos, fwd };
+      }
+
+      // globe.gl hard-locks the camera to the globe centre by calling
+      // controls.update() every frame. Override it (only during a flight) to aim
+      // the camera behind + above the plane — recomputed fresh from `progress`
+      // each render frame, so camera and plane stay in sync and glide. Restored
+      // on exit.
       function installChaseCam() {
         const c = globe.controls();
         if (!c || camOrigUpdate) return;
         camOrigUpdate = c.update.bind(c);
         c.update = function () {
-          if (camDesiredPos) {
+          if (flying && curPaths && THREE) {
+            const { pos, fwd } = planeAt(progress);
+            const up = pos.clone().normalize(); // radial "up" → level horizon
             const cam = globe.camera();
-            cam.up.copy(camDesiredTgt).normalize(); // radial "up" → level horizon
-            cam.position.copy(camDesiredPos);
-            cam.lookAt(camDesiredTgt);
+            cam.up.copy(up);
+            cam.position.copy(pos).addScaledVector(fwd, -camDist * 0.7).addScaledVector(up, camDist * 0.6);
+            cam.lookAt(pos);
           } else camOrigUpdate();
         };
       }
       function removeChaseCam() {
         const c = globe.controls();
         if (c && camOrigUpdate) c.update = camOrigUpdate;
-        camOrigUpdate = null; camDesiredPos = null; camDesiredTgt = null;
-      }
-      function followCam(p) {
-        if (!curPaths || !THREE) return;
-        const pts = curPaths[0];
-        const fp = p * (pts.length - 1);
-        const i = Math.min(pts.length - 2, Math.floor(fp));
-        const frac = fp - i;
-        const a = globe.getCoords(pts[i][0], pts[i][1], pts[i][2]);
-        const b = globe.getCoords(pts[i + 1][0], pts[i + 1][1], pts[i + 1][2]);
-        const plane = new THREE.Vector3(a.x + (b.x - a.x) * frac, a.y + (b.y - a.y) * frac, a.z + (b.z - a.z) * frac);
-        const forward = new THREE.Vector3(b.x - a.x, b.y - a.y, b.z - a.z);
-        if (forward.lengthSq() < 1e-9) forward.set(0, 0, 1);
-        forward.normalize();
-        const up = plane.clone().normalize(); // radial out from globe centre
-        camDesiredTgt = plane;
-        camDesiredPos = plane.clone()
-          .addScaledVector(forward, -camDist * 0.7)  // behind the plane
-          .addScaledVector(up, camDist * 0.6);       // and above it (~40° look-down)
+        camOrigUpdate = null;
       }
 
       // Moon's shadow on the ground beneath Concorde (eclipse flight only)
@@ -1085,7 +1086,6 @@
         drawPaths(progress, false);
         orientPlane(progress);
         positionShadow(progress);
-        if (flying) followCam(progress); // camera stays locked on the plane
         const b = beatFor(current, progress);
         $("hudCap").innerHTML = `<b>${current.num}.</b> ${t(b.en, b.tr)}`;
         $("scrub").value = Math.round(progress * 1000);
@@ -1133,7 +1133,6 @@
           drawPaths(1, false);
           orientPlane(1);
           positionShadow(1);
-          followCam(1); // frame the end of the route (no animation for reduced motion)
           $("hudCap").innerHTML = `<b>${f.num}.</b> ${t(f.beats[f.beats.length - 1].en, f.beats[f.beats.length - 1].tr)}`;
           $("scrub").value = 1000;
           pause();
