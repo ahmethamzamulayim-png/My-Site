@@ -125,6 +125,7 @@
           <div class="stat"><strong id="total">—</strong><span data-i18n="stat.total">Kaydedilen uçuş</span></div>
           <div class="stat late"><strong id="late">—</strong><span data-i18n="stat.late">Rötarlı (15+ dk)</span></div>
           <div class="stat ontime"><strong id="ontime">—</strong><span data-i18n="stat.ontime">Zamanında</span></div>
+          <div class="stat"><strong id="median">—</strong><span data-i18n="stat.median">Medyan kalkış rötarı</span></div>
         </div>
         <p class="warmup" id="warm" hidden data-i18n="warm">ısınma dönemi — yüzdeler henüz oturmadı</p>
         <p class="warmup" data-i18n="metric.note">Ölçülen: kapıdan planlanan ayrılışa göre gerçek kalkış rötarı (taxi süresi hariç), yalnızca kalkışlar.</p>
@@ -143,6 +144,10 @@
           <div class="chart-panel">
             <h3 data-i18n="chart.delay">Günlük ortalama kalkış rötarı (dk)</h3>
             <canvas id="c2" height="110"></canvas>
+          </div>
+          <div class="chart-panel" id="histpanel" hidden>
+            <h3 data-i18n="chart.hist">Kalkış rötarı dağılımı (dk)</h3>
+            <canvas id="c3" height="110"></canvas>
           </div>
         </div>
         <p class="metar" id="metar"></p>
@@ -166,11 +171,13 @@
         "stat.total": "Flights recorded",
         "stat.late": "Delayed (15+ min)",
         "stat.ontime": "On time",
+        "stat.median": "Median departure delay",
         "warm": "warm-up period — percentages haven't settled yet",
         "metric.note": "Measured: gate departure punctuality vs. scheduled pushback (taxi-out excluded), departures only.",
         "offline": "The data source isn't live yet — this page will fill itself once collection starts.",
         "chart.cum": "Flights collected (cumulative)",
         "chart.delay": "Daily average departure delay (min)",
+        "chart.hist": "Departure delay distribution (min)",
         "footer.p": "Data: OpenSky Network + aviationstack + aviationweather.gov · daily GitHub Actions"
       };
     </script>
@@ -187,6 +194,8 @@
           S.pct_delayed == null ? fmt(S.delayed_15) : `${fmt(S.delayed_15)} (${pct(S.pct_delayed)})`;
         document.getElementById("ontime").textContent =
           S.pct_ontime == null ? fmt(S.ontime) : `${fmt(S.ontime)} (${pct(S.pct_ontime)})`;
+        document.getElementById("median").textContent =
+          S.median_delay == null ? "—" : `${fmt(S.median_delay)} ${t("min", "dk")}`;
         if ((S.days || 0) < 14) document.getElementById("warm").hidden = false;
 
         const badge = document.getElementById("badge");
@@ -250,6 +259,20 @@
               borderWidth: 2, pointRadius: 2, tension: 0.2, spanGaps: true }] },
             options: { plugins: { legend: { display: false } }, scales: scales() },
           });
+
+          // delay distribution: on-time bucket in leaf green, delays in THY red
+          const hist = s.delay_hist || [];
+          if (hist.length && hist.some((h) => h.count)) {
+            document.getElementById("histpanel").hidden = false;
+            new Chart(document.getElementById("c3"), {
+              type: "bar",
+              data: { labels: hist.map((h) => h.bin), datasets: [{ data: hist.map((h) => h.count),
+                backgroundColor: hist.map((h) => (h.bin === "<15" ? "#3e8e4e" : "#e81932")),
+                borderRadius: 4, maxBarThickness: 56 }] },
+              options: { plugins: { legend: { display: false } },
+                scales: { x: { grid: { display: false } }, y: { beginAtZero: true } } },
+            });
+          }
         })
         .catch(() => { failed = true; renderFail(); });
 
