@@ -105,6 +105,34 @@
         margin-top: 22px;
         color: var(--muted);
       }
+      .quest {
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 22px;
+        margin-top: 16px;
+      }
+      .quest.main { border-left: 4px solid var(--accent); }
+      .quest h3 {
+        font-family: "Space Grotesk", sans-serif;
+        letter-spacing: -0.02em;
+        margin: 8px 0;
+      }
+      .quest p { margin: 0; color: var(--muted); line-height: 1.6; font-size: 0.95rem; }
+      .quest-tag {
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--accent-2);
+      }
+      .quest-tag.alt { color: var(--cobalt); }
+      .quest-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(258px, 1fr));
+        gap: 16px;
+      }
     </style>
   </head>
   <body>
@@ -175,6 +203,55 @@
         </div>
         <p class="metar" id="metar"></p>
       </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="phase2.eyebrow">Faz 2 · Yol haritası</p>
+          <h2 data-i18n="phase2.h2">Veri büyüdükçe ne inşa edeceğiz</h2>
+        </div>
+
+        <div class="quest main">
+          <span class="quest-tag" data-i18n="phase2.priority">Öncelik · ana görev</span>
+          <h3 data-i18n="phase2.ml.h">Rötar tahmin modeli</h3>
+          <p data-i18n="phase2.ml.p">
+            Bir uçuşun 15+ dk rötarlı olma olasılığını tahmin et — kalkış saati,
+            havayolu, rota, hava durumu (METAR) ve uçağın önceki bacağının
+            rötarından. Geçmiş rötar medyanı temel çizgidir; modelin onu geçmesi
+            gerekir. Önce basit sınıflandırma (rötarlı mı, değil mi), sonra dakika
+            tahmini.
+          </p>
+        </div>
+
+        <div class="quest-grid">
+          <div class="quest">
+            <span class="quest-tag alt" data-i18n="phase2.side">Yan görev</span>
+            <h3 data-i18n="phase2.globe.h">Rota rötar küresi</h3>
+            <p data-i18n="phase2.globe.p">
+              En rötarlı rotalar 3B küre üzerinde; her rota için gerçek rötar
+              medyanı — "IST→X uçuşları tipik olarak 18 dk geç." THY küresinin
+              veriye dayalı, tarihsel kuzeni.
+            </p>
+          </div>
+          <div class="quest">
+            <span class="quest-tag alt" data-i18n="phase2.side">Yan görev</span>
+            <h3 data-i18n="phase2.fleet.h">Filo & uçak rotasyonu</h3>
+            <p data-i18n="phase2.fleet.p">
+              Uçakları kuyruk numarasıyla (icao24) izle: hangi tipler uçuyor, bir
+              uçak günde kaç sefer dönüyor, aktarma süreleri ne kadar sıkışık. Hem
+              somut bilgi hem de tahmin modelinin en güçlü özelliği.
+            </p>
+          </div>
+          <div class="quest">
+            <span class="quest-tag alt" data-i18n="phase2.side">Yan görev</span>
+            <h3 data-i18n="phase2.rhythm.h">Havalimanının nabzı</h3>
+            <p data-i18n="phase2.rhythm.p">
+              IST'nin ritmi: saatlik kalkış/iniş dalgaları, en yoğun ve en sakin
+              saatler, haftanın günlerine göre desenler. Kotasız ve eksiksiz —
+              sadece ADS-B hareketlerinden.
+            </p>
+          </div>
+        </div>
+      </section>
     </main>
 
     <footer class="footer">
@@ -203,6 +280,18 @@
         "chart.cum": "Flights collected (cumulative)",
         "chart.delay": "Daily average departure delay (min)",
         "chart.hist": "Departure delay distribution (min)",
+        "phase2.eyebrow": "Phase 2 · Roadmap",
+        "phase2.h2": "What we'll build as the data grows",
+        "phase2.priority": "Priority · main quest",
+        "phase2.side": "Side quest",
+        "phase2.ml.h": "Delay prediction model",
+        "phase2.ml.p": "Predict the chance a flight is 15+ min late — from departure hour, airline, route, weather (METAR), and the aircraft's previous-leg delay. The historical median is the baseline the model must beat. Classification first (late or not), exact-minutes later.",
+        "phase2.globe.h": "Route delay globe",
+        "phase2.globe.p": "The most-delayed routes on a 3D globe, each showing its true median delay — \"IST→X runs typically 18 min late.\" The data-driven, historical cousin of the THY globe.",
+        "phase2.fleet.h": "Fleet & aircraft rotation",
+        "phase2.fleet.p": "Track aircraft by tail number (icao24): which types fly, how many rotations a single plane makes per day, how tight the turnarounds are. Both concrete knowledge and the prediction model's strongest feature.",
+        "phase2.rhythm.h": "The airport's pulse",
+        "phase2.rhythm.p": "IST's rhythm: hourly departure/arrival banks, busiest and quietest hours, day-of-week patterns. Quota-free and complete, from ADS-B movements alone.",
         "footer.p": "Data: OpenSky Network + aviationstack + aviationweather.gov · daily GitHub Actions"
       };
     </script>
