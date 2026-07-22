@@ -46,8 +46,15 @@
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 16px;
-        margin-top: 26px;
+        margin-top: 16px;
       }
+      .stat-head {
+        font-family: "Space Grotesk", sans-serif;
+        letter-spacing: -0.02em;
+        font-size: 1.05rem;
+        margin: 30px 0 0;
+      }
+      .stat-head span { color: var(--muted); font-weight: 500; font-size: 0.9rem; }
       .stat {
         background: var(--panel-strong);
         border: 1px solid var(--line);
@@ -130,9 +137,14 @@
           </p>
         </div>
 
+        <h3 class="stat-head" data-i18n="head.collect">Veri toplama</h3>
         <div class="stat-grid">
           <div class="stat"><strong id="days">—</strong><span data-i18n="stat.days">Veri toplanıyor (gün)</span></div>
-          <div class="stat"><strong id="total">—</strong><span data-i18n="stat.total">Dakikliği ölçülen uçuş</span></div>
+          <div class="stat"><strong id="movements">—</strong><span data-i18n="stat.movements">İzlenen uçuş hareketi (ADS-B)</span></div>
+          <div class="stat"><strong id="total">—</strong><span data-i18n="stat.total">Kaydedilen uçuş</span></div>
+        </div>
+        <h3 class="stat-head" id="punchead">Dakiklik</h3>
+        <div class="stat-grid">
           <div class="stat late"><strong id="late">—</strong><span data-i18n="stat.late">Rötarlı (15+ dk)</span></div>
           <div class="stat ontime"><strong id="ontime">—</strong><span data-i18n="stat.ontime">Zamanında</span></div>
           <div class="stat"><strong id="median">—</strong><span data-i18n="stat.median">Medyan kalkış rötarı</span></div>
@@ -178,8 +190,10 @@
         "hero.h2": "IST delay dataset",
         "badge.loading": "loading…",
         "hero.text": "There is no public historical delay dataset for Istanbul Airport (LTFM) — this project is building one, collecting and joining the day's flights from OpenSky and aviationstack every night. Phase 2 will train a delay prediction model on it.",
+        "head.collect": "Data collection",
         "stat.days": "Days collecting",
-        "stat.total": "Flights with delay data",
+        "stat.movements": "Flight movements tracked (ADS-B)",
+        "stat.total": "Flights recorded",
         "stat.late": "Delayed (15+ min)",
         "stat.ontime": "On time",
         "stat.median": "Median departure delay",
@@ -200,9 +214,14 @@
 
       function renderStats() {
         document.getElementById("days").textContent = fmt(S.days);
-        // headline the SCORED count (gate-delay data) so it reconciles with
-        // delayed + on-time; pre-metric flights stay archived, just not shown
-        document.getElementById("total").textContent = fmt(S.delay_known ?? S.total_flights);
+        document.getElementById("movements").textContent = fmt(S.movements_tracked);
+        document.getElementById("total").textContent = fmt(S.total_flights);
+        // the punctuality tiles are a subset (only flights with gate data), so the
+        // heading names that count — delayed + on-time then obviously sum to it,
+        // and the big "recorded" number above is clearly a separate thing
+        const ph = document.getElementById("punchead");
+        ph.innerHTML = t("Punctuality ", "Dakiklik ") +
+          `<span>· ${fmt(S.delay_known)} ` + t("flights with gate data", "uçuşta kapı verisi") + "</span>";
         document.getElementById("late").textContent =
           S.pct_delayed == null ? fmt(S.delayed_15) : `${fmt(S.delayed_15)} (${pct(S.pct_delayed)})`;
         document.getElementById("ontime").textContent =
@@ -259,7 +278,7 @@
           const daily = s.daily || [];
           const labels = daily.map((d) => d.date.slice(5));
           let cum = 0;
-          const cumData = daily.map((d) => (cum += (d.scored ?? d.flights)));
+          const cumData = daily.map((d) => (cum += d.flights));
 
           Chart.defaults.color = "#6f6878";
           Chart.defaults.borderColor = "rgba(43, 39, 50, 0.12)";
