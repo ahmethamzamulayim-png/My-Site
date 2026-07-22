@@ -139,6 +139,7 @@
         </div>
         <p class="warmup" id="warm" hidden data-i18n="warm">ısınma dönemi — yüzdeler henüz oturmadı</p>
         <p class="warmup" data-i18n="metric.note">Ölçülen: kapıdan planlanan ayrılışa göre gerçek kalkış rötarı (taxi süresi hariç), yalnızca kalkışlar.</p>
+        <p class="warmup" id="provnote" hidden></p>
       </section>
 
       <section class="section" data-reveal>
@@ -208,6 +209,17 @@
           S.median_delay == null ? "—" : `${fmt(S.median_delay)} ${t("min", "dk")}`;
         if ((S.days || 0) < 14) document.getElementById("warm").hidden = false;
 
+        // the most recent day is still being collected — its count is tiny until
+        // finalized next evening. Say so, so a small "today" never reads as broken.
+        const last = (S.daily || [])[S.daily.length - 1];
+        if (last) {
+          const pn = document.getElementById("provnote");
+          pn.hidden = false;
+          pn.textContent = t(
+            `${last.date} is still being collected — today's count fills in tomorrow after finalization.`,
+            `${last.date} hâlâ toplanıyor — bugünkü sayı yarın kesinleşecek.`);
+        }
+
         const badge = document.getElementById("badge");
         badge.removeAttribute("data-i18n"); // dynamic from here on
         if (S.generated_utc) {
@@ -262,9 +274,13 @@
             options: { plugins: { legend: { display: false } },
               scales: { x: { grid: { display: false } }, y: { beginAtZero: true } } },
           });
+          // drop the last (still-collecting) day from the delay line: a 2-flight
+          // provisional average spikes wildly and reads as a delay explosion
+          const delayData = daily.map((d, i) =>
+            i === daily.length - 1 ? null : d.avg_dep_delay);
           chart2 = new Chart(document.getElementById("c2"), {
             type: "line",
-            data: { labels, datasets: [{ data: daily.map((d) => d.avg_dep_delay),
+            data: { labels, datasets: [{ data: delayData,
               borderColor: "#e81932", backgroundColor: "#e81932",
               borderWidth: 2, pointRadius: 2, tension: 0.2, spanGaps: true }] },
             options: { plugins: { legend: { display: false } }, scales: scales() },
