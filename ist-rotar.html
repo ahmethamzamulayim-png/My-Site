@@ -139,6 +139,7 @@
         </div>
         <p class="warmup" id="warm" hidden data-i18n="warm">ısınma dönemi — yüzdeler henüz oturmadı</p>
         <p class="warmup" data-i18n="metric.note">Ölçülen: kapıdan planlanan ayrılışa göre gerçek kalkış rötarı (taxi süresi hariç), yalnızca kalkışlar.</p>
+        <p class="warmup" id="covnote" hidden></p>
         <p class="warmup" id="provnote" hidden></p>
       </section>
 
@@ -208,6 +209,17 @@
         document.getElementById("median").textContent =
           S.median_delay == null ? "—" : `${fmt(S.median_delay)} ${t("min", "dk")}`;
         if ((S.days || 0) < 14) document.getElementById("warm").hidden = false;
+
+        // punctuality is scored only on flights with aviationstack's gate-based
+        // delay (captured from 2026-07-21 on); older flights are recorded but not
+        // categorized. Show the coverage so 47-of-219 isn't a mystery.
+        if (S.delay_known != null) {
+          const cn = document.getElementById("covnote");
+          cn.hidden = false;
+          cn.textContent = t(
+            `Punctuality is scored on the ${fmt(S.delay_known)} of ${fmt(S.total_flights)} flights that have gate-departure data — coverage grows daily.`,
+            `Dakiklik, kapı verisi olan ${fmt(S.delay_known)}/${fmt(S.total_flights)} uçuş üzerinden hesaplanıyor — kapsam her gün artıyor.`);
+        }
 
         // the most recent day is still being collected — its count is tiny until
         // finalized next evening. Say so, so a small "today" never reads as broken.
