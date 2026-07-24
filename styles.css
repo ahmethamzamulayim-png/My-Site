@@ -512,6 +512,42 @@ body::before {
   gap: 12px;
 }
 
+.cert {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 18px;
+  padding: 10px 20px 10px 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(43, 39, 50, 0.12);
+  background: rgba(255, 255, 255, 0.55);
+  text-decoration: none;
+  color: var(--text);
+  transition: transform 180ms ease, border-color 180ms ease;
+}
+
+.cert:hover {
+  transform: translateY(-2px);
+  border-color: rgba(232, 25, 50, 0.35);
+}
+
+.cert img {
+  width: 72px;
+  height: 72px;
+}
+
+.cert strong {
+  display: block;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 0.95rem;
+}
+
+.cert small {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+}
+
 .skill-list span:nth-child(4n + 1) {
   border-color: rgba(232, 25, 50, 0.35);
   background: rgba(232, 25, 50, 0.05);
