@@ -176,8 +176,8 @@
         </div>
 
         <div class="chart-panel">
-          <h3 data-i18n="chart.hourly.h">Saatlik: kalkışlar ve inişler (İstanbul saati)</h3>
-          <p class="note" data-i18n="chart.hourly.note">Her uçuş iki şekilde sayılıyor: planlanan kalkış saati, ve gerçekten inen uçuşların iniş saati. Çubuğun üzerine gel, tam sayıyı gör.</p>
+          <h3 data-i18n="chart.hourly.h">Saatlik ortalama: kalkışlar ve inişler (İstanbul saati)</h3>
+          <p class="note" data-i18n="chart.hourly.note">Her çubuk, o saatte tipik bir günde ortalama kaç uçuşun kalktığını/indiğini gösteriyor (85 günlük veri, günlere bölünmüş toplam değil). Çubuğun üzerine gel, tam ortalamayı gör.</p>
           <canvas id="c-hourly" height="110"></canvas>
           <div class="callout" data-i18n="callout.turnaround">
             <b>Gece-yatışı deseni:</b> kalkışlar İstanbul saatiyle <b>07:00</b>'de
@@ -194,10 +194,12 @@
           <p class="note" data-i18n="chart.compare.note">Havalimanlarını aç/kapat — grafikler ona göre güncellenir.</p>
           <div class="airport-toggles" id="airport-toggles"></div>
 
-          <h3 data-i18n="chart.weekly.h" style="margin-top: 22px">Haftalık: hangi günler yoğun</h3>
+          <h3 data-i18n="chart.weekly.h" style="margin-top: 22px">Haftalık ortalama: hangi günler yoğun</h3>
+          <p class="note" data-i18n="chart.weekly.note">Her çubuk, o haftanın gününde (ör. tüm Pazarların ortalaması) tipik olarak görülen uçuş sayısı.</p>
           <canvas id="c-weekly" height="110"></canvas>
 
-          <h3 data-i18n="chart.monthly.h" style="margin-top: 28px">Aylık: Mayıs–Temmuz</h3>
+          <h3 data-i18n="chart.monthly.h" style="margin-top: 28px">Aylık ortalama: Mayıs–Temmuz (günlük)</h3>
+          <p class="note" data-i18n="chart.monthly.note">Ay içindeki günlük ortalama uçuş sayısı — toplam değil, böylece eksik günü olan Temmuz (27 gün) ve Haziran (27 gün, küçük bir toplama boşluğu) diğer aylarla adil karşılaştırılabiliyor.</p>
           <canvas id="c-monthly" height="100"></canvas>
         </div>
       </section>
@@ -230,30 +232,42 @@
         "sq1.eyebrow": "Side quest 1",
         "sq1.h2": "The airport's pulse",
         "sq1.text": "From the 131,334-flight IST dataset: hourly/weekly/monthly traffic patterns and a 3-airport comparison. A snapshot — will refresh as the data grows.",
-        "chart.hourly.h": "Hourly: departures vs. landings (Istanbul local time)",
-        "chart.hourly.note": "Every flight counted two ways: the scheduled departure hour, and the hour flights that actually landed touched down. Hover a bar for the exact count.",
+        "chart.hourly.h": "Hourly average: departures vs. landings (Istanbul local time)",
+        "chart.hourly.note": "Each bar is the average number of flights in that hour, on a typical day (from 85 days of data — not a raw multi-day total). Hover a bar for the exact average.",
         "callout.turnaround": "<b>The overnight-turnaround pattern:</b> departures peak at Istanbul local <b>07:00</b> (the morning bank), while landed arrivals peak at <b>22:00–23:00</b> (the night bank). That ~8–9 hour gap lines up with how long a plane landing at night needs to sit — crew rest rules — before it's ready to fly again in the morning bank. This is exactly the mechanism the \"aircraft rotation\" feature in Phase 2 is meant to capture.",
         "chart.compare.h": "3-airport comparison",
         "chart.compare.note": "Toggle airports on/off — the charts update accordingly.",
-        "chart.weekly.h": "Weekly: which days are busiest",
-        "chart.monthly.h": "Monthly: May–July",
+        "chart.weekly.h": "Weekly average: which days are busiest",
+        "chart.weekly.note": "Each bar is the typical flight count for that day of the week (e.g. the average across every Sunday in the data).",
+        "chart.monthly.h": "Monthly average: May–July (per day)",
+        "chart.monthly.note": "Average flights per day WITHIN each month — not a total — so partial July (27 days) and June (27 days, a small collection gap) compare fairly against complete months.",
         "footer.p": "Data: IST + LHR + FRA · OpenSky Network + aviationstack"
       };
     </script>
     <script>
       // ------------------------------------------------------------------
-      // DATA. Computed once from the real dataset (131,334 IST flights,
-      // 75,291 LHR, 95,968 FRA; 2026-05-01 to 2026-07-27) and pasted in as a
-      // snapshot — this page doesn't fetch live, so re-run the analysis and
-      // update these arrays when we want a fresher picture.
+      // DATA — all AVERAGES PER DAY, not raw multi-day sums. (Earlier drafts
+      // summed straight across the whole date range: e.g. "5,919 departures
+      // at 07:00" was actually 5,919 across 85 days, ~70/day — a sum like
+      // that reads as one impossible hour unless it's divided back down.)
+      // Hourly = average flights in that hour on a typical day (÷85 days).
+      // Weekly = average flights on a typical Mon/Tue/etc. (÷ how many of
+      //   that weekday actually appear in the data, not a flat ÷12).
+      // Monthly = average flights per day WITHIN that month (÷ observed
+      //   days in that month — July is partial (to the 27th) and IST is
+      //   missing 3 June days to a real, small collection gap, so dividing
+      //   by calendar length would have quietly under-counted them).
+      // Snapshot from 2026-05-01..07-27 (131,334 IST + 75,291 LHR + 95,968
+      // FRA flights) — this page doesn't fetch live; re-run the analysis
+      // and paste in fresh numbers when we want an update.
       // ------------------------------------------------------------------
-      const depByHour = [1076,3452,1567,746,623,458,3995,5919,3279,1304,2026,2701,3406,3952,3928,4756,4083,2832,4754,3091,3520,2523,1371,1023];
-      const arrByHour = [1136,633,414,833,2101,2061,636,593,1252,2013,2702,3427,3688,3109,3216,2230,3130,2927,2266,2150,1508,1330,3985,3923];
+      const depByHour = [12.7,40.6,18.4,8.8,7.3,5.4,47.0,69.6,38.6,15.3,23.8,31.8,40.1,46.5,46.2,56.0,48.0,33.3,55.9,36.4,41.4,29.7,16.1,12.0];
+      const arrByHour = [13.4,7.4,4.9,9.8,24.7,24.2,7.5,7.0,14.7,23.7,31.8,40.3,43.4,36.6,37.8,26.2,36.8,34.4,26.7,25.3,17.7,15.6,46.9,46.2];
 
       const AIRPORTS = [
-        { code: "IST", color: "#e81932", weekly: [18052,17156,17400,18436,20179,19470,20641], monthly: [41899,43797,45638] },
-        { code: "LHR", color: "#2b50b5", weekly: [10430,10117,9841,10738,10813,11216,12136],  monthly: [26797,24710,23784] },
-        { code: "FRA", color: "#1f9e93", weekly: [13449,12798,12931,13428,14246,14086,15030],  monthly: [33234,31372,31362] },
+        { code: "IST", color: "#e81932", weekly: [1504.3,1559.6,1581.8,1536.3,1552.2,1497.7,1587.8], monthly: [1351.6,1622.1,1690.3] },
+        { code: "LHR", color: "#2b50b5", weekly: [802.3,919.7,820.1,894.8,831.8,862.8,933.5],        monthly: [864.4,852.1,880.9] },
+        { code: "FRA", color: "#1f9e93", weekly: [1034.5,1163.5,1077.6,1119.0,1095.8,1083.5,1156.2], monthly: [1072.1,1081.8,1161.6] },
       ];
 
       const weekdayLabels = { tr: ["Pzt","Sal","Çar","Per","Cum","Cmt","Paz"], en: ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"] };
