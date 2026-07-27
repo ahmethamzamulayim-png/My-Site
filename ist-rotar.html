@@ -186,9 +186,10 @@
         <h3 class="stat-head" data-i18n="head.collect">Veri toplama</h3>
         <div class="stat-grid">
           <div class="stat"><strong id="days">—</strong><span data-i18n="stat.days">Veri toplanıyor (gün)</span></div>
-          <div class="stat"><strong id="movements">—</strong><span data-i18n="stat.movements">İzlenen uçuş hareketi (ADS-B)</span></div>
+          <div class="stat"><strong id="crossval">—</strong><span data-i18n="stat.crossval">ADS-B ile doğrulanmış · OpenSky</span></div>
           <div class="stat"><strong id="total">—</strong><span data-i18n="stat.total">Kaydedilen uçuş</span></div>
         </div>
+        <p class="warmup" data-i18n="provenance">Tarihsel aylar tarife kaynaklı (aviationstack). Canlı günlük toplama ise her uçuşu ADS-B ile (OpenSky) çapraz doğruluyor — bu projenin üzerine kurulduğu açık, gerçek zamanlı kaynak.</p>
         <h3 class="stat-head" id="punchead">Dakiklik</h3>
         <div class="stat-grid">
           <div class="stat late"><strong id="late">—</strong><span data-i18n="stat.late">Rötarlı (15+ dk)</span></div>
@@ -300,7 +301,8 @@
         "hero.text": "There is no public historical delay dataset for Istanbul Airport (LTFM) — this project is building one, collecting and joining the day's flights from OpenSky and aviationstack every night. Phase 2 will train a delay prediction model on it.",
         "head.collect": "Data collection",
         "stat.days": "Days collecting",
-        "stat.movements": "Flight movements tracked (ADS-B)",
+        "stat.crossval": "ADS-B cross-validated · OpenSky",
+        "provenance": "The historical months are schedule-sourced (aviationstack). The live daily collection cross-validates every flight against ADS-B (OpenSky) — the open, real-time source this project was built on.",
         "stat.total": "Flights recorded",
         "stat.late": "Delayed (15+ min)",
         "stat.ontime": "On time",
@@ -338,11 +340,11 @@
 
       function renderStats() {
         document.getElementById("days").textContent = fmt(S.days);
-        // ADS-B tile only makes sense once live two-source collection has run;
-        // the historical backfill is aviationstack-only, so hide it while it's 0
-        const movEl = document.getElementById("movements");
-        movEl.textContent = fmt(S.movements_tracked);
-        movEl.closest(".stat").hidden = !S.movements_tracked;
+        // OpenSky cross-validated count only exists once live two-source collection
+        // has run; the historical backfill is aviationstack-only, so hide while 0
+        const xvEl = document.getElementById("crossval");
+        xvEl.textContent = fmt(S.cross_validated);
+        xvEl.closest(".stat").hidden = !S.cross_validated;
         document.getElementById("total").textContent = fmt(S.total_flights);
         // the punctuality tiles are a subset (only flights with gate data), so the
         // heading names that count — delayed + on-time then obviously sum to it,

@@ -1,10 +1,11 @@
 {
- "generated_utc": "2026-07-27T08:58:22+00:00",
+ "generated_utc": "2026-07-27T09:30:31+00:00",
  "days": 86,
  "first_date": "2026-05-01",
  "last_date": "2026-07-27",
  "total_flights": 131334,
  "movements_tracked": 0,
+ "cross_validated": 0,
  "delay_known": 65799,
  "median_delay": 0.0,
  "delay_hist": [
