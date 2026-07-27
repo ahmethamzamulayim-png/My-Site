@@ -331,8 +331,9 @@
       };
     </script>
     <script>
-      const DATA_URL =
-        "https://raw.githubusercontent.com/ahmethamzamulayim-png/ist-delay-dataset/main/data/summary.json";
+      // aggregate stats only (no raw flight rows) — the private pipeline publishes
+      // this here; the raw dataset stays in the private repo per its data license
+      const DATA_URL = "summary.json";
       let S = null, failed = false, chart1 = null, chart2 = null;
       const pct = (v) => (getLang() === "tr" ? "%" + fmt(v) : fmt(v) + "%");
 
