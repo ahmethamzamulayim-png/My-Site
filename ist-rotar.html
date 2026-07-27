@@ -338,7 +338,11 @@
 
       function renderStats() {
         document.getElementById("days").textContent = fmt(S.days);
-        document.getElementById("movements").textContent = fmt(S.movements_tracked);
+        // ADS-B tile only makes sense once live two-source collection has run;
+        // the historical backfill is aviationstack-only, so hide it while it's 0
+        const movEl = document.getElementById("movements");
+        movEl.textContent = fmt(S.movements_tracked);
+        movEl.closest(".stat").hidden = !S.movements_tracked;
         document.getElementById("total").textContent = fmt(S.total_flights);
         // the punctuality tiles are a subset (only flights with gate data), so the
         // heading names that count — delayed + on-time then obviously sum to it,
@@ -403,14 +407,15 @@
         if (!d) return;
         const conv = d.conversion == null ? "—" : pct(Math.round(d.conversion * 100));
         const med = d.median_delay == null ? "—" : `${fmt(d.median_delay)} ${t("min", "dk")}`;
+        const dash = (v) => (v ? fmt(v) : "—"); // 0/absent -> not available
         const tiles = [
-          [fmt(d.movements), t("ADS-B movements tracked", "izlenen ADS-B hareketi"), ""],
+          [dash(d.movements), t("ADS-B movements tracked", "izlenen ADS-B hareketi"), ""],
           [fmt(d.flights), t("flights recorded", "kaydedilen uçuş"), ""],
           [fmt(d.flew), t("departures flown", "uçan kalkış"), ""],
           [fmt(d.delayed), t("delayed 15+ min", "15+ dk rötarlı"), "late"],
           [fmt(d.ontime), t("on time", "zamanında"), "ontime"],
           [med, t("median delay", "medyan rötar"), ""],
-          [fmt(d.metars), t("METAR weather obs", "METAR gözlemi"), ""],
+          [dash(d.metars), t("METAR weather obs", "METAR gözlemi"), ""],
           [conv, t("schedule match rate", "tarife eşleşme oranı"), ""],
         ];
         document.getElementById("dayboard").innerHTML = tiles.map(
