@@ -194,7 +194,7 @@
         <div class="stat-grid">
           <div class="stat late"><strong id="late">—</strong><span data-i18n="stat.late">Rötarlı (15+ dk)</span></div>
           <div class="stat ontime"><strong id="ontime">—</strong><span data-i18n="stat.ontime">Zamanında</span></div>
-          <div class="stat"><strong id="median">—</strong><span data-i18n="stat.median">Medyan kalkış rötarı</span></div>
+          <div class="stat"><strong id="median">—</strong><span data-i18n="stat.median">Rötarlıysa medyan gecikme</span></div>
         </div>
         <p class="warmup" id="warm" hidden data-i18n="warm">ısınma dönemi — yüzdeler henüz oturmadı</p>
         <p class="warmup" data-i18n="metric.note">Ölçülen: kapıdan planlanan ayrılışa göre gerçek kalkış rötarı (taxi süresi hariç), yalnızca kalkışlar.</p>
@@ -306,7 +306,7 @@
         "stat.total": "Flights recorded",
         "stat.late": "Delayed (15+ min)",
         "stat.ontime": "On time",
-        "stat.median": "Median departure delay",
+        "stat.median": "Median delay when late",
         "warm": "warm-up period — percentages haven't settled yet",
         "metric.note": "Measured: gate departure punctuality vs. scheduled pushback (taxi-out excluded), departures only.",
         "offline": "The data source isn't live yet — this page will fill itself once collection starts.",
@@ -357,7 +357,7 @@
         document.getElementById("ontime").textContent =
           S.pct_ontime == null ? fmt(S.ontime) : `${fmt(S.ontime)} (${pct(S.pct_ontime)})`;
         document.getElementById("median").textContent =
-          S.median_delay == null ? "—" : `${fmt(S.median_delay)} ${t("min", "dk")}`;
+          S.median_when_delayed == null ? "—" : `${fmt(S.median_when_delayed)} ${t("min", "dk")}`;
         if ((S.days || 0) < 14) document.getElementById("warm").hidden = false;
 
         // the most recent day is still being collected — its count is tiny until
