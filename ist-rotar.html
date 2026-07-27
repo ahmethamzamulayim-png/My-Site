@@ -133,6 +133,25 @@
         grid-template-columns: repeat(auto-fit, minmax(258px, 1fr));
         gap: 16px;
       }
+      .daypick-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+      .daypick {
+        min-height: 40px;
+        padding: 6px 14px;
+        border-radius: 12px;
+        border: 1px solid var(--line);
+        background: var(--panel-strong);
+        color: var(--text);
+        font: inherit;
+        font-weight: 600;
+        cursor: pointer;
+      }
     </style>
   </head>
   <body>
@@ -180,6 +199,19 @@
         <p class="warmup" id="warm" hidden data-i18n="warm">ısınma dönemi — yüzdeler henüz oturmadı</p>
         <p class="warmup" data-i18n="metric.note">Ölçülen: kapıdan planlanan ayrılışa göre gerçek kalkış rötarı (taxi süresi hariç), yalnızca kalkışlar.</p>
         <p class="warmup" id="provnote" hidden></p>
+      </section>
+
+      <section class="section" data-reveal id="boardsection" hidden>
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="board.eyebrow">Günlük döküm</p>
+          <h2 data-i18n="board.h2">Bir günün verisini incele</h2>
+        </div>
+        <label class="daypick-label">
+          <span data-i18n="board.pick">Gün:</span>
+          <select class="daypick" id="daypick"></select>
+        </label>
+        <p class="warmup" id="dayprov" hidden></p>
+        <div class="stat-grid" id="dayboard"></div>
       </section>
 
       <section class="section" data-reveal>
@@ -280,6 +312,9 @@
         "chart.cum": "Flights collected (cumulative)",
         "chart.delay": "Daily average departure delay (min)",
         "chart.hist": "Departure delay distribution (min)",
+        "board.eyebrow": "Daily breakdown",
+        "board.h2": "Inspect a single day",
+        "board.pick": "Day:",
         "phase2.eyebrow": "Phase 2 · Roadmap",
         "phase2.h2": "What we'll build as the data grows",
         "phase2.priority": "Priority · main quest",
@@ -310,7 +345,7 @@
         // and the big "recorded" number above is clearly a separate thing
         const ph = document.getElementById("punchead");
         ph.innerHTML = t("Punctuality ", "Dakiklik ") +
-          `<span>· ${fmt(S.delay_known)} ` + t("flights with gate data", "uçuşta kapı verisi") + "</span>";
+          `<span>· ${fmt(S.delay_known)} ` + t("flown departures", "uçan kalkış") + "</span>";
         document.getElementById("late").textContent =
           S.pct_delayed == null ? fmt(S.delayed_15) : `${fmt(S.delayed_15)} (${pct(S.pct_delayed)})`;
         document.getElementById("ontime").textContent =
@@ -349,6 +384,45 @@
         }
       }
 
+      // --- per-day board: pick any day, see that day's haul ---
+      function setupBoard() {
+        const daily = S.daily || [];
+        if (!daily.length) return;
+        document.getElementById("boardsection").hidden = false;
+        const sel = document.getElementById("daypick");
+        sel.innerHTML = daily.map((d, i) => `<option value="${i}">${d.date}</option>`).join("");
+        // default to the latest FINALIZED day (the last one is still collecting)
+        sel.value = daily.length >= 2 ? daily.length - 2 : 0;
+        sel.onchange = renderBoard;
+        renderBoard();
+      }
+      function renderBoard() {
+        const daily = S.daily || [];
+        const sel = document.getElementById("daypick");
+        const d = daily[+sel.value];
+        if (!d) return;
+        const conv = d.conversion == null ? "—" : pct(Math.round(d.conversion * 100));
+        const med = d.median_delay == null ? "—" : `${fmt(d.median_delay)} ${t("min", "dk")}`;
+        const tiles = [
+          [fmt(d.movements), t("ADS-B movements tracked", "izlenen ADS-B hareketi"), ""],
+          [fmt(d.flights), t("flights recorded", "kaydedilen uçuş"), ""],
+          [fmt(d.flew), t("departures flown", "uçan kalkış"), ""],
+          [fmt(d.delayed), t("delayed 15+ min", "15+ dk rötarlı"), "late"],
+          [fmt(d.ontime), t("on time", "zamanında"), "ontime"],
+          [med, t("median delay", "medyan rötar"), ""],
+          [fmt(d.metars), t("METAR weather obs", "METAR gözlemi"), ""],
+          [conv, t("schedule match rate", "tarife eşleşme oranı"), ""],
+        ];
+        document.getElementById("dayboard").innerHTML = tiles.map(
+          ([v, l, c]) => `<div class="stat ${c}"><strong>${v}</strong><span>${l}</span></div>`).join("");
+        const prov = document.getElementById("dayprov");
+        if (+sel.value === daily.length - 1) {
+          prov.hidden = false;
+          prov.textContent = t("still collecting today — finalizes tomorrow evening.",
+                               "bugün hâlâ toplanıyor — yarın akşam kesinleşir.");
+        } else prov.hidden = true;
+      }
+
       function renderFail() {
         const badge = document.getElementById("badge");
         badge.removeAttribute("data-i18n");
@@ -363,6 +437,7 @@
         .then((s) => {
           S = s;
           renderStats();
+          setupBoard();
 
           const daily = s.daily || [];
           const labels = daily.map((d) => d.date.slice(5));
@@ -413,7 +488,7 @@
         .catch(() => { failed = true; renderFail(); });
 
       document.addEventListener("langchange", () => {
-        if (S) renderStats();
+        if (S) { renderStats(); renderBoard(); }
         else if (failed) renderFail();
         if (chart2) {
           chart2.options.scales.y.title.text = t("min", "dk");
