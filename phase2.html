@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Faz 2: Rötar Tahmini | Ahmet Hamza Mülayim</title>
+    <meta
+      name="description"
+      content="IST rötar veri seti üzerine inşa edilen rötar tahmin modeli yol haritası ve ilk bulgular — saatlik, haftalık, aylık trafik ve 3 havalimanı karşılaştırması."
+    />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e81932'/%3E%3Ctext x='32' y='45' font-size='38' font-family='sans-serif' font-weight='700' text-anchor='middle' fill='%23fff'%3EA%3C/text%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="i18n.js"></script>
+    <script defer src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <style>
+      /* page-local additions on top of the site tokens — same classes as
+         ist-rotar.html so the two pages read as one project family */
+      .quest {
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 22px;
+        margin-top: 16px;
+      }
+      .quest.main { border-left: 4px solid var(--accent); }
+      .quest.link { cursor: pointer; text-decoration: none; display: block; color: inherit; }
+      .quest.link:hover { filter: brightness(0.97); }
+      .quest h3 {
+        font-family: "Space Grotesk", sans-serif;
+        letter-spacing: -0.02em;
+        margin: 8px 0;
+      }
+      .quest p { margin: 0; color: var(--muted); line-height: 1.6; font-size: 0.95rem; }
+      .quest-tag {
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--accent-2);
+      }
+      .quest-tag.alt { color: var(--cobalt); }
+      .quest-tag.done { color: var(--leaf); }
+      .quest-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(258px, 1fr));
+        gap: 16px;
+      }
+      .chart-panel {
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 22px;
+        margin-top: 22px;
+      }
+      .chart-panel h3 {
+        font-family: "Space Grotesk", sans-serif;
+        letter-spacing: -0.03em;
+        margin: 0 0 6px;
+      }
+      .chart-panel .note { margin: 0 0 14px; color: var(--muted); font-size: 0.88rem; }
+      .callout {
+        background: var(--panel);
+        border-left: 4px solid var(--cobalt);
+        border-radius: 8px;
+        padding: 16px 20px;
+        margin-top: 18px;
+        line-height: 1.6;
+        font-size: 0.95rem;
+      }
+      .callout b { font-family: "Space Grotesk", sans-serif; }
+      /* airport toggle pills: double as the legend for the weekly/monthly charts */
+      .airport-toggles { display: flex; gap: 10px; margin: 4px 0 18px; flex-wrap: wrap; }
+      .apill {
+        display: inline-flex; align-items: center; gap: 7px;
+        padding: 6px 14px; border-radius: 999px;
+        border: 1.5px solid var(--line); background: var(--panel-strong);
+        font: inherit; font-weight: 700; font-size: 0.85rem; cursor: pointer;
+        color: var(--text); opacity: 0.45; transition: opacity 150ms ease;
+      }
+      .apill.active { opacity: 1; }
+      .apill i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+    </style>
+  </head>
+  <body>
+    <div class="noise"></div>
+    <header class="site-header">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">A</span>
+        <span>
+          <strong>Ahmet Hamza Mülayim</strong>
+          <small>Marmara University</small>
+        </span>
+      </a>
+      <nav class="site-nav">
+        <a href="index.html#projects" data-i18n="nav.back">← Portföy</a>
+        <a href="ist-rotar.html" data-i18n="nav.pipeline">Veri hattı →</a>
+        <button class="lang-toggle" type="button">EN</button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="hero.eyebrow">Faz 2</p>
+          <h2 data-i18n="hero.h2">IST veri setiyle rötar tahmini</h2>
+          <p class="hero-text" data-i18n="hero.text">
+            IST rötar veri seti üzerine inşa edilen ikinci aşama: bir rötar tahmin
+            modeli, ve bu modeli inşa ederken yolda öğrenilen somut bulgular.
+            Aşağıda yol haritası ve ilk sonuçlar var.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="quest main">
+          <span class="quest-tag" data-i18n="q.priority">Öncelik · ana görev</span>
+          <h3 data-i18n="q.ml.h">Rötar tahmin modeli</h3>
+          <p data-i18n="q.ml.p">
+            Bir uçuşun 15+ dk rötarlı olma olasılığını tahmin et — kalkış saati,
+            havayolu, rota, hava durumu (METAR) ve uçağın önceki bacağının
+            rötarından. Geçmiş rötar medyanı temel çizgidir; modelin onu geçmesi
+            gerekir. Önce basit sınıflandırma (rötarlı mı, değil mi), sonra dakika
+            tahmini.
+          </p>
+        </div>
+
+        <div class="quest-grid">
+          <a class="quest link" href="#sidequest1">
+            <span class="quest-tag done" data-i18n="q.done">Yan görev · ilk sonuçlar hazır ↓</span>
+            <h3 data-i18n="q.rhythm.h">Havalimanının nabzı</h3>
+            <p data-i18n="q.rhythm.p">
+              IST'nin ritmi: saatlik kalkış/iniş dalgaları, haftanın günlerine ve
+              aylara göre trafik, 3 havalimanı karşılaştırması. Kotasız ve
+              eksiksiz — sadece ADS-B hareketlerinden.
+            </p>
+          </a>
+          <div class="quest">
+            <span class="quest-tag alt" data-i18n="q.side">Yan görev</span>
+            <h3 data-i18n="q.globe.h">Rota rötar küresi</h3>
+            <p data-i18n="q.globe.p">
+              En rötarlı rotalar 3B küre üzerinde; her rota için gerçek rötar
+              medyanı — "IST→X uçuşları tipik olarak 18 dk geç." THY küresinin
+              veriye dayalı, tarihsel kuzeni.
+            </p>
+          </div>
+          <div class="quest">
+            <span class="quest-tag alt" data-i18n="q.side">Yan görev</span>
+            <h3 data-i18n="q.fleet.h">Filo & uçak rotasyonu</h3>
+            <p data-i18n="q.fleet.p">
+              Uçakları kuyruk numarasıyla (icao24) izle: hangi tipler uçuyor, bir
+              uçak günde kaç sefer dönüyor, aktarma süreleri ne kadar sıkışık. Hem
+              somut bilgi hem de tahmin modelinin en güçlü özelliği.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" data-reveal id="sidequest1">
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="sq1.eyebrow">Yan görev 1</p>
+          <h2 data-i18n="sq1.h2">Havalimanının nabzı</h2>
+          <p class="hero-text" data-i18n="sq1.text">
+            131.334 uçuşluk IST veri setinden, saatlik/haftalık/aylık trafik
+            desenleri ve 3 havalimanının karşılaştırması. Bu bir anlık görüntü —
+            veri büyüdükçe yenilenecek.
+          </p>
+        </div>
+
+        <div class="chart-panel">
+          <h3 data-i18n="chart.hourly.h">Saatlik: kalkışlar ve inişler (İstanbul saati)</h3>
+          <p class="note" data-i18n="chart.hourly.note">Her uçuş iki şekilde sayılıyor: planlanan kalkış saati, ve gerçekten inen uçuşların iniş saati. Çubuğun üzerine gel, tam sayıyı gör.</p>
+          <canvas id="c-hourly" height="110"></canvas>
+          <div class="callout" data-i18n="callout.turnaround">
+            <b>Gece-yatışı deseni:</b> kalkışlar İstanbul saatiyle <b>07:00</b>'de
+            (sabah dalgası), inen uçuşlar ise <b>22:00–23:00</b>'te (gece dalgası)
+            zirve yapıyor. Aradaki ~8-9 saat, gece inen bir uçağın mürettebat
+            dinlenme kuralları nedeniyle beklemesi gereken ve ertesi sabah tekrar
+            uçabilmesi için gereken süreye denk geliyor — Faz 2'nin "uçak
+            rotasyonu" özelliğinin tam olarak yakalamaya çalıştığı mekanizma bu.
+          </div>
+        </div>
+
+        <div class="chart-panel">
+          <h3 data-i18n="chart.compare.h">3 havalimanı karşılaştırması</h3>
+          <p class="note" data-i18n="chart.compare.note">Havalimanlarını aç/kapat — grafikler ona göre güncellenir.</p>
+          <div class="airport-toggles" id="airport-toggles"></div>
+
+          <h3 data-i18n="chart.weekly.h" style="margin-top: 22px">Haftalık: hangi günler yoğun</h3>
+          <canvas id="c-weekly" height="110"></canvas>
+
+          <h3 data-i18n="chart.monthly.h" style="margin-top: 28px">Aylık: Mayıs–Temmuz</h3>
+          <canvas id="c-monthly" height="100"></canvas>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p data-i18n="footer.p">Veri: IST + LHR + FRA · OpenSky Network + aviationstack</p>
+      <p id="year"></p>
+    </footer>
+
+    <script>
+      window.I18N_LANG = "en";
+      window.I18N = {
+        "nav.back": "← Portfolio",
+        "nav.pipeline": "Data pipeline →",
+        "hero.eyebrow": "Phase 2",
+        "hero.h2": "Delay prediction on the IST dataset",
+        "hero.text": "The second stage built on the IST delay dataset: a delay prediction model, and the concrete findings learned along the way. The roadmap and first results are below.",
+        "q.priority": "Priority · main quest",
+        "q.ml.h": "Delay prediction model",
+        "q.ml.p": "Predict the chance a flight is 15+ min late — from departure hour, airline, route, weather (METAR), and the aircraft's previous-leg delay. The historical median is the baseline the model must beat. Classification first (late or not), exact-minutes later.",
+        "q.done": "Side quest · first results ready ↓",
+        "q.rhythm.h": "The airport's pulse",
+        "q.rhythm.p": "IST's rhythm: hourly departure/arrival banks, traffic by day of week and by month, a 3-airport comparison. Quota-free and complete, from ADS-B movements alone.",
+        "q.side": "Side quest",
+        "q.globe.h": "Route delay globe",
+        "q.globe.p": "The most-delayed routes on a 3D globe, each showing its true median delay — \"IST→X runs typically 18 min late.\" The data-driven, historical cousin of the THY globe.",
+        "q.fleet.h": "Fleet & aircraft rotation",
+        "q.fleet.p": "Track aircraft by tail number (icao24): which types fly, how many rotations a single plane makes per day, how tight the turnarounds are. Both concrete knowledge and the prediction model's strongest feature.",
+        "sq1.eyebrow": "Side quest 1",
+        "sq1.h2": "The airport's pulse",
+        "sq1.text": "From the 131,334-flight IST dataset: hourly/weekly/monthly traffic patterns and a 3-airport comparison. A snapshot — will refresh as the data grows.",
+        "chart.hourly.h": "Hourly: departures vs. landings (Istanbul local time)",
+        "chart.hourly.note": "Every flight counted two ways: the scheduled departure hour, and the hour flights that actually landed touched down. Hover a bar for the exact count.",
+        "callout.turnaround": "<b>The overnight-turnaround pattern:</b> departures peak at Istanbul local <b>07:00</b> (the morning bank), while landed arrivals peak at <b>22:00–23:00</b> (the night bank). That ~8–9 hour gap lines up with how long a plane landing at night needs to sit — crew rest rules — before it's ready to fly again in the morning bank. This is exactly the mechanism the \"aircraft rotation\" feature in Phase 2 is meant to capture.",
+        "chart.compare.h": "3-airport comparison",
+        "chart.compare.note": "Toggle airports on/off — the charts update accordingly.",
+        "chart.weekly.h": "Weekly: which days are busiest",
+        "chart.monthly.h": "Monthly: May–July",
+        "footer.p": "Data: IST + LHR + FRA · OpenSky Network + aviationstack"
+      };
+    </script>
+    <script>
+      // ------------------------------------------------------------------
+      // DATA. Computed once from the real dataset (131,334 IST flights,
+      // 75,291 LHR, 95,968 FRA; 2026-05-01 to 2026-07-27) and pasted in as a
+      // snapshot — this page doesn't fetch live, so re-run the analysis and
+      // update these arrays when we want a fresher picture.
+      // ------------------------------------------------------------------
+      const depByHour = [1076,3452,1567,746,623,458,3995,5919,3279,1304,2026,2701,3406,3952,3928,4756,4083,2832,4754,3091,3520,2523,1371,1023];
+      const arrByHour = [1136,633,414,833,2101,2061,636,593,1252,2013,2702,3427,3688,3109,3216,2230,3130,2927,2266,2150,1508,1330,3985,3923];
+
+      const AIRPORTS = [
+        { code: "IST", color: "#e81932", weekly: [18052,17156,17400,18436,20179,19470,20641], monthly: [41899,43797,45638] },
+        { code: "LHR", color: "#2b50b5", weekly: [10430,10117,9841,10738,10813,11216,12136],  monthly: [26797,24710,23784] },
+        { code: "FRA", color: "#1f9e93", weekly: [13449,12798,12931,13428,14246,14086,15030],  monthly: [33234,31372,31362] },
+      ];
+
+      const weekdayLabels = { tr: ["Pzt","Sal","Çar","Per","Cum","Cmt","Paz"], en: ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"] };
+      const monthLabels   = { tr: ["Mayıs","Haziran","Temmuz"], en: ["May","Jun","Jul"] };
+      const hourLabels    = Array.from({ length: 24 }, (_, h) => String(h));
+
+      // ------------------------------------------------------------------
+      // CHARTS
+      // ------------------------------------------------------------------
+      Chart.defaults.color = "#6f6878";
+      Chart.defaults.borderColor = "rgba(43, 39, 50, 0.12)";
+      Chart.defaults.font.family = '"Manrope", sans-serif';
+      const noGridX = { x: { grid: { display: false } }, y: { beginAtZero: true } };
+
+      const hourlyChart = new Chart(document.getElementById("c-hourly"), {
+        type: "bar",
+        data: {
+          labels: hourLabels,
+          datasets: [
+            { label: "Departures", data: depByHour, backgroundColor: "#2b50b5", borderRadius: 3, maxBarThickness: 14 },
+            { label: "Landed arrivals", data: arrByHour, backgroundColor: "#1f9e93", borderRadius: 3, maxBarThickness: 14 },
+          ],
+        },
+        options: { scales: noGridX, plugins: { legend: { position: "bottom", labels: { boxWidth: 10 } } } },
+      });
+
+      const weeklyChart = new Chart(document.getElementById("c-weekly"), {
+        type: "bar",
+        data: {
+          labels: weekdayLabels[getLang()],
+          datasets: AIRPORTS.map(a => ({ label: a.code, data: a.weekly, backgroundColor: a.color, borderRadius: 3, maxBarThickness: 26 })),
+        },
+        options: { scales: noGridX, plugins: { legend: { display: false } } }, // toggle pills ARE the legend
+      });
+
+      const monthlyChart = new Chart(document.getElementById("c-monthly"), {
+        type: "bar",
+        data: {
+          labels: monthLabels[getLang()],
+          datasets: AIRPORTS.map(a => ({ label: a.code, data: a.monthly, backgroundColor: a.color, borderRadius: 3, maxBarThickness: 40 })),
+        },
+        options: { scales: noGridX, plugins: { legend: { display: false } } },
+      });
+
+      // ------------------------------------------------------------------
+      // AIRPORT TOGGLE PILLS — one row controls both the weekly and the
+      // monthly chart. Hiding a dataset via setDatasetVisibility never
+      // touches the other datasets' colors/positions (Chart.js handles
+      // that for us), so toggling one airport off never repaints the rest.
+      // ------------------------------------------------------------------
+      const toggleRow = document.getElementById("airport-toggles");
+      AIRPORTS.forEach((a, i) => {
+        const pill = document.createElement("button");
+        pill.type = "button";
+        pill.className = "apill active";
+        pill.innerHTML = `<i style="background:${a.color}"></i>${a.code}`;
+        pill.onclick = () => {
+          pill.classList.toggle("active");
+          const visible = pill.classList.contains("active");
+          weeklyChart.setDatasetVisibility(i, visible);
+          monthlyChart.setDatasetVisibility(i, visible);
+          weeklyChart.update();
+          monthlyChart.update();
+        };
+        toggleRow.appendChild(pill);
+      });
+
+      // keep chart text (legend, axis category labels) in sync with the
+      // site-wide language toggle
+      document.addEventListener("langchange", () => {
+        hourlyChart.data.datasets[0].label = t("Departures", "Kalkışlar");
+        hourlyChart.data.datasets[1].label = t("Landed arrivals", "İnişler");
+        weeklyChart.data.labels = weekdayLabels[getLang()];
+        monthlyChart.data.labels = monthLabels[getLang()];
+        hourlyChart.update();
+        weeklyChart.update();
+        monthlyChart.update();
+      });
+    </script>
+  </body>
+</html>
