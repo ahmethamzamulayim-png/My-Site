@@ -299,12 +299,16 @@ body::before {
   box-shadow: 0 0 14px rgba(232, 25, 50, 0.55);
 }
 
-/* treemap: tile area and tint scale with project scope;
-   uneven tracks so the seams never line up symmetrically */
+/* treemap: tile area and tint scale with project scope; uneven ROW heights
+   keep the seams from lining up symmetrically.
+   Two columns, not three: the hero panel is only ~435px wide at a 1120px
+   desktop, so a third track left ~67px of text and broke "prediction" onto
+   its own line. Two columns give every tile ~170px+ at every width, which is
+   what lets all the labels share one type size. */
 .treemap {
   display: grid;
-  grid-template-columns: 1.7fr 1fr 0.8fr;
-  grid-template-rows: 1.8fr 1fr 0.9fr 0.9fr;
+  grid-template-columns: 1.15fr 1fr;
+  grid-template-rows: 1.9fr 1fr 0.9fr 0.9fr;
   gap: 10px;
   min-height: 320px; /* floor for when the hero stacks to one column */
 }
@@ -320,11 +324,6 @@ body::before {
   border: 1px solid rgba(43, 39, 50, 0.08);
   text-decoration: none;
   transition: filter 200ms ease, transform 200ms ease;
-  /* the treemap keeps its 1.7/1/0.8 columns at every width, so the narrow
-     third column stays narrow on a phone. Make each tile its own container so
-     the label sizes against the TILE it sits in, not the viewport — otherwise
-     a fixed 1.05rem wraps "Universal bearing RUL" onto three cramped lines. */
-  container-type: inline-size;
 }
 
 .treemap .tile:hover {
@@ -334,40 +333,39 @@ body::before {
 
 .treemap .tile strong {
   font-family: "Space Grotesk", sans-serif;
-  font-size: 1.05rem; /* fallback where container queries are unsupported */
-  font-size: clamp(0.72rem, 13cqi, 1.05rem);
+  font-size: 1.05rem; /* one size across every tile — the grid gives them room */
   line-height: 1.18;
   text-wrap: balance; /* spread the wrap evenly instead of one orphan word */
-  overflow-wrap: break-word; /* a long word shrinks the tile, never overflows it */
+  overflow-wrap: break-word; /* safety net on a 320px phone, never reached above */
   color: var(--text);
 }
 
 .treemap .tile-tag,
 .treemap .tile-note {
   font-size: 0.78rem;
-  font-size: clamp(0.6rem, 8cqi, 0.78rem);
   line-height: 1.3;
   color: var(--muted);
 }
 
 .t-globe {
-  grid-area: 1 / 1 / 3 / 3;
+  grid-area: 1 / 1 / 2 / 3; /* the lead project keeps the full-width top row */
   background: rgba(232, 25, 50, 0.16);
 }
 
 .t-globe strong {
   font-size: 1.4rem;
-  font-size: clamp(1.05rem, 8cqi, 1.4rem); /* widest tile, so it keeps the lead */
+}
+
+/* "prediction" is the longest word on the board, so this one takes the wider
+   1.15fr column — that alone keeps it on one line down to a 320px phone */
+.t-ml {
+  grid-area: 2 / 1 / 3 / 2;
+  background: rgba(36, 67, 155, 0.13);
 }
 
 .t-xds {
-  grid-area: 1 / 3 / 3 / 4;
+  grid-area: 2 / 2 / 3 / 3;
   background: rgba(122, 62, 158, 0.14);
-}
-
-.t-ml {
-  grid-area: 3 / 3 / 4 / 4;
-  background: rgba(36, 67, 155, 0.13);
 }
 
 .t-ugv {
@@ -381,12 +379,12 @@ body::before {
 }
 
 .t-phase2 {
-  grid-area: 4 / 1 / 5 / 3;
+  grid-area: 4 / 1 / 5 / 2;
   background: rgba(192, 18, 42, 0.14);
 }
 
 .t-hubs {
-  grid-area: 4 / 3 / 5 / 4;
+  grid-area: 4 / 2 / 5 / 3;
   background: rgba(201, 138, 26, 0.15);
 }
 
@@ -709,22 +707,9 @@ body::before {
     grid-template-columns: 1fr;
   }
 
-  /* three columns with a 0.8fr track leaves ~36px of text on a phone, which
-     breaks words mid-way no matter how small the type goes. Drop to two even
-     columns and let the lead project keep the full-width top row. */
   .treemap {
     min-height: 260px;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1.6fr 1fr 1fr 1fr;
   }
-
-  .t-globe { grid-area: 1 / 1 / 2 / 3; }
-  .t-xds { grid-area: 2 / 1 / 3 / 2; }
-  .t-ml { grid-area: 2 / 2 / 3 / 3; }
-  .t-ugv { grid-area: 3 / 1 / 4 / 2; }
-  .t-rig { grid-area: 3 / 2 / 4 / 3; }
-  .t-phase2 { grid-area: 4 / 1 / 5 / 2; }
-  .t-hubs { grid-area: 4 / 2 / 5 / 3; }
 
   .treemap .tile {
     padding: 11px;
