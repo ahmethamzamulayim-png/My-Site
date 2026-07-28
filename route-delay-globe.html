@@ -339,6 +339,10 @@
         .labelsData(ROUTES)
         .labelLat(d => d.lat).labelLng(d => d.lon)
         .labelText(d => d.city)
+        .labelAltitude(0.01) // ABOVE polygonAltitude(0.006): without this the
+                              // label rendered at the surface, UNDER the
+                              // near-opaque country fill, which washed it out
+                              // regardless of what color it was given
         .labelSize(0.9)
         .labelDotRadius(d => 0.3 + 0.35 * (d.pct_delayed - MIN_PCT) / (MAX_PCT - MIN_PCT || 1))
         // fixed dark color, NOT the risk ramp: low-risk routes sit at the pale
