@@ -198,7 +198,7 @@
 
     <aside class="globe-panel">
       <p class="eyebrow" data-i18n="panel.eyebrow">En yüksek rötar riski · IST çıkışlı</p>
-      <div class="big-count"><span id="count">20</span><small data-i18n="panel.sub">rota (≥20 uçuş, en az %20 örnek)</small></div>
+      <div class="big-count"><span id="count">20</span><small data-i18n="panel.sub">rota (≥20 yolcu uçuşu, kargo hariç)</small></div>
       <div class="ramp"></div>
       <div class="ramp-labels"><span data-i18n="ramp.low">daha az riskli</span><span data-i18n="ramp.high">daha riskli</span></div>
       <div class="catlegend" id="catlegend"></div>
@@ -224,7 +224,7 @@
         "brand.sub": "from the IST dataset · 2026-05-01–07-28",
         "nav.back": "← Phase 2",
         "panel.eyebrow": "Highest delay risk · departing IST",
-        "panel.sub": "routes (≥20 flights, honest sample)",
+        "panel.sub": "routes (≥20 passenger flights, cargo excluded)",
         "ramp.low": "lower risk",
         "ramp.high": "higher risk",
         "panel.hint": "Click a route in the list, or click a line on the globe, for details.",
@@ -250,50 +250,51 @@
       const ROUTES = [
        {"icao":"UMMS","name":"Minsk National Airport","city":"Minsk","lat":53.888,"lon":28.04,"flights":85,"median":25.0,"pct_delayed":57.6,
         "cat":"sanctions","reason":["Belarus is under Western sanctions, complicating routing, ground handling, and diplomatic coordination for carriers still serving it.","Belarus Batı yaptırımları altında; bu da hâlâ oraya uçan havayolları için rota, yer hizmetleri ve diplomatik koordinasyonu zorlaştırıyor."]},
-       {"icao":"OPKC","name":"Jinnah International Airport","city":"Karachi","lat":24.907,"lon":67.161,"flights":112,"median":15.5,"pct_delayed":52.7,
+       {"icao":"OPKC","name":"Jinnah International Airport","city":"Karachi","lat":24.907,"lon":67.161,"flights":107,"median":16.0,"pct_delayed":54.2,
         "cat":"documented","reason":["2026 incidents: 10+ flights bunched into one departure slot, dense fog dropping visibility to 50m, and immigration processing bottlenecks.","2026 olayları: tek bir kalkış dilimine 10'dan fazla uçuşun yığılması, görüşü 50 metreye düşüren yoğun sis ve pasaport kontrolünde tıkanıklık."]},
        {"icao":"UUDD","name":"Domodedovo International Airport","city":"Moscow","lat":55.409,"lon":37.906,"flights":165,"median":13.0,"pct_delayed":48.5,
         "cat":"sanctions","reason":["THY is one of the few carriers still flying to/over Russia post-2022. July 2026: THY flights out of Moscow were delayed up to 10 hours.","THY, 2022 sonrası hâlâ Rusya'ya/üzerinden uçan az sayıda havayolundan biri. Temmuz 2026'da THY'nin Moskova çıkışlı uçuşları 10 saate kadar rötar yaptı."]},
        {"icao":"URML","name":"Uytash Airport","city":"Makhachkala","lat":42.817,"lon":47.652,"flights":60,"median":0.0,"pct_delayed":45.0,
         "cat":"sanctions","reason":["North Caucasus, Russia — the same sanctions-era overflight and coordination friction as Moscow.","Kuzey Kafkasya, Rusya — Moskova ile aynı yaptırım dönemi üstten geçiş ve koordinasyon sürtünmesi."]},
+       {"icao":"OOMS","name":"Muscat International Airport","city":"Muscat/Seeb","lat":23.6,"lon":58.285,"flights":132,"median":11.0,"pct_delayed":43.9,
+        "cat":"documented","reason":["2026 saw repeated multi-airline disruption waves (70+ delays in single events) and regional capacity cuts destabilizing the schedule.","2026'da tekrarlayan çok havayollu aksama dalgaları (tek olayda 70+ rötar) ve bölgesel kapasite kesintileri programı istikrarsızlaştırdı."]},
        {"icao":"UWWW","name":"Kurumoch International Airport","city":"Samara","lat":53.505,"lon":50.164,"flights":23,"median":6.0,"pct_delayed":43.5,
         "cat":"sanctions","reason":["Russia sanctions friction — and only 23 flights in this sample, so treat the percentage cautiously.","Rusya yaptırım sürtünmesi — ayrıca bu örneklemde yalnızca 23 uçuş var, yüzdeyi temkinli okuyun."]},
        {"icao":"CYYZ","name":"Toronto Pearson International Airport","city":"Toronto","lat":43.676,"lon":-79.629,"flights":111,"median":8.0,"pct_delayed":43.2,
         "cat":"documented","reason":["2026 incident reports name Turkish Airlines directly: tight aircraft rotations at Pearson mean one late inbound ripples through the day's whole schedule.","2026 olay raporları THY'yi doğrudan sayıyor: Pearson'da sıkı uçak rotasyonları, bir gecikmiş inişin günün tüm programına yayılması anlamına geliyor."]},
-       {"icao":"VTSP","name":"Phuket International Airport","city":"Phuket","lat":8.113,"lon":98.317,"flights":35,"median":8.0,"pct_delayed":42.9,
-        "cat":"documented","reason":["2026: a hard landing shut Phuket's only runway, plus immigration system faults and Dubai/Doha transit-hub chaos feeding through.","2026: sert bir iniş Phuket'in tek pistini kapattı; buna pasaport sistemi arızaları ve Dubai/Doha aktarma merkezlerindeki kaos eklendi."]},
        {"icao":"LGIR","name":"Heraklion International Nikos Kazantzakis Airport","city":"Heraklion","lat":35.34,"lon":25.18,"flights":63,"median":12.0,"pct_delayed":42.9,
         "cat":"capacity","reason":["50+ year old infrastructure rated for ~10 arrivals/hour; summer demand runs well past that, with no real backup runway for large aircraft.","50 yılı aşkın altyapı saatte ~10 iniş için tasarlanmış; yaz talebi bunun çok üzerinde, büyük uçaklar için gerçek bir yedek pist de yok."]},
+       {"icao":"VTSP","name":"Phuket International Airport","city":"Phuket","lat":8.113,"lon":98.317,"flights":35,"median":8.0,"pct_delayed":42.9,
+        "cat":"documented","reason":["2026: a hard landing shut Phuket's only runway, plus immigration system faults and Dubai/Doha transit-hub chaos feeding through.","2026: sert bir iniş Phuket'in tek pistini kapattı; buna pasaport sistemi arızaları ve Dubai/Doha aktarma merkezlerindeki kaos eklendi."]},
        {"icao":"URMG","name":"Akhmat Kadyrov Grozny International Airport","city":"Grozny","lat":43.388,"lon":45.7,"flights":34,"median":9.0,"pct_delayed":41.2,
         "cat":"sanctions","reason":["North Caucasus, Russia — same overflight and coordination friction as Moscow.","Kuzey Kafkasya, Rusya — Moskova ile aynı üstten geçiş ve koordinasyon sürtünmesi."]},
-       {"icao":"OOMS","name":"Muscat International Airport","city":"Muscat/Seeb","lat":23.6,"lon":58.285,"flights":189,"median":8.0,"pct_delayed":40.2,
-        "cat":"documented","reason":["2026 saw repeated multi-airline disruption waves (70+ delays in single events) and regional capacity cuts destabilizing the schedule.","2026'da tekrarlayan çok havayollu aksama dalgaları (tek olayda 70+ rötar) ve bölgesel kapasite kesintileri programı istikrarsızlaştırdı."]},
        {"icao":"URMO","name":"Beslan Airport","city":"Beslan","lat":43.206,"lon":44.606,"flights":43,"median":0.0,"pct_delayed":37.2,
         "cat":"sanctions","reason":["North Caucasus, Russia — same overflight and coordination friction as Moscow.","Kuzey Kafkasya, Rusya — Moskova ile aynı üstten geçiş ve koordinasyon sürtünmesi."]},
        {"icao":"SVMI","name":"Simon Bolivar International Airport","city":"Maiquetía","lat":10.601,"lon":-66.991,"flights":35,"median":0.0,"pct_delayed":37.1,
         "cat":"sanctions","reason":["Venezuela remains under heavy US sanctions, complicating fuel, parts, and financial clearing for international carriers.","Venezuela hâlâ ağır ABD yaptırımları altında; bu da uluslararası havayolları için yakıt, yedek parça ve finansal takası zorlaştırıyor."]},
-       {"icao":"EBLG","name":"Liège Airport","city":"Grâce-Hollogne","lat":50.639,"lon":5.444,"flights":91,"median":4.0,"pct_delayed":36.3,
-        "cat":"caveat","reason":["Data note: Liège lost all scheduled passenger service in Jan 2026. These are Turkish Cargo freighter flights, not passengers — a different operation with different delay dynamics.","Veri notu: Liège Ocak 2026'da tüm yolcu seferlerini kaybetti. Bunlar Turkish Cargo kargo uçuşları, yolcu değil — farklı rötar dinamikleri olan ayrı bir operasyon."]},
        {"icao":"LGSR","name":"Santorini International Airport","city":"Santorini Island","lat":36.4,"lon":25.479,"flights":28,"median":10.5,"pct_delayed":35.7,
         "cat":"capacity","reason":["A short caldera-edge runway with no room to expand; one delay can cascade 24-48h since the schedule has no slack.","Genişleme imkânı olmayan, kaldera kenarında kısa bir pist; programda boşluk olmadığından tek bir gecikme 24-48 saat sürebiliyor."]},
        {"icao":"LDSP","name":"Split Airport","city":"Split","lat":43.539,"lon":16.298,"flights":45,"median":0.0,"pct_delayed":35.6,
         "cat":"capacity","reason":["Adriatic summer tourist surge overwhelms the airport; ground-staffing shortages compound it June-August.","Adriyatik yaz turist patlaması havalimanını aşıyor; Haziran-Ağustos'ta yer personeli eksikliği bunu ağırlaştırıyor."]},
-       {"icao":"GBYD","name":"Banjul International Airport","city":"Banjul (Yundum)","lat":13.338,"lon":-16.652,"flights":23,"median":1.0,"pct_delayed":34.8,
-        "cat":"caveat","reason":["Only 23 flights in this sample, on a 7.5-hour route where Turkish Airlines is the sole non-stop operator — read the percentage cautiously.","Bu örneklemde yalnızca 23 uçuş var, THY'nin tek aktarmasız işletmeci olduğu 7,5 saatlik bir rotada — yüzdeyi temkinli okuyun."]},
        {"icao":"OMSJ","name":"Sharjah International Airport","city":"Sharjah","lat":25.329,"lon":55.517,"flights":107,"median":2.0,"pct_delayed":34.6,
         "cat":"documented","reason":["A low-cost, point-to-point hub for the Gulf-South Asia corridor; 2026 saw repeated multi-carrier disruption waves there.","Körfez-Güney Asya koridoru için düşük maliyetli, noktadan noktaya bir merkez; 2026'da orada tekrarlayan çok havayollu aksama dalgaları yaşandı."]},
        {"icao":"HHAS","name":"Asmara International Airport","city":"Asmara","lat":15.292,"lon":38.911,"flights":67,"median":5.0,"pct_delayed":34.3,
         "cat":"capacity","reason":["Eritrea is diplomatically isolated with almost no resident carriers; foreign airlines serving it face friction other routes don't — Ethiopian Airlines was suspended entirely amid a dispute with authorities.","Eritre diplomatik olarak izole, neredeyse hiç yerleşik havayolu yok; oraya uçan yabancı havayolları başka rotalarda görülmeyen sürtünmeyle karşılaşıyor — Ethiopian Airlines, yetkililerle anlaşmazlık yüzünden tamamen askıya alınmıştı."]},
        {"icao":"OIMM","name":"Shahid Hasheminejad Airport","city":"Mashhad","lat":36.235,"lon":59.641,"flights":59,"median":0.0,"pct_delayed":33.9,
         "cat":"sanctions","reason":["Iran sanctions complicate fuel, parts, and financial clearing for international carriers.","İran yaptırımları uluslararası havayolları için yakıt, yedek parça ve finansal takası zorlaştırıyor."]},
-       {"icao":"VOBL","name":"Kempegowda International Airport","city":"Bengaluru","lat":13.198,"lon":77.706,"flights":48,"median":0.0,"pct_delayed":33.3,
-        "cat":"capacity","reason":["Passenger growth has outpaced infrastructure for years; the airport is mid-construction on a new taxiway phase specifically to add capacity.","Yolcu artışı yıllardır altyapıyı geride bırakıyor; havalimanı özellikle kapasite eklemek için yeni bir taksi yolu inşaatının ortasında."]},
+       {"icao":"EBLG","name":"Liège Airport","city":"Grâce-Hollogne","lat":50.639,"lon":5.444,"flights":74,"median":5.5,"pct_delayed":33.8,
+        "cat":"caveat","reason":["Data note: Liège lost all scheduled passenger service in Jan 2026 — it's cargo-only. Even after removing flights our detector catches as Turkish Cargo, these 74 remaining ones are still suspect; the detector likely misses cargo flights on a different flight-number block.","Veri notu: Liège Ocak 2026'da tüm yolcu seferlerini kaybetti — artık sadece kargo. Dedektörümüzün Turkish Cargo olarak yakaladığı uçuşlar çıkarıldıktan sonra bile, kalan bu 74 uçuş hâlâ şüpheli; dedektör muhtemelen farklı bir uçuş numarası bloğu kullanan kargo uçuşlarını kaçırıyor."]},
+       {"icao":"UWKD","name":"Kazan International Airport","city":"Kazan","lat":55.606,"lon":49.279,"flights":163,"median":0.0,"pct_delayed":32.5,
+        "cat":"sanctions","reason":["Tatarstan, Russia — same sanctions-era overflight and coordination friction as Moscow. Confirmed as a real, year-round Turkish Airlines route (TK429), not a data artifact.","Tataristan, Rusya — Moskova ile aynı yaptırım dönemi üstten geçiş ve koordinasyon sürtünmesi. Yıl boyu gerçek bir THY rotası olduğu doğrulandı (TK429), veri hatası değil."]},
+       {"icao":"DAAG","name":"Houari Boumediene Airport","city":"Algiers","lat":36.694,"lon":3.215,"flights":610,"median":0.0,"pct_delayed":32.5,
+        "cat":"unexplained","reason":["No documented incident found for this route specifically — but with 610 flights, the largest sample of any route here, this is a real, statistically solid pattern, not noise. The cause isn't identifiable from public reporting alone.","Bu rota için özel olarak belgelenmiş bir olay bulunamadı — ama 610 uçuşla (buradaki en büyük örneklem) bu gerçek, istatistiksel olarak sağlam bir örüntü, gürültü değil. Neden, kamuya açık kaynaklardan tek başına belirlenemiyor."]},
       ];
       const CATS = {
         sanctions: { color: "#c0122a", label: ["Sanctions / geopolitical", "Yaptırım / jeopolitik"] },
         documented: { color: "#1f9e93", label: ["Documented 2026 disruption", "Belgelenmiş 2026 aksaması"] },
         capacity: { color: "#2b50b5", label: ["Airport capacity / structural", "Havalimanı kapasitesi / yapısal"] },
         caveat: { color: "#8a6d1a", label: ["Data caveat — see note", "Veri notu — açıklamaya bak"] },
+        unexplained: { color: "#6b4a9e", label: ["No documented cause found", "Belgelenmiş neden bulunamadı"] },
       };
       const IST = { lat: 41.275, lon: 28.732 };
       const MIN_PCT = Math.min(...ROUTES.map(r => r.pct_delayed));
