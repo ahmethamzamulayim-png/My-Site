@@ -130,6 +130,10 @@ body::before {
 
 .site-nav {
   display: flex;
+  align-items: center;
+  /* without this the row defaults to stretch: the 34px language pill sets the
+     line height, the text links stretch to match it, and their text renders at
+     the TOP of that box — ~6px above the pill's centre. */
   gap: 20px;
   flex-wrap: wrap;
 }
