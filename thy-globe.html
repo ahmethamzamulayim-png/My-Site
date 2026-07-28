@@ -298,12 +298,15 @@
 
       // --- adsbdb lookups, cached in localStorage (airframes are static) ---
       const store = k => { try { return JSON.parse(localStorage.getItem(k)) || {}; } catch { return {}; } };
-      const AC = store("thy_ac");   // hex -> {model, reg, t} | null (known-unknown)
-      // routes change seasonally: discard the route cache when the month rolls over
+      // hex->airframe and callsign->route both get re-verified monthly: adsbdb
+      // entries get corrected and hex codes occasionally get reassigned to a
+      // different airframe, so "static" only means slow-changing, not permanent.
       const MONTH = new Date().toISOString().slice(0, 7);
+      const acRaw = store("thy_ac");
+      const AC = acRaw.m === MONTH ? acRaw.d : {}; // hex -> {model, reg, t} | null (known-unknown)
       const rtRaw = store("thy_rt");
       const RT = rtRaw.m === MONTH ? rtRaw.d : {}; // callsign -> {oi,on,om,di,dn,dm,olat,olng,dlat,dlng} | null
-      const save = () => { try { localStorage.setItem("thy_ac", JSON.stringify(AC)); localStorage.setItem("thy_rt", JSON.stringify({ m: MONTH, d: RT })); } catch {} };
+      const save = () => { try { localStorage.setItem("thy_ac", JSON.stringify({ m: MONTH, d: AC })); localStorage.setItem("thy_rt", JSON.stringify({ m: MONTH, d: RT })); } catch {} };
 
       async function getAircraft(hex) {
         if (AC[hex] !== undefined) return AC[hex];
