@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>3 Havalimanı: Kim Daha Dakik? | Ahmet Hamza Mülayim</title>
+    <meta
+      name="description"
+      content="İstanbul, Heathrow ve Frankfurt'un aynı 86 günlük pencerede, aynı yöntemle ölçülmüş kalkış dakikliği — IST üçünün en dakiki, ve gün içinde rötar biriktirmiyor."
+    />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e81932'/%3E%3Ctext x='32' y='45' font-size='38' font-family='sans-serif' font-weight='700' text-anchor='middle' fill='%23fff'%3EA%3C/text%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="i18n.js"></script>
+    <script defer src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <style>
+      /* page-local, on top of the site tokens — same panel/callout classes as
+         phase2.html and ist-rotar.html so the project pages read as one family */
+      .chart-panel {
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 22px;
+        margin-top: 22px;
+      }
+      .chart-panel h3 {
+        font-family: "Space Grotesk", sans-serif;
+        letter-spacing: -0.03em;
+        margin: 0 0 6px;
+      }
+      .chart-panel .note { margin: 0 0 14px; color: var(--muted); font-size: 0.88rem; }
+      .callout {
+        margin-top: 16px;
+        padding: 14px 16px;
+        border-left: 3px solid var(--accent);
+        background: var(--bg-alt);
+        border-radius: 0 12px 12px 0;
+        color: var(--text);
+        font-size: 0.9rem;
+        line-height: 1.65;
+      }
+      .callout.alt { border-left-color: var(--cobalt); }
+
+      /* hero tiles: one number per hub, identity carried by the colour chip */
+      .hub-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+        gap: 16px;
+        margin-top: 18px;
+      }
+      .hub {
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 20px 22px;
+      }
+      .hub .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+      }
+      .hub .dot { width: 11px; height: 11px; border-radius: 50%; flex: none; }
+      .hub .big {
+        display: block;
+        font-family: "Space Grotesk", sans-serif;
+        font-size: clamp(2.2rem, 6vw, 2.9rem);
+        font-weight: 700;
+        letter-spacing: -0.03em;
+        line-height: 1.05;
+        margin: 10px 0 2px;
+      }
+      .hub small { color: var(--muted); font-size: 0.82rem; line-height: 1.5; display: block; }
+      .hub .sub { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); }
+
+      .chart-wrap { position: relative; width: 100%; overflow-x: auto; }
+      .chart-wrap canvas { max-width: 100%; }
+
+      /* the table view — the numbers behind every chart, for screen readers,
+         printing, and anyone who just wants the figures */
+      .data-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.88rem; }
+      .data-table caption { text-align: left; color: var(--muted); font-size: 0.85rem; padding-bottom: 10px; }
+      .data-table th, .data-table td { padding: 9px 10px; text-align: right; border-bottom: 1px solid var(--line); }
+      .data-table th:first-child, .data-table td:first-child { text-align: left; }
+      .data-table thead th { color: var(--muted); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; }
+      .data-table tbody th { font-weight: 700; font-family: "Space Grotesk", sans-serif; }
+      .table-scroll { overflow-x: auto; }
+    </style>
+  </head>
+  <body>
+    <div class="noise"></div>
+    <header class="site-header">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">A</span>
+        <span>
+          <strong>Ahmet Hamza Mülayim</strong>
+          <small>Marmara University</small>
+        </span>
+      </a>
+      <nav class="site-nav">
+        <a href="index.html#projects" data-i18n="nav.back">← Portföy</a>
+        <a href="phase2.html" data-i18n="nav.phase2">Faz 2 →</a>
+        <button class="lang-toggle" type="button">EN</button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="hero.eyebrow">Yan görev 3 · karşılaştırma</p>
+          <h2 data-i18n="hero.h2">3 havalimanı: kim gerçekten dakik?</h2>
+          <p class="hero-text" data-i18n="hero.text">
+            İstanbul, Heathrow ve Frankfurt — aynı 86 günlük pencerede, aynı veri
+            kaynağıyla, aynı rötar tanımıyla ölçüldü. Kalkışlar, kargo hariç,
+            iptaller hariç. Sonuç beklediğim gibi çıkmadı.
+          </p>
+        </div>
+
+        <div class="hub-grid" id="hubtiles"></div>
+
+        <div class="callout" data-i18n="callout.headline">
+          <b>İstanbul üçünün en dakiki.</b> IST'te kalkışların
+          <b>%11,7</b>'si 15+ dk rötarlı; Heathrow'da %16,6, Frankfurt'ta %19,1.
+          Yani Frankfurt'ta bir uçağın rötarlı kalkma ihtimali İstanbul'un
+          <b>1,6 katı</b>. Bu, tek bir kötü haftanın çıkardığı bir fark değil —
+          aşağıdaki 7 günlük hareketli ortalamada üç ay boyunca sabit kalıyor.
+        </div>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="chart-panel">
+          <h3 data-i18n="chart.hourly.h">Gün içinde rötar nasıl birikiyor? (yerel saat)</h3>
+          <p class="note" data-i18n="chart.hourly.note">
+            Her havalimanının kendi yerel saatiyle, o saatte kalkan uçuşların yüzde
+            kaçının 15+ dk rötarlı olduğu. Çizginin üzerine gel — üç havalimanını
+            aynı anda karşılaştır.
+          </p>
+          <div class="chart-wrap"><canvas id="c-hourly" height="112"></canvas></div>
+          <div class="callout" data-i18n="callout.hourly">
+            <b>Asıl fark burada.</b> Frankfurt sabah %3,4'ten öğlen <b>%27,9</b>'a
+            çıkıyor — günün rötarı birikiyor ve akşama kadar %21'in altına
+            inmiyor. Heathrow aynı şeyi yapıyor, 18:00'de %26,3 ile zirve.
+            İstanbul ise gün boyu <b>%5–16</b> arasında düz gidiyor: sabahki
+            gecikmeyi akşama taşımıyor. Rötar oranının düşük olması kadar önemli
+            olan şey bu — IST günü kendi içinde toparlıyor.
+          </div>
+          <div class="callout alt" data-i18n="callout.curfew">
+            <b>Neden LHR ve FRA'nın çizgisi kısa?</b> İkisinde de gece uçuş
+            kısıtlaması var, bu yüzden gecenin ilerleyen saatlerinde
+            karşılaştırılacak kadar uçuş yok (grafikte saat başına en az 150 uçuş
+            şartı arandı). İstanbul 24 saat çalışıyor. IST'in 05:00'teki tek
+            sıçraması ince veriye dayanıyor — üzerine yorum kurmayın.
+          </div>
+        </div>
+
+        <div class="chart-panel">
+          <h3 data-i18n="chart.roll.h">Fark kalıcı mı, yoksa kötü bir hafta mı?</h3>
+          <p class="note" data-i18n="chart.roll.note">
+            7 günlük hareketli ortalama, 3 Mayıs – 27 Temmuz 2026. Sıralama üç ay
+            boyunca hiç değişmiyor.
+          </p>
+          <div class="chart-wrap"><canvas id="c-roll" height="112"></canvas></div>
+        </div>
+
+        <div class="chart-panel">
+          <h3 data-i18n="chart.sev.h">Rötar olduğunda ne kadar kötü?</h3>
+          <p class="note" data-i18n="chart.sev.note">
+            Çubuğun tamamı, tüm kalkışlar içindeki rötarlı payı; parçalar rötarın
+            büyüklüğünü gösteriyor. Renk koyulaştıkça gecikme uzuyor.
+          </p>
+          <div class="chart-wrap"><canvas id="c-sev" height="88"></canvas></div>
+          <div class="callout" data-i18n="callout.sev">
+            <b>Frankfurt sık ama kısa, Heathrow seyrek ama ağır.</b> FRA'da
+            kalkışların %10,3'ü 15–30 dk arası gecikiyor — üçünün en yükseği — ama
+            1 saati aşan rötar payı (%2,4) İstanbul'unkine (%2,2) neredeyse eşit.
+            Heathrow ise daha az rötar yapıyor ama yaptığında ağır yapıyor:
+            <b>%3,4</b>'ü 1 saatin üzerinde, yani IST'in yarım katı fazlası.
+          </div>
+        </div>
+
+        <div class="chart-panel">
+          <h3 data-i18n="table.h">Sayılar</h3>
+          <p class="note" data-i18n="table.note">
+            Grafiklerin arkasındaki veri. "Örnekteki kalkış/gün" bu veri setinin
+            günde yakaladığı uçuş sayısıdır — havalimanının gerçek toplam
+            trafiği değil.
+          </p>
+          <div class="table-scroll">
+            <table class="data-table" id="datatable"></table>
+          </div>
+        </div>
+
+        <div class="chart-panel">
+          <h3 data-i18n="method.h">Yöntem ve sınırlar</h3>
+          <p class="note" data-i18n="method.p">
+            Rötar = aviationstack'in kapı kalkış gecikmesi; "rötarlı" eşiği 15+ dk.
+            Sadece kalkışlar sayıldı; kargo uçuşları ve iptaller hariç tutuldu.
+            Üç havalimanı da aynı pencerede (3 Mayıs – 27 Temmuz 2026) ve aynı kodla
+            işlendi; yarım toplanmış günler atıldı, bu yüzden IST'te 83, diğer
+            ikisinde 82 gün kaldı. Bu bir anlık görüntü — canlı değil. Veri IST için
+            hâlâ günlük toplanıyor; LHR ve FRA tek seferlik tarihsel çekimdi.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p data-i18n="footer.p">Veri: IST + LHR + FRA · aviationstack · kalkış kapı gecikmesi</p>
+      <p id="year"></p>
+    </footer>
+
+    <script>
+      window.I18N_LANG = "en";
+      window.I18N = {
+        "nav.back": "← Portfolio",
+        "nav.phase2": "Phase 2 →",
+        "hero.eyebrow": "Side quest 3 · comparison",
+        "hero.h2": "Three hubs: who is actually on time?",
+        "hero.text": "Istanbul, Heathrow and Frankfurt — measured over the same 86-day window, from the same source, with the same delay definition. Departures only, cargo and cancellations excluded. The result was not what I expected.",
+        "callout.headline": "<b>Istanbul is the most punctual of the three.</b> 11.7% of IST departures leave 15+ min late, against 16.6% at Heathrow and 19.1% at Frankfurt. A flight is <b>1.6x</b> more likely to depart late from Frankfurt than from Istanbul. This isn't one bad week skewing an average — the 7-day rolling chart below holds the same ordering for three straight months.",
+        "chart.hourly.h": "How delay builds through the day (local time)",
+        "chart.hourly.note": "Share of departures leaving 15+ min late, by each airport's own local hour. Hover the lines to compare all three at once.",
+        "callout.hourly": "<b>This is where the real difference is.</b> Frankfurt climbs from 3.4% in the early morning to <b>27.9%</b> by midday — the day's delay accumulates and never drops below 21% again until late evening. Heathrow does the same, peaking at 26.3% at 18:00. Istanbul stays flat at <b>5–16%</b> all day: it doesn't carry morning lateness into the evening. That matters as much as the headline rate — IST absorbs the day instead of compounding it.",
+        "callout.curfew": "<b>Why are the LHR and FRA lines shorter?</b> Both operate under night flight restrictions, so there aren't enough late-night departures to compare (the chart requires at least 150 flights in an hour to plot it). Istanbul runs 24 hours. IST's single spike at 05:00 rests on thin data — don't read anything into it.",
+        "chart.roll.h": "Is the gap persistent, or just a bad week?",
+        "chart.roll.note": "7-day rolling average, 3 May – 27 July 2026. The ordering never changes across the whole three months.",
+        "chart.sev.h": "When it is late, how bad is it?",
+        "chart.sev.note": "The full bar is the share of all departures running late; the segments split that by how late. Darker means longer.",
+        "callout.sev": "<b>Frankfurt is often late but briefly; Heathrow is late less often but harder.</b> 10.3% of FRA departures slip 15–30 min — the highest of the three — yet its share of delays over an hour (2.4%) is nearly identical to Istanbul's (2.2%). Heathrow delays less often but pays more when it does: <b>3.4%</b> run over an hour, half again as many as IST.",
+        "table.h": "The numbers",
+        "table.note": "The data behind the charts. \"Departures in sample / day\" is how many flights this dataset captured per day — not the airport's true total traffic.",
+        "method.h": "Method and limits",
+        "method.p": "Delay = aviationstack's gate departure delay; the \"late\" threshold is 15+ min. Departures only; cargo flights and cancellations excluded. All three airports cover the same window (3 May – 27 July 2026) and run through the same code; partially-collected days were dropped, leaving 83 days for IST and 82 for the other two. This is a snapshot, not live. IST is still collected daily; LHR and FRA were a one-off historical pull.",
+        "footer.p": "Data: IST + LHR + FRA · aviationstack · gate departure delay",
+        "tbl.metric": "Metric",
+        "tbl.delayed": "Delayed 15+ min",
+        "tbl.median": "Median delay when late",
+        "tbl.b1": "15–30 min",
+        "tbl.b2": "30–60 min",
+        "tbl.b3": "Over 60 min",
+        "tbl.days": "Days measured",
+        "tbl.perday": "Departures in sample / day",
+        "tbl.total": "Departures measured",
+        "unit.min": " min",
+      };
+    </script>
+
+    <script>
+      const DATA = {"hubs":{"IST":{"flights":62378,"days":83,"per_day":752,"pct_delayed":11.7,"median_late":30.0,"hourly":[{"h":0,"pct":15.2,"n":891},{"h":1,"pct":9.5,"n":3318},{"h":2,"pct":10.3,"n":1463},{"h":3,"pct":14.1,"n":516},{"h":4,"pct":11.7,"n":495},{"h":5,"pct":20.6,"n":315},{"h":6,"pct":5.1,"n":3746},{"h":7,"pct":8.1,"n":5699},{"h":8,"pct":6.8,"n":2997},{"h":9,"pct":11.6,"n":1151},{"h":10,"pct":8.1,"n":1854},{"h":11,"pct":7.8,"n":2514},{"h":12,"pct":11.7,"n":3229},{"h":13,"pct":14.1,"n":3786},{"h":14,"pct":12.7,"n":3750},{"h":15,"pct":16.0,"n":4549},{"h":16,"pct":16.1,"n":3894},{"h":17,"pct":15.1,"n":2631},{"h":18,"pct":13.7,"n":4619},{"h":19,"pct":11.7,"n":2961},{"h":20,"pct":12.5,"n":3404},{"h":21,"pct":13.3,"n":2368},{"h":22,"pct":11.4,"n":1264},{"h":23,"pct":13.5,"n":964}],"hist":[{"bin":"<15","pct":88.3},{"bin":"15–30","pct":5.8},{"bin":"30–60","pct":3.7},{"bin":"60+","pct":2.2}],"rolling":[null,null,null,null,8.7,9.6,10.2,10.3,10.6,12.3,13.5,13.7,14.0,14.5,15.4,15.3,14.2,14.0,14.1,13.6,12.6,11.2,10.6,10.4,9.2,8.4,7.6,7.3,8.9,8.6,9.1,10.0,10.4,10.6,11.0,8.7,9.4,9.2,9.1,9.5,10.0,9.9,11.0,10.9,10.8,10.5,10.3,9.9,10.0,9.9,9.9,9.9,10.1,9.9,9.5,9.7,10.3,10.5,10.6,10.8,10.9,11.0,10.6,10.6,11.5,11.8,11.4,11.2,11.3,12.5,12.4,12.0,12.3,12.5,12.6,13.2,12.7,14.0,14.0,14.5,16.9,18.0,18.1]},"LHR":{"flights":54435,"days":82,"per_day":664,"pct_delayed":16.6,"median_late":33.0,"hourly":[{"h":4,"pct":4.7,"n":2124},{"h":5,"pct":6.9,"n":3134},{"h":6,"pct":10.2,"n":3514},{"h":7,"pct":12.9,"n":3753},{"h":8,"pct":11.2,"n":3335},{"h":9,"pct":14.8,"n":3545},{"h":10,"pct":17.6,"n":3468},{"h":11,"pct":19.5,"n":3327},{"h":12,"pct":19.3,"n":3571},{"h":13,"pct":21.0,"n":3464},{"h":14,"pct":20.7,"n":3572},{"h":15,"pct":22.0,"n":3210},{"h":16,"pct":20.6,"n":3366},{"h":17,"pct":20.8,"n":3487},{"h":18,"pct":26.3,"n":3345},{"h":19,"pct":16.5,"n":2038},{"h":20,"pct":9.1,"n":2168}],"hist":[{"bin":"<15","pct":83.4},{"bin":"15–30","pct":7.2},{"bin":"30–60","pct":5.9},{"bin":"60+","pct":3.4}],"rolling":[null,null,null,null,9.6,9.2,8.8,8.5,8.4,8.4,16.0,20.6,22.5,23.0,23.5,23.1,23.2,16.1,11.6,10.4,10.8,10.9,11.5,13.3,13.5,16.7,17.8,17.7,18.4,17.7,20.9,22.1,23.2,21.6,21.3,18.9,20.0,15.7,14.7,11.7,12.0,11.2,12.0,11.4,12.1,11.8,11.5,12.2,14.7,16.6,17.1,17.9,23.3,24.7,24.9,23.9,24.0,23.5,21.5,16.0,14.0,13.5,12.7,11.0,11.1,12.9,14.8,17.3,19.0,20.0,22.0,23.1,23.5,22.8,21.7,21.1,20.7,20.1,18.9,17.1,16.5,15.5,14.7]},"FRA":{"flights":55517,"days":82,"per_day":677,"pct_delayed":19.1,"median_late":28.0,"hourly":[{"h":3,"pct":3.4,"n":413},{"h":4,"pct":3.9,"n":484},{"h":5,"pct":4.5,"n":1345},{"h":6,"pct":6.8,"n":2190},{"h":7,"pct":8.5,"n":3595},{"h":8,"pct":13.3,"n":3657},{"h":9,"pct":21.1,"n":4340},{"h":10,"pct":22.7,"n":3880},{"h":11,"pct":22.5,"n":4305},{"h":12,"pct":23.2,"n":4408},{"h":13,"pct":27.9,"n":4047},{"h":14,"pct":26.0,"n":2504},{"h":15,"pct":21.2,"n":3635},{"h":16,"pct":21.3,"n":3105},{"h":17,"pct":21.1,"n":1357},{"h":18,"pct":21.5,"n":2267},{"h":19,"pct":21.3,"n":3823},{"h":20,"pct":17.9,"n":4003},{"h":21,"pct":11.7,"n":2153}],"hist":[{"bin":"<15","pct":80.9},{"bin":"15–30","pct":10.3},{"bin":"30–60","pct":6.4},{"bin":"60+","pct":2.4}],"rolling":[null,null,null,null,12.4,12.6,13.3,14.0,15.3,15.8,18.6,19.7,19.2,18.8,17.2,16.4,15.8,14.2,14.3,15.9,16.5,17.4,16.4,17.0,16.8,16.9,17.1,18.6,24.0,24.9,26.6,26.8,27.4,25.7,23.0,15.3,15.6,14.9,14.6,13.6,14.3,14.4,15.7,15.2,16.7,18.4,21.4,22.3,22.9,24.3,25.2,25.2,25.2,25.0,26.1,26.9,29.1,29.7,27.7,25.3,22.6,20.2,18.5,14.7,12.8,13.2,13.9,13.7,14.0,15.3,17.4,18.9,22.0,23.9,24.7,25.3,24.5,22.9,22.0,18.2,16.1,15.8,15.2]}},"order":["IST","LHR","FRA"],"dates":["2026-05-03","2026-05-04","2026-05-05","2026-05-06","2026-05-07","2026-05-08","2026-05-09","2026-05-10","2026-05-11","2026-05-12","2026-05-13","2026-05-14","2026-05-15","2026-05-16","2026-05-17","2026-05-18","2026-05-19","2026-05-20","2026-05-21","2026-05-22","2026-05-23","2026-05-24","2026-05-25","2026-05-26","2026-05-27","2026-05-28","2026-05-29","2026-05-30","2026-05-31","2026-06-01","2026-06-02","2026-06-03","2026-06-04","2026-06-05","2026-06-06","2026-06-07","2026-06-11","2026-06-12","2026-06-13","2026-06-14","2026-06-15","2026-06-16","2026-06-17","2026-06-18","2026-06-19","2026-06-20","2026-06-21","2026-06-22","2026-06-23","2026-06-24","2026-06-25","2026-06-26","2026-06-27","2026-06-28","2026-06-29","2026-06-30","2026-07-01","2026-07-02","2026-07-03","2026-07-04","2026-07-05","2026-07-06","2026-07-07","2026-07-08","2026-07-09","2026-07-10","2026-07-11","2026-07-12","2026-07-13","2026-07-14","2026-07-15","2026-07-16","2026-07-17","2026-07-18","2026-07-19","2026-07-20","2026-07-21","2026-07-22","2026-07-23","2026-07-24","2026-07-25","2026-07-26","2026-07-27"],"first_date":"2026-05-03","last_date":"2026-07-27"};
+
+      // Hub identity. Fixed order, never cycled, never repainted by a filter.
+      // Validated for CVD safety against the #faf7f2 page surface
+      // (scripts/validate_palette.js: all six checks pass, worst adjacent pair
+      // ΔE 19.5 deutan / 20.7 normal).
+      const HUE = { IST: "#e81932", LHR: "#3f63c9", FRA: "#1f9e93" };
+      const NAME = { IST: ["İstanbul", "Istanbul"], LHR: ["Heathrow", "Heathrow"], FRA: ["Frankfurt", "Frankfurt"] };
+      // severity is ordered magnitude, so it gets a sequential ramp (one hue,
+      // light -> dark) instead of hub colours — different job, different rule
+      const SEV = ["#c0a0d8", "#9560bd", "#6a3590"];
+      const SURFACE = "#fdfbf8";
+
+      const t = (en, tr) => (getLang() === "tr" ? tr : en);
+      const nm = (c) => (getLang() === "tr" ? NAME[c][0] : NAME[c][1]);
+      const pc = (v) => (v == null ? "—" : v.toFixed(1).replace(".", getLang() === "tr" ? "," : ".") + "%");
+
+      Chart.defaults.color = "#6f6878";
+      Chart.defaults.borderColor = "rgba(43, 39, 50, 0.12)";
+      Chart.defaults.font.family = '"Manrope", sans-serif';
+
+      // identity must never be colour-alone: label each line at its own end
+      const endLabel = {
+        id: "endLabel",
+        afterDatasetsDraw(chart) {
+          const ctx = chart.ctx;
+          chart.data.datasets.forEach((ds, i) => {
+            const meta = chart.getDatasetMeta(i);
+            if (meta.hidden || !meta.data.length) return;
+            let pt = null;
+            for (let j = meta.data.length - 1; j >= 0; j--) {
+              if (ds.data[j] != null) { pt = meta.data[j]; break; }
+            }
+            if (!pt) return;
+            ctx.save();
+            ctx.font = '700 12px "Manrope", sans-serif';
+            ctx.fillStyle = "#2b2732"; // text token, not the series colour
+            ctx.textBaseline = "middle";
+            ctx.fillText(ds.label, pt.x + 8, pt.y);
+            ctx.restore();
+          });
+        },
+      };
+
+      const lineOpts = (yTitle) => ({
+        responsive: true,
+        maintainAspectRatio: true,
+        layout: { padding: { right: 46 } }, // room for the end labels
+        interaction: { mode: "index", intersect: false },
+        plugins: {
+          legend: { position: "top", align: "start",
+            labels: { usePointStyle: true, pointStyle: "circle", boxWidth: 8, padding: 16 } },
+          tooltip: {
+            backgroundColor: "rgba(43,39,50,0.94)", padding: 11, cornerRadius: 10,
+            usePointStyle: true, boxPadding: 5,
+            callbacks: { label: (c) => ` ${c.dataset.label}: ${pc(c.parsed.y)}` },
+          },
+        },
+        scales: {
+          y: { beginAtZero: true, title: { display: true, text: yTitle },
+               ticks: { callback: (v) => v + "%" }, grid: { drawTicks: false } },
+          x: { grid: { display: false } },
+        },
+        elements: { line: { borderWidth: 2, tension: 0.3 }, point: { radius: 0, hoverRadius: 5, hitRadius: 12 } },
+      });
+
+      let charts = [];
+      function build() {
+        charts.forEach((c) => c.destroy());
+        charts = [];
+        const order = DATA.order;
+
+        // --- hero tiles ---
+        document.getElementById("hubtiles").innerHTML = order.map((c) => {
+          const h = DATA.hubs[c];
+          return `<div class="hub">
+            <span class="chip"><span class="dot" style="background:${HUE[c]}"></span>${c} · ${nm(c)}</span>
+            <strong class="big" style="color:${HUE[c]}">${pc(h.pct_delayed)}</strong>
+            <small>${t("of departures left 15+ min late", "kalkışın 15+ dk rötarlı")}</small>
+            <div class="sub"><small>${t("median when late", "rötarlıysa medyan")}
+              <b style="color:var(--text)">${h.median_late}${t(" min", " dk")}</b></small></div>
+          </div>`;
+        }).join("");
+
+        // --- hourly curve ---
+        const hours = [...Array(24).keys()];
+        charts.push(new Chart(document.getElementById("c-hourly"), {
+          type: "line",
+          data: {
+            labels: hours.map((h) => String(h).padStart(2, "0") + ":00"),
+            datasets: order.map((c) => {
+              const m = new Map(DATA.hubs[c].hourly.map((x) => [x.h, x.pct]));
+              return { label: c, data: hours.map((h) => (m.has(h) ? m.get(h) : null)),
+                       borderColor: HUE[c], backgroundColor: HUE[c], spanGaps: false };
+            }),
+          },
+          options: lineOpts(t("delayed 15+ min", "15+ dk rötarlı")),
+          plugins: [endLabel],
+        }));
+
+        // --- 7-day rolling ---
+        charts.push(new Chart(document.getElementById("c-roll"), {
+          type: "line",
+          data: {
+            labels: DATA.dates.map((d) => d.slice(5)),
+            datasets: order.map((c) => ({
+              label: c, data: DATA.hubs[c].rolling,
+              borderColor: HUE[c], backgroundColor: HUE[c], spanGaps: false,
+            })),
+          },
+          options: (() => {
+            const o = lineOpts(t("delayed 15+ min · 7-day avg", "15+ dk rötarlı · 7 gün ort."));
+            o.scales.x.ticks = { maxTicksLimit: 10, autoSkip: true };
+            return o;
+          })(),
+          plugins: [endLabel],
+        }));
+
+        // --- severity: horizontal stacked bar, sequential ramp ---
+        const bins = ["15–30", "30–60", "60+"];
+        charts.push(new Chart(document.getElementById("c-sev"), {
+          type: "bar",
+          data: {
+            labels: order.map((c) => `${c} · ${nm(c)}`),
+            datasets: bins.map((b, i) => ({
+              label: i === 0 ? t("15–30 min", "15–30 dk") : i === 1 ? t("30–60 min", "30–60 dk") : t("over 60 min", "60 dk üzeri"),
+              data: order.map((c) => DATA.hubs[c].hist.find((x) => x.bin === b).pct),
+              backgroundColor: SEV[i], borderColor: SURFACE, borderWidth: 2,
+              borderRadius: 4, borderSkipped: false,
+            })),
+          },
+          options: {
+            indexAxis: "y",
+            responsive: true,
+            interaction: { mode: "index", intersect: false },
+            plugins: {
+              legend: { position: "top", align: "start",
+                labels: { usePointStyle: true, pointStyle: "circle", boxWidth: 8, padding: 16 } },
+              tooltip: {
+                backgroundColor: "rgba(43,39,50,0.94)", padding: 11, cornerRadius: 10,
+                usePointStyle: true, boxPadding: 5,
+                callbacks: {
+                  label: (c) => ` ${c.dataset.label}: ${pc(c.parsed.x)}`,
+                  footer: (items) => t("total late: ", "toplam rötarlı: ") +
+                    pc(items.reduce((s, i) => s + i.parsed.x, 0)),
+                },
+              },
+            },
+            scales: {
+              x: { stacked: true, beginAtZero: true, ticks: { callback: (v) => v + "%" },
+                   title: { display: true, text: t("share of all departures", "tüm kalkışlar içindeki pay") } },
+              y: { stacked: true, grid: { display: false } },
+            },
+          },
+        }));
+
+        // --- table view ---
+        const rows = [
+          ["tbl.delayed", "Rötarlı (15+ dk)", (h) => pc(h.pct_delayed)],
+          ["tbl.median", "Rötarlıysa medyan gecikme", (h) => h.median_late + t(" min", " dk")],
+          ["tbl.b1", "15–30 dk", (h) => pc(h.hist[1].pct)],
+          ["tbl.b2", "30–60 dk", (h) => pc(h.hist[2].pct)],
+          ["tbl.b3", "60 dk üzeri", (h) => pc(h.hist[3].pct)],
+          ["tbl.days", "Ölçülen gün", (h) => h.days],
+          ["tbl.perday", "Örnekteki kalkış/gün", (h) => h.per_day.toLocaleString(getLang() === "tr" ? "tr-TR" : "en-US")],
+          ["tbl.total", "Ölçülen kalkış", (h) => h.flights.toLocaleString(getLang() === "tr" ? "tr-TR" : "en-US")],
+        ];
+        document.getElementById("datatable").innerHTML =
+          `<caption>${t("Every figure plotted above, as a table.", "Yukarıdaki tüm grafiklerin sayıları.")}</caption>` +
+          `<thead><tr><th>${t("Metric", "Ölçüt")}</th>` +
+          order.map((c) => `<th>${c}</th>`).join("") + `</tr></thead><tbody>` +
+          rows.map(([key, tr, fn]) =>
+            `<tr><th scope="row">${t(window.I18N[key], tr)}</th>` +
+            order.map((c) => `<td>${fn(DATA.hubs[c])}</td>`).join("") + `</tr>`).join("") +
+          `</tbody>`;
+      }
+
+      build();
+      document.addEventListener("langchange", build);
+    </script>
+  </body>
+</html>
