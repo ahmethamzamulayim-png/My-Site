@@ -84,8 +84,18 @@
         justify-content: space-between;
         font-size: 0.72rem;
         color: var(--muted);
-        margin-bottom: 12px;
+        margin-bottom: 8px;
       }
+      .catlegend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 10px;
+        margin: 0 0 12px;
+        font-size: 0.68rem;
+        color: var(--muted);
+      }
+      .catlegend span { display: inline-flex; align-items: center; }
+      .catlegend i { width: 8px; height: 8px; border-radius: 999px; margin-right: 4px; flex: none; }
       .routelist {
         overflow-y: auto;
         flex: 1;
@@ -136,6 +146,17 @@
       }
       .detail h3 { margin: 4px 0 2px; font-family: "Space Grotesk", sans-serif; font-size: 1.4rem; letter-spacing: -0.02em; }
       .detail .dmodel { margin: 0 0 12px; font-size: 0.85rem; color: var(--muted); }
+      .rbadge {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: 999px;
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        color: #fff;
+        margin-bottom: 8px;
+      }
+      .dreason { font-size: 0.85rem; line-height: 1.55; color: var(--muted); margin: 0 0 10px; }
       .detail .droute {
         padding: 12px 0;
         border-top: 1px solid rgba(43, 39, 50, 0.1);
@@ -180,6 +201,7 @@
       <div class="big-count"><span id="count">20</span><small data-i18n="panel.sub">rota (≥20 uçuş, en az %20 örnek)</small></div>
       <div class="ramp"></div>
       <div class="ramp-labels"><span data-i18n="ramp.low">daha az riskli</span><span data-i18n="ramp.high">daha riskli</span></div>
+      <div class="catlegend" id="catlegend"></div>
       <div class="routelist" id="routelist"></div>
       <p class="hint" data-i18n="panel.hint">Bir rotaya tıkla veya küre üzerindeki hatta tıkla, detayları gör.</p>
     </aside>
@@ -189,6 +211,8 @@
       <p class="eyebrow" id="dtag">Rota</p>
       <h3 id="dcity"></h3>
       <p class="dmodel" id="dairport"></p>
+      <span class="rbadge" id="dcat"></span>
+      <p class="dreason" id="dreason"></p>
       <div class="droute" id="droute"></div>
       <div class="dstats" id="dstats"></div>
     </aside>
@@ -217,28 +241,60 @@
       // minority are seriously late — that's why routes are ranked by
       // pct_delayed, not median (median floors to 0 too easily to rank by).
       // ------------------------------------------------------------------
+      // cat: 'sanctions' | 'documented' (real, sourced 2026 incidents) |
+      // 'capacity' (structural airport/infrastructure limits) | 'cargo'
+      // (data-quality note) | 'sample' (too small to trust the %% alone).
+      // reason: [English, Turkish] — researched per-route, sources in the
+      // conversation this page was built from; not exhaustive causation,
+      // just the best documented explanation found for each route.
       const ROUTES = [
-       {"icao":"UMMS","name":"Minsk National Airport","city":"Minsk","lat":53.888,"lon":28.04,"flights":85,"median":25.0,"pct_delayed":57.6},
-       {"icao":"OPKC","name":"Jinnah International Airport","city":"Karachi","lat":24.907,"lon":67.161,"flights":112,"median":15.5,"pct_delayed":52.7},
-       {"icao":"UUDD","name":"Domodedovo International Airport","city":"Moscow","lat":55.409,"lon":37.906,"flights":165,"median":13.0,"pct_delayed":48.5},
-       {"icao":"URML","name":"Uytash Airport","city":"Makhachkala","lat":42.817,"lon":47.652,"flights":60,"median":0.0,"pct_delayed":45.0},
-       {"icao":"UWWW","name":"Kurumoch International Airport","city":"Samara","lat":53.505,"lon":50.164,"flights":23,"median":6.0,"pct_delayed":43.5},
-       {"icao":"CYYZ","name":"Toronto Pearson International Airport","city":"Toronto","lat":43.676,"lon":-79.629,"flights":111,"median":8.0,"pct_delayed":43.2},
-       {"icao":"VTSP","name":"Phuket International Airport","city":"Phuket","lat":8.113,"lon":98.317,"flights":35,"median":8.0,"pct_delayed":42.9},
-       {"icao":"LGIR","name":"Heraklion International Nikos Kazantzakis Airport","city":"Heraklion","lat":35.34,"lon":25.18,"flights":63,"median":12.0,"pct_delayed":42.9},
-       {"icao":"URMG","name":"Akhmat Kadyrov Grozny International Airport","city":"Grozny","lat":43.388,"lon":45.7,"flights":34,"median":9.0,"pct_delayed":41.2},
-       {"icao":"OOMS","name":"Muscat International Airport","city":"Muscat/Seeb","lat":23.6,"lon":58.285,"flights":189,"median":8.0,"pct_delayed":40.2},
-       {"icao":"URMO","name":"Beslan Airport","city":"Beslan","lat":43.206,"lon":44.606,"flights":43,"median":0.0,"pct_delayed":37.2},
-       {"icao":"SVMI","name":"Simon Bolivar International Airport","city":"Maiquetía","lat":10.601,"lon":-66.991,"flights":35,"median":0.0,"pct_delayed":37.1},
-       {"icao":"EBLG","name":"Liège Airport","city":"Grâce-Hollogne","lat":50.639,"lon":5.444,"flights":91,"median":4.0,"pct_delayed":36.3},
-       {"icao":"LGSR","name":"Santorini International Airport","city":"Santorini Island","lat":36.4,"lon":25.479,"flights":28,"median":10.5,"pct_delayed":35.7},
-       {"icao":"LDSP","name":"Split Airport","city":"Split","lat":43.539,"lon":16.298,"flights":45,"median":0.0,"pct_delayed":35.6},
-       {"icao":"GBYD","name":"Banjul International Airport","city":"Banjul (Yundum)","lat":13.338,"lon":-16.652,"flights":23,"median":1.0,"pct_delayed":34.8},
-       {"icao":"OMSJ","name":"Sharjah International Airport","city":"Sharjah","lat":25.329,"lon":55.517,"flights":107,"median":2.0,"pct_delayed":34.6},
-       {"icao":"HHAS","name":"Asmara International Airport","city":"Asmara","lat":15.292,"lon":38.911,"flights":67,"median":5.0,"pct_delayed":34.3},
-       {"icao":"OIMM","name":"Shahid Hasheminejad Airport","city":"Mashhad","lat":36.235,"lon":59.641,"flights":59,"median":0.0,"pct_delayed":33.9},
-       {"icao":"VOBL","name":"Kempegowda International Airport","city":"Bengaluru","lat":13.198,"lon":77.706,"flights":48,"median":0.0,"pct_delayed":33.3},
+       {"icao":"UMMS","name":"Minsk National Airport","city":"Minsk","lat":53.888,"lon":28.04,"flights":85,"median":25.0,"pct_delayed":57.6,
+        "cat":"sanctions","reason":["Belarus is under Western sanctions, complicating routing, ground handling, and diplomatic coordination for carriers still serving it.","Belarus Batı yaptırımları altında; bu da hâlâ oraya uçan havayolları için rota, yer hizmetleri ve diplomatik koordinasyonu zorlaştırıyor."]},
+       {"icao":"OPKC","name":"Jinnah International Airport","city":"Karachi","lat":24.907,"lon":67.161,"flights":112,"median":15.5,"pct_delayed":52.7,
+        "cat":"documented","reason":["2026 incidents: 10+ flights bunched into one departure slot, dense fog dropping visibility to 50m, and immigration processing bottlenecks.","2026 olayları: tek bir kalkış dilimine 10'dan fazla uçuşun yığılması, görüşü 50 metreye düşüren yoğun sis ve pasaport kontrolünde tıkanıklık."]},
+       {"icao":"UUDD","name":"Domodedovo International Airport","city":"Moscow","lat":55.409,"lon":37.906,"flights":165,"median":13.0,"pct_delayed":48.5,
+        "cat":"sanctions","reason":["THY is one of the few carriers still flying to/over Russia post-2022. July 2026: THY flights out of Moscow were delayed up to 10 hours.","THY, 2022 sonrası hâlâ Rusya'ya/üzerinden uçan az sayıda havayolundan biri. Temmuz 2026'da THY'nin Moskova çıkışlı uçuşları 10 saate kadar rötar yaptı."]},
+       {"icao":"URML","name":"Uytash Airport","city":"Makhachkala","lat":42.817,"lon":47.652,"flights":60,"median":0.0,"pct_delayed":45.0,
+        "cat":"sanctions","reason":["North Caucasus, Russia — the same sanctions-era overflight and coordination friction as Moscow.","Kuzey Kafkasya, Rusya — Moskova ile aynı yaptırım dönemi üstten geçiş ve koordinasyon sürtünmesi."]},
+       {"icao":"UWWW","name":"Kurumoch International Airport","city":"Samara","lat":53.505,"lon":50.164,"flights":23,"median":6.0,"pct_delayed":43.5,
+        "cat":"sanctions","reason":["Russia sanctions friction — and only 23 flights in this sample, so treat the percentage cautiously.","Rusya yaptırım sürtünmesi — ayrıca bu örneklemde yalnızca 23 uçuş var, yüzdeyi temkinli okuyun."]},
+       {"icao":"CYYZ","name":"Toronto Pearson International Airport","city":"Toronto","lat":43.676,"lon":-79.629,"flights":111,"median":8.0,"pct_delayed":43.2,
+        "cat":"documented","reason":["2026 incident reports name Turkish Airlines directly: tight aircraft rotations at Pearson mean one late inbound ripples through the day's whole schedule.","2026 olay raporları THY'yi doğrudan sayıyor: Pearson'da sıkı uçak rotasyonları, bir gecikmiş inişin günün tüm programına yayılması anlamına geliyor."]},
+       {"icao":"VTSP","name":"Phuket International Airport","city":"Phuket","lat":8.113,"lon":98.317,"flights":35,"median":8.0,"pct_delayed":42.9,
+        "cat":"documented","reason":["2026: a hard landing shut Phuket's only runway, plus immigration system faults and Dubai/Doha transit-hub chaos feeding through.","2026: sert bir iniş Phuket'in tek pistini kapattı; buna pasaport sistemi arızaları ve Dubai/Doha aktarma merkezlerindeki kaos eklendi."]},
+       {"icao":"LGIR","name":"Heraklion International Nikos Kazantzakis Airport","city":"Heraklion","lat":35.34,"lon":25.18,"flights":63,"median":12.0,"pct_delayed":42.9,
+        "cat":"capacity","reason":["50+ year old infrastructure rated for ~10 arrivals/hour; summer demand runs well past that, with no real backup runway for large aircraft.","50 yılı aşkın altyapı saatte ~10 iniş için tasarlanmış; yaz talebi bunun çok üzerinde, büyük uçaklar için gerçek bir yedek pist de yok."]},
+       {"icao":"URMG","name":"Akhmat Kadyrov Grozny International Airport","city":"Grozny","lat":43.388,"lon":45.7,"flights":34,"median":9.0,"pct_delayed":41.2,
+        "cat":"sanctions","reason":["North Caucasus, Russia — same overflight and coordination friction as Moscow.","Kuzey Kafkasya, Rusya — Moskova ile aynı üstten geçiş ve koordinasyon sürtünmesi."]},
+       {"icao":"OOMS","name":"Muscat International Airport","city":"Muscat/Seeb","lat":23.6,"lon":58.285,"flights":189,"median":8.0,"pct_delayed":40.2,
+        "cat":"documented","reason":["2026 saw repeated multi-airline disruption waves (70+ delays in single events) and regional capacity cuts destabilizing the schedule.","2026'da tekrarlayan çok havayollu aksama dalgaları (tek olayda 70+ rötar) ve bölgesel kapasite kesintileri programı istikrarsızlaştırdı."]},
+       {"icao":"URMO","name":"Beslan Airport","city":"Beslan","lat":43.206,"lon":44.606,"flights":43,"median":0.0,"pct_delayed":37.2,
+        "cat":"sanctions","reason":["North Caucasus, Russia — same overflight and coordination friction as Moscow.","Kuzey Kafkasya, Rusya — Moskova ile aynı üstten geçiş ve koordinasyon sürtünmesi."]},
+       {"icao":"SVMI","name":"Simon Bolivar International Airport","city":"Maiquetía","lat":10.601,"lon":-66.991,"flights":35,"median":0.0,"pct_delayed":37.1,
+        "cat":"sanctions","reason":["Venezuela remains under heavy US sanctions, complicating fuel, parts, and financial clearing for international carriers.","Venezuela hâlâ ağır ABD yaptırımları altında; bu da uluslararası havayolları için yakıt, yedek parça ve finansal takası zorlaştırıyor."]},
+       {"icao":"EBLG","name":"Liège Airport","city":"Grâce-Hollogne","lat":50.639,"lon":5.444,"flights":91,"median":4.0,"pct_delayed":36.3,
+        "cat":"caveat","reason":["Data note: Liège lost all scheduled passenger service in Jan 2026. These are Turkish Cargo freighter flights, not passengers — a different operation with different delay dynamics.","Veri notu: Liège Ocak 2026'da tüm yolcu seferlerini kaybetti. Bunlar Turkish Cargo kargo uçuşları, yolcu değil — farklı rötar dinamikleri olan ayrı bir operasyon."]},
+       {"icao":"LGSR","name":"Santorini International Airport","city":"Santorini Island","lat":36.4,"lon":25.479,"flights":28,"median":10.5,"pct_delayed":35.7,
+        "cat":"capacity","reason":["A short caldera-edge runway with no room to expand; one delay can cascade 24-48h since the schedule has no slack.","Genişleme imkânı olmayan, kaldera kenarında kısa bir pist; programda boşluk olmadığından tek bir gecikme 24-48 saat sürebiliyor."]},
+       {"icao":"LDSP","name":"Split Airport","city":"Split","lat":43.539,"lon":16.298,"flights":45,"median":0.0,"pct_delayed":35.6,
+        "cat":"capacity","reason":["Adriatic summer tourist surge overwhelms the airport; ground-staffing shortages compound it June-August.","Adriyatik yaz turist patlaması havalimanını aşıyor; Haziran-Ağustos'ta yer personeli eksikliği bunu ağırlaştırıyor."]},
+       {"icao":"GBYD","name":"Banjul International Airport","city":"Banjul (Yundum)","lat":13.338,"lon":-16.652,"flights":23,"median":1.0,"pct_delayed":34.8,
+        "cat":"caveat","reason":["Only 23 flights in this sample, on a 7.5-hour route where Turkish Airlines is the sole non-stop operator — read the percentage cautiously.","Bu örneklemde yalnızca 23 uçuş var, THY'nin tek aktarmasız işletmeci olduğu 7,5 saatlik bir rotada — yüzdeyi temkinli okuyun."]},
+       {"icao":"OMSJ","name":"Sharjah International Airport","city":"Sharjah","lat":25.329,"lon":55.517,"flights":107,"median":2.0,"pct_delayed":34.6,
+        "cat":"documented","reason":["A low-cost, point-to-point hub for the Gulf-South Asia corridor; 2026 saw repeated multi-carrier disruption waves there.","Körfez-Güney Asya koridoru için düşük maliyetli, noktadan noktaya bir merkez; 2026'da orada tekrarlayan çok havayollu aksama dalgaları yaşandı."]},
+       {"icao":"HHAS","name":"Asmara International Airport","city":"Asmara","lat":15.292,"lon":38.911,"flights":67,"median":5.0,"pct_delayed":34.3,
+        "cat":"capacity","reason":["Eritrea is diplomatically isolated with almost no resident carriers; foreign airlines serving it face friction other routes don't — Ethiopian Airlines was suspended entirely amid a dispute with authorities.","Eritre diplomatik olarak izole, neredeyse hiç yerleşik havayolu yok; oraya uçan yabancı havayolları başka rotalarda görülmeyen sürtünmeyle karşılaşıyor — Ethiopian Airlines, yetkililerle anlaşmazlık yüzünden tamamen askıya alınmıştı."]},
+       {"icao":"OIMM","name":"Shahid Hasheminejad Airport","city":"Mashhad","lat":36.235,"lon":59.641,"flights":59,"median":0.0,"pct_delayed":33.9,
+        "cat":"sanctions","reason":["Iran sanctions complicate fuel, parts, and financial clearing for international carriers.","İran yaptırımları uluslararası havayolları için yakıt, yedek parça ve finansal takası zorlaştırıyor."]},
+       {"icao":"VOBL","name":"Kempegowda International Airport","city":"Bengaluru","lat":13.198,"lon":77.706,"flights":48,"median":0.0,"pct_delayed":33.3,
+        "cat":"capacity","reason":["Passenger growth has outpaced infrastructure for years; the airport is mid-construction on a new taxiway phase specifically to add capacity.","Yolcu artışı yıllardır altyapıyı geride bırakıyor; havalimanı özellikle kapasite eklemek için yeni bir taksi yolu inşaatının ortasında."]},
       ];
+      const CATS = {
+        sanctions: { color: "#c0122a", label: ["Sanctions / geopolitical", "Yaptırım / jeopolitik"] },
+        documented: { color: "#1f9e93", label: ["Documented 2026 disruption", "Belgelenmiş 2026 aksaması"] },
+        capacity: { color: "#2b50b5", label: ["Airport capacity / structural", "Havalimanı kapasitesi / yapısal"] },
+        caveat: { color: "#8a6d1a", label: ["Data caveat — see note", "Veri notu — açıklamaya bak"] },
+      };
       const IST = { lat: 41.275, lon: 28.732 };
       const MIN_PCT = Math.min(...ROUTES.map(r => r.pct_delayed));
       const MAX_PCT = Math.max(...ROUTES.map(r => r.pct_delayed));
@@ -318,6 +374,11 @@
         $("dtag").textContent = d.icao;
         $("dcity").textContent = d.city;
         $("dairport").textContent = d.name;
+        const cat = CATS[d.cat];
+        const li = getLang() === "tr" ? 1 : 0;
+        $("dcat").textContent = cat.label[li];
+        $("dcat").style.background = cat.color;
+        $("dreason").textContent = d.reason[li];
         $("droute").innerHTML = `<b>IST</b> (İstanbul) →<br><b>${d.icao}</b> ${d.city}`;
         $("dstats").innerHTML =
           `${t("Delayed 15+ min","15+ dk rötarlı")}: <b>${d.pct_delayed}%</b><br>` +
@@ -338,6 +399,7 @@
         $("routelist").innerHTML = ROUTES.map((d, i) => `
           <button data-i="${i}" class="${d === selected ? 'active' : ''}">
             <span class="rank">${i + 1}</span>
+            <i style="background:${CATS[d.cat].color};width:7px;height:7px;border-radius:999px;flex:none;margin-right:2px"></i>
             <span class="city">${d.city}</span>
             <span class="pct" style="color:${riskColor(d.pct_delayed)}">${d.pct_delayed}%</span>
           </button>`).join("");
@@ -346,7 +408,18 @@
       }
       renderList();
 
+      // legend for the category dimension (dataviz rule: >=2 categorical
+      // colors always get a legend, not just the color-by-itself)
+      function renderCatLegend() {
+        const li = getLang() === "tr" ? 1 : 0;
+        $("catlegend").innerHTML = Object.values(CATS)
+          .map(c => `<span><i style="background:${c.color}"></i>${c.label[li]}</span>`).join("");
+      }
+      renderCatLegend();
+
       document.addEventListener("langchange", () => {
+        renderCatLegend();
+        renderList();
         if (selected) select(selected);
       });
     </script>
