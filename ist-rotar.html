@@ -366,7 +366,7 @@
         const d = daily[+sel.value];
         if (!d) return;
         const conv = d.conversion == null ? "—" : pct(Math.round(d.conversion * 100));
-        const med = d.median_delay == null ? "—" : `${fmt(d.median_delay)} ${t("min", "dk")}`;
+        const med = d.median_when_delayed == null ? "—" : `${fmt(d.median_when_delayed)} ${t("min", "dk")}`;
         const dash = (v) => (v ? fmt(v) : "—"); // 0/absent -> not available
         const tiles = [
           [dash(d.movements), t("ADS-B movements tracked", "izlenen ADS-B hareketi"), ""],
@@ -374,7 +374,7 @@
           [fmt(d.flew), t("departures flown", "uçan kalkış"), ""],
           [fmt(d.delayed), t("delayed 15+ min", "15+ dk rötarlı"), "late"],
           [fmt(d.ontime), t("on time", "zamanında"), "ontime"],
-          [med, t("median delay", "medyan rötar"), ""],
+          [med, t("median delay when late", "rötarlıysa medyan gecikme"), ""],
           [dash(d.metars), t("METAR weather obs", "METAR gözlemi"), ""],
           [conv, t("schedule match rate", "tarife eşleşme oranı"), ""],
         ];
