@@ -320,6 +320,11 @@ body::before {
   border: 1px solid rgba(43, 39, 50, 0.08);
   text-decoration: none;
   transition: filter 200ms ease, transform 200ms ease;
+  /* the treemap keeps its 1.7/1/0.8 columns at every width, so the narrow
+     third column stays narrow on a phone. Make each tile its own container so
+     the label sizes against the TILE it sits in, not the viewport — otherwise
+     a fixed 1.05rem wraps "Universal bearing RUL" onto three cramped lines. */
+  container-type: inline-size;
 }
 
 .treemap .tile:hover {
@@ -329,14 +334,19 @@ body::before {
 
 .treemap .tile strong {
   font-family: "Space Grotesk", sans-serif;
-  font-size: 1.05rem;
-  line-height: 1.2;
+  font-size: 1.05rem; /* fallback where container queries are unsupported */
+  font-size: clamp(0.72rem, 13cqi, 1.05rem);
+  line-height: 1.18;
+  text-wrap: balance; /* spread the wrap evenly instead of one orphan word */
+  overflow-wrap: break-word; /* a long word shrinks the tile, never overflows it */
   color: var(--text);
 }
 
 .treemap .tile-tag,
 .treemap .tile-note {
   font-size: 0.78rem;
+  font-size: clamp(0.6rem, 8cqi, 0.78rem);
+  line-height: 1.3;
   color: var(--muted);
 }
 
@@ -347,6 +357,7 @@ body::before {
 
 .t-globe strong {
   font-size: 1.4rem;
+  font-size: clamp(1.05rem, 8cqi, 1.4rem); /* widest tile, so it keeps the lead */
 }
 
 .t-xds {
@@ -698,9 +709,22 @@ body::before {
     grid-template-columns: 1fr;
   }
 
+  /* three columns with a 0.8fr track leaves ~36px of text on a phone, which
+     breaks words mid-way no matter how small the type goes. Drop to two even
+     columns and let the lead project keep the full-width top row. */
   .treemap {
     min-height: 260px;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1.6fr 1fr 1fr 1fr;
   }
+
+  .t-globe { grid-area: 1 / 1 / 2 / 3; }
+  .t-xds { grid-area: 2 / 1 / 3 / 2; }
+  .t-ml { grid-area: 2 / 2 / 3 / 3; }
+  .t-ugv { grid-area: 3 / 1 / 4 / 2; }
+  .t-rig { grid-area: 3 / 2 / 4 / 3; }
+  .t-phase2 { grid-area: 4 / 1 / 5 / 2; }
+  .t-hubs { grid-area: 4 / 2 / 5 / 3; }
 
   .treemap .tile {
     padding: 11px;
