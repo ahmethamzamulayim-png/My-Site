@@ -606,8 +606,10 @@
         globe.htmlElementVisibilityModifier((el, vis) => { el.style.opacity = vis ? 1 : 0; el.style.pointerEvents = vis ? "auto" : "none"; });
       }
 
-      // same 110m map as thy-globe: light, stable, proven
-      fetch("countries-110m.geojson")
+      // same map as thy-globe (upgraded 2026-07-28 from 110m to 50m
+      // resolution: the coarse boundaries visibly mismatched real coastlines
+      // whenever a page zoomed into a single city, e.g. Algiers)
+      fetch("countries-50m.geojson")
         .then(r => r.json())
         .then(geo => globe.polygonsData(geo.features));
 

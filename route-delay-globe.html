@@ -341,13 +341,16 @@
         .labelText(d => d.city)
         .labelSize(0.9)
         .labelDotRadius(d => 0.3 + 0.35 * (d.pct_delayed - MIN_PCT) / (MAX_PCT - MIN_PCT || 1))
-        .labelColor(d => riskColor(d.pct_delayed))
+        // fixed dark color, NOT the risk ramp: low-risk routes sit at the pale
+        // end of that ramp, which is unreadable against the light map/sea —
+        // risk is already encoded by the arc color and the dot radius above
+        .labelColor(() => "#2b2732")
         .labelResolution(2)
         .onLabelClick(select);
 
       globe.globeMaterial().color.set("#cde6e2");
 
-      fetch("countries-110m.geojson").then(r => r.json()).then(geo => globe.polygonsData(geo.features));
+      fetch("countries-50m.geojson").then(r => r.json()).then(geo => globe.polygonsData(geo.features));
 
       const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
       const controls = globe.controls();
