@@ -252,8 +252,6 @@
         "cat":"sanctions","reason":["Belarus is under Western sanctions, complicating routing, ground handling, and diplomatic coordination for carriers still serving it.","Belarus Batı yaptırımları altında; bu da hâlâ oraya uçan havayolları için rota, yer hizmetleri ve diplomatik koordinasyonu zorlaştırıyor."]},
        {"icao":"OPKC","name":"Jinnah International Airport","city":"Karachi","lat":24.907,"lon":67.161,"flights":107,"median":16.0,"pct_delayed":54.2,
         "cat":"documented","reason":["2026 incidents: 10+ flights bunched into one departure slot, dense fog dropping visibility to 50m, and immigration processing bottlenecks.","2026 olayları: tek bir kalkış dilimine 10'dan fazla uçuşun yığılması, görüşü 50 metreye düşüren yoğun sis ve pasaport kontrolünde tıkanıklık."]},
-       {"icao":"UUDD","name":"Domodedovo International Airport","city":"Moscow","lat":55.409,"lon":37.906,"flights":165,"median":13.0,"pct_delayed":48.5,
-        "cat":"sanctions","reason":["THY is one of the few carriers still flying to/over Russia post-2022. July 2026: THY flights out of Moscow were delayed up to 10 hours.","THY, 2022 sonrası hâlâ Rusya'ya/üzerinden uçan az sayıda havayolundan biri. Temmuz 2026'da THY'nin Moskova çıkışlı uçuşları 10 saate kadar rötar yaptı."]},
        {"icao":"URML","name":"Uytash Airport","city":"Makhachkala","lat":42.817,"lon":47.652,"flights":60,"median":0.0,"pct_delayed":45.0,
         "cat":"sanctions","reason":["North Caucasus, Russia — the same sanctions-era overflight and coordination friction as Moscow.","Kuzey Kafkasya, Rusya — Moskova ile aynı yaptırım dönemi üstten geçiş ve koordinasyon sürtünmesi."]},
        {"icao":"OOMS","name":"Muscat International Airport","city":"Muscat/Seeb","lat":23.6,"lon":58.285,"flights":132,"median":11.0,"pct_delayed":43.9,
@@ -287,14 +285,15 @@
        {"icao":"UWKD","name":"Kazan International Airport","city":"Kazan","lat":55.606,"lon":49.279,"flights":163,"median":0.0,"pct_delayed":32.5,
         "cat":"sanctions","reason":["Tatarstan, Russia — same sanctions-era overflight and coordination friction as Moscow. Confirmed as a real, year-round Turkish Airlines route (TK429), not a data artifact.","Tataristan, Rusya — Moskova ile aynı yaptırım dönemi üstten geçiş ve koordinasyon sürtünmesi. Yıl boyu gerçek bir THY rotası olduğu doğrulandı (TK429), veri hatası değil."]},
        {"icao":"DAAG","name":"Houari Boumediene Airport","city":"Algiers","lat":36.694,"lon":3.215,"flights":610,"median":0.0,"pct_delayed":32.5,
-        "cat":"unexplained","reason":["No documented incident found for this route specifically — but with 610 flights, the largest sample of any route here, this is a real, statistically solid pattern, not noise. The cause isn't identifiable from public reporting alone.","Bu rota için özel olarak belgelenmiş bir olay bulunamadı — ama 610 uçuşla (buradaki en büyük örneklem) bu gerçek, istatistiksel olarak sağlam bir örüntü, gürültü değil. Neden, kamuya açık kaynaklardan tek başına belirlenemiyor."]},
+        "cat":"caveat","reason":["Pooled across 8 carriers that diverge sharply: Turkish Airlines itself runs 10.3% delayed (near IST's own baseline), while charter/budget carriers on the same route (Avion Express, Nouvelair, MNG, Fly2Sky) run 60-69% delayed and pull the pooled average way up.","8 havayolu havuzlanmış ve aralarında büyük fark var: Turkish Airlines'ın kendisi %10,3 rötarla uçuyor (IST'nin kendi ortalamasına yakın), aynı rotadaki charter/ucuz havayolları (Avion Express, Nouvelair, MNG, Fly2Sky) ise %60-69 rötarla uçarak havuzlanmış ortalamayı yukarı çekiyor."]},
+       {"icao":"UUWW","name":"Vnukovo International Airport","city":"Moscow","lat":55.591,"lon":37.262,"flights":840,"median":0.0,"pct_delayed":31.0,
+        "cat":"sanctions","reason":["Turkish Airlines operates 79% of this route's traffic (662 of 840 flights) at 23.1% delayed — about double IST's own baseline, matching July 2026 reports of Vnukovo-specific THY delays up to 10 hours. Pobeda and other Russian carriers on the same route run far worse (62%+), pulling the pooled number up to 31%.","Turkish Airlines bu rotanın trafiğinin %79'unu işletiyor (840 uçuşun 662'si) ve %23,1 rötarla uçuyor — IST'nin kendi ortalamasının yaklaşık iki katı; Temmuz 2026'daki Vnukovo'ya özel THY rötar haberleriyle (10 saate kadar) örtüşüyor. Aynı rotadaki Pobeda ve diğer Rus havayolları çok daha kötü (%62+), havuzlanmış oranı %31'e çekiyor."]},
       ];
       const CATS = {
         sanctions: { color: "#c0122a", label: ["Sanctions / geopolitical", "Yaptırım / jeopolitik"] },
         documented: { color: "#1f9e93", label: ["Documented 2026 disruption", "Belgelenmiş 2026 aksaması"] },
         capacity: { color: "#2b50b5", label: ["Airport capacity / structural", "Havalimanı kapasitesi / yapısal"] },
         caveat: { color: "#8a6d1a", label: ["Data caveat — see note", "Veri notu — açıklamaya bak"] },
-        unexplained: { color: "#6b4a9e", label: ["No documented cause found", "Belgelenmiş neden bulunamadı"] },
       };
       const IST = { lat: 41.275, lon: 28.732 };
       const MIN_PCT = Math.min(...ROUTES.map(r => r.pct_delayed));
