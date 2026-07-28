@@ -389,7 +389,7 @@
         globe.htmlElementVisibilityModifier((el, visible) => { el.style.opacity = visible ? 1 : 0; el.style.pointerEvents = visible ? "auto" : "none"; });
       }
 
-      fetch("countries-50m.geojson")
+      fetch("countries-110m.geojson")
         .then(r => r.json())
         .then(geo => globe.polygonsData(geo.features));
 
