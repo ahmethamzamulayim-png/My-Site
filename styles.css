@@ -17,6 +17,11 @@
   --gold: #c98a1a;
   --shadow: 0 24px 60px rgba(58, 40, 28, 0.12);
   --radius: 24px;
+  /* the text rail: every panel is a card with 28px padding inside a 1px
+     border, so its TEXT starts 29px in from the shared container edge. The
+     header and footer have no card, so they pad by hand to sit on the same
+     line — otherwise the brand hangs 29px left of every heading below it. */
+  --rail: 29px;
 }
 
 * {
@@ -71,7 +76,7 @@ body::before {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 24px 0 12px;
+  padding: 24px var(--rail) 12px;
   position: sticky;
   top: 0;
   z-index: 10;
@@ -639,7 +644,7 @@ body::before {
   justify-content: space-between;
   align-items: center;
   gap: 16px;
-  padding: 0 0 36px;
+  padding: 0 var(--rail) 36px;
   font-size: 0.92rem;
 }
 
@@ -683,6 +688,10 @@ body::before {
 }
 
 @media (max-width: 720px) {
+  :root {
+    --rail: 23px; /* cards drop to 22px padding here, +1px border */
+  }
+
   .site-header,
   .hero,
   .section,
