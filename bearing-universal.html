@@ -158,7 +158,7 @@
 
         <div class="stat-grid">
           <div class="stat"><strong>36</strong><span data-i18n="stat.1">run-to-failure bearings, 3 rigs, roller + ball, lifetimes 37 min to 45 days</span></div>
-          <div class="stat"><strong>≈ 0</strong><span data-i18n="stat.2">generalization gap: median life-fraction error 0.186 (bearing unseen) vs 0.173 (whole rig unseen)</span></div>
+          <div class="stat"><strong>≈ 0</strong><span data-i18n="stat.2">generalization gap: median life-fraction error 0.188 (bearing unseen) vs 0.169 (whole rig unseen), matched preprocessing</span></div>
           <div class="stat"><strong>21.7×</strong><span data-i18n="stat.3">physics check passed: the BPFO envelope band lights up at a documented outer-race failure</span></div>
           <div class="stat"><strong>0.35</strong><span data-i18n="stat.4">worst single-bearing error — the number the median hides</span></div>
         </div>
@@ -243,9 +243,9 @@
           <img src="bearing-universal/fig3_lobo_vs_lodo.png" alt="Bar chart comparing LOBO and LODO median life-fraction error per dataset; FEMTO is hardest in both, IMS shows only a modest gap" loading="lazy" />
           <p data-i18n="fig2.p">
             The headline: hiding the entire rig barely moves the median error
-            (0.186 → 0.173). Two surprises. The roller-vs-ball wall we expected
+            (0.188 → 0.169). Two surprises. The roller-vs-ball wall we expected
             never showed up — models trained only on ball bearings handled the
-            roller rig fine (0.166). And the hardest dataset either way is
+            roller rig fine (0.168). And the hardest dataset either way is
             FEMTO, for a mundane reason: its snapshots last 0.1 seconds, so
             every diagnosis is made from a finger-snap of audio. Recording
             quality beat bearing-type physics as the dominant difficulty.
@@ -325,9 +325,9 @@
             leans on smoothed RMS (27%), smoothed kurtosis, and a broad spread
             of geometry-derived envelope bands. Damage signals, not dataset
             IDs. Two ablations complete the audit: removing the roller-bearing
-            data <em>hurts</em> ball-bearing predictions (0.192 → 0.205 — the
+            data <em>hurts</em> ball-bearing predictions (0.190 → 0.200 — the
             odd rig out was helping), and excluding cage-failure bearings
-            changes nothing (0.188 both ways).
+            changes nothing (0.188 against a 0.190 baseline).
           </p>
         </div>
       </section>
@@ -480,11 +480,12 @@
           <p data-i18n="corr.c.p">
             Four things were untouched by all of this, and pretending otherwise
             would undo the point of the exercise. <strong>Steadying the examples
-            does nothing when a sibling bearing is available</strong> — the
-            bearing-unseen exam went 0.186 → 0.184, which is no change; the
-            benefit exists only when an entire rig is a stranger, which is
-            admittedly the case that matters. <strong>IMS got marginally
-            worse</strong> (0.160 → 0.167). <strong>FEMTO's frequency
+            does nothing when a sibling bearing is available</strong> — tested
+            directly, the bearing-unseen exam moved by 0.002, which is nothing;
+            the benefit exists only when an entire rig is a stranger, which is
+            admittedly the case that matters, and it is why that protocol is
+            left unsmoothed. <strong>IMS got marginally worse</strong>
+            (0.160 → 0.187). <strong>FEMTO's frequency
             resolution is permanent</strong>: no processing recovers detail a
             0.1-second recording never captured. And <strong>"failure time" is
             still a chosen convention</strong>, FEMTO's failure modes are still
@@ -564,7 +565,7 @@
         "hero.h2": "Bir rulman modeli hiç görmediği bir düzeneğe taşınır mı?",
         "hero.text": "Bölüm 1, tek bir test düzeneğinde arıza tahmin etmeyi öğretti. Sıradaki soru: bunların ne kadarı hiç görmediği bir makineyle karşılaşınca ayakta kalır? Bu, kendi arabanın tuhaf ses çıkarmaya başladığını hemen fark etmekle bir yabancının arabasına teşhis koymak arasındaki fark. Her düzenek titreşimi farklı renklendirir ve ömürler 100 kat saçılır — 37 dakikadan 45 güne. Bu çalışma üç herkese açık bozulana-kadar-çalıştırma veri setini (NASA IMS makaralı, XJTU-SY ve FEMTO bilyeli rulmanlar, 36 ömür) birleştiriyor, kalan ömrü yakıt göstergesi tarzı bir ömür oranına çeviriyor ve genelleme açığını doğrudan ölçüyor: yalnızca rulman değil, düzeneğin tamamı eğitimden saklanınca model ne kadar kötüleşiyor?",
         "stat.1": "bozulana kadar çalıştırılan rulman; 3 düzenek, makaralı + bilyeli, ömürler 37 dk – 45 gün",
-        "stat.2": "genelleme açığı: medyan ömür-oranı hatası 0,186 (rulman görülmemiş) vs 0,173 (düzeneğin tamamı görülmemiş)",
+        "stat.2": "genelleme açığı: medyan ömür-oranı hatası 0,188 (rulman görülmemiş) vs 0,169 (düzeneğin tamamı görülmemiş), eşit ön işleme",
         "stat.3": "fizik testi geçildi: belgelenmiş dış bilezik arızasında BPFO zarf bandı parlıyor",
         "stat.4": "en kötü tek rulman hatası — medyanın sakladığı sayı",
         "method.eyebrow": "Yöntem",
@@ -582,7 +583,7 @@
         "fig1.h3": "Önce fizik özniteliğinin çalıştığını kanıtla",
         "fig1.p": "Bir birim testi, ama fizik için. IMS test 2 rulman 1, belgelenmiş bir dış bilezik kusuruyla arızalandı; öyleyse zarf spektrumu hesaplanan dış bilezik temposunda (BPFO, 236 Hz) ve harmoniklerinde davul çalmalı — ve çalıyor, hem de keskin biçimde; iç bilezik ve makara ritimleri sessiz kalıyor. Davulun enerjisi test boyunca 21,7 kat büyüyor. Zarf öznitelikleri modele ancak bu kontrolden sonra girdi.",
         "fig2.h3": "Ana sonuç: rulman görülmemiş vs düzeneğin tamamı görülmemiş",
-        "fig2.p": "Ana sonuç: düzeneğin tamamını saklamak medyan hatayı neredeyse kımıldatmıyor (0,186 → 0,173). İki sürpriz. Beklediğimiz makaralı-bilyeli duvarı hiç çıkmadı — yalnızca bilyeli rulmanlarla eğitilen modeller makaralı düzeneği gayet idare etti (0,166). Ve iki yönde de en zor veri seti FEMTO; sebebi sıradan: kesitleri 0,1 saniye sürüyor, yani her teşhis parmak şıklatması kadar bir sesten konuyor. Baskın zorluk olarak kayıt kalitesi, rulman tipi fiziğini yendi.",
+        "fig2.p": "Ana sonuç: düzeneğin tamamını saklamak medyan hatayı neredeyse kımıldatmıyor (0,188 → 0,169). İki sürpriz. Beklediğimiz makaralı-bilyeli duvarı hiç çıkmadı — yalnızca bilyeli rulmanlarla eğitilen modeller makaralı düzeneği gayet idare etti (0,168). Ve iki yönde de en zor veri seti FEMTO; sebebi sıradan: kesitleri 0,1 saniye sürüyor, yani her teşhis parmak şıklatması kadar bir sesten konuyor. Baskın zorluk olarak kayıt kalitesi, rulman tipi fiziğini yendi.",
         "tbl.h1": "Protokol", "tbl.h2": "Medyan hata", "tbl.h3": "Geç evre (Q4)", "tbl.h4": "En kötü rulman",
         "tbl.r1": "LOBO — rulman görülmemiş",
         "tbl.r2": "LODO — IMS (makaralı) dışarıda",
@@ -594,7 +595,7 @@
         "fig4.h3": "Popülasyon modeli vs eğri ekstrapolasyonu — kazanan ilan edilmedi",
         "fig4.p": "Literatür, eğri ekstrapolasyonunun erken dönemde çuvallayıp geç dönemde parladığını söyler; yani popülasyon modeli erken kazanmalı, sonra bayrağı devretmeli. Verimiz bu temiz hikâyeyi reddetti — çünkü ekstrapolatör yalnızca emin olduğu sorulara cevap veren bir öğrenci: sadece hasar gerçekten üstel büyürken tahmin üretiyor (erken kesitlerin %17–33'ü), dolayısıyla gösterişli erken notu kendi seçtiği kolay bir alt kümede veriliyor. Orman her soruya cevap veriyor; hatası U şeklinde (en kötüsü başlangıçtan hemen sonra). 36 ömürle, kesişme ilan etmek yerine eğrileri ve kapsama oranını raporluyoruz.",
         "fig5.h3": "Sızıntı kontrolü: veri setlerini gizlice tanıyor mu?",
-        "fig5.p": "Kopya kontrolü. Burada zeki görünmenin en kolay yolu, kesitin hangi veri setinden geldiğini tanımak — sınav kâğıtlarını el yazısından tanıyarak notlamak gibi — ve en bariz parmak izi, düzenekler arasında 100 kat farklı olan duvar-saati bozulma hızı. O hız öznitelikleri toplam önemin %0,3'ünü taşıyor: orman yumuşatılmış RMS'e (%27), yumuşatılmış basıklığa ve geometriden türetilen zarf bantlarının geniş bir yelpazesine yaslanıyor. Veri seti kimliği değil, hasar sinyali. İki ablasyon denetimi tamamlıyor: makaralı rulman verisini çıkarmak bilyeli tahminleri <em>kötüleştiriyor</em> (0,192 → 0,205 — aykırı düzenek aslında yardım ediyormuş) ve kafes arızalı rulmanları dışlamak hiçbir şeyi değiştirmiyor (iki yönde de 0,188).",
+        "fig5.p": "Kopya kontrolü. Burada zeki görünmenin en kolay yolu, kesitin hangi veri setinden geldiğini tanımak — sınav kâğıtlarını el yazısından tanıyarak notlamak gibi — ve en bariz parmak izi, düzenekler arasında 100 kat farklı olan duvar-saati bozulma hızı. O hız öznitelikleri toplam önemin %0,3'ünü taşıyor: orman yumuşatılmış RMS'e (%27), yumuşatılmış basıklığa ve geometriden türetilen zarf bantlarının geniş bir yelpazesine yaslanıyor. Veri seti kimliği değil, hasar sinyali. İki ablasyon denetimi tamamlıyor: makaralı rulman verisini çıkarmak bilyeli tahminleri <em>kötüleştiriyor</em> (0,190 → 0,200 — aykırı düzenek aslında yardım ediyormuş) ve kafes arızalı rulmanları dışlamak hiçbir şeyi değiştirmiyor (0,190'lık temele karşı 0,188).",
         "corr.eyebrow": "Düzeltme ve inceleme",
         "corr.h2": "İkinci bir bakış bir sayıyı çok oynattı — açıklamamı daha da çok.",
         "corr.intro": "Yukarıdaki sonuçlar yayımlandıktan sonra yeniden incelendi. İki şey çıktı. FEMTO rulmanının ölçüleriyle ilgili bir çekince kapandı ve zararsız olduğu görüldü. Bir de bu sayfanın FEMTO'yu en zor düzenek yapan şey için verdiği açıklama — \"kayıtları çok kısa\" — yalnızca yarı doğruydu ve bu yarım doğru, düzeltilebilir bir kusuru gizliyordu. İkisi de yukarıdaki tablolara sessizce işlenmek yerine burada kayda geçiriliyor; çünkü bir sayının nasıl kımıldadığı, çoğu zaman nereye oturduğundan daha öğreticidir.",
@@ -624,7 +625,7 @@
         "corr.b.p3": "En çok FEMTO'yu vurmasının gösterişsiz bir sebebi var. FEMTO'yu dışarıda bırakmak, öğrenilecek en küçük örnek yığınını geriye bırakıyor — 4.610 satır; diğer iki dönüşümde 14.220 ve 15.536. Örneğin az olduğu durum, tam da modelin gürültüyü ezberlediği durumdur; dolayısıyla örnekleri temizlemek en çok orada işe yarıyor. Bu, gürültü giderme değil düzenlileştirme — ve şu anlama geliyor: ilk teşhis olan \"FEMTO zor, çünkü kayıtları kötü\" bir belirtiyi tarif ediyormuş. Kayıtlar gerçekten daha kötü. Ama cezanın büyük kısmı mikrofondan değil, modelden geliyormuş.",
         "corr.b.p4": "Bir itiraf daha; çünkü bu, özete hangi sayının gireceğini değiştiriyor. O 0,095, her seçeneğin dışarıda bırakılan düzeneğe karşı nasıl not aldığını <em>gördükten sonra</em> seçilen bir sabitleme miktarıyla elde edildi — yani gizlice bakarak. Bu, tartıyı birazdan tartacağınız cismin kendisiyle kalibre etmenin okumayı güzelleştirmesi gibi sonucu güzelleştirir. Kurallara uygun biçimde yeniden yapıldığında — miktar yalnızca modelin eğitildiği düzeneklere bakılarak seçilip, dışarıdaki düzeneğe en sonda bir kez dokunulduğunda — geç evre hatası <strong>0,153</strong>'e oturuyor. 0,318'e karşı yine %52'lik bir azalma ve alıntılanmayı hak eden sayı bu. 0,153 ile 0,095 arasındaki farkın da söylenmeye değer bir sebebi var: ayar, görebildiğiniz düzeneklerden seçilmek zorunda ve onlar da tam olarak bu ayara ihtiyacı olmayanlar. Hiç tanışmadığınız bir makine için gürültü ayarı yapamazsınız.",
         "corr.c.h3": "Ne düzelmedi",
-        "corr.c.p": "Tüm bunlardan etkilenmeyen dört şey var ve aksini ima etmek bu işin amacını ortadan kaldırırdı. <strong>Aynı düzenekten kardeş bir rulman varken örnekleri sabitlemek hiçbir şey yapmıyor</strong> — rulman-görülmemiş sınavı 0,186 → 0,184 oldu, yani değişmedi; fayda yalnızca düzeneğin tamamı yabancıyken ortaya çıkıyor, ki asıl önemli durum da o. <strong>IMS az da olsa kötüleşti</strong> (0,160 → 0,167). <strong>FEMTO'nun frekans çözünürlüğü kalıcı</strong>: 0,1 saniyelik bir kaydın hiç yakalamadığı ayrıntıyı hiçbir işlem geri getirmez. Ve <strong>\"arıza zamanı\" hâlâ seçilmiş bir tanım</strong>, FEMTO'nun arıza tipleri hâlâ belgesiz, 36 ömür hâlâ küçük bir sayı. Dürüst özet şu: büyük hatalardan biri kabaca üçte iki oranında azaldı, bu sayfadaki diğer her şey olduğu gibi duruyor.",
+        "corr.c.p": "Tüm bunlardan etkilenmeyen dört şey var ve aksini ima etmek bu işin amacını ortadan kaldırırdı. <strong>Aynı düzenekten kardeş bir rulman varken örnekleri sabitlemek hiçbir şey yapmıyor</strong> — doğrudan test edildiğinde rulman-görülmemiş sınavı 0,002 kadar oynadı, yani değişmedi; fayda yalnızca düzeneğin tamamı yabancıyken ortaya çıkıyor, ki asıl önemli durum da o. <strong>IMS az da olsa kötüleşti</strong> (0,160 → 0,187). <strong>FEMTO'nun frekans çözünürlüğü kalıcı</strong>: 0,1 saniyelik bir kaydın hiç yakalamadığı ayrıntıyı hiçbir işlem geri getirmez. Ve <strong>\"arıza zamanı\" hâlâ seçilmiş bir tanım</strong>, FEMTO'nun arıza tipleri hâlâ belgesiz, 36 ömür hâlâ küçük bir sayı. Dürüst özet şu: büyük hatalardan biri kabaca üçte iki oranında azaldı, bu sayfadaki diğer her şey olduğu gibi duruyor.",
         "limits.eyebrow": "Dürüst sınırlar",
         "limits.h2": "Sayıları alıntılamadan önce bunları oku.",
         "limits.ul": "<li>\"Arıza zamanı\" doğanın bir gerçeği değil, bir tercih: IMS düzenek kendini durdurduğunda bitiyor; XJTU ve FEMTO ilk 20&nbsp;g tepede (XJTU'nun kendi kriteri, FEMTO'ya da uygulandı — ki FEMTO'nun arıza tanımı literatürde hakikaten tartışmalı). Her etiket bu tercihe koşullu.</li><li>Ömür <em>oranı</em> ancak rulman arızalandıktan sonra bilinir. Hataları saate çevirmek gerçek toplam ömrü kullanıyor — canlı hiçbir sistemin sahip olmadığı geriye bakış. Saat rakamları söz değil, sezgi için.</li><li>6σ alarmı kapı bekçisi: erken çaldığı yerde (XJTU rulmanları ısınırken kayıyor) neredeyse sağlıklı veri eğitime sızıyor; ömrün %95'inde çaldığı yerde ise model minicik, kolay bir sınava giriyor. Modelin yetki alanını orman değil dedektör çiziyor.</li><li><strong>Frekans çözünürlüğü, hiçbir yazılımın düzeltemediği tek şey.</strong> FEMTO'nun parmak şıklatması kadar süren 0,1&nbsp;s kesitleri frekansı ancak 10&nbsp;Hz'e kadar ayırt edebiliyor; oysa arıza ritimleri 100–170&nbsp;Hz. Pratikte arıza bantları %14–33 genişliğinde çıkıyor ve 8 komşu bandın 3–5'i fiziksel olarak üst üste biniyor — yani \"farklı\" sayılan birkaç öznitelik spektrumun aynı diliminden okuyor. IMS'in bir saniyelik kesitleri %2 genişlikte, hiç binişme olmayan bantlar veriyor. Ortalama almak gürültüyü iyileştirir; ama hiç kaydedilmemiş ayrıntıyı hiçbir şey geri getirmez. (Burada duran NSK&nbsp;6804 geometri çekincesi kaldırıldı — yukarıdaki düzeltmeye bakın.)</li><li>36 ömür azdır. Bu yüzden burada bilerek derin öğrenme yok (fiziği değil düzenekleri ezberlerdi — bir kapsam kararı, bir eksik değil) ve bu yüzden tek ortalamalar yerine medyanlar, IQR'ler ve en kötü durumlar raporlanıyor.</li><li>Üç düzenek de sabit, hızlandırılmış yük altında çalışıyor. Gerçek makineler hız ve yükü değiştirir; bu, sıfır hasarla bile her özniteliği oynatır. Burada bunu test eden hiçbir şey yok.</li>",
