@@ -253,12 +253,23 @@
           <table class="rtable">
             <thead><tr><th data-i18n="tbl.h1">Protocol</th><th data-i18n="tbl.h2">Median error</th><th data-i18n="tbl.h3">Late-stage (Q4)</th><th data-i18n="tbl.h4">Worst bearing</th></tr></thead>
             <tbody>
-              <tr><td data-i18n="tbl.r1">LOBO — bearing unseen</td><td>0.186</td><td>0.115</td><td>0.346</td></tr>
-              <tr><td data-i18n="tbl.r2">LODO — IMS (roller) held out</td><td>0.166</td><td>0.172</td><td>0.222</td></tr>
-              <tr><td data-i18n="tbl.r3">LODO — XJTU held out</td><td>0.112</td><td>0.051</td><td>0.368</td></tr>
-              <tr><td data-i18n="tbl.r4">LODO — FEMTO held out</td><td>0.248</td><td>0.318</td><td>0.434</td></tr>
+              <tr><td data-i18n="tbl.r1">LOBO — bearing unseen</td><td>0.188</td><td>0.121</td><td>0.347</td></tr>
+              <tr><td data-i18n="tbl.r2">LODO — IMS (roller) held out</td><td>0.168</td><td>0.160</td><td>0.212</td></tr>
+              <tr><td data-i18n="tbl.r3">LODO — XJTU held out</td><td>0.106</td><td>0.054</td><td>0.370</td></tr>
+              <tr><td data-i18n="tbl.r4">LODO — FEMTO held out</td><td>0.249</td><td>0.318</td><td>0.434</td></tr>
             </tbody>
           </table>
+          <p data-i18n="tbl.note">
+            Both rows here share the same preprocessing on purpose. Comparing a
+            model that got a helping hand against one that didn't would measure
+            the helping hand, not generalization — so the gap is quoted on
+            like-for-like terms. That hand exists, and it improves the FEMTO row
+            substantially: late-stage error 0.318 → 0.153. It is kept out of
+            this table and set out separately in
+            <a href="#correction">Correction &amp; review</a>, along with the
+            explanation this page originally gave for FEMTO being hardest,
+            which turned out to be only half right.
+          </p>
         </div>
 
         <div class="fig">
@@ -275,9 +286,13 @@
             wide in the middle and snaps shut at the end. The best case is
             partly an easy exam: its alarm fired at 93% of life, leaving only
             the final, obvious stretch to track. The worst case is the honest
-            one: alarm at 16%, a long ambiguous middle age, and the model
-            called it nearly dead throughout — a full miss. Medians hide
-            bearings like this; the report doesn't.
+            one, and it fails in the dangerous direction: the alarm fires late,
+            at 88% of life, and the model then reads the bearing as having
+            40–70% of its life left when barely a tenth remains. It only snaps
+            to the truth in the final minutes. An <em>optimistic</em> miss is
+            the one that hurts — a pessimistic model sends you to inspect a
+            healthy bearing, this one would have told you to keep running.
+            Medians hide bearings like this; the report doesn't.
           </p>
         </div>
 
@@ -317,6 +332,170 @@
         </div>
       </section>
 
+      <section class="section" id="correction" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="corr.eyebrow">Correction &amp; review</p>
+          <h2 data-i18n="corr.h2">A second look moved one number a long way — and moved my explanation further.</h2>
+          <p class="hero-text" data-i18n="corr.intro">
+            The results above were re-examined after publication. Two things
+            came out of it. A caveat about the FEMTO bearing's dimensions was
+            settled and turned out to be harmless. And the explanation this
+            page gave for FEMTO being the hardest rig — "its recordings are too
+            short" — was only half right, in a way that was hiding a fixable
+            flaw. Both are recorded here rather than quietly edited into the
+            tables above, because how a number moved is usually more
+            informative than where it landed.
+          </p>
+        </div>
+
+        <div class="step-grid">
+          <article class="step">
+            <h3 data-i18n="corr.d1.h3"><small>Definition</small>Life-fraction error</h3>
+            <p data-i18n="corr.d1.p">
+              The model doesn't guess hours; it guesses what <em>share</em> of a
+              bearing's total life is still ahead of it. An error of 0.318 means
+              the guess is off by about a third of that bearing's entire life —
+              on a bearing that lives three hours, roughly an hour out. Lower is
+              better; 0 would be perfect.
+            </p>
+          </article>
+          <article class="step">
+            <h3 data-i18n="corr.d2.h3"><small>Definition</small>Late stage (Q4)</h3>
+            <p data-i18n="corr.d2.p">
+              The final quarter of the bearing's decline — from the moment
+              damage is detected to the moment it fails, the last stretch. This
+              is the number that matters, because a prediction made while the
+              bearing is still nearly healthy is guesswork for any method,
+              whereas one made shortly before failure is what you would actually
+              schedule a repair around.
+            </p>
+          </article>
+          <article class="step">
+            <h3 data-i18n="corr.d3.h3"><small>Definition</small>Training data</h3>
+            <p data-i18n="corr.d3.p">
+              The worked examples the model learns from: other bearings that
+              already died, with their answers attached. Think of them as the
+              textbook cases a trainee studies before ever seeing a patient.
+            </p>
+          </article>
+          <article class="step">
+            <h3 data-i18n="corr.d4.h3"><small>Definition</small>Test data</h3>
+            <p data-i18n="corr.d4.p">
+              The readings coming off the bearing being judged — a bearing from
+              a rig kept out of training entirely, so the model has never
+              encountered it or its siblings. The patient, not the textbook.
+            </p>
+          </article>
+        </div>
+
+        <div class="fig">
+          <h3 data-i18n="corr.a.h3">Correction 1 — the dimension we had taken on trust</h3>
+          <p data-i18n="corr.a.p">
+            The fault rhythms this study listens for are computed from the
+            bearing's internal dimensions, so a wrong dimension means listening
+            at the wrong frequency. FEMTO's NSK 6804 figure had come from
+            secondary literature rather than the manufacturer. Pulling the
+            actual datasheet settled it: 13 balls and a 3.5 mm ball diameter
+            were right, but the ball centres sit on a 26.0 mm circle, not the
+            25.6 mm that had been assumed.
+          </p>
+          <table class="rtable">
+            <thead><tr><th data-i18n="corr.a.t1">Quantity</th><th data-i18n="corr.a.t2">Published</th><th data-i18n="corr.a.t3">Datasheet</th><th data-i18n="corr.a.t4">Consequence</th></tr></thead>
+            <tbody>
+              <tr><td data-i18n="corr.a.r1">Ball circle diameter</td><td>25.6 mm</td><td>26.0 mm</td><td data-i18n="corr.a.r1c">assumption → verified</td></tr>
+              <tr><td data-i18n="corr.a.r2">Ball-spin frequency</td><td data-i18n="corr.a.r2a">1.6% low</td><td data-i18n="corr.a.r2b">corrected</td><td data-i18n="corr.a.r2c">6 of 27 bands shift one step</td></tr>
+              <tr><td data-i18n="corr.a.r3">Every result on this page</td><td>—</td><td>—</td><td data-i18n="corr.a.r3c">unchanged</td></tr>
+            </tbody>
+          </table>
+          <p data-i18n="corr.a.p2">
+            Recomputing the whole FEMTO dataset from raw signal moved only the
+            ball-spin features, left IMS and XJTU bit-for-bit identical, and
+            changed no conclusion. That is a boring outcome and worth publishing
+            anyway: "we checked and it didn't matter" is a different statement
+            from "we never checked."
+          </p>
+        </div>
+
+        <div class="fig">
+          <h3 data-i18n="corr.b.h3">Correction 2 — the fix was not where the explanation pointed</h3>
+          <img src="bearing-universal/fig7_smoothing.png" alt="Two bar charts. Left: late-stage error per held-out rig, as published versus after correction — FEMTO falls from 0.318 to 0.153 while IMS and XJTU rise slightly. Right: FEMTO late-stage error under four conditions — steadying neither 0.318, test rows only 0.332, training rows only 0.095, both 0.094." loading="lazy" />
+          <p data-i18n="corr.b.p">
+            This page blamed FEMTO's difficulty on its finger-snap recordings.
+            The obvious remedy follows from that: steady the incoming readings
+            before judging them — take the middle of the last five instead of
+            reacting to each one. That was tested directly, along with the same
+            treatment applied to the textbook cases instead. The result inverts
+            the intuition.
+          </p>
+          <table class="rtable">
+            <thead><tr><th data-i18n="corr.b.t1">What gets steadied</th><th data-i18n="corr.b.t2">Late-stage error</th><th data-i18n="corr.b.t3">Verdict</th></tr></thead>
+            <tbody>
+              <tr><td data-i18n="corr.b.r1">Nothing — as originally published</td><td>0.318</td><td data-i18n="corr.b.r1c">baseline</td></tr>
+              <tr><td data-i18n="corr.b.r2">The incoming FEMTO readings</td><td>0.332</td><td data-i18n="corr.b.r2c">slightly <em>worse</em></td></tr>
+              <tr><td data-i18n="corr.b.r3">The training examples</td><td>0.095</td><td data-i18n="corr.b.r3c">70% better</td></tr>
+              <tr><td data-i18n="corr.b.r4">Both</td><td>0.094</td><td data-i18n="corr.b.r4c">no better than training alone</td></tr>
+            </tbody>
+          </table>
+          <p data-i18n="corr.b.p2">
+            Cleaning the patient's chart does nothing. Cleaning the textbook
+            fixes almost everything. The mechanism: when the worked examples
+            jump around, the model learns the jumping instead of the underlying
+            decline — it fits measurement scatter belonging to those particular
+            rigs. Steady the examples and it learns the real shape of failure,
+            after which it reads a messy new signal perfectly well with no
+            cleanup at all. Train someone on blurry textbook photographs and
+            they learn the blur; sharpening the patient's X-ray afterwards
+            cannot undo that.
+          </p>
+          <p data-i18n="corr.b.p3">
+            It hits FEMTO hardest for an unglamorous reason. Holding FEMTO out
+            leaves the smallest pile of examples to learn from — 4,610 rows,
+            against 14,220 and 15,536 for the other two rotations. Scarce
+            examples is precisely when a model memorises noise, so cleaning them
+            up helps most exactly there. This is regularisation, not
+            denoising — and it means the original diagnosis, "FEMTO is hard
+            because its recordings are poor," was describing a symptom. The
+            recordings really are poorer. But most of the penalty came from the
+            model, not the microphone.
+          </p>
+          <p data-i18n="corr.b.p4">
+            One more confession, because it changes which number belongs in a
+            summary. That 0.095 was obtained with a steadying amount picked
+            <em>after</em> seeing how each option scored against the held-out
+            rig — which is peeking, and it flatters the result the way
+            calibrating a scale against the object you are about to weigh
+            flatters the reading. Redone strictly — the amount chosen using only
+            the rigs the model trains on, the held-out rig touched exactly once
+            at the end — late-stage error lands at <strong>0.153</strong>. Still
+            a 52% cut against 0.318, and that is the figure worth quoting. The
+            gap between 0.153 and 0.095 has a cause worth stating too: the
+            setting has to be chosen from the rigs you can see, and those are
+            precisely the ones that don't need it. You cannot tune a
+            noise-handling knob for a machine you have not met.
+          </p>
+        </div>
+
+        <div class="fig">
+          <h3 data-i18n="corr.c.h3">What did not improve</h3>
+          <p data-i18n="corr.c.p">
+            Four things were untouched by all of this, and pretending otherwise
+            would undo the point of the exercise. <strong>Steadying the examples
+            does nothing when a sibling bearing is available</strong> — the
+            bearing-unseen exam went 0.186 → 0.184, which is no change; the
+            benefit exists only when an entire rig is a stranger, which is
+            admittedly the case that matters. <strong>IMS got marginally
+            worse</strong> (0.160 → 0.167). <strong>FEMTO's frequency
+            resolution is permanent</strong>: no processing recovers detail a
+            0.1-second recording never captured. And <strong>"failure time" is
+            still a chosen convention</strong>, FEMTO's failure modes are still
+            undocumented, and 36 lifetimes is still a small number. The honest
+            summary is that one large error was cut by about half, one caveat
+            was retired, one explanation was wrong, and everything else on this
+            page stands as it was.
+          </p>
+        </div>
+      </section>
+
       <section class="section" data-reveal>
         <div class="section-heading">
           <p class="eyebrow" data-i18n="limits.eyebrow">Honest limitations</p>
@@ -326,7 +505,7 @@
           <li>"Failure time" is a chosen convention, not a fact of nature: IMS ends when the rig stopped itself; XJTU and FEMTO end at the first 20&nbsp;g peak (XJTU's own criterion, extended to FEMTO — whose failure definition the literature genuinely argues about). Every label is conditional on that choice.</li>
           <li>A life <em>fraction</em> is only knowable after the death. Translating errors into hours uses the true total life — hindsight no live system has. The hour figures are for intuition, not a promise.</li>
           <li>The 6σ alarm is the gatekeeper: where it fires early (XJTU bearings drift while warming up), near-healthy data sneaks into training; where it fires at 95% of life, the model gets a tiny, easy exam. The detector, not the forest, defines the model's jurisdiction.</li>
-          <li>FEMTO's 0.1&nbsp;s finger-snap snapshots give blurry 10&nbsp;Hz frequency resolution against 100–170&nbsp;Hz fault rhythms, and its NSK&nbsp;6804 geometry is a literature value, not a verified drawing. FEMTO being hardest is partly a statement about its recordings, not its bearings.</li>
+          <li><strong>Frequency resolution is the one thing no software fixes.</strong> FEMTO's 0.1&nbsp;s finger-snap snapshots resolve frequency only to the nearest 10&nbsp;Hz, against fault rhythms of 100–170&nbsp;Hz. In practice its fault bands come out 14–33% wide and 3–5 of 8 neighbouring bands physically overlap — so several "different" features are reading the same slice of spectrum. IMS's one-second snapshots give 2% bands with no overlap at all. Averaging cures noise; nothing recovers detail that was never recorded. (The NSK&nbsp;6804 geometry caveat that used to sit here has been retired — see the correction above.)</li>
           <li>36 lifetimes is small. That's why there is deliberately no deep learning here (it would memorize rigs, not physics — a scoping decision, not a gap), and why medians, IQRs and worst cases are reported instead of single averages.</li>
           <li>All three rigs run constant, accelerated load. Real machines change speed and load, which moves every feature with zero damage present. Nothing here tests that.</li>
         </ul>
@@ -338,10 +517,30 @@
           <h2 data-i18n="next.h2">Dataset #4 will be my own rig.</h2>
           <p data-i18n="next.p">
             The pipeline was built so a new dataset is a drop-in loader. The
-            plan: a desktop run-to-failure rig around an SKF 6204 bearing with
-            seeded defects — my own data, collected with the lessons above
-            (fixed-duration healthy baseline, explicit stop criterion), graded
-            by the same LOBO/LODO protocol.
+            plan: a desktop rig around an SKF 6204 bearing, run to natural
+            failure under accelerated load. <strong>Seeded defects were
+            dropped</strong> — a filed or spark-eroded notch is a manufactured
+            shape, while a real spall grows out of fatigue cracking below the
+            surface, so a seeded bearing is already damaged on its first
+            revolution. That leaves it with no healthy baseline to depart from,
+            and this entire pipeline is built on measuring departure from a
+            bearing's own healthy state. Seeded defects can still prove the
+            <em>diagnosis</em> half (does the outer-race drumbeat appear where
+            geometry says it should?), but remaining-life data only comes from
+            watching a healthy bearing actually die.
+          </p>
+          <p data-i18n="next.p2">
+            The recording spec follows directly from what the FEMTO review
+            found: <strong>snapshots of 1–2 seconds at 20 kHz or above</strong>
+            — not to reduce noise, which turned out to be fixable in software,
+            but for frequency resolution, which is not. A fixed-duration
+            healthy baseline gets recorded and marked at the start of every
+            run, and the stop criterion is written down before the rig is
+            switched on, so this becomes the one dataset of the four whose
+            failure time is a measurement rather than a judgment call. Three or
+            four natural failures are enough to test the claim that matters:
+            does a model trained on three other rigs stage a bearing on a rig
+            it has never seen?
           </p>
         </div>
         <div class="contact-actions">
@@ -389,18 +588,50 @@
         "tbl.r2": "LODO — IMS (makaralı) dışarıda",
         "tbl.r3": "LODO — XJTU dışarıda",
         "tbl.r4": "LODO — FEMTO dışarıda",
+        "tbl.note": "Buradaki iki satır bilerek aynı ön işlemeyi paylaşıyor. Yardım almış bir modeli almamış bir modelle kıyaslamak genellemeyi değil, o yardımı ölçerdi; bu yüzden açık eşit koşullarda veriliyor. O yardım var ve FEMTO satırını hatırı sayılır biçimde iyileştiriyor: geç evre hatası 0,318 → 0,153. Bu tablodan dışarıda tutulup, sayfanın FEMTO'nun neden en zor olduğuna dair ilk verdiği ve yalnızca yarısı doğru çıkan açıklamayla birlikte aşağıdaki <a href=\"#correction\">Düzeltme ve inceleme</a> bölümünde ele alınıyor.",
         "fig3.h3": "En iyi, medyan — ve bilerek gösterilen en kötü",
-        "fig3.p": "Tahmin vs gerçek ömür oranı; gölgeli bant, ormanın 300 ağacının %90'ının nereye düştüğünü gösteriyor. Gördüklerini iki şey açıklıyor. Birincisi, modelin hafızası yok — her kesit taze bir teşhis alıyor; aralarda hafızası silinen, tek bir kan tahlilinden çalışan bir doktor gibi. Titreme bundan. İkincisi, ömrün ortası gerçekten belirsizdir (\"biraz hasta\", ömrün %30'unda da %50'sinde de %70'inde de aynı görünür); sonu ise şaşmaz — bu yüzden bant ortada geniş, sonda kapanıyor. En iyi durum kısmen kolay bir sınav: alarmı ömrün %93'ünde çaldı, geriye izlenecek yalnızca son, apaçık bölüm kaldı. En kötü durum ise dürüst olan: alarm %16'da, uzun ve belirsiz bir orta dönem ve model onu baştan sona ömrünün sonuna gelmiş saydı — tam bir kaçırma. Medyanlar böyle rulmanları saklar; bu rapor saklamıyor.",
+        "fig3.p": "Tahmin vs gerçek ömür oranı; gölgeli bant, ormanın 300 ağacının %90'ının nereye düştüğünü gösteriyor. Gördüklerini iki şey açıklıyor. Birincisi, modelin hafızası yok — her kesit taze bir teşhis alıyor; aralarda hafızası silinen, tek bir kan tahlilinden çalışan bir doktor gibi. Titreme bundan. İkincisi, ömrün ortası gerçekten belirsizdir (\"biraz hasta\", ömrün %30'unda da %50'sinde de %70'inde de aynı görünür); sonu ise şaşmaz — bu yüzden bant ortada geniş, sonda kapanıyor. En iyi durum kısmen kolay bir sınav: alarmı ömrün %93'ünde çaldı, geriye izlenecek yalnızca son, apaçık bölüm kaldı. En kötü durum ise dürüst olan ve tehlikeli yönde hata yapıyor: alarm geç, ömrün %88'inde çalıyor ve model, geriye ancak onda biri kalmışken rulmanı ömrünün %40–70'i duruyormuş gibi okuyor. Gerçeğe ancak son dakikalarda oturuyor. Canını yakan, <em>iyimser</em> kaçırmadır — kötümser bir model sizi sağlam bir rulmanı boşuna kontrol etmeye yollar, bu model ise çalışmaya devam edin derdi. Medyanlar böyle rulmanları saklar; bu rapor saklamıyor.",
         "fig4.h3": "Popülasyon modeli vs eğri ekstrapolasyonu — kazanan ilan edilmedi",
         "fig4.p": "Literatür, eğri ekstrapolasyonunun erken dönemde çuvallayıp geç dönemde parladığını söyler; yani popülasyon modeli erken kazanmalı, sonra bayrağı devretmeli. Verimiz bu temiz hikâyeyi reddetti — çünkü ekstrapolatör yalnızca emin olduğu sorulara cevap veren bir öğrenci: sadece hasar gerçekten üstel büyürken tahmin üretiyor (erken kesitlerin %17–33'ü), dolayısıyla gösterişli erken notu kendi seçtiği kolay bir alt kümede veriliyor. Orman her soruya cevap veriyor; hatası U şeklinde (en kötüsü başlangıçtan hemen sonra). 36 ömürle, kesişme ilan etmek yerine eğrileri ve kapsama oranını raporluyoruz.",
         "fig5.h3": "Sızıntı kontrolü: veri setlerini gizlice tanıyor mu?",
         "fig5.p": "Kopya kontrolü. Burada zeki görünmenin en kolay yolu, kesitin hangi veri setinden geldiğini tanımak — sınav kâğıtlarını el yazısından tanıyarak notlamak gibi — ve en bariz parmak izi, düzenekler arasında 100 kat farklı olan duvar-saati bozulma hızı. O hız öznitelikleri toplam önemin %0,3'ünü taşıyor: orman yumuşatılmış RMS'e (%27), yumuşatılmış basıklığa ve geometriden türetilen zarf bantlarının geniş bir yelpazesine yaslanıyor. Veri seti kimliği değil, hasar sinyali. İki ablasyon denetimi tamamlıyor: makaralı rulman verisini çıkarmak bilyeli tahminleri <em>kötüleştiriyor</em> (0,192 → 0,205 — aykırı düzenek aslında yardım ediyormuş) ve kafes arızalı rulmanları dışlamak hiçbir şeyi değiştirmiyor (iki yönde de 0,188).",
+        "corr.eyebrow": "Düzeltme ve inceleme",
+        "corr.h2": "İkinci bir bakış bir sayıyı çok oynattı — açıklamamı daha da çok.",
+        "corr.intro": "Yukarıdaki sonuçlar yayımlandıktan sonra yeniden incelendi. İki şey çıktı. FEMTO rulmanının ölçüleriyle ilgili bir çekince kapandı ve zararsız olduğu görüldü. Bir de bu sayfanın FEMTO'yu en zor düzenek yapan şey için verdiği açıklama — \"kayıtları çok kısa\" — yalnızca yarı doğruydu ve bu yarım doğru, düzeltilebilir bir kusuru gizliyordu. İkisi de yukarıdaki tablolara sessizce işlenmek yerine burada kayda geçiriliyor; çünkü bir sayının nasıl kımıldadığı, çoğu zaman nereye oturduğundan daha öğreticidir.",
+        "corr.d1.h3": "<small>Tanım</small>Ömür-oranı hatası",
+        "corr.d1.p": "Model saat tahmin etmiyor; rulmanın toplam ömrünün ne kadarlık bir <em>oranının</em> önünde durduğunu tahmin ediyor. 0,318'lik bir hata, tahminin o rulmanın tüm ömrünün yaklaşık üçte biri kadar şaştığı anlamına gelir — üç saat yaşayan bir rulmanda kabaca bir saat. Küçük olması iyidir; 0 kusursuz olurdu.",
+        "corr.d2.h3": "<small>Tanım</small>Geç evre (Q4)",
+        "corr.d2.p": "Rulmanın çöküşünün son çeyreği — hasarın fark edildiği andan arızalandığı ana kadarki sürecin son bölümü. Asıl önemli sayı budur; çünkü rulman hâlâ neredeyse sağlıklıyken yapılan tahmin her yöntem için tahminden ibarettir, oysa arızadan kısa süre önce yapılan tahmin gerçekten bakım planlayacağınız şeydir.",
+        "corr.d3.h3": "<small>Tanım</small>Eğitim verisi",
+        "corr.d3.p": "Modelin öğrendiği çözülmüş örnekler: cevapları yanına iliştirilmiş, çoktan ölmüş başka rulmanlar. Bir asistanın hasta görmeden önce çalıştığı ders kitabı vakaları gibi düşünün.",
+        "corr.d4.h3": "<small>Tanım</small>Test verisi",
+        "corr.d4.p": "Değerlendirilen rulmandan gelen ölçümler — eğitimden tamamen dışarıda tutulmuş bir düzeneğe ait, yani modelin ne kendisini ne de kardeşlerini gördüğü bir rulman. Ders kitabı değil, hastanın kendisi.",
+        "corr.a.h3": "Düzeltme 1 — güvenerek aldığımız ölçü",
+        "corr.a.p": "Bu çalışmanın dinlediği arıza ritimleri rulmanın iç ölçülerinden hesaplanıyor; dolayısıyla yanlış bir ölçü, yanlış frekansı dinlemek demek. FEMTO'nun NSK 6804 değeri üreticiden değil, ikincil literatürden gelmişti. Gerçek veri sayfasını çekmek meseleyi kapattı: 13 bilya ve 3,5 mm bilya çapı doğruymuş, ama bilya merkezleri varsayılan 25,6 mm'lik değil, 26,0 mm'lik bir daire üzerinde duruyor.",
+        "corr.a.t1": "Büyüklük", "corr.a.t2": "Yayımlanan", "corr.a.t3": "Veri sayfası", "corr.a.t4": "Sonucu",
+        "corr.a.r1": "Bilya merkez daire çapı", "corr.a.r1c": "varsayım → doğrulandı",
+        "corr.a.r2": "Bilya dönme frekansı", "corr.a.r2a": "%1,6 düşük", "corr.a.r2b": "düzeltildi", "corr.a.r2c": "27 banttan 6'sı bir adım kayıyor",
+        "corr.a.r3": "Bu sayfadaki her sonuç", "corr.a.r3c": "değişmedi",
+        "corr.a.p2": "Tüm FEMTO veri setini ham sinyalden yeniden hesaplamak yalnızca bilya dönme özniteliklerini oynattı, IMS ve XJTU'yu bit düzeyinde aynı bıraktı ve hiçbir sonucu değiştirmedi. Bu sıkıcı bir sonuç ve yine de yayımlanmayı hak ediyor: \"kontrol ettik, fark etmedi\" ile \"hiç kontrol etmedik\" aynı cümle değil.",
+        "corr.b.h3": "Düzeltme 2 — çözüm, açıklamanın işaret ettiği yerde değildi",
+        "corr.b.p": "Bu sayfa FEMTO'nun zorluğunu parmak şıklatması kadar süren kayıtlarına bağlamıştı. Bundan çıkan bariz çare şu: gelen ölçümleri değerlendirmeden önce sabitle — her birine tepki vermek yerine son beşinin ortancasını al. Bu doğrudan test edildi; aynı işlem bir de ders kitabı vakalarına uygulandı. Sonuç sezgiyi tersine çeviriyor.",
+        "corr.b.t1": "Neye sabitleme uygulandı", "corr.b.t2": "Geç evre hatası", "corr.b.t3": "Hüküm",
+        "corr.b.r1": "Hiçbir şeye — ilk yayımlandığı hali", "corr.b.r1c": "temel",
+        "corr.b.r2": "Gelen FEMTO ölçümlerine", "corr.b.r2c": "biraz <em>daha kötü</em>",
+        "corr.b.r3": "Eğitim örneklerine", "corr.b.r3c": "%70 daha iyi",
+        "corr.b.r4": "İkisine birden", "corr.b.r4c": "tek başına eğitimden iyi değil",
+        "corr.b.p2": "Hastanın dosyasını temizlemek hiçbir işe yaramıyor. Ders kitabını temizlemek neredeyse her şeyi düzeltiyor. Mekanizma şu: çözülmüş örnekler zıplıyorsa model asıl çöküşü değil, o zıplamayı öğreniyor — o düzeneklere özgü ölçüm saçılmasına uyum sağlıyor. Örnekleri sabitleyin, arızanın gerçek şeklini öğreniyor; öğrendikten sonra da yeni ve gürültülü bir sinyali hiçbir temizlik olmadan gayet iyi okuyor. Birine bulanık ders kitabı fotoğraflarıyla eğitim verirseniz bulanıklığı öğrenir; sonradan hastanın röntgenini netleştirmek bunu geri almaz.",
+        "corr.b.p3": "En çok FEMTO'yu vurmasının gösterişsiz bir sebebi var. FEMTO'yu dışarıda bırakmak, öğrenilecek en küçük örnek yığınını geriye bırakıyor — 4.610 satır; diğer iki dönüşümde 14.220 ve 15.536. Örneğin az olduğu durum, tam da modelin gürültüyü ezberlediği durumdur; dolayısıyla örnekleri temizlemek en çok orada işe yarıyor. Bu, gürültü giderme değil düzenlileştirme — ve şu anlama geliyor: ilk teşhis olan \"FEMTO zor, çünkü kayıtları kötü\" bir belirtiyi tarif ediyormuş. Kayıtlar gerçekten daha kötü. Ama cezanın büyük kısmı mikrofondan değil, modelden geliyormuş.",
+        "corr.b.p4": "Bir itiraf daha; çünkü bu, özete hangi sayının gireceğini değiştiriyor. O 0,095, her seçeneğin dışarıda bırakılan düzeneğe karşı nasıl not aldığını <em>gördükten sonra</em> seçilen bir sabitleme miktarıyla elde edildi — yani gizlice bakarak. Bu, tartıyı birazdan tartacağınız cismin kendisiyle kalibre etmenin okumayı güzelleştirmesi gibi sonucu güzelleştirir. Kurallara uygun biçimde yeniden yapıldığında — miktar yalnızca modelin eğitildiği düzeneklere bakılarak seçilip, dışarıdaki düzeneğe en sonda bir kez dokunulduğunda — geç evre hatası <strong>0,153</strong>'e oturuyor. 0,318'e karşı yine %52'lik bir azalma ve alıntılanmayı hak eden sayı bu. 0,153 ile 0,095 arasındaki farkın da söylenmeye değer bir sebebi var: ayar, görebildiğiniz düzeneklerden seçilmek zorunda ve onlar da tam olarak bu ayara ihtiyacı olmayanlar. Hiç tanışmadığınız bir makine için gürültü ayarı yapamazsınız.",
+        "corr.c.h3": "Ne düzelmedi",
+        "corr.c.p": "Tüm bunlardan etkilenmeyen dört şey var ve aksini ima etmek bu işin amacını ortadan kaldırırdı. <strong>Aynı düzenekten kardeş bir rulman varken örnekleri sabitlemek hiçbir şey yapmıyor</strong> — rulman-görülmemiş sınavı 0,186 → 0,184 oldu, yani değişmedi; fayda yalnızca düzeneğin tamamı yabancıyken ortaya çıkıyor, ki asıl önemli durum da o. <strong>IMS az da olsa kötüleşti</strong> (0,160 → 0,167). <strong>FEMTO'nun frekans çözünürlüğü kalıcı</strong>: 0,1 saniyelik bir kaydın hiç yakalamadığı ayrıntıyı hiçbir işlem geri getirmez. Ve <strong>\"arıza zamanı\" hâlâ seçilmiş bir tanım</strong>, FEMTO'nun arıza tipleri hâlâ belgesiz, 36 ömür hâlâ küçük bir sayı. Dürüst özet şu: büyük hatalardan biri kabaca üçte iki oranında azaldı, bu sayfadaki diğer her şey olduğu gibi duruyor.",
         "limits.eyebrow": "Dürüst sınırlar",
         "limits.h2": "Sayıları alıntılamadan önce bunları oku.",
-        "limits.ul": "<li>\"Arıza zamanı\" doğanın bir gerçeği değil, bir tercih: IMS düzenek kendini durdurduğunda bitiyor; XJTU ve FEMTO ilk 20&nbsp;g tepede (XJTU'nun kendi kriteri, FEMTO'ya da uygulandı — ki FEMTO'nun arıza tanımı literatürde hakikaten tartışmalı). Her etiket bu tercihe koşullu.</li><li>Ömür <em>oranı</em> ancak rulman arızalandıktan sonra bilinir. Hataları saate çevirmek gerçek toplam ömrü kullanıyor — canlı hiçbir sistemin sahip olmadığı geriye bakış. Saat rakamları söz değil, sezgi için.</li><li>6σ alarmı kapı bekçisi: erken çaldığı yerde (XJTU rulmanları ısınırken kayıyor) neredeyse sağlıklı veri eğitime sızıyor; ömrün %95'inde çaldığı yerde ise model minicik, kolay bir sınava giriyor. Modelin yetki alanını orman değil dedektör çiziyor.</li><li>FEMTO'nun parmak şıklatması kadar süren 0,1&nbsp;s kesitleri, 100–170&nbsp;Hz arıza ritimlerine karşı bulanık 10&nbsp;Hz çözünürlük veriyor ve NSK&nbsp;6804 geometrisi doğrulanmış çizim değil, literatür değeri. FEMTO'nun en zor olması kısmen rulmanları değil, kayıtları hakkında bir cümle.</li><li>36 ömür azdır. Bu yüzden burada bilerek derin öğrenme yok (fiziği değil düzenekleri ezberlerdi — bir kapsam kararı, bir eksik değil) ve bu yüzden tek ortalamalar yerine medyanlar, IQR'ler ve en kötü durumlar raporlanıyor.</li><li>Üç düzenek de sabit, hızlandırılmış yük altında çalışıyor. Gerçek makineler hız ve yükü değiştirir; bu, sıfır hasarla bile her özniteliği oynatır. Burada bunu test eden hiçbir şey yok.</li>",
+        "limits.ul": "<li>\"Arıza zamanı\" doğanın bir gerçeği değil, bir tercih: IMS düzenek kendini durdurduğunda bitiyor; XJTU ve FEMTO ilk 20&nbsp;g tepede (XJTU'nun kendi kriteri, FEMTO'ya da uygulandı — ki FEMTO'nun arıza tanımı literatürde hakikaten tartışmalı). Her etiket bu tercihe koşullu.</li><li>Ömür <em>oranı</em> ancak rulman arızalandıktan sonra bilinir. Hataları saate çevirmek gerçek toplam ömrü kullanıyor — canlı hiçbir sistemin sahip olmadığı geriye bakış. Saat rakamları söz değil, sezgi için.</li><li>6σ alarmı kapı bekçisi: erken çaldığı yerde (XJTU rulmanları ısınırken kayıyor) neredeyse sağlıklı veri eğitime sızıyor; ömrün %95'inde çaldığı yerde ise model minicik, kolay bir sınava giriyor. Modelin yetki alanını orman değil dedektör çiziyor.</li><li><strong>Frekans çözünürlüğü, hiçbir yazılımın düzeltemediği tek şey.</strong> FEMTO'nun parmak şıklatması kadar süren 0,1&nbsp;s kesitleri frekansı ancak 10&nbsp;Hz'e kadar ayırt edebiliyor; oysa arıza ritimleri 100–170&nbsp;Hz. Pratikte arıza bantları %14–33 genişliğinde çıkıyor ve 8 komşu bandın 3–5'i fiziksel olarak üst üste biniyor — yani \"farklı\" sayılan birkaç öznitelik spektrumun aynı diliminden okuyor. IMS'in bir saniyelik kesitleri %2 genişlikte, hiç binişme olmayan bantlar veriyor. Ortalama almak gürültüyü iyileştirir; ama hiç kaydedilmemiş ayrıntıyı hiçbir şey geri getirmez. (Burada duran NSK&nbsp;6804 geometri çekincesi kaldırıldı — yukarıdaki düzeltmeye bakın.)</li><li>36 ömür azdır. Bu yüzden burada bilerek derin öğrenme yok (fiziği değil düzenekleri ezberlerdi — bir kapsam kararı, bir eksik değil) ve bu yüzden tek ortalamalar yerine medyanlar, IQR'ler ve en kötü durumlar raporlanıyor.</li><li>Üç düzenek de sabit, hızlandırılmış yük altında çalışıyor. Gerçek makineler hız ve yükü değiştirir; bu, sıfır hasarla bile her özniteliği oynatır. Burada bunu test eden hiçbir şey yok.</li>",
         "next.eyebrow": "Sırada ne var",
         "next.h2": "4. veri seti kendi düzeneğim olacak.",
-        "next.p": "Boru hattı, yeni bir veri seti tak-çalıştır bir yükleyici olsun diye kuruldu. Plan: SKF 6204 rulmanı ve ekilmiş kusurlarla masaüstü bir bozulana-kadar-çalıştırma düzeneği — yukarıdaki derslerle toplanan (sabit süreli sağlıklı taban çizgisi, açık durdurma kriteri) kendi verim, aynı LOBO/LODO protokolüyle notlanacak.",
+        "next.p": "Boru hattı, yeni bir veri seti tak-çalıştır bir yükleyici olsun diye kuruldu. Plan: SKF 6204 rulmanı etrafında masaüstü bir düzenek, hızlandırılmış yük altında doğal arızaya kadar çalıştırılacak. <strong>Ekilmiş kusurlardan vazgeçildi</strong> — eğeyle veya erozyonla açılan çentik imal edilmiş bir şekildir; gerçek çukurlaşma ise yüzeyin altındaki yorulma çatlağından büyür, dolayısıyla kusur ekilmiş bir rulman daha ilk turunda hasarlıdır. Bu da onu ayrılacak sağlıklı bir taban çizgisinden yoksun bırakır — oysa bu boru hattının tamamı, rulmanın kendi sağlıklı halinden ayrılmasını ölçmek üzerine kurulu. Ekilmiş kusurlar hâlâ <em>teşhis</em> yarısını kanıtlayabilir (dış bilezik davulu, geometrinin söylediği yerde beliriyor mu?), ama kalan ömür verisi ancak sağlıklı bir rulmanın gerçekten ölüşünü izlemekten çıkar.",
+        "next.p2": "Kayıt şartnamesi doğrudan FEMTO incelemesinin bulgusundan geliyor: <strong>20 kHz ve üzeri örnekleme ile 1–2 saniyelik kesitler</strong> — gürültüyü azaltmak için değil (o, yazılımda çözülebilir çıktı), frekans çözünürlüğü için; o çözülemiyor. Her koşunun başında sabit süreli bir sağlıklı taban kaydı alınıp işaretlenecek ve durdurma kriteri düzenek çalıştırılmadan önce yazılacak; böylece bu, dört veri seti içinde arıza zamanı bir yorum değil bir ölçüm olan tek set olacak. Önemli olan iddiayı sınamak için üç-dört doğal arıza yeter: diğer üç düzenekte eğitilmiş bir model, hiç görmediği bir düzenekteki rulmanın evresini belirleyebiliyor mu?",
         "next.part1": "Bölüm 1'i oku: IMS çalışması",
         "next.back": "Projelere dön",
         "footer.p": "Veri: NASA IMS · XJTU-SY · FEMTO (PHM 2012) bozulana-kadar-çalıştırma veri setleri · Python, NumPy, SciPy, scikit-learn"
