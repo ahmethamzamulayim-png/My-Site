@@ -292,7 +292,12 @@
             to the truth in the final minutes. An <em>optimistic</em> miss is
             the one that hurts — a pessimistic model sends you to inspect a
             healthy bearing, this one would have told you to keep running.
-            Medians hide bearings like this; the report doesn't.
+            Don't over-read it, though: the second-worst bearing fails the
+            <em>opposite</em> way, flatlining near zero while most of its life
+            remained, and the two sit 0.004 apart. The model has no systematic
+            direction of error — it has two ways of being lost, and which one
+            tops the table is close to a coin toss. Medians hide bearings like
+            this; the report doesn't.
           </p>
         </div>
 
@@ -477,6 +482,17 @@
 
         <div class="fig">
           <h3 data-i18n="corr.c.h3">What did not improve</h3>
+          <img src="bearing-universal/fig8_before_after.png" alt="Six trajectory panels in two rows: best, median and worst bearing as published on top, after correction below. Best and median are the same bearing in both rows with visually identical curves; only the worst slot changes hands." loading="lazy" />
+          <p data-i18n="corr.c.p0">
+            The clearest picture of a correction that changed nothing. Best and
+            median are the <em>same bearing</em> in both rows, with curves you
+            cannot tell apart — which is exactly right, because these are the
+            bearing-unseen curves and that protocol is deliberately left
+            unsmoothed. Only the worst slot changes hands, and only because two
+            bearings swapped rank by four thousandths. The fix that halved
+            FEMTO's late-stage error lives in the whole-rig-unseen protocol and
+            is invisible here; the chart above is where you see it.
+          </p>
           <p data-i18n="corr.c.p">
             Four things were untouched by all of this, and pretending otherwise
             would undo the point of the exercise. <strong>Steadying the examples
@@ -591,7 +607,7 @@
         "tbl.r4": "LODO — FEMTO dışarıda",
         "tbl.note": "Buradaki iki satır bilerek aynı ön işlemeyi paylaşıyor. Yardım almış bir modeli almamış bir modelle kıyaslamak genellemeyi değil, o yardımı ölçerdi; bu yüzden açık eşit koşullarda veriliyor. O yardım var ve FEMTO satırını hatırı sayılır biçimde iyileştiriyor: geç evre hatası 0,318 → 0,153. Bu tablodan dışarıda tutulup, sayfanın FEMTO'nun neden en zor olduğuna dair ilk verdiği ve yalnızca yarısı doğru çıkan açıklamayla birlikte aşağıdaki <a href=\"#correction\">Düzeltme ve inceleme</a> bölümünde ele alınıyor.",
         "fig3.h3": "En iyi, medyan — ve bilerek gösterilen en kötü",
-        "fig3.p": "Tahmin vs gerçek ömür oranı; gölgeli bant, ormanın 300 ağacının %90'ının nereye düştüğünü gösteriyor. Gördüklerini iki şey açıklıyor. Birincisi, modelin hafızası yok — her kesit taze bir teşhis alıyor; aralarda hafızası silinen, tek bir kan tahlilinden çalışan bir doktor gibi. Titreme bundan. İkincisi, ömrün ortası gerçekten belirsizdir (\"biraz hasta\", ömrün %30'unda da %50'sinde de %70'inde de aynı görünür); sonu ise şaşmaz — bu yüzden bant ortada geniş, sonda kapanıyor. En iyi durum kısmen kolay bir sınav: alarmı ömrün %93'ünde çaldı, geriye izlenecek yalnızca son, apaçık bölüm kaldı. En kötü durum ise dürüst olan ve tehlikeli yönde hata yapıyor: alarm geç, ömrün %88'inde çalıyor ve model, geriye ancak onda biri kalmışken rulmanı ömrünün %40–70'i duruyormuş gibi okuyor. Gerçeğe ancak son dakikalarda oturuyor. Canını yakan, <em>iyimser</em> kaçırmadır — kötümser bir model sizi sağlam bir rulmanı boşuna kontrol etmeye yollar, bu model ise çalışmaya devam edin derdi. Medyanlar böyle rulmanları saklar; bu rapor saklamıyor.",
+        "fig3.p": "Tahmin vs gerçek ömür oranı; gölgeli bant, ormanın 300 ağacının %90'ının nereye düştüğünü gösteriyor. Gördüklerini iki şey açıklıyor. Birincisi, modelin hafızası yok — her kesit taze bir teşhis alıyor; aralarda hafızası silinen, tek bir kan tahlilinden çalışan bir doktor gibi. Titreme bundan. İkincisi, ömrün ortası gerçekten belirsizdir (\"biraz hasta\", ömrün %30'unda da %50'sinde de %70'inde de aynı görünür); sonu ise şaşmaz — bu yüzden bant ortada geniş, sonda kapanıyor. En iyi durum kısmen kolay bir sınav: alarmı ömrün %93'ünde çaldı, geriye izlenecek yalnızca son, apaçık bölüm kaldı. En kötü durum ise dürüst olan ve tehlikeli yönde hata yapıyor: alarm geç, ömrün %88'inde çalıyor ve model, geriye ancak onda biri kalmışken rulmanı ömrünün %40–70'i duruyormuş gibi okuyor. Gerçeğe ancak son dakikalarda oturuyor. Canını yakan, <em>iyimser</em> kaçırmadır — kötümser bir model sizi sağlam bir rulmanı boşuna kontrol etmeye yollar, bu model ise çalışmaya devam edin derdi. Yine de fazla anlam yüklememeli: ikinci en kötü rulman tam <em>tersi</em> yönde hata yapıyor; ömrünün büyük kısmı dururken sıfıra yapışık gidiyor ve ikisi arasında 0,004 var. Modelin sistematik bir hata yönü yok — iki türlü şaşırma biçimi var ve hangisinin tabloda başa güreçeceği neredeyse yazı tura. Medyanlar böyle rulmanları saklar; bu rapor saklamıyor.",
         "fig4.h3": "Popülasyon modeli vs eğri ekstrapolasyonu — kazanan ilan edilmedi",
         "fig4.p": "Literatür, eğri ekstrapolasyonunun erken dönemde çuvallayıp geç dönemde parladığını söyler; yani popülasyon modeli erken kazanmalı, sonra bayrağı devretmeli. Verimiz bu temiz hikâyeyi reddetti — çünkü ekstrapolatör yalnızca emin olduğu sorulara cevap veren bir öğrenci: sadece hasar gerçekten üstel büyürken tahmin üretiyor (erken kesitlerin %17–33'ü), dolayısıyla gösterişli erken notu kendi seçtiği kolay bir alt kümede veriliyor. Orman her soruya cevap veriyor; hatası U şeklinde (en kötüsü başlangıçtan hemen sonra). 36 ömürle, kesişme ilan etmek yerine eğrileri ve kapsama oranını raporluyoruz.",
         "fig5.h3": "Sızıntı kontrolü: veri setlerini gizlice tanıyor mu?",
@@ -624,6 +640,7 @@
         "corr.b.p2": "Hastanın dosyasını temizlemek hiçbir işe yaramıyor. Ders kitabını temizlemek neredeyse her şeyi düzeltiyor. Mekanizma şu: çözülmüş örnekler zıplıyorsa model asıl çöküşü değil, o zıplamayı öğreniyor — o düzeneklere özgü ölçüm saçılmasına uyum sağlıyor. Örnekleri sabitleyin, arızanın gerçek şeklini öğreniyor; öğrendikten sonra da yeni ve gürültülü bir sinyali hiçbir temizlik olmadan gayet iyi okuyor. Birine bulanık ders kitabı fotoğraflarıyla eğitim verirseniz bulanıklığı öğrenir; sonradan hastanın röntgenini netleştirmek bunu geri almaz.",
         "corr.b.p3": "En çok FEMTO'yu vurmasının gösterişsiz bir sebebi var. FEMTO'yu dışarıda bırakmak, öğrenilecek en küçük örnek yığınını geriye bırakıyor — 4.610 satır; diğer iki dönüşümde 14.220 ve 15.536. Örneğin az olduğu durum, tam da modelin gürültüyü ezberlediği durumdur; dolayısıyla örnekleri temizlemek en çok orada işe yarıyor. Bu, gürültü giderme değil düzenlileştirme — ve şu anlama geliyor: ilk teşhis olan \"FEMTO zor, çünkü kayıtları kötü\" bir belirtiyi tarif ediyormuş. Kayıtlar gerçekten daha kötü. Ama cezanın büyük kısmı mikrofondan değil, modelden geliyormuş.",
         "corr.b.p4": "Bir itiraf daha; çünkü bu, özete hangi sayının gireceğini değiştiriyor. O 0,095, her seçeneğin dışarıda bırakılan düzeneğe karşı nasıl not aldığını <em>gördükten sonra</em> seçilen bir sabitleme miktarıyla elde edildi — yani gizlice bakarak. Bu, tartıyı birazdan tartacağınız cismin kendisiyle kalibre etmenin okumayı güzelleştirmesi gibi sonucu güzelleştirir. Kurallara uygun biçimde yeniden yapıldığında — miktar yalnızca modelin eğitildiği düzeneklere bakılarak seçilip, dışarıdaki düzeneğe en sonda bir kez dokunulduğunda — geç evre hatası <strong>0,153</strong>'e oturuyor. 0,318'e karşı yine %52'lik bir azalma ve alıntılanmayı hak eden sayı bu. 0,153 ile 0,095 arasındaki farkın da söylenmeye değer bir sebebi var: ayar, görebildiğiniz düzeneklerden seçilmek zorunda ve onlar da tam olarak bu ayara ihtiyacı olmayanlar. Hiç tanışmadığınız bir makine için gürültü ayarı yapamazsınız.",
+        "corr.c.p0": "Hiçbir şeyi değiştirmemiş bir düzeltmenin en net resmi. En iyi ve medyan, iki satırda da <em>aynı rulman</em> ve eğrileri birbirinden ayırt edemiyorsunuz — ki bu tam da olması gereken: bunlar rulman-görülmemiş eğrileri ve o protokol bilerek yumuşatılmadan bırakılıyor. Yalnızca en kötü slotu el değiştiriyor, o da iki rulman dört binde bir fark ile sıra değiştirdiği için. FEMTO'nun geç evre hatasını yarıya indiren düzeltme, düzeneğin-tamamı-görülmemiş protokolünde yaşıyor ve burada görünmüyor; onu yukarıdaki grafikte görüyorsunuz.",
         "corr.c.h3": "Ne düzelmedi",
         "corr.c.p": "Tüm bunlardan etkilenmeyen dört şey var ve aksini ima etmek bu işin amacını ortadan kaldırırdı. <strong>Aynı düzenekten kardeş bir rulman varken örnekleri sabitlemek hiçbir şey yapmıyor</strong> — doğrudan test edildiğinde rulman-görülmemiş sınavı 0,002 kadar oynadı, yani değişmedi; fayda yalnızca düzeneğin tamamı yabancıyken ortaya çıkıyor, ki asıl önemli durum da o. <strong>IMS az da olsa kötüleşti</strong> (0,160 → 0,187). <strong>FEMTO'nun frekans çözünürlüğü kalıcı</strong>: 0,1 saniyelik bir kaydın hiç yakalamadığı ayrıntıyı hiçbir işlem geri getirmez. Ve <strong>\"arıza zamanı\" hâlâ seçilmiş bir tanım</strong>, FEMTO'nun arıza tipleri hâlâ belgesiz, 36 ömür hâlâ küçük bir sayı. Dürüst özet şu: büyük hatalardan biri kabaca üçte iki oranında azaldı, bu sayfadaki diğer her şey olduğu gibi duruyor.",
         "limits.eyebrow": "Dürüst sınırlar",
