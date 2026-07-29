@@ -160,6 +160,7 @@
           <div class="stat"><strong>36</strong><span data-i18n="stat.1">run-to-failure bearings, 3 rigs, roller + ball, lifetimes 37 min to 45 days</span></div>
           <div class="stat"><strong>≈ 0</strong><span data-i18n="stat.2">generalization gap: median life-fraction error 0.188 (bearing unseen) vs 0.169 (whole rig unseen), matched preprocessing</span></div>
           <div class="stat"><strong>21.7×</strong><span data-i18n="stat.3">physics check passed: the BPFO envelope band lights up at a documented outer-race failure</span></div>
+          <div class="stat"><strong>−52%</strong><span data-i18n="stat.5">the hardest rig's late-stage error, once the cause was correctly diagnosed: 0.318 → 0.153</span></div>
           <div class="stat"><strong>0.35</strong><span data-i18n="stat.4">worst single-bearing error — the number the median hides</span></div>
         </div>
       </section>
@@ -223,7 +224,21 @@
         <div class="section-heading">
           <p class="eyebrow" data-i18n="results.eyebrow">Results</p>
           <h2 data-i18n="results.h2">The gap is small. The reasons are interesting.</h2>
+          <p class="hero-text" data-i18n="results.lead">
+            Six things this study establishes, stated plainly and up front. Each
+            one survived the corrections set out further down — where two
+            findings were revised, the revised number is the one quoted here.
+          </p>
         </div>
+
+        <ul class="limits" data-i18n="results.findings">
+          <li><strong>A rig it has never seen costs almost nothing.</strong> Hiding an entire test rig — not merely one bearing — moves the median error from 0.188 to 0.169. Whatever the model learned about damage is not rig-specific bookkeeping.</li>
+          <li><strong>The roller-versus-ball wall does not exist.</strong> Models trained only on ball bearings staged roller bearings at 0.168 — middling, not worst. Bearing type was not the dividing line; recording quality was.</li>
+          <li><strong>The odd rig out was helping.</strong> Removing the roller data makes ball-bearing predictions <em>worse</em> (0.190 → 0.200). Pooling unlike hardware paid off, which is not the default outcome — the failure mode has a name, negative transfer, and it didn't happen.</li>
+          <li><strong>The physics was verified before it was trusted.</strong> On a bearing documented to have died of an outer-race defect, the computed outer-race band rises 21.7× across the test while the inner-race and roller bands stay quiet. No envelope feature entered the model until that passed.</li>
+          <li><strong>It isn't quietly cheating.</strong> The easiest way to look clever here is to recognise which rig a snapshot came from, and the obvious tell is wall-clock degradation speed, which differs 100× between rigs. Those features carry 0.3% of the model's attention.</li>
+          <li><strong>The hardest rig got twice as good once the cause was found.</strong> FEMTO's late-stage error fell 0.318 → 0.153 — and the fix was the opposite of the obvious one, which is the subject of the correction section.</li>
+        </ul>
 
         <div class="fig">
           <h3 data-i18n="fig1.h3">First, prove the physics feature works</h3>
@@ -596,6 +611,9 @@
         "step4.p": "İki sınav. Bir-rulmanı-dışarıda-bırak (LOBO): model bu düzeneğin kardeşlerini görmüş, yalnızca bu rulmanı görmemiş — tanıdık bir modelin yeni bir arabasına teşhis koymak gibi. Bir-veri-setini-dışarıda-bırak (LODO): düzeneğin tamamı bir yabancının arabası. İki notun farkı genelleme açığı — bu çalışmanın ölçmek için var olduğu sayı.",
         "results.eyebrow": "Sonuçlar",
         "results.h2": "Açık küçük. Nedenleri ilginç.",
+        "stat.5": "en zor düzeneğin geç evre hatası, sebep doğru teşhis edildikten sonra: 0,318 → 0,153",
+        "results.lead": "Bu çalışmanın ortaya koyduğu altı şey, baştan ve açıkça. Her biri aşağıda anlatılan düzeltmelerden sağ çıktı; iki bulgu revize edildi ve burada alıntılanan, revize edilmiş olanı.",
+        "results.findings": "<li><strong>Hiç görmediği bir düzenek neredeyse hiçbir şeye mal olmuyor.</strong> Tek bir rulmanı değil, düzeneğin tamamını saklamak medyan hatayı 0,188'den 0,169'a taşıyor. Modelin hasar hakkında öğrendiği şey, düzeneğe özgü bir defter tutma değil.</li><li><strong>Makaralı-bilyeli duvarı diye bir şey yok.</strong> Yalnızca bilyeli rulmanlarla eğitilen modeller makaralı rulmanları 0,168 ile evreledi — orta halli, en kötü değil. Ayırıcı çizgi rulman tipi değil, kayıt kalitesiydi.</li><li><strong>Aykırı duran düzenek aslında yardım ediyormuş.</strong> Makaralı veriyi çıkarmak bilyeli tahminleri <em>kötüleştiriyor</em> (0,190 → 0,200). Benzemeyen donanımı bir araya koymak işe yaradı; bu varsayılan sonuç değildir — ters durumun adı var, negatif transfer, ve yaşanmadı.</li><li><strong>Fizik, güvenilmeden önce doğrulandı.</strong> Dış bilezik kusurundan öldüğü belgelenmiş bir rulmanda, hesaplanan dış bilezik bandı test boyunca 21,7 kat yükseliyor; iç bilezik ve makara bantları sessiz kalıyor. Bu geçilene kadar modele hiçbir zarf özniteliği girmedi.</li><li><strong>Sinsice kopya çekmiyor.</strong> Burada zeki görünmenin en kolay yolu kesitin hangi düzenekten geldiğini tanımaktır ve en bariz ipucu, düzenekler arasında 100 kat farklı olan duvar-saati bozulma hızıdır. O öznitelikler modelin ilgisinin %0,3'ünü taşıyor.</li><li><strong>En zor düzenek, sebep bulununca iki kat iyileşti.</strong> FEMTO'nun geç evre hatası 0,318 → 0,153 düştü — ve çözüm, bariz olanın tam tersiydi; düzeltme bölümünün konusu da bu.</li>",
         "fig1.h3": "Önce fizik özniteliğinin çalıştığını kanıtla",
         "fig1.p": "Bir birim testi, ama fizik için. IMS test 2 rulman 1, belgelenmiş bir dış bilezik kusuruyla arızalandı; öyleyse zarf spektrumu hesaplanan dış bilezik temposunda (BPFO, 236 Hz) ve harmoniklerinde davul çalmalı — ve çalıyor, hem de keskin biçimde; iç bilezik ve makara ritimleri sessiz kalıyor. Davulun enerjisi test boyunca 21,7 kat büyüyor. Zarf öznitelikleri modele ancak bu kontrolden sonra girdi.",
         "fig2.h3": "Ana sonuç: rulman görülmemiş vs düzeneğin tamamı görülmemiş",
