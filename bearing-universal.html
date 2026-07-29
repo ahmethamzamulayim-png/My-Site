@@ -496,6 +496,37 @@
         </div>
 
         <div class="fig">
+          <h3 data-i18n="corr.imp.h3">What it improved</h3>
+          <img src="bearing-universal/fig9_fix_visible.png" alt="Three panels of FEMTO bearings judged by a model that never saw their rig. A grey dashed line taught from jittery examples sits near 0.6 across the middle and right panels while true life falls to zero; a blue line taught from steadied examples tracks the truth far more closely." loading="lazy" />
+          <p data-i18n="corr.imp.p">
+            The same fix, shown where it actually operates. Every curve here is a
+            FEMTO bearing judged by a model that never saw its rig. The test
+            signal is <em>identical</em> in both lines — raw, untouched — so the
+            only thing separating them is what the model was taught from. Grey
+            learned from jittery examples; blue learned from steadied ones. Watch
+            the grey line in the middle and right panels: it parks near 0.6 and
+            stays there, calmly reporting most of a life remaining while the
+            bearing dies underneath it. Blue follows the truth down. Across all
+            seventeen FEMTO bearings the median error falls 0.249 → 0.214 and the
+            late-stage error halves, 0.318 → 0.153; the biggest single winner
+            goes 0.409 → 0.107.
+          </p>
+          <p data-i18n="corr.imp.p2">
+            The right-hand panel is there deliberately, because a median hides a
+            lot: <strong>7 of the 17 bearings got worse</strong>, one of them
+            badly (0.103 → 0.307). The worst case shown is one of the losers —
+            0.266 → 0.338 — and you can see what happened to it: blue now pins
+            near zero for the whole run, calling the bearing nearly dead from the
+            start. So the honest description is not "the model got better" but
+            "the model traded one failure for another". It was uniformly too
+            optimistic; it is now sometimes too pessimistic. On a machine you
+            would actually act on, that is a different mistake rather than an
+            obviously smaller one. The median improved, the character of the
+            errors changed, and both belong in the summary.
+          </p>
+        </div>
+
+        <div class="fig">
           <h3 data-i18n="corr.c.h3">What did not improve</h3>
           <img src="bearing-universal/fig8_before_after.png" alt="Six trajectory panels in two rows: best, median and worst bearing as published on top, after correction below. Best and median are the same bearing in both rows with visually identical curves; only the worst slot changes hands." loading="lazy" />
           <p data-i18n="corr.c.p0">
@@ -659,6 +690,9 @@
         "corr.b.p3": "En çok FEMTO'yu vurmasının gösterişsiz bir sebebi var. FEMTO'yu dışarıda bırakmak, öğrenilecek en küçük örnek yığınını geriye bırakıyor — 4.610 satır; diğer iki dönüşümde 14.220 ve 15.536. Örneğin az olduğu durum, tam da modelin gürültüyü ezberlediği durumdur; dolayısıyla örnekleri temizlemek en çok orada işe yarıyor. Bu, gürültü giderme değil düzenlileştirme — ve şu anlama geliyor: ilk teşhis olan \"FEMTO zor, çünkü kayıtları kötü\" bir belirtiyi tarif ediyormuş. Kayıtlar gerçekten daha kötü. Ama cezanın büyük kısmı mikrofondan değil, modelden geliyormuş.",
         "corr.b.p4": "Bir itiraf daha; çünkü bu, özete hangi sayının gireceğini değiştiriyor. O 0,095, her seçeneğin dışarıda bırakılan düzeneğe karşı nasıl not aldığını <em>gördükten sonra</em> seçilen bir sabitleme miktarıyla elde edildi — yani gizlice bakarak. Bu, tartıyı birazdan tartacağınız cismin kendisiyle kalibre etmenin okumayı güzelleştirmesi gibi sonucu güzelleştirir. Kurallara uygun biçimde yeniden yapıldığında — miktar yalnızca modelin eğitildiği düzeneklere bakılarak seçilip, dışarıdaki düzeneğe en sonda bir kez dokunulduğunda — geç evre hatası <strong>0,153</strong>'e oturuyor. 0,318'e karşı yine %52'lik bir azalma ve alıntılanmayı hak eden sayı bu. 0,153 ile 0,095 arasındaki farkın da söylenmeye değer bir sebebi var: ayar, görebildiğiniz düzeneklerden seçilmek zorunda ve onlar da tam olarak bu ayara ihtiyacı olmayanlar. Hiç tanışmadığınız bir makine için gürültü ayarı yapamazsınız.",
         "corr.c.p0": "Hiçbir şeyi değiştirmemiş bir düzeltmenin en net resmi. En iyi ve medyan, iki satırda da <em>aynı rulman</em> ve eğrileri birbirinden ayırt edemiyorsunuz — ki bu tam da olması gereken: bunlar rulman-görülmemiş eğrileri ve o protokol bilerek yumuşatılmadan bırakılıyor. Yalnızca en kötü slotu el değiştiriyor, o da iki rulman dört binde bir fark ile sıra değiştirdiği için. FEMTO'nun geç evre hatasını yarıya indiren düzeltme, düzeneğin-tamamı-görülmemiş protokolünde yaşıyor ve burada görünmüyor; onu yukarıdaki grafikte görüyorsunuz.",
+        "corr.imp.h3": "Neyi iyileştirdi",
+        "corr.imp.p": "Aynı düzeltme, gerçekten işlediği yerde gösteriliyor. Buradaki her eğri, düzeneğini hiç görmemiş bir model tarafından değerlendirilen bir FEMTO rulmanı. Test sinyali iki çizgide de <em>aynı</em> — ham, dokunulmamış — dolayısıyla aralarındaki tek fark, modelin neyden öğrendiği. Gri, zıplayan örneklerden öğrendi; mavi, sabitlenmiş örneklerden. Ortadaki ve sağdaki panellerde gri çizgiye bakın: 0,6 civarına park edip orada kalıyor; altında rulman ölürken sakin sakin ömrün büyük kısmının durduğunu bildiriyor. Mavi ise gerçeği aşağı doğru takip ediyor. On yedi FEMTO rulmanının tamamında medyan hata 0,249 → 0,214 düşüyor, geç evre hatası yarıya iniyor: 0,318 → 0,153; tek başına en çok kazanan 0,409 → 0,107.",
+        "corr.imp.p2": "Sağdaki panel bilerek orada; çünkü medyan çok şey saklar: <strong>17 rulmanın 7'si kötüleşti</strong>, biri fena halde (0,103 → 0,307). Gösterilen en kötü durum, kaybedenlerden biri — 0,266 → 0,338 — ve ona ne olduğu görülüyor: mavi artık tüm koşu boyunca sıfıra yapışıyor, yani rulmanı daha baştan ölmüş sayıyor. Dolayısıyla dürüst tarif şu değil: “model iyileşti”; şu: “model bir hatayı başka bir hatayla takas etti”. Eskiden balıklama iyimserdi; şimdi zaman zaman fazla kötümser. Gerçekten aksiyon alacağınız bir makinede bu, bariz biçimde daha küçük bir hata değil, farklı bir hatadır. Medyan iyileşti, hataların karakteri değişti ve özete ikisi de girmeli.",
         "corr.c.h3": "Ne düzelmedi",
         "corr.c.p": "Tüm bunlardan etkilenmeyen dört şey var ve aksini ima etmek bu işin amacını ortadan kaldırırdı. <strong>Aynı düzenekten kardeş bir rulman varken örnekleri sabitlemek hiçbir şey yapmıyor</strong> — doğrudan test edildiğinde rulman-görülmemiş sınavı 0,002 kadar oynadı, yani değişmedi; fayda yalnızca düzeneğin tamamı yabancıyken ortaya çıkıyor, ki asıl önemli durum da o. <strong>IMS az da olsa kötüleşti</strong> (0,160 → 0,187). <strong>FEMTO'nun frekans çözünürlüğü kalıcı</strong>: 0,1 saniyelik bir kaydın hiç yakalamadığı ayrıntıyı hiçbir işlem geri getirmez. Ve <strong>\"arıza zamanı\" hâlâ seçilmiş bir tanım</strong>, FEMTO'nun arıza tipleri hâlâ belgesiz, 36 ömür hâlâ küçük bir sayı. Dürüst özet şu: büyük hatalardan biri kabaca üçte iki oranında azaldı, bu sayfadaki diğer her şey olduğu gibi duruyor.",
         "limits.eyebrow": "Dürüst sınırlar",
