@@ -138,6 +138,8 @@
         .flap.turn { animation: none; }
       }
       .flap.dim { color: #9a90a4; }
+      .flapgrp.late .flap { color: #ff5c6e; }
+      .flapgrp.ontime .flap { color: #5fbf72; }
       .flapgrp.risk .flap { color: inherit; }
       .conf {
         font-size: 0.68rem;
@@ -274,6 +276,10 @@
         "col.risk": "Delay risk",
         "col.basis": "Based on",
         "col.med": "Late by",
+        "col.actual": "Actual",
+        "out.late": "DELAYED",
+        "out.ontime": "ON TIME",
+        "score.none": "None of these have flown yet — the verdict fills in once the day is collected.",
         "d.med": "typical delay when it IS late",
         "d.hour": "this hour across all of IST",
         "basis.flight": "this flight number",
@@ -301,7 +307,9 @@
       const TR = {
         "col.time": "Saat", "col.flight": "Uçuş", "col.dest": "Varış",
         "col.airline": "Havayolu", "col.risk": "Rötar riski", "col.basis": "Neye göre",
-        "col.med": "Ne kadar",
+        "col.med": "Ne kadar", "col.actual": "Gerceklesen",
+        "out.late": "ROTARLI", "out.ontime": "ZAMANINDA",
+        "score.none": "Bunlarin hicbiri henuz ucmadi — sonuc, gun toplandiginda doluyor.",
         "d.med": "rötarlıysa tipik gecikme", "d.hour": "bu saatte IST geneli",
         "basis.flight": "bu uçuş numarası", "basis.flight+hour": "bu uçuş, bu saat", "basis.route+hour": "havayolu + rota + saat",
         "basis.route": "havayolu + rota", "basis.destination": "varış noktası",
@@ -329,6 +337,23 @@
       }
       const pct = (v, d = 0) =>
         (100 * v).toFixed(d).replace(".", getLang() === "tr" ? "," : ".") + "%";
+
+      /** Once flights have flown, say how the board did as a whole — the day's
+          verdict, not just each row's. Predicted vs actual is the honest pair:
+          the board ranks well but cannot see that a given day is a bad one. */
+      function scoreLine(s) {
+        const done = `<span>${t("resolved", "sonuçlanan")} <b>${s.resolved}/${s.total}</b>` +
+          ` · <b style="color:#c0122a">${s.late}</b> ${t("delayed", "rötarlı")}` +
+          ` · <b style="color:#3e8e4e">${s.ontime}</b> ${t("on time", "zamanında")}</span>`;
+        if (s.mean_predicted == null) return done;
+        return done + `<span>${t("board said", "pano dedi")} <b>${pct(s.mean_predicted, 1)}</b>` +
+          ` · ${t("day ran", "gün gerçekleşti")} <b>${pct(s.actual_rate, 1)}</b></span>`;
+      }
+
+      const outcomeText = (r) => r.actual === "late" ? key("out.late")
+        : r.actual === "ontime" ? key("out.ontime") : "-";
+      const outcomeCls = (r) => r.actual === "late" ? "late"
+        : r.actual === "ontime" ? "ontime" : "dimgrp";
 
       let DATA = null, sel = null;
 
@@ -434,7 +459,8 @@
         document.getElementById("meta").innerHTML =
           `<span>${t("Board for", "Pano tarihi")} <b>${b.board_date}</b></span>` +
           `<span>${t("airport average", "havalimanı ortalaması")} <b>${pct(base, 1)}</b></span>` +
-          `<span>${t("trained on", "eğitim verisi")} <b>${b.trained_on.flights.toLocaleString(getLang() === "tr" ? "tr-TR" : "en-US")}</b> ${t("flights", "uçuş")} · ${b.trained_on.days} ${t("days", "gün")}</span>`;
+          `<span>${t("trained on", "eğitim verisi")} <b>${b.trained_on.flights.toLocaleString(getLang() === "tr" ? "tr-TR" : "en-US")}</b> ${t("flights", "uçuş")} · ${b.trained_on.days} ${t("days", "gün")}</span>` +
+          (b.scoreboard ? scoreLine(b.scoreboard) : "");
 
         const rows = b.departures || [];
         const brd = document.getElementById("board");
@@ -444,7 +470,7 @@
           return;
         }
 
-        const W = { time: 5, flight: 7, dest: 4, airline: 16, risk: 4, med: 4 };
+        const W = { time: 5, flight: 7, dest: 4, airline: 16, risk: 4, med: 4, actual: 9 };
 
         // masthead: a real hall board carries the date, and without it "03:55"
         // is meaningless — you cannot tell which day you are reading
@@ -459,7 +485,8 @@
         head.className = "flaprow head";
         head.innerHTML =
           [["col.time", W.time], ["col.flight", W.flight], ["col.dest", W.dest],
-           ["col.airline", W.airline], ["col.risk", W.risk], ["col.med", W.med]]
+           ["col.airline", W.airline], ["col.risk", W.risk], ["col.med", W.med],
+           ["col.actual", W.actual]]
             // match the tile group exactly: w tiles of 0.92em plus the 2px seams
             .map(([k, w]) => `<span style="width:calc(${w} * var(--flapw) + ${w - 1} * var(--flapgap));flex:none">${key(k)}</span>`)
             .join("") + `<span style="min-width:11ch">${key("col.basis")}</span>`;
@@ -477,7 +504,9 @@
             flapGroup(r.airline || "-", W.airline, "dimgrp"),
             flapGroup(pct(r.risk).replace("%", ""), W.risk, "risk"),
             // how bad when it IS bad — the other half of the sentence
-            flapGroup(r.median_late ? r.median_late + "M" : "-", W.med, "dimgrp"));
+            flapGroup(r.median_late ? r.median_late + "M" : "-", W.med, "dimgrp"),
+            // blank until the day is collected; then the verdict
+            flapGroup(outcomeText(r), W.actual, outcomeCls(r)));
           // the risk group is the one place colour carries meaning
           row.children[4].style.color = riskColor(r.risk, true);
           const conf = document.createElement("span");
