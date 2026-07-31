@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-07-31T09:12:07+00:00",
+ "generated_utc": "2026-07-31T09:19:52+00:00",
  "airport": "IST",
  "board_date": "2026-07-31",
  "late_threshold_min": 15,
@@ -136,10 +136,10 @@
   "day": "2026-07-27",
   "flights": 553,
   "actual_pct": 12.1,
-  "brier": 0.101,
+  "brier": 0.1003,
   "brier_baseline": 0.1065,
-  "top_decile_pct": 34.5,
-  "lift": 2.85
+  "top_decile_pct": 36.4,
+  "lift": 3.0
  },
  "departures": [
   {
@@ -187,9 +187,9 @@
    "flight": "TK164",
    "dest": "VVNB",
    "airline": "Turkish Airlines",
-   "risk": 0.1061,
-   "basis": "flight",
-   "n": 84,
+   "risk": 0.1301,
+   "basis": "flight+hour",
+   "n": 4,
    "median_late": 52,
    "median_from": "flight",
    "hour_rate": 0.2057
@@ -317,9 +317,9 @@
    "flight": "YK776",
    "dest": "UCFM",
    "airline": "Avia Traffic",
-   "risk": 0.008,
-   "basis": "flight",
-   "n": 23,
+   "risk": 0.0052,
+   "basis": "flight+hour",
+   "n": 11,
    "median_late": 30,
    "median_from": "destination",
    "hour_rate": 0.0504
