@@ -144,6 +144,7 @@
       .dbox b { display: block; font-family: "Space Grotesk", sans-serif; font-size: 1.5rem; letter-spacing: -0.02em; line-height: 1.1; }
       .dbox span { display: block; margin-top: 3px; color: var(--muted); font-size: 0.78rem; line-height: 1.45; }
 
+      .detail .split { margin: 14px 0 0; font-size: 0.88rem; line-height: 1.6; color: var(--text); }
       .statline { display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 0 0 4px; color: var(--muted); font-size: 0.85rem; }
       .statline b { color: var(--text); font-family: "Space Grotesk", sans-serif; }
       .empty { padding: 26px 4px; color: #8d8496; font-size: 0.9rem; }
@@ -256,6 +257,9 @@
         "col.airline": "Airline",
         "col.risk": "Delay risk",
         "col.basis": "Based on",
+        "col.med": "Late by",
+        "d.med": "typical delay when it IS late",
+        "d.hour": "this hour across all of IST",
         "basis.flight": "this flight number",
         "basis.route+hour": "airline + route + hour",
         "basis.route": "airline + route",
@@ -280,6 +284,8 @@
       const TR = {
         "col.time": "Saat", "col.flight": "Uçuş", "col.dest": "Varış",
         "col.airline": "Havayolu", "col.risk": "Rötar riski", "col.basis": "Neye göre",
+        "col.med": "Ne kadar",
+        "d.med": "rötarlıysa tipik gecikme", "d.hour": "bu saatte IST geneli",
         "basis.flight": "bu uçuş numarası", "basis.route+hour": "havayolu + rota + saat",
         "basis.route": "havayolu + rota", "basis.destination": "varış noktası",
         "basis.airport": "havalimanı ortalaması",
@@ -308,6 +314,23 @@
         (100 * v).toFixed(d).replace(".", getLang() === "tr" ? "," : ".") + "%";
 
       let DATA = null, sel = null;
+
+      /** Say in words how much of this flight's risk is the SLOT and how much is
+          the flight itself — a 19:00 departure carries the airport's evening
+          rate before anything about that particular service is considered. */
+      function splitSentence(r, base) {
+        if (r.hour_rate == null) return "";
+        const hr = r.hour_rate, slot = hr / base, own = r.risk / Math.max(hr, 1e-6);
+        const h = r.time.slice(0, 2) + ":00";
+        if (r.risk < hr * 1.15 && r.risk > hr * 0.85)
+          return t(`Almost all of this is the time of day — IST as a whole runs ${pct(hr, 1)} at ${h}. This flight is close to normal for its slot.`,
+                   `Bunun neredeyse tamamı saatten geliyor — IST geneli ${h} civarında ${pct(hr, 1)}. Bu uçuş kendi dilimi için normale yakın.`);
+        if (r.risk >= hr * 1.15)
+          return t(`Departing at ${h} already carries ${pct(hr, 1)} across the whole airport (${slot.toFixed(1)}× the daily average). On top of that, this flight runs ${own.toFixed(1)}× worse than others in the same slot.`,
+                   `${h} kalkışı zaten havalimanı genelinde ${pct(hr, 1)} taşıyor (günlük ortalamanın ${slot.toFixed(1)} katı). Bunun üstüne bu uçuş, aynı dilimdeki diğerlerinden ${own.toFixed(1)} kat daha kötü.`);
+        return t(`Its slot (${h}) averages ${pct(hr, 1)} airport-wide, so this flight is actually running better than the hour around it.`,
+                 `Kendi dilimi (${h}) havalimanı genelinde ${pct(hr, 1)}; yani bu uçuş, çevresindeki saatten daha iyi gidiyor.`);
+      }
 
       // ---- split-flap mechanics ----------------------------------------
       // A real Solari unit can only step FORWARD through its leaf stack, so a
@@ -394,12 +417,12 @@
           return;
         }
 
-        const W = { time: 5, flight: 7, dest: 4, airline: 14, risk: 4 };
+        const W = { time: 5, flight: 7, dest: 4, airline: 14, risk: 4, med: 4 };
         const head = document.createElement("div");
         head.className = "flaprow head";
         head.innerHTML =
           [["col.time", W.time], ["col.flight", W.flight], ["col.dest", W.dest],
-           ["col.airline", W.airline], ["col.risk", W.risk]]
+           ["col.airline", W.airline], ["col.risk", W.risk], ["col.med", W.med]]
             // match the tile group exactly: w tiles of 0.92em plus the 2px seams
             .map(([k, w]) => `<span style="width:calc(${w} * 0.92em + ${w - 1} * 2px);flex:none">${key(k)}</span>`)
             .join("") + `<span style="min-width:11ch">${key("col.basis")}</span>`;
@@ -415,9 +438,11 @@
             flapGroup(r.flight || "-", W.flight),
             flapGroup(r.dest, W.dest),
             flapGroup(r.airline || "-", W.airline, "dimgrp"),
-            flapGroup(pct(r.risk).replace("%", ""), W.risk, "risk"));
+            flapGroup(pct(r.risk).replace("%", ""), W.risk, "risk"),
+            // how bad when it IS bad — the other half of the sentence
+            flapGroup(r.median_late ? r.median_late + "M" : "-", W.med, "dimgrp"));
           // the risk group is the one place colour carries meaning
-          row.lastChild.style.color = riskColor(r.risk, true);
+          row.children[4].style.color = riskColor(r.risk, true);
           const conf = document.createElement("span");
           conf.className = "conf";
           conf.textContent = `${key("basis." + r.basis)} · n=${r.n}`;
@@ -447,12 +472,17 @@
              <div class="dgrid">
                <div class="dbox"><b style="color:${riskColor(r.risk)}">${pct(r.risk)}</b>
                  <span>${key("d.risk")}</span></div>
+               <div class="dbox"><b>${r.median_late ? r.median_late + " min" : "—"}</b>
+                 <span>${key("d.med")}</span></div>
+               <div class="dbox"><b>${r.hour_rate == null ? "—" : pct(r.hour_rate, 1)}</b>
+                 <span>${key("d.hour")} (${r.time.slice(0, 2)}:00)</span></div>
                <div class="dbox"><b>${pct(base, 1)}</b><span>${key("d.base")}</span></div>
                <div class="dbox"><b>${ratio ? ratio.toFixed(1) + "×" : "—"}</b>
                  <span>${key("d.times")}</span></div>
                <div class="dbox"><b>${r.n}</b>
                  <span>${key("d.n")} · ${key("basis." + r.basis)}</span></div>
-             </div>`;
+             </div>
+             <p class="split">${splitSentence(r, base)}</p>`;
         }
 
         // --- validation ---

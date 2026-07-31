@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-07-31T08:29:28+00:00",
+ "generated_utc": "2026-07-31T09:12:07+00:00",
  "airport": "IST",
  "board_date": "2026-07-31",
  "late_threshold_min": 15,
@@ -9,6 +9,129 @@
   "days": 88,
   "through": "2026-07-30"
  },
+ "hourly": [
+  {
+   "h": 0,
+   "pct": 0.1498,
+   "n": 901
+  },
+  {
+   "h": 1,
+   "pct": 0.0939,
+   "n": 3356
+  },
+  {
+   "h": 2,
+   "pct": 0.1015,
+   "n": 1478
+  },
+  {
+   "h": 3,
+   "pct": 0.1372,
+   "n": 532
+  },
+  {
+   "h": 4,
+   "pct": 0.116,
+   "n": 500
+  },
+  {
+   "h": 5,
+   "pct": 0.2057,
+   "n": 316
+  },
+  {
+   "h": 6,
+   "pct": 0.0504,
+   "n": 3786
+  },
+  {
+   "h": 7,
+   "pct": 0.0823,
+   "n": 5794
+  },
+  {
+   "h": 8,
+   "pct": 0.0682,
+   "n": 3064
+  },
+  {
+   "h": 9,
+   "pct": 0.1153,
+   "n": 1162
+  },
+  {
+   "h": 10,
+   "pct": 0.0812,
+   "n": 1873
+  },
+  {
+   "h": 11,
+   "pct": 0.0786,
+   "n": 2544
+  },
+  {
+   "h": 12,
+   "pct": 0.1172,
+   "n": 3234
+  },
+  {
+   "h": 13,
+   "pct": 0.1412,
+   "n": 3788
+  },
+  {
+   "h": 14,
+   "pct": 0.127,
+   "n": 3755
+  },
+  {
+   "h": 15,
+   "pct": 0.1584,
+   "n": 4609
+  },
+  {
+   "h": 16,
+   "pct": 0.1603,
+   "n": 3924
+  },
+  {
+   "h": 17,
+   "pct": 0.1497,
+   "n": 2706
+  },
+  {
+   "h": 18,
+   "pct": 0.1364,
+   "n": 4640
+  },
+  {
+   "h": 19,
+   "pct": 0.1168,
+   "n": 2962
+  },
+  {
+   "h": 20,
+   "pct": 0.125,
+   "n": 3407
+  },
+  {
+   "h": 21,
+   "pct": 0.1334,
+   "n": 2369
+  },
+  {
+   "h": 22,
+   "pct": 0.1139,
+   "n": 1264
+  },
+  {
+   "h": 23,
+   "pct": 0.1358,
+   "n": 965
+  }
+ ],
+ "median_late_overall": 30,
  "validation": {
   "day": "2026-07-27",
   "flights": 553,
@@ -21,201 +144,289 @@
  "departures": [
   {
    "time": "03:55",
+   "hour": 3,
    "flight": "3O523",
    "dest": "GMME",
    "airline": "Air Arabia",
    "risk": 0.0303,
    "basis": "flight",
-   "n": 17
+   "n": 17,
+   "median_late": 30,
+   "median_from": "route",
+   "hour_rate": 0.1372
   },
   {
    "time": "04:30",
+   "hour": 4,
    "flight": "YI",
    "dest": "HLLM",
    "airline": "Air Anka",
    "risk": 0.0535,
    "basis": "flight",
-   "n": 9
+   "n": 9,
+   "median_late": 45,
+   "median_from": "destination",
+   "hour_rate": 0.116
   },
   {
    "time": "05:10",
+   "hour": 5,
    "flight": "TK734",
    "dest": "VRMM",
    "airline": "Turkish Airlines",
    "risk": 0.1642,
    "basis": "flight",
-   "n": 61
+   "n": 61,
+   "median_late": 27,
+   "median_from": "flight",
+   "hour_rate": 0.2057
   },
   {
    "time": "05:10",
+   "hour": 5,
    "flight": "TK164",
    "dest": "VVNB",
    "airline": "Turkish Airlines",
    "risk": 0.1061,
    "basis": "flight",
-   "n": 84
+   "n": 84,
+   "median_late": 52,
+   "median_from": "flight",
+   "hour_rate": 0.2057
   },
   {
    "time": "05:15",
+   "hour": 5,
    "flight": "MB6564",
    "dest": "UZSA",
    "airline": "Chrono Jet",
    "risk": 0.0265,
    "basis": "flight",
-   "n": 12
+   "n": 12,
+   "median_late": 30,
+   "median_from": "airport",
+   "hour_rate": 0.2057
   },
   {
    "time": "05:15",
+   "hour": 5,
    "flight": "TK429",
    "dest": "UWKD",
    "airline": "Turkish Airlines",
    "risk": 0.1511,
    "basis": "flight",
-   "n": 79
+   "n": 79,
+   "median_late": 81,
+   "median_from": "flight",
+   "hour_rate": 0.2057
   },
   {
    "time": "05:15",
+   "hour": 5,
    "flight": "TK176",
    "dest": "FIMP",
    "airline": "Turkish Airlines",
    "risk": 0.1756,
    "basis": "flight",
-   "n": 49
+   "n": 49,
+   "median_late": 36,
+   "median_from": "flight",
+   "hour_rate": 0.2057
   },
   {
    "time": "05:15",
+   "hour": 5,
    "flight": "TK84",
    "dest": "RPLL",
    "airline": "Turkish Airlines",
    "risk": 0.0358,
    "basis": "flight",
-   "n": 84
+   "n": 84,
+   "median_late": 30,
+   "median_from": "airport",
+   "hour_rate": 0.2057
   },
   {
    "time": "05:20",
+   "hour": 5,
    "flight": "TK407",
    "dest": "UUWW",
    "airline": "Turkish Airlines",
    "risk": 0.1989,
    "basis": "flight",
-   "n": 81
+   "n": 81,
+   "median_late": 31,
+   "median_from": "flight",
+   "hour_rate": 0.2057
   },
   {
    "time": "05:25",
+   "hour": 5,
    "flight": "TK86",
    "dest": "RJBB",
    "airline": "Turkish Airlines",
    "risk": 0.0817,
    "basis": "flight",
-   "n": 84
+   "n": 84,
+   "median_late": 34,
+   "median_from": "flight",
+   "hour_rate": 0.2057
   },
   {
    "time": "05:30",
+   "hour": 5,
    "flight": "AH3023",
    "dest": "DABC",
    "airline": "Air Algerie",
    "risk": 0.322,
    "basis": "flight",
-   "n": 55
+   "n": 55,
+   "median_late": 38,
+   "median_from": "flight",
+   "hour_rate": 0.2057
   },
   {
    "time": "05:40",
+   "hour": 5,
    "flight": "TK360",
    "dest": "UDYZ",
    "airline": "Turkish Airlines",
    "risk": 0.0153,
    "basis": "flight",
-   "n": 70
+   "n": 70,
+   "median_late": 30,
+   "median_from": "route",
+   "hour_rate": 0.2057
   },
   {
    "time": "06:15",
+   "hour": 6,
    "flight": "FQ753",
    "dest": "HLLM",
    "airline": "Crown Airlines",
    "risk": 0.0231,
    "basis": "flight",
-   "n": 20
+   "n": 20,
+   "median_late": 84,
+   "median_from": "route",
+   "hour_rate": 0.0504
   },
   {
    "time": "06:20",
+   "hour": 6,
    "flight": "YK776",
    "dest": "UCFM",
    "airline": "Avia Traffic",
    "risk": 0.008,
    "basis": "flight",
-   "n": 23
+   "n": 23,
+   "median_late": 30,
+   "median_from": "destination",
+   "hour_rate": 0.0504
   },
   {
    "time": "06:30",
+   "hour": 6,
    "flight": "YL101",
    "dest": "HLLM",
    "airline": "Libyan Wings",
    "risk": 0.434,
    "basis": "flight",
-   "n": 76
+   "n": 76,
+   "median_late": 45,
+   "median_from": "flight",
+   "hour_rate": 0.0504
   },
   {
    "time": "06:30",
+   "hour": 6,
    "flight": null,
    "dest": "HLLM",
    "airline": "empty",
    "risk": 0.0554,
    "basis": "route",
-   "n": 40
+   "n": 40,
+   "median_late": 45,
+   "median_from": "destination",
+   "hour_rate": 0.0504
   },
   {
    "time": "06:40",
+   "hour": 6,
    "flight": "TK1224",
    "dest": "EDDF",
    "airline": "Turkish Airlines",
    "risk": 0.0447,
    "basis": "flight",
-   "n": 5
+   "n": 5,
+   "median_late": 25,
+   "median_from": "route",
+   "hour_rate": 0.0504
   },
   {
    "time": "06:45",
+   "hour": 6,
    "flight": "TK1220",
    "dest": "EDDB",
    "airline": "Turkish Airlines",
    "risk": 0.0205,
    "basis": "flight",
-   "n": 19
+   "n": 19,
+   "median_late": 26,
+   "median_from": "route",
+   "hour_rate": 0.0504
   },
   {
    "time": "06:45",
+   "hour": 6,
    "flight": "LH1743",
    "dest": "EDDM",
    "airline": "Lufthansa",
    "risk": 0.0122,
    "basis": "flight",
-   "n": 85
+   "n": 85,
+   "median_late": 23,
+   "median_from": "destination",
+   "hour_rate": 0.0504
   },
   {
    "time": "06:50",
+   "hour": 6,
    "flight": "MS746",
    "dest": "HECA",
    "airline": "Egyptair",
    "risk": 0.0432,
    "basis": "flight",
-   "n": 76
+   "n": 76,
+   "median_late": 28,
+   "median_from": "route",
+   "hour_rate": 0.0504
   },
   {
    "time": "07:00",
+   "hour": 7,
    "flight": "TO3413",
    "dest": "LFPO",
    "airline": "Transavia",
    "risk": 0.0086,
    "basis": "flight",
-   "n": 3
+   "n": 3,
+   "median_late": 32,
+   "median_from": "route",
+   "hour_rate": 0.0823
   },
   {
    "time": "07:00",
+   "hour": 7,
    "flight": "SU2133",
    "dest": "UUEE",
    "airline": "Aeroflot",
    "risk": 0.341,
    "basis": "flight",
-   "n": 79
+   "n": 79,
+   "median_late": 36,
+   "median_from": "flight",
+   "hour_rate": 0.0823
   }
  ]
 }
