@@ -1,0 +1,221 @@
+{
+ "generated_utc": "2026-07-31T08:29:28+00:00",
+ "airport": "IST",
+ "board_date": "2026-07-31",
+ "late_threshold_min": 15,
+ "baseline": 0.1162,
+ "trained_on": {
+  "flights": 62929,
+  "days": 88,
+  "through": "2026-07-30"
+ },
+ "validation": {
+  "day": "2026-07-27",
+  "flights": 553,
+  "actual_pct": 12.1,
+  "brier": 0.101,
+  "brier_baseline": 0.1065,
+  "top_decile_pct": 34.5,
+  "lift": 2.85
+ },
+ "departures": [
+  {
+   "time": "03:55",
+   "flight": "3O523",
+   "dest": "GMME",
+   "airline": "Air Arabia",
+   "risk": 0.0303,
+   "basis": "flight",
+   "n": 17
+  },
+  {
+   "time": "04:30",
+   "flight": "YI",
+   "dest": "HLLM",
+   "airline": "Air Anka",
+   "risk": 0.0535,
+   "basis": "flight",
+   "n": 9
+  },
+  {
+   "time": "05:10",
+   "flight": "TK734",
+   "dest": "VRMM",
+   "airline": "Turkish Airlines",
+   "risk": 0.1642,
+   "basis": "flight",
+   "n": 61
+  },
+  {
+   "time": "05:10",
+   "flight": "TK164",
+   "dest": "VVNB",
+   "airline": "Turkish Airlines",
+   "risk": 0.1061,
+   "basis": "flight",
+   "n": 84
+  },
+  {
+   "time": "05:15",
+   "flight": "MB6564",
+   "dest": "UZSA",
+   "airline": "Chrono Jet",
+   "risk": 0.0265,
+   "basis": "flight",
+   "n": 12
+  },
+  {
+   "time": "05:15",
+   "flight": "TK429",
+   "dest": "UWKD",
+   "airline": "Turkish Airlines",
+   "risk": 0.1511,
+   "basis": "flight",
+   "n": 79
+  },
+  {
+   "time": "05:15",
+   "flight": "TK176",
+   "dest": "FIMP",
+   "airline": "Turkish Airlines",
+   "risk": 0.1756,
+   "basis": "flight",
+   "n": 49
+  },
+  {
+   "time": "05:15",
+   "flight": "TK84",
+   "dest": "RPLL",
+   "airline": "Turkish Airlines",
+   "risk": 0.0358,
+   "basis": "flight",
+   "n": 84
+  },
+  {
+   "time": "05:20",
+   "flight": "TK407",
+   "dest": "UUWW",
+   "airline": "Turkish Airlines",
+   "risk": 0.1989,
+   "basis": "flight",
+   "n": 81
+  },
+  {
+   "time": "05:25",
+   "flight": "TK86",
+   "dest": "RJBB",
+   "airline": "Turkish Airlines",
+   "risk": 0.0817,
+   "basis": "flight",
+   "n": 84
+  },
+  {
+   "time": "05:30",
+   "flight": "AH3023",
+   "dest": "DABC",
+   "airline": "Air Algerie",
+   "risk": 0.322,
+   "basis": "flight",
+   "n": 55
+  },
+  {
+   "time": "05:40",
+   "flight": "TK360",
+   "dest": "UDYZ",
+   "airline": "Turkish Airlines",
+   "risk": 0.0153,
+   "basis": "flight",
+   "n": 70
+  },
+  {
+   "time": "06:15",
+   "flight": "FQ753",
+   "dest": "HLLM",
+   "airline": "Crown Airlines",
+   "risk": 0.0231,
+   "basis": "flight",
+   "n": 20
+  },
+  {
+   "time": "06:20",
+   "flight": "YK776",
+   "dest": "UCFM",
+   "airline": "Avia Traffic",
+   "risk": 0.008,
+   "basis": "flight",
+   "n": 23
+  },
+  {
+   "time": "06:30",
+   "flight": "YL101",
+   "dest": "HLLM",
+   "airline": "Libyan Wings",
+   "risk": 0.434,
+   "basis": "flight",
+   "n": 76
+  },
+  {
+   "time": "06:30",
+   "flight": null,
+   "dest": "HLLM",
+   "airline": "empty",
+   "risk": 0.0554,
+   "basis": "route",
+   "n": 40
+  },
+  {
+   "time": "06:40",
+   "flight": "TK1224",
+   "dest": "EDDF",
+   "airline": "Turkish Airlines",
+   "risk": 0.0447,
+   "basis": "flight",
+   "n": 5
+  },
+  {
+   "time": "06:45",
+   "flight": "TK1220",
+   "dest": "EDDB",
+   "airline": "Turkish Airlines",
+   "risk": 0.0205,
+   "basis": "flight",
+   "n": 19
+  },
+  {
+   "time": "06:45",
+   "flight": "LH1743",
+   "dest": "EDDM",
+   "airline": "Lufthansa",
+   "risk": 0.0122,
+   "basis": "flight",
+   "n": 85
+  },
+  {
+   "time": "06:50",
+   "flight": "MS746",
+   "dest": "HECA",
+   "airline": "Egyptair",
+   "risk": 0.0432,
+   "basis": "flight",
+   "n": 76
+  },
+  {
+   "time": "07:00",
+   "flight": "TO3413",
+   "dest": "LFPO",
+   "airline": "Transavia",
+   "risk": 0.0086,
+   "basis": "flight",
+   "n": 3
+  },
+  {
+   "time": "07:00",
+   "flight": "SU2133",
+   "dest": "UUEE",
+   "airline": "Aeroflot",
+   "risk": 0.341,
+   "basis": "flight",
+   "n": 79
+  }
+ ]
+}

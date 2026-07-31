@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kalkış Rötar Panosu | Ahmet Hamza Mülayim</title>
+    <meta
+      name="description"
+      content="IST'ten planlanan kalkışlar, her biri kendi geçmişine göre puanlanmış rötar riskiyle — 62.000+ uçuşluk veri setinden üretilen istatistiksel tahmin."
+    />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e81932'/%3E%3Ctext x='32' y='45' font-size='38' font-family='sans-serif' font-weight='700' text-anchor='middle' fill='%23fff'%3EA%3C/text%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="i18n.js"></script>
+    <script defer src="script.js"></script>
+    <style>
+      .chart-panel {
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 22px;
+        margin-top: 22px;
+      }
+      .chart-panel h3 {
+        font-family: "Space Grotesk", sans-serif;
+        letter-spacing: -0.03em;
+        margin: 0 0 6px;
+      }
+      .chart-panel .note { margin: 0 0 14px; color: var(--muted); font-size: 0.88rem; }
+      .callout {
+        margin-top: 16px;
+        padding: 14px 16px;
+        border-left: 3px solid var(--accent);
+        background: var(--bg-alt);
+        border-radius: 0 12px 12px 0;
+        font-size: 0.9rem;
+        line-height: 1.65;
+      }
+      .callout.alt { border-left-color: var(--cobalt); }
+
+      /* the board itself */
+      .board { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+      .board thead th {
+        text-align: left;
+        color: var(--muted);
+        font-weight: 600;
+        font-size: 0.74rem;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        padding: 0 10px 10px;
+        border-bottom: 1px solid var(--line);
+      }
+      .board thead th.num, .board tbody td.num { text-align: right; }
+      .board tbody tr { cursor: pointer; border-bottom: 1px solid var(--line); }
+      .board tbody tr:hover, .board tbody tr.sel { background: var(--bg-alt); }
+      .board tbody td { padding: 10px; vertical-align: middle; }
+      .board .t, .board .fl {
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 700;
+        letter-spacing: 0.01em;
+      }
+      .board .dst { color: var(--muted); font-variant-numeric: tabular-nums; }
+      .board .al { color: var(--muted); }
+      .riskcell { display: flex; align-items: center; gap: 9px; justify-content: flex-end; }
+      .riskbar { width: 74px; height: 7px; border-radius: 999px; background: rgba(43,39,50,.09); overflow: hidden; flex: none; }
+      .riskbar i { display: block; height: 100%; border-radius: 999px; }
+      .riskpct { font-family: "Space Grotesk", sans-serif; font-weight: 700; min-width: 40px; text-align: right; }
+      .conf { font-size: 0.72rem; color: var(--muted); white-space: nowrap; }
+
+      /* detail panel */
+      .detail { margin-top: 18px; padding: 18px 20px; border-radius: 18px; background: var(--bg-alt); border: 1px solid var(--line); }
+      .detail[hidden] { display: none; }
+      .detail h4 { margin: 0 0 2px; font-family: "Space Grotesk", sans-serif; font-size: 1.25rem; letter-spacing: -0.02em; }
+      .detail .sub { margin: 0 0 14px; color: var(--muted); font-size: 0.86rem; }
+      .droute { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; font-family: "Space Grotesk", sans-serif; }
+      .droute .ap { font-size: 1.15rem; font-weight: 700; }
+      .droute .arrow { color: var(--muted); }
+      .dgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
+      .dbox { padding: 12px 14px; background: var(--panel-strong); border: 1px solid var(--line); border-radius: 14px; }
+      .dbox b { display: block; font-family: "Space Grotesk", sans-serif; font-size: 1.5rem; letter-spacing: -0.02em; line-height: 1.1; }
+      .dbox span { display: block; margin-top: 3px; color: var(--muted); font-size: 0.78rem; line-height: 1.45; }
+
+      .statline { display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 0 0 4px; color: var(--muted); font-size: 0.85rem; }
+      .statline b { color: var(--text); font-family: "Space Grotesk", sans-serif; }
+      .table-scroll { overflow-x: auto; }
+      .empty { padding: 26px 4px; color: var(--muted); font-size: 0.9rem; }
+    </style>
+  </head>
+  <body>
+    <div class="noise"></div>
+    <header class="site-header">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">A</span>
+        <span>
+          <strong>Ahmet Hamza Mülayim</strong>
+          <small>Marmara University</small>
+        </span>
+      </a>
+      <nav class="site-nav">
+        <a href="index.html#projects" data-i18n="nav.back">← Portföy</a>
+        <a href="phase2.html" data-i18n="nav.phase2">Faz 2 →</a>
+        <button class="lang-toggle" type="button">EN</button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="hero.eyebrow">Demo · istatistiksel yarı</p>
+          <h2 data-i18n="hero.h2">Kalkış rötar panosu</h2>
+          <p class="hero-text" data-i18n="hero.text">
+            IST'ten planlanan her kalkış, kendi geçmişine göre puanlanıyor: bu
+            uçuş numarası, bu rota ve bu saat daha önce ne kadar rötar yaptı?
+            Havalimanı panosu gibi — ama sayılar tahmin, ilan değil.
+          </p>
+        </div>
+        <p class="statline" id="meta"></p>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="chart-panel">
+          <h3 data-i18n="board.h">Panodaki uçuşlar</h3>
+          <p class="note" data-i18n="board.note">
+            Bir satıra tıkla — sayının nereden geldiğini gör.
+          </p>
+          <div class="table-scroll">
+            <table class="board" id="board"></table>
+          </div>
+          <div class="detail" id="detail" hidden></div>
+          <div class="callout alt" data-i18n="board.partial">
+            <b>Pano neden kısa?</b> Ücretsiz veri planı yarının tarifesinin
+            tamamını değil, günde yaklaşık 77 satırını getiriyor. Gün ilerledikçe
+            gece çalışan iş bu panoyu dolduruyor. Yani bu, günün tamamı değil —
+            elimizde tarifesi olan uçuşlar.
+          </div>
+        </div>
+
+        <div class="chart-panel">
+          <h3 data-i18n="val.h">Çalışıyor mu?</h3>
+          <p class="note" data-i18n="val.note">
+            Aynı yöntem, hiç görmediği bir güne uygulandı: model o günden önceki
+            verilerle kuruldu, sonra o günün uçuşları puanlandı ve gerçekte ne
+            olduğuyla karşılaştırıldı.
+          </p>
+          <div class="dgrid" id="val"></div>
+          <div class="callout" data-i18n="val.caveat">
+            <b>Dürüst olan taraf:</b> model uçuşları <b>sıralamada</b> iyi —
+            riskli dediklerinin çok daha fazlası gerçekten rötar yaptı. Ama
+            seviyeyi olduğundan düşük tahmin ediyor: kötü bir günde tüm pano
+            yukarı kaymalı. Bunu düzeltecek şey canlı havalimanı durumu (son
+            saatlerde ne kadar geciktiği) — o veri şu an birikiyor.
+          </div>
+        </div>
+
+        <div class="chart-panel">
+          <h3 data-i18n="method.h">Yöntem ve sınırlar</h3>
+          <p class="note" data-i18n="method.p">
+            Rötar = aviationstack'in kapı kalkış gecikmesi, eşik 15+ dk. Yalnızca
+            kalkışlar; kargo ve iptaller hariç. Her uçuş, sırasıyla şu basamaklara
+            bakılarak puanlanıyor: uçuş numarası → havayolu+varış+saat →
+            havayolu+varış → varış → havalimanı ortalaması. İnce veriye dayanan
+            hücreler bir üst basamağa doğru yumuşatılıyor, böylece üç uçuşluk bir
+            rota "%0" ya da "%100" diye bağırmıyor. Bu bir tahmin — havayolunun
+            resmi bildirimi değil.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p data-i18n="footer.p">Veri: IST · aviationstack + OpenSky Network · her gece yeniden eğitilir</p>
+      <p id="year"></p>
+    </footer>
+
+    <script>
+      window.I18N_LANG = "en";
+      window.I18N = {
+        "nav.back": "← Portfolio",
+        "nav.phase2": "Phase 2 →",
+        "hero.eyebrow": "Demo · the statistical half",
+        "hero.h2": "Departure delay board",
+        "hero.text": "Every scheduled departure from IST, scored against its own history: how often has this flight number, this route and this hour run late before? Like an airport board — except the numbers are a prediction, not an announcement.",
+        "board.h": "Flights on the board",
+        "board.note": "Click a row to see where its number came from.",
+        "board.partial": "<b>Why is the board short?</b> The free data plan returns about 77 rows of tomorrow's schedule per run, not the whole day. The nightly job fills this board out as the day approaches. So this is the flights we hold a schedule for — not the full day.",
+        "val.h": "Does it work?",
+        "val.note": "The same method applied to a day it had never seen: built from everything before that day, then asked to score it, then checked against what actually happened.",
+        "val.caveat": "<b>The honest part:</b> the model <b>ranks</b> flights well — far more of the ones it called risky really did run late. But it under-states the level: on a bad day the whole board should shift up. The thing that fixes that is live airport state (how late the airport has been running in the last few hours) — that data is accumulating now.",
+        "method.h": "Method and limits",
+        "method.p": "Delay = aviationstack's gate departure delay, threshold 15+ min. Departures only; cargo and cancellations excluded. Each flight is scored by walking down these rungs: flight number → airline+destination+hour → airline+destination → destination → airport average. Cells with thin history are smoothed toward the rung above, so a route flown three times doesn't shout \"0%\" or \"100%\". This is a prediction, not an airline's official estimate.",
+        "footer.p": "Data: IST · aviationstack + OpenSky Network · retrained nightly",
+        "col.time": "Time",
+        "col.flight": "Flight",
+        "col.dest": "To",
+        "col.airline": "Airline",
+        "col.risk": "Delay risk",
+        "col.basis": "Based on",
+        "basis.flight": "this flight number",
+        "basis.route+hour": "airline + route + hour",
+        "basis.route": "airline + route",
+        "basis.destination": "destination",
+        "basis.airport": "airport average",
+        "d.risk": "chance of 15+ min delay",
+        "d.base": "airport average",
+        "d.times": "vs the airport average",
+        "d.n": "past flights behind it",
+        "v.lift": "more likely to be late",
+        "v.top": "of the riskiest 10% ran late",
+        "v.day": "on the whole test day",
+        "v.n": "flights scored blind",
+        "empty": "No schedule on the board yet — the nightly job fills it as the day approaches.",
+      };
+    </script>
+
+    <script>
+      const t = (en, tr) => (getLang() === "tr" ? tr : en);
+      const key = (k) => (getLang() === "tr" ? (TR[k] || window.I18N[k]) : window.I18N[k]);
+      // Turkish strings for the JS-rendered bits (the HTML above is TR by default)
+      const TR = {
+        "col.time": "Saat", "col.flight": "Uçuş", "col.dest": "Varış",
+        "col.airline": "Havayolu", "col.risk": "Rötar riski", "col.basis": "Neye göre",
+        "basis.flight": "bu uçuş numarası", "basis.route+hour": "havayolu + rota + saat",
+        "basis.route": "havayolu + rota", "basis.destination": "varış noktası",
+        "basis.airport": "havalimanı ortalaması",
+        "d.risk": "15+ dk rötar ihtimali", "d.base": "havalimanı ortalaması",
+        "d.times": "havalimanı ortalamasına göre", "d.n": "geçmiş uçuş",
+        "v.lift": "kat daha riskli", "v.top": "en riskli %10'un rötar oranı",
+        "v.day": "o günün geneli", "v.n": "kör puanlanan uçuş",
+        "empty": "Panoda henüz tarife yok — gece çalışan iş gün yaklaştıkça dolduruyor.",
+      };
+
+      // risk is ordered magnitude -> one hue, pale to deep. Same ramp as the
+      // route-delay globe so the two pages read as the same measurement.
+      const RAMP = [[243,198,204], [232,25,50], [122,15,31]];
+      function riskColor(p) {
+        const x = Math.max(0, Math.min(1, p / 0.5)); // 50%+ saturates the ramp
+        const [a, b] = x < 0.5 ? [RAMP[0], RAMP[1]] : [RAMP[1], RAMP[2]];
+        const f = x < 0.5 ? x * 2 : (x - 0.5) * 2;
+        return `rgb(${a.map((v, i) => Math.round(v + (b[i] - v) * f)).join(",")})`;
+      }
+      const pct = (v, d = 0) =>
+        (100 * v).toFixed(d).replace(".", getLang() === "tr" ? "," : ".") + "%";
+
+      let DATA = null, sel = null;
+
+      function render() {
+        if (!DATA) return;
+        const b = DATA, base = b.baseline;
+
+        document.getElementById("meta").innerHTML =
+          `<span>${t("Board for", "Pano tarihi")} <b>${b.board_date}</b></span>` +
+          `<span>${t("airport average", "havalimanı ortalaması")} <b>${pct(base, 1)}</b></span>` +
+          `<span>${t("trained on", "eğitim verisi")} <b>${b.trained_on.flights.toLocaleString(getLang() === "tr" ? "tr-TR" : "en-US")}</b> ${t("flights", "uçuş")} · ${b.trained_on.days} ${t("days", "gün")}</span>`;
+
+        const rows = b.departures || [];
+        const tbl = document.getElementById("board");
+        if (!rows.length) {
+          tbl.innerHTML = `<tbody><tr><td class="empty">${key("empty")}</td></tr></tbody>`;
+          return;
+        }
+        tbl.innerHTML =
+          `<thead><tr>
+             <th>${key("col.time")}</th><th>${key("col.flight")}</th>
+             <th>${key("col.dest")}</th><th>${key("col.airline")}</th>
+             <th class="num">${key("col.risk")}</th></tr></thead><tbody>` +
+          rows.map((r, i) => `
+            <tr data-i="${i}"${i === sel ? ' class="sel"' : ""}>
+              <td class="t">${r.time}</td>
+              <td class="fl">${r.flight || "—"}</td>
+              <td class="dst">${r.dest}</td>
+              <td class="al">${r.airline || "—"}</td>
+              <td class="num"><div class="riskcell">
+                <span class="conf">${key("basis." + r.basis)} · n=${r.n}</span>
+                <span class="riskbar"><i style="width:${Math.min(100, 100 * r.risk / 0.5)}%;background:${riskColor(r.risk)}"></i></span>
+                <span class="riskpct" style="color:${riskColor(r.risk)}">${pct(r.risk)}</span>
+              </div></td>
+            </tr>`).join("") + `</tbody>`;
+        tbl.querySelectorAll("tbody tr[data-i]").forEach((tr) => {
+          tr.onclick = () => { sel = +tr.dataset.i; render(); };
+        });
+
+        // --- detail ---
+        const d = document.getElementById("detail");
+        if (sel == null || !rows[sel]) { d.hidden = true; } else {
+          const r = rows[sel];
+          const ratio = base ? r.risk / base : null;
+          d.hidden = false;
+          d.innerHTML =
+            `<h4>${r.flight || "—"}</h4>
+             <p class="sub">${r.airline || ""} · ${b.board_date} ${r.time}</p>
+             <div class="droute">
+               <span class="ap">LTFM</span><span class="arrow">→</span><span class="ap">${r.dest}</span>
+             </div>
+             <div class="dgrid">
+               <div class="dbox"><b style="color:${riskColor(r.risk)}">${pct(r.risk)}</b>
+                 <span>${key("d.risk")}</span></div>
+               <div class="dbox"><b>${pct(base, 1)}</b><span>${key("d.base")}</span></div>
+               <div class="dbox"><b>${ratio ? ratio.toFixed(1) + "×" : "—"}</b>
+                 <span>${key("d.times")}</span></div>
+               <div class="dbox"><b>${r.n}</b>
+                 <span>${key("d.n")} · ${key("basis." + r.basis)}</span></div>
+             </div>`;
+        }
+
+        // --- validation ---
+        const v = b.validation, vg = document.getElementById("val");
+        vg.innerHTML = !v ? "" :
+          `<div class="dbox"><b>${v.lift}×</b><span>${key("v.lift")}</span></div>
+           <div class="dbox"><b>${v.top_decile_pct.toString().replace(".", getLang() === "tr" ? "," : ".")}%</b>
+             <span>${key("v.top")}</span></div>
+           <div class="dbox"><b>${v.actual_pct.toString().replace(".", getLang() === "tr" ? "," : ".")}%</b>
+             <span>${key("v.day")} (${v.day})</span></div>
+           <div class="dbox"><b>${v.flights}</b><span>${key("v.n")}</span></div>`;
+      }
+
+      fetch("board.json", { cache: "no-store" })
+        .then((r) => r.json())
+        .then((j) => { DATA = j; render(); })
+        .catch(() => {
+          document.getElementById("board").innerHTML =
+            `<tbody><tr><td class="empty">${key("empty")}</td></tr></tbody>`;
+        });
+
+      document.addEventListener("langchange", render);
+    </script>
+  </body>
+</html>

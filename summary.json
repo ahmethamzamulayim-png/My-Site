@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-07-30T18:45:56+00:00",
+ "generated_utc": "2026-07-31T08:28:45+00:00",
  "days": 89,
  "first_date": "2026-05-01",
  "last_date": "2026-07-30",
@@ -32,6 +32,14 @@
  "ontime": 55619,
  "pct_delayed": 11.6,
  "pct_ontime": 88.4,
+ "recent": {
+  "days": 14,
+  "first_date": "2026-07-15",
+  "last_date": "2026-07-28",
+  "flights": 10582,
+  "delayed_15": 1639,
+  "pct_delayed": 15.5
+ },
  "daily": [
   {
    "date": "2026-05-01",
