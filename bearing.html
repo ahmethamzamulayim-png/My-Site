@@ -104,6 +104,7 @@
         color: var(--muted);
         line-height: 1.7;
       }
+      .limits-next { margin: 22px 0 0; }
     </style>
   </head>
   <body>
@@ -242,14 +243,17 @@
       <section class="section" data-reveal>
         <div class="section-heading">
           <p class="eyebrow" data-i18n="limits.eyebrow">Honest limitations</p>
-          <h2 data-i18n="limits.h2">What this doesn't do.</h2>
+          <h2 data-i18n="limits.h2">Where the countdown stops — and what Part&nbsp;2 did about it.</h2>
         </div>
         <ul class="limits" data-i18n="limits.ul">
           <li>The failure level is taken from the end of each test; a deployed system would need ISO standards or fleet history instead.</li>
           <li>No forecast is possible before damage starts — a healthy bearing's vibration contains nothing about its future. Identical bearings scatter 10×+ in lifetime; that's why catalogs quote statistical L10 ratings, never per-unit dates.</li>
-          <li>Time-domain features only. The classic next step is envelope spectrum analysis, which identifies <em>which</em> defect (inner race / outer race / roller) from the impact repetition frequency.</li>
-          <li>Absolute-hours predictions don't transfer to other rigs — the open research problem (cross-domain prognostics) that a life-fraction formulation would be the first step toward.</li>
+          <li>Time-domain features only. The classic next step is envelope spectrum analysis, which identifies <em>which</em> defect (inner race / outer race / roller) from the impact repetition frequency. <strong>Part&nbsp;2 built it</strong> — the envelope band fires 21.7× at a documented outer-race failure.</li>
+          <li>Absolute-hours predictions don't transfer to other rigs — the open research problem (cross-domain prognostics) that a life-fraction formulation would be the first step toward. <strong>Part&nbsp;2 measured it</strong> across three rigs: hiding an entire rig cost no more than hiding one bearing.</li>
         </ul>
+        <p class="limits-next">
+          <a class="button secondary" href="bearing-universal.html" data-i18n="limits.next">Read Part 2 — does it transfer to an unseen rig? →</a>
+        </p>
       </section>
 
       <section class="section contact" data-reveal>
@@ -307,8 +311,9 @@
         "fig4.h3": "Hiç görmediği rulmanda rastgele orman",
         "fig4.p": "Model, test 3'te kalan faydalı ömrü saat saat tahmin ediyor. Etiketler 120&nbsp;saatte kırpılıyor çünkü sağlıklı titreşim gelecek hakkında bilgi taşımaz — düz kırmızı çizgi hata değil, dürüstlük. 40. gün civarında bozulma başlayınca geri sayım kilitleniyor: son günde ortalama hata 7,4 saat. Öznitelik önemi ~%75'i yumuşatılmış RMS'e, ~%15'i yumuşatılmış basıklığa veriyor — orman, fiziğin işaret ettiği göstergeleri kendi başına yeniden keşfetti.",
         "limits.eyebrow": "Dürüst sınırlar",
-        "limits.h2": "Bunun yapmadıkları.",
-        "limits.ul": "<li>Arıza seviyesi her testin sonundan alınıyor; sahada kurulu bir sistem bunun yerine ISO standartlarına ya da filo geçmişine ihtiyaç duyar.</li><li>Hasar başlamadan öngörü mümkün değil — sağlıklı bir rulmanın titreşimi geleceği hakkında hiçbir şey içermez. Birebir aynı rulmanların ömrü 10 kattan fazla saçılır; kataloglar bu yüzden birim bazlı tarih değil, istatistiksel L10 ömrü verir.</li><li>Yalnızca zaman alanı öznitelikleri. Klasik sonraki adım, darbe tekrarlama frekansından <em>hangi</em> kusur olduğunu (iç bilezik / dış bilezik / makara) belirleyen zarf spektrumu analizi.</li><li>Mutlak saat tahminleri başka test düzeneklerine taşınmaz — hâlâ açık bir araştırma problemi (alanlar arası prognostik); ömür oranı formülasyonu buna atılacak ilk adım olurdu.</li>",
+        "limits.h2": "Geri sayımın bittiği yer — ve Faz&nbsp;2'nin bununla ne yaptığı.",
+        "limits.next": "Faz 2'yi oku — hiç görülmemiş bir düzeneğe aktarılıyor mu? →",
+        "limits.ul": "<li>Arıza seviyesi her testin sonundan alınıyor; sahada kurulu bir sistem bunun yerine ISO standartlarına ya da filo geçmişine ihtiyaç duyar.</li><li>Hasar başlamadan öngörü mümkün değil — sağlıklı bir rulmanın titreşimi geleceği hakkında hiçbir şey içermez. Birebir aynı rulmanların ömrü 10 kattan fazla saçılır; kataloglar bu yüzden birim bazlı tarih değil, istatistiksel L10 ömrü verir.</li><li>Yalnızca zaman alanı öznitelikleri. Klasik sonraki adım, darbe tekrarlama frekansından <em>hangi</em> kusur olduğunu (iç bilezik / dış bilezik / makara) belirleyen zarf spektrumu analizi. <strong>Faz&nbsp;2 bunu kurdu</strong> — zarf bandı, belgelenmiş bir dış bilezik arızasında 21,7 kat parlıyor.</li><li>Mutlak saat tahminleri başka test düzeneklerine taşınmaz — hâlâ açık bir araştırma problemi (alanlar arası prognostik); ömür oranı formülasyonu buna atılacak ilk adım olurdu. <strong>Faz&nbsp;2 bunu ölçtü</strong>: üç düzenekte, tüm bir düzeneği gizlemek tek bir rulmanı gizlemekten daha pahalıya mal olmadı.</li>",
         "mat.eyebrow": "Malzemeler",
         "mat.h2": "Slaytlar ve anlatım.",
         "mat.p": "Tam anlatım — yöntem, grafikler ve bir makine mühendisinin gözünden ML — sunumda.",

@@ -317,7 +317,7 @@
         </div>
 
         <div class="fig">
-          <h3 data-i18n="fig4.h3">Population model vs curve extrapolation — no winner declared</h3>
+          <h3 data-i18n="fig4.h3">Curve extrapolation only answers the easy questions</h3>
           <img src="bearing-universal/fig4_error_vs_stage.png" alt="Error versus post-onset life stage for the random forest, exponential extrapolation, and a fusion; forest error is U-shaped, extrapolation appears flat but only answers on a minority of snapshots" loading="lazy" />
           <p data-i18n="fig4.p">
             Literature says curve extrapolation fails early and shines late, so
@@ -334,7 +334,7 @@
         </div>
 
         <div class="fig">
-          <h3 data-i18n="fig5.h3">Leakage guard: is it secretly identifying datasets?</h3>
+          <h3 data-i18n="fig5.h3">Leakage guard: dataset identity carries 0.3% of the importance</h3>
           <img src="bearing-universal/fig6_feature_importance.png" alt="Top 20 feature importances led by smoothed RMS and kurtosis with envelope band features spread throughout; absolute-time rate features carry 0.3 percent" loading="lazy" />
           <p data-i18n="fig5.p">
             The cheating check. The easiest way to look smart here is to
@@ -355,7 +355,7 @@
       <section class="section" id="correction" data-reveal>
         <div class="section-heading">
           <p class="eyebrow" data-i18n="corr.eyebrow">Correction &amp; review</p>
-          <h2 data-i18n="corr.h2">A second look moved one number a long way — and moved my explanation further.</h2>
+          <h2 data-i18n="corr.h2">A second look halved the hardest rig's late-stage error — and overturned my explanation of why.</h2>
           <p class="hero-text" data-i18n="corr.intro">
             The results above were re-examined after publication. Two things
             came out of it. A caveat about the FEMTO bearing's dimensions was
@@ -409,7 +409,7 @@
         </div>
 
         <div class="fig">
-          <h3 data-i18n="corr.a.h3">Correction 1 — the dimension we had taken on trust</h3>
+          <h3 data-i18n="corr.a.h3">The dimension we had taken on trust — checked, and harmless</h3>
           <p data-i18n="corr.a.p">
             The fault rhythms this study listens for are computed from the
             bearing's internal dimensions, so a wrong dimension means listening
@@ -437,7 +437,7 @@
         </div>
 
         <div class="fig">
-          <h3 data-i18n="corr.b.h3">Correction 2 — the fix was not where the explanation pointed</h3>
+          <h3 data-i18n="corr.b.h3">Chasing the wrong cause, and the halving that came from finding the right one</h3>
           <img src="bearing-universal/fig7_smoothing.png" alt="Two bar charts. Left: late-stage error per held-out rig, as published versus after correction — FEMTO falls from 0.318 to 0.153 while IMS and XJTU rise slightly. Right: FEMTO late-stage error under four conditions — steadying neither 0.318, test rows only 0.332, training rows only 0.095, both 0.094." loading="lazy" />
           <p data-i18n="corr.b.p">
             This page blamed FEMTO's difficulty on its finger-snap recordings.
@@ -657,12 +657,12 @@
         "tbl.note": "Buradaki iki satır bilerek aynı ön işlemeyi paylaşıyor. Yardım almış bir modeli almamış bir modelle kıyaslamak genellemeyi değil, o yardımı ölçerdi; bu yüzden açık eşit koşullarda veriliyor. O yardım var ve FEMTO satırını hatırı sayılır biçimde iyileştiriyor: geç evre hatası 0,318 → 0,153. Bu tablodan dışarıda tutulup, sayfanın FEMTO'nun neden en zor olduğuna dair ilk verdiği ve yalnızca yarısı doğru çıkan açıklamayla birlikte aşağıdaki <a href=\"#correction\">Düzeltme ve inceleme</a> bölümünde ele alınıyor.",
         "fig3.h3": "En iyi, medyan — ve bilerek gösterilen en kötü",
         "fig3.p": "Tahmin vs gerçek ömür oranı; gölgeli bant, ormanın 300 ağacının %90'ının nereye düştüğünü gösteriyor. Gördüklerini iki şey açıklıyor. Birincisi, modelin hafızası yok — her kesit taze bir teşhis alıyor; aralarda hafızası silinen, tek bir kan tahlilinden çalışan bir doktor gibi. Titreme bundan. İkincisi, ömrün ortası gerçekten belirsizdir (\"biraz hasta\", ömrün %30'unda da %50'sinde de %70'inde de aynı görünür); sonu ise şaşmaz — bu yüzden bant ortada geniş, sonda kapanıyor. En iyi durum kısmen kolay bir sınav: alarmı ömrün %93'ünde çaldı, geriye izlenecek yalnızca son, apaçık bölüm kaldı. En kötü durum ise dürüst olan ve tehlikeli yönde hata yapıyor: alarm geç, ömrün %88'inde çalıyor ve model, geriye ancak onda biri kalmışken rulmanı ömrünün %40–70'i duruyormuş gibi okuyor. Gerçeğe ancak son dakikalarda oturuyor. Canını yakan, <em>iyimser</em> kaçırmadır — kötümser bir model sizi sağlam bir rulmanı boşuna kontrol etmeye yollar, bu model ise çalışmaya devam edin derdi. Yine de fazla anlam yüklememeli: ikinci en kötü rulman tam <em>tersi</em> yönde hata yapıyor; ömrünün büyük kısmı dururken sıfıra yapışık gidiyor ve ikisi arasında 0,004 var. Modelin sistematik bir hata yönü yok — iki türlü şaşırma biçimi var ve hangisinin tabloda başa güreçeceği neredeyse yazı tura. Medyanlar böyle rulmanları saklar; bu rapor saklamıyor.",
-        "fig4.h3": "Popülasyon modeli vs eğri ekstrapolasyonu — kazanan ilan edilmedi",
+        "fig4.h3": "Eğri ekstrapolasyonu yalnızca kolay sorulara cevap veriyor",
         "fig4.p": "Literatür, eğri ekstrapolasyonunun erken dönemde çuvallayıp geç dönemde parladığını söyler; yani popülasyon modeli erken kazanmalı, sonra bayrağı devretmeli. Verimiz bu temiz hikâyeyi reddetti — çünkü ekstrapolatör yalnızca emin olduğu sorulara cevap veren bir öğrenci: sadece hasar gerçekten üstel büyürken tahmin üretiyor (erken kesitlerin %17–33'ü), dolayısıyla gösterişli erken notu kendi seçtiği kolay bir alt kümede veriliyor. Orman her soruya cevap veriyor; hatası U şeklinde (en kötüsü başlangıçtan hemen sonra). 36 ömürle, kesişme ilan etmek yerine eğrileri ve kapsama oranını raporluyoruz.",
-        "fig5.h3": "Sızıntı kontrolü: veri setlerini gizlice tanıyor mu?",
+        "fig5.h3": "Sızıntı kontrolü: veri seti kimliği toplam önemin %0,3'ü",
         "fig5.p": "Kopya kontrolü. Burada zeki görünmenin en kolay yolu, kesitin hangi veri setinden geldiğini tanımak — sınav kâğıtlarını el yazısından tanıyarak notlamak gibi — ve en bariz parmak izi, düzenekler arasında 100 kat farklı olan duvar-saati bozulma hızı. O hız öznitelikleri toplam önemin %0,3'ünü taşıyor: orman yumuşatılmış RMS'e (%27), yumuşatılmış basıklığa ve geometriden türetilen zarf bantlarının geniş bir yelpazesine yaslanıyor. Veri seti kimliği değil, hasar sinyali. İki ablasyon denetimi tamamlıyor: makaralı rulman verisini çıkarmak bilyeli tahminleri <em>kötüleştiriyor</em> (0,190 → 0,200 — aykırı düzenek aslında yardım ediyormuş) ve kafes arızalı rulmanları dışlamak hiçbir şeyi değiştirmiyor (0,190'lık temele karşı 0,188).",
         "corr.eyebrow": "Düzeltme ve inceleme",
-        "corr.h2": "İkinci bir bakış bir sayıyı çok oynattı — açıklamamı daha da çok.",
+        "corr.h2": "İkinci bir bakış en zor düzeneğin geç dönem hatasını yarıya indirdi — ve nedenine dair açıklamamı çürüttü.",
         "corr.intro": "Yukarıdaki sonuçlar yayımlandıktan sonra yeniden incelendi. İki şey çıktı. FEMTO rulmanının ölçüleriyle ilgili bir çekince kapandı ve zararsız olduğu görüldü. Bir de bu sayfanın FEMTO'yu en zor düzenek yapan şey için verdiği açıklama — \"kayıtları çok kısa\" — yalnızca yarı doğruydu ve bu yarım doğru, düzeltilebilir bir kusuru gizliyordu. İkisi de yukarıdaki tablolara sessizce işlenmek yerine burada kayda geçiriliyor; çünkü bir sayının nasıl kımıldadığı, çoğu zaman nereye oturduğundan daha öğreticidir.",
         "corr.d1.h3": "<small>Tanım</small>Ömür-oranı hatası",
         "corr.d1.p": "Model saat tahmin etmiyor; rulmanın toplam ömrünün ne kadarlık bir <em>oranının</em> önünde durduğunu tahmin ediyor. 0,318'lik bir hata, tahminin o rulmanın tüm ömrünün yaklaşık üçte biri kadar şaştığı anlamına gelir — üç saat yaşayan bir rulmanda kabaca bir saat. Küçük olması iyidir; 0 kusursuz olurdu.",
@@ -672,14 +672,14 @@
         "corr.d3.p": "Modelin öğrendiği çözülmüş örnekler: cevapları yanına iliştirilmiş, çoktan ölmüş başka rulmanlar. Bir asistanın hasta görmeden önce çalıştığı ders kitabı vakaları gibi düşünün.",
         "corr.d4.h3": "<small>Tanım</small>Test verisi",
         "corr.d4.p": "Değerlendirilen rulmandan gelen ölçümler — eğitimden tamamen dışarıda tutulmuş bir düzeneğe ait, yani modelin ne kendisini ne de kardeşlerini gördüğü bir rulman. Ders kitabı değil, hastanın kendisi.",
-        "corr.a.h3": "Düzeltme 1 — güvenerek aldığımız ölçü",
+        "corr.a.h3": "Güvenerek aldığımız ölçü — kontrol edildi, zararsız çıktı",
         "corr.a.p": "Bu çalışmanın dinlediği arıza ritimleri rulmanın iç ölçülerinden hesaplanıyor; dolayısıyla yanlış bir ölçü, yanlış frekansı dinlemek demek. FEMTO'nun NSK 6804 değeri üreticiden değil, ikincil literatürden gelmişti. Gerçek veri sayfasını çekmek meseleyi kapattı: 13 bilya ve 3,5 mm bilya çapı doğruymuş, ama bilya merkezleri varsayılan 25,6 mm'lik değil, 26,0 mm'lik bir daire üzerinde duruyor.",
         "corr.a.t1": "Büyüklük", "corr.a.t2": "Yayımlanan", "corr.a.t3": "Veri sayfası", "corr.a.t4": "Sonucu",
         "corr.a.r1": "Bilya merkez daire çapı", "corr.a.r1c": "varsayım → doğrulandı",
         "corr.a.r2": "Bilya dönme frekansı", "corr.a.r2a": "%1,6 düşük", "corr.a.r2b": "düzeltildi", "corr.a.r2c": "27 banttan 6'sı bir adım kayıyor",
         "corr.a.r3": "Bu sayfadaki her sonuç", "corr.a.r3c": "değişmedi",
         "corr.a.p2": "Tüm FEMTO veri setini ham sinyalden yeniden hesaplamak yalnızca bilya dönme özniteliklerini oynattı, IMS ve XJTU'yu bit düzeyinde aynı bıraktı ve hiçbir sonucu değiştirmedi. Bu sıkıcı bir sonuç ve yine de yayımlanmayı hak ediyor: \"kontrol ettik, fark etmedi\" ile \"hiç kontrol etmedik\" aynı cümle değil.",
-        "corr.b.h3": "Düzeltme 2 — çözüm, açıklamanın işaret ettiği yerde değildi",
+        "corr.b.h3": "Yanlış nedeni kovalamak — ve doğrusunu bulunca gelen yarılanma",
         "corr.b.p": "Bu sayfa FEMTO'nun zorluğunu parmak şıklatması kadar süren kayıtlarına bağlamıştı. Bundan çıkan bariz çare şu: gelen ölçümleri değerlendirmeden önce sabitle — her birine tepki vermek yerine son beşinin ortancasını al. Bu doğrudan test edildi; aynı işlem bir de ders kitabı vakalarına uygulandı. Sonuç sezgiyi tersine çeviriyor.",
         "corr.b.t1": "Neye sabitleme uygulandı", "corr.b.t2": "Geç evre hatası", "corr.b.t3": "Hüküm",
         "corr.b.r1": "Hiçbir şeye — ilk yayımlandığı hali", "corr.b.r1c": "temel",
