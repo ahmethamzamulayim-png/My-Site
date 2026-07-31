@@ -49,6 +49,12 @@
          colours are the site's own tokens inverted: --text becomes the case,
          --bg becomes the printed character. */
       .flapboard {
+        /* One tile width for the whole board. It has to be an absolute unit:
+           the header renders at 0.66rem and the tiles at 0.95rem, so an `em`
+           here would mean two different widths and the columns would drift
+           further apart the further right you read. */
+        --flapw: 0.874rem;
+        --flapgap: 2px;
         background: #241f2b;
         border: 1px solid rgba(0, 0, 0, 0.5);
         border-radius: 16px;
@@ -66,6 +72,16 @@
         width: max-content;
         min-width: 100%;
       }
+      .flaprow.mast {
+        cursor: default;
+        gap: 18px;
+        padding-bottom: 12px;
+        margin-bottom: 4px;
+      }
+      /* bigger type needs a proportionally wider leaf, or the characters
+         crowd their cell: 0.874 * (1.05/0.95) */
+      .flaprow.mast .flap { font-size: 1.05rem; width: 0.966rem; }
+      .flaprow.mast:hover { background: none; }
       .flaprow.head {
         cursor: default;
         padding-bottom: 9px;
@@ -81,13 +97,13 @@
       }
       .flaprow:not(.head):hover { background: rgba(255, 255, 255, 0.05); }
       .flaprow.sel { background: rgba(255, 255, 255, 0.09); }
-      .flapgrp { display: flex; gap: 2px; flex: none; }
+      .flapgrp { display: flex; gap: var(--flapgap); flex: none; }
 
       /* one character tile: the split seam across the middle is the whole look */
       .flap {
         position: relative;
         display: inline-block;
-        width: 0.92em;
+        width: var(--flapw);
         padding: 3px 0;
         text-align: center;
         font-family: "Space Grotesk", ui-monospace, monospace;
@@ -316,6 +332,16 @@
 
       let DATA = null, sel = null;
 
+      // every character has to exist on the drum, so no Turkish diacritics and
+      // no punctuation beyond what the leaves carry
+      const MON = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN",
+                   "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+      function boardDate(iso) {
+        if (!iso) return "";
+        const [y, m, d] = iso.split("-");
+        return getLang() === "tr" ? `${d}.${m}.${y}` : `${d} ${MON[+m - 1]} ${y}`;
+      }
+
       /** Say in words how much of this flight's risk is the SLOT and how much is
           the flight itself — a 19:00 departure carries the airport's evening
           rate before anything about that particular service is considered. */
@@ -393,7 +419,7 @@
       /** wind every tile on the board, cascading down and across */
       function runFlaps(root) {
         stopFlaps();
-        const rows = [...root.querySelectorAll(".flaprow:not(.head)")];
+        const rows = [...root.querySelectorAll(".flaprow:not(.head)")]; // mast included: it winds too
         rows.forEach((row, ri) => {
           [...row.querySelectorAll(".flap")].forEach((f, ci) => {
             windTile(f, f.dataset.target, ri * 55 + ci * 11);
@@ -418,14 +444,24 @@
           return;
         }
 
-        const W = { time: 5, flight: 7, dest: 4, airline: 14, risk: 4, med: 4 };
+        const W = { time: 5, flight: 7, dest: 4, airline: 16, risk: 4, med: 4 };
+
+        // masthead: a real hall board carries the date, and without it "03:55"
+        // is meaningless — you cannot tell which day you are reading
+        const mast = document.createElement("div");
+        mast.className = "flaprow mast";
+        mast.append(flapGroup(t("DEPARTURES", "KALKISLAR"), 10),
+                    flapGroup(boardDate(b.board_date), 11, "dimgrp"));
+        mast.querySelectorAll(".dimgrp .flap").forEach((f) => f.classList.add("dim"));
+        brd.appendChild(mast);
+
         const head = document.createElement("div");
         head.className = "flaprow head";
         head.innerHTML =
           [["col.time", W.time], ["col.flight", W.flight], ["col.dest", W.dest],
            ["col.airline", W.airline], ["col.risk", W.risk], ["col.med", W.med]]
             // match the tile group exactly: w tiles of 0.92em plus the 2px seams
-            .map(([k, w]) => `<span style="width:calc(${w} * 0.92em + ${w - 1} * 2px);flex:none">${key(k)}</span>`)
+            .map(([k, w]) => `<span style="width:calc(${w} * var(--flapw) + ${w - 1} * var(--flapgap));flex:none">${key(k)}</span>`)
             .join("") + `<span style="min-width:11ch">${key("col.basis")}</span>`;
         brd.appendChild(head);
 
