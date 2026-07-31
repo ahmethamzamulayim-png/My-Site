@@ -44,34 +44,92 @@
       }
       .callout.alt { border-left-color: var(--cobalt); }
 
-      /* the board itself */
-      .board { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-      .board thead th {
-        text-align: left;
-        color: var(--muted);
-        font-weight: 600;
-        font-size: 0.74rem;
+      /* ---- Solari split-flap board -------------------------------------
+         Dark panel inside the light page, the way a real hall board is. The
+         colours are the site's own tokens inverted: --text becomes the case,
+         --bg becomes the printed character. */
+      .flapboard {
+        background: #241f2b;
+        border: 1px solid rgba(0, 0, 0, 0.5);
+        border-radius: 16px;
+        padding: 16px 14px;
+        overflow-x: auto;
+        box-shadow: inset 0 2px 22px rgba(0, 0, 0, 0.55), var(--shadow);
+      }
+      .flaprow {
+        display: flex;
+        gap: 14px;
+        align-items: center;
+        padding: 5px 6px;
+        border-radius: 8px;
+        cursor: pointer;
+        width: max-content;
+        min-width: 100%;
+      }
+      .flaprow.head {
+        cursor: default;
+        padding-bottom: 9px;
+        margin-bottom: 5px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.13);
+      }
+      .flaprow.head span {
+        font-size: 0.66rem;
+        letter-spacing: 0.13em;
         text-transform: uppercase;
-        letter-spacing: 0.07em;
-        padding: 0 10px 10px;
-        border-bottom: 1px solid var(--line);
-      }
-      .board thead th.num, .board tbody td.num { text-align: right; }
-      .board tbody tr { cursor: pointer; border-bottom: 1px solid var(--line); }
-      .board tbody tr:hover, .board tbody tr.sel { background: var(--bg-alt); }
-      .board tbody td { padding: 10px; vertical-align: middle; }
-      .board .t, .board .fl {
-        font-family: "Space Grotesk", sans-serif;
+        color: #8d8496;
         font-weight: 700;
-        letter-spacing: 0.01em;
       }
-      .board .dst { color: var(--muted); font-variant-numeric: tabular-nums; }
-      .board .al { color: var(--muted); }
-      .riskcell { display: flex; align-items: center; gap: 9px; justify-content: flex-end; }
-      .riskbar { width: 74px; height: 7px; border-radius: 999px; background: rgba(43,39,50,.09); overflow: hidden; flex: none; }
-      .riskbar i { display: block; height: 100%; border-radius: 999px; }
-      .riskpct { font-family: "Space Grotesk", sans-serif; font-weight: 700; min-width: 40px; text-align: right; }
-      .conf { font-size: 0.72rem; color: var(--muted); white-space: nowrap; }
+      .flaprow:not(.head):hover { background: rgba(255, 255, 255, 0.05); }
+      .flaprow.sel { background: rgba(255, 255, 255, 0.09); }
+      .flapgrp { display: flex; gap: 2px; flex: none; }
+
+      /* one character tile: the split seam across the middle is the whole look */
+      .flap {
+        position: relative;
+        display: inline-block;
+        width: 0.92em;
+        padding: 3px 0;
+        text-align: center;
+        font-family: "Space Grotesk", ui-monospace, monospace;
+        font-weight: 700;
+        font-size: 0.95rem;
+        line-height: 1.15;
+        color: #f6efe6;
+        background: linear-gradient(#3b3545 0 calc(50% - 0.5px), #2e2937 calc(50% + 0.5px) 100%);
+        border-radius: 3px;
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(255, 255, 255, 0.045);
+        transform-origin: 50% 50%;
+        backface-visibility: hidden;
+      }
+      .flap::after { /* the hairline the two leaves meet on */
+        content: "";
+        position: absolute;
+        left: 1px;
+        right: 1px;
+        top: 50%;
+        height: 1px;
+        background: rgba(0, 0, 0, 0.62);
+        pointer-events: none;
+      }
+      .flap.turn { animation: flapturn 78ms linear; }
+      @keyframes flapturn {
+        0%   { transform: rotateX(0deg);   filter: brightness(1); }
+        49%  { transform: rotateX(-88deg); filter: brightness(0.55); }
+        50%  { transform: rotateX(88deg);  filter: brightness(0.55); }
+        100% { transform: rotateX(0deg);   filter: brightness(1); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .flap.turn { animation: none; }
+      }
+      .flap.dim { color: #9a90a4; }
+      .flapgrp.risk .flap { color: inherit; }
+      .conf {
+        font-size: 0.68rem;
+        color: #8d8496;
+        white-space: nowrap;
+        flex: none;
+        min-width: 11ch;
+      }
 
       /* detail panel */
       .detail { margin-top: 18px; padding: 18px 20px; border-radius: 18px; background: var(--bg-alt); border: 1px solid var(--line); }
@@ -88,8 +146,7 @@
 
       .statline { display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 0 0 4px; color: var(--muted); font-size: 0.85rem; }
       .statline b { color: var(--text); font-family: "Space Grotesk", sans-serif; }
-      .table-scroll { overflow-x: auto; }
-      .empty { padding: 26px 4px; color: var(--muted); font-size: 0.9rem; }
+      .empty { padding: 26px 4px; color: #8d8496; font-size: 0.9rem; }
     </style>
   </head>
   <body>
@@ -129,9 +186,7 @@
           <p class="note" data-i18n="board.note">
             Bir satıra tıkla — sayının nereden geldiğini gör.
           </p>
-          <div class="table-scroll">
-            <table class="board" id="board"></table>
-          </div>
+          <div class="flapboard" id="board"></div>
           <div class="detail" id="detail" hidden></div>
           <div class="callout alt" data-i18n="board.partial">
             <b>Pano neden kısa?</b> Ücretsiz veri planı yarının tarifesinin
@@ -237,10 +292,15 @@
 
       // risk is ordered magnitude -> one hue, pale to deep. Same ramp as the
       // route-delay globe so the two pages read as the same measurement.
-      const RAMP = [[243,198,204], [232,25,50], [122,15,31]];
-      function riskColor(p) {
+      // Two ramps, not one flipped: on the light detail panel risk darkens as it
+      // rises, on the dark board it has to BRIGHTEN or the worst flights would
+      // be the hardest ones to see. Both stay one hue and move monotonically.
+      const RAMP_LIGHT = [[243, 198, 204], [232, 25, 50], [122, 15, 31]];
+      const RAMP_DARK = [[142, 122, 128], [232, 25, 50], [255, 128, 142]];
+      function riskColor(p, onDark) {
+        const R = onDark ? RAMP_DARK : RAMP_LIGHT;
         const x = Math.max(0, Math.min(1, p / 0.5)); // 50%+ saturates the ramp
-        const [a, b] = x < 0.5 ? [RAMP[0], RAMP[1]] : [RAMP[1], RAMP[2]];
+        const [a, b] = x < 0.5 ? [R[0], R[1]] : [R[1], R[2]];
         const f = x < 0.5 ? x * 2 : (x - 0.5) * 2;
         return `rgb(${a.map((v, i) => Math.round(v + (b[i] - v) * f)).join(",")})`;
       }
@@ -248,6 +308,74 @@
         (100 * v).toFixed(d).replace(".", getLang() === "tr" ? "," : ".") + "%";
 
       let DATA = null, sel = null;
+
+      // ---- split-flap mechanics ----------------------------------------
+      // A real Solari unit can only step FORWARD through its leaf stack, so a
+      // "K" is reached by winding past A,B,C… That ordering is the whole charm:
+      // characters far apart in the drum settle later, which staggers the board
+      // on its own without any hand-tuned delays.
+      const DRUM = " ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789:%+.-";
+      const MAX_STEPS = 13;      // cap the wind so a lone "Z" can't stall a row
+      const STEP_MS = 62;
+      const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      let flapTimers = [];
+
+      function stopFlaps() {
+        flapTimers.forEach(clearTimeout);
+        flapTimers = [];
+      }
+
+      /** wind one tile from whatever it shows to `target` */
+      function windTile(el, target, delay) {
+        const to = Math.max(0, DRUM.indexOf(target));
+        if (reduceMotion) {
+          flapTimers.push(setTimeout(() => (el.textContent = DRUM[to]), 0));
+          return;
+        }
+        let from = DRUM.indexOf(el.textContent || " ");
+        if (from < 0) from = 0;
+        let steps = (to - from + DRUM.length) % DRUM.length;
+        if (steps > MAX_STEPS) {           // start closer instead of truncating,
+          from = (to - MAX_STEPS + DRUM.length) % DRUM.length;  // so it still lands right
+          steps = MAX_STEPS;
+        }
+        for (let s = 1; s <= steps; s++) {
+          flapTimers.push(setTimeout(() => {
+            el.textContent = DRUM[(from + s) % DRUM.length];
+            el.classList.remove("turn");
+            void el.offsetWidth;           // restart the animation on every leaf
+            el.classList.add("turn");
+          }, delay + s * STEP_MS));
+        }
+      }
+
+      /** a fixed-width group of tiles; returns the element */
+      function flapGroup(text, width, cls) {
+        const g = document.createElement("span");
+        g.className = "flapgrp" + (cls ? " " + cls : "");
+        const s = (text || "").toUpperCase().slice(0, width).padEnd(width, " ");
+        for (const ch of s) {
+          const f = document.createElement("span");
+          f.className = "flap";
+          f.textContent = " ";
+          f.setAttribute("aria-hidden", "true");
+          f.dataset.target = DRUM.includes(ch) ? ch : " ";
+          g.appendChild(f);
+        }
+        g.setAttribute("aria-label", (text || "").trim());
+        return g;
+      }
+
+      /** wind every tile on the board, cascading down and across */
+      function runFlaps(root) {
+        stopFlaps();
+        const rows = [...root.querySelectorAll(".flaprow:not(.head)")];
+        rows.forEach((row, ri) => {
+          [...row.querySelectorAll(".flap")].forEach((f, ci) => {
+            windTile(f, f.dataset.target, ri * 55 + ci * 11);
+          });
+        });
+      }
 
       function render() {
         if (!DATA) return;
@@ -259,31 +387,50 @@
           `<span>${t("trained on", "eğitim verisi")} <b>${b.trained_on.flights.toLocaleString(getLang() === "tr" ? "tr-TR" : "en-US")}</b> ${t("flights", "uçuş")} · ${b.trained_on.days} ${t("days", "gün")}</span>`;
 
         const rows = b.departures || [];
-        const tbl = document.getElementById("board");
+        const brd = document.getElementById("board");
+        brd.innerHTML = "";
         if (!rows.length) {
-          tbl.innerHTML = `<tbody><tr><td class="empty">${key("empty")}</td></tr></tbody>`;
+          brd.innerHTML = `<p class="empty">${key("empty")}</p>`;
           return;
         }
-        tbl.innerHTML =
-          `<thead><tr>
-             <th>${key("col.time")}</th><th>${key("col.flight")}</th>
-             <th>${key("col.dest")}</th><th>${key("col.airline")}</th>
-             <th class="num">${key("col.risk")}</th></tr></thead><tbody>` +
-          rows.map((r, i) => `
-            <tr data-i="${i}"${i === sel ? ' class="sel"' : ""}>
-              <td class="t">${r.time}</td>
-              <td class="fl">${r.flight || "—"}</td>
-              <td class="dst">${r.dest}</td>
-              <td class="al">${r.airline || "—"}</td>
-              <td class="num"><div class="riskcell">
-                <span class="conf">${key("basis." + r.basis)} · n=${r.n}</span>
-                <span class="riskbar"><i style="width:${Math.min(100, 100 * r.risk / 0.5)}%;background:${riskColor(r.risk)}"></i></span>
-                <span class="riskpct" style="color:${riskColor(r.risk)}">${pct(r.risk)}</span>
-              </div></td>
-            </tr>`).join("") + `</tbody>`;
-        tbl.querySelectorAll("tbody tr[data-i]").forEach((tr) => {
-          tr.onclick = () => { sel = +tr.dataset.i; render(); };
+
+        const W = { time: 5, flight: 7, dest: 4, airline: 14, risk: 4 };
+        const head = document.createElement("div");
+        head.className = "flaprow head";
+        head.innerHTML =
+          [["col.time", W.time], ["col.flight", W.flight], ["col.dest", W.dest],
+           ["col.airline", W.airline], ["col.risk", W.risk]]
+            // match the tile group exactly: w tiles of 0.92em plus the 2px seams
+            .map(([k, w]) => `<span style="width:calc(${w} * 0.92em + ${w - 1} * 2px);flex:none">${key(k)}</span>`)
+            .join("") + `<span style="min-width:11ch">${key("col.basis")}</span>`;
+        brd.appendChild(head);
+
+        rows.forEach((r, i) => {
+          const row = document.createElement("div");
+          row.className = "flaprow" + (i === sel ? " sel" : "");
+          row.tabIndex = 0;
+          row.setAttribute("role", "button");
+          row.append(
+            flapGroup(r.time, W.time),
+            flapGroup(r.flight || "-", W.flight),
+            flapGroup(r.dest, W.dest),
+            flapGroup(r.airline || "-", W.airline, "dimgrp"),
+            flapGroup(pct(r.risk).replace("%", ""), W.risk, "risk"));
+          // the risk group is the one place colour carries meaning
+          row.lastChild.style.color = riskColor(r.risk, true);
+          const conf = document.createElement("span");
+          conf.className = "conf";
+          conf.textContent = `${key("basis." + r.basis)} · n=${r.n}`;
+          row.appendChild(conf);
+          row.querySelectorAll(".dimgrp .flap").forEach((f) => f.classList.add("dim"));
+          const open = () => { sel = i; render(); };
+          row.onclick = open;
+          row.onkeydown = (e) => {
+            if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); }
+          };
+          brd.appendChild(row);
         });
+        runFlaps(brd);
 
         // --- detail ---
         const d = document.getElementById("detail");
@@ -324,7 +471,7 @@
         .then((j) => { DATA = j; render(); })
         .catch(() => {
           document.getElementById("board").innerHTML =
-            `<tbody><tr><td class="empty">${key("empty")}</td></tr></tbody>`;
+            `<p class="empty">${key("empty")}</p>`;
         });
 
       document.addEventListener("langchange", render);
