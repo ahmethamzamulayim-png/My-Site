@@ -1,44 +1,44 @@
 {
- "generated_utc": "2026-07-31T08:28:45+00:00",
- "days": 89,
+ "generated_utc": "2026-07-31T18:45:56+00:00",
+ "days": 90,
  "first_date": "2026-05-01",
- "last_date": "2026-07-30",
- "total_flights": 131894,
- "cargo_flights": 6438,
- "movements_tracked": 6509,
- "cross_validated": 2484,
- "delay_known": 62929,
+ "last_date": "2026-07-31",
+ "total_flights": 131978,
+ "cargo_flights": 6441,
+ "movements_tracked": 8371,
+ "cross_validated": 2524,
+ "delay_known": 63010,
  "median_delay": 0.0,
  "median_when_delayed": 31.0,
  "delay_hist": [
   {
    "bin": "<15",
-   "count": 55619
+   "count": 55693
   },
   {
    "bin": "15–30",
-   "count": 3603
+   "count": 3607
   },
   {
    "bin": "30–60",
-   "count": 2313
+   "count": 2316
   },
   {
    "bin": "60+",
    "count": 1394
   }
  ],
- "delayed_15": 7310,
- "ontime": 55619,
+ "delayed_15": 7317,
+ "ontime": 55693,
  "pct_delayed": 11.6,
  "pct_ontime": 88.4,
  "recent": {
   "days": 14,
-  "first_date": "2026-07-15",
-  "last_date": "2026-07-28",
-  "flights": 10582,
-  "delayed_15": 1639,
-  "pct_delayed": 15.5
+  "first_date": "2026-07-16",
+  "last_date": "2026-07-29",
+  "flights": 9822,
+  "delayed_15": 1549,
+  "pct_delayed": 15.8
  },
  "daily": [
   {
@@ -52,7 +52,7 @@
    "median_delay": 0.0,
    "median_when_delayed": null,
    "avg_dep_delay": null,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.72,
    "scored": 258
   },
@@ -67,7 +67,7 @@
    "median_delay": 0.0,
    "median_when_delayed": null,
    "avg_dep_delay": 8.0,
-   "metars": null,
+   "metars": 48,
    "conversion": 1.0,
    "scored": 9
   },
@@ -82,7 +82,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 24.0,
    "avg_dep_delay": 19.8,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.999,
    "scored": 549
   },
@@ -97,7 +97,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 24.0,
    "avg_dep_delay": 20.6,
-   "metars": null,
+   "metars": 48,
    "conversion": 1.0,
    "scored": 534
   },
@@ -112,7 +112,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 21.5,
    "avg_dep_delay": 24.8,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.992,
    "scored": 500
   },
@@ -127,7 +127,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 25.0,
    "avg_dep_delay": 18.8,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.989,
    "scored": 488
   },
@@ -142,7 +142,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 28.0,
    "avg_dep_delay": 28.2,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.925,
    "scored": 578
   },
@@ -157,7 +157,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 34.0,
    "avg_dep_delay": 29.1,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.89,
    "scored": 668
   },
@@ -172,7 +172,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 33.0,
    "avg_dep_delay": 21.7,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.912,
    "scored": 676
   },
@@ -187,7 +187,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 29.5,
    "avg_dep_delay": 19.7,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.907,
    "scored": 694
   },
@@ -202,7 +202,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 29.0,
    "avg_dep_delay": 19.0,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.911,
    "scored": 694
   },
@@ -217,7 +217,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 29.0,
    "avg_dep_delay": 19.2,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.904,
    "scored": 650
   },
@@ -232,7 +232,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 32.5,
    "avg_dep_delay": 23.1,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.901,
    "scored": 655
   },
@@ -247,7 +247,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 32.0,
    "avg_dep_delay": 21.1,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.903,
    "scored": 662
   },
@@ -262,7 +262,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 34.0,
    "avg_dep_delay": 21.4,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.897,
    "scored": 713
   },
@@ -277,7 +277,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 28.5,
    "avg_dep_delay": 22.1,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.91,
    "scored": 687
   },
@@ -292,7 +292,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 33.0,
    "avg_dep_delay": 22.0,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.916,
    "scored": 719
   },
@@ -307,7 +307,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 28.0,
    "avg_dep_delay": 21.2,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.903,
    "scored": 703
   },
@@ -322,7 +322,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 33.0,
    "avg_dep_delay": 23.2,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.913,
    "scored": 700
   },
@@ -337,7 +337,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 31.0,
    "avg_dep_delay": 24.1,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.894,
    "scored": 694
   },
@@ -352,7 +352,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 33.0,
    "avg_dep_delay": 24.3,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.911,
    "scored": 743
   },
@@ -367,7 +367,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 29.5,
    "avg_dep_delay": 22.7,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.896,
    "scored": 751
   },
@@ -382,7 +382,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 29.0,
    "avg_dep_delay": 20.4,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.903,
    "scored": 785
   },
@@ -397,7 +397,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 27.0,
    "avg_dep_delay": 15.9,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.918,
    "scored": 745
   },
@@ -412,7 +412,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 28.0,
    "avg_dep_delay": 19.8,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.918,
    "scored": 732
   },
@@ -427,7 +427,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 31.0,
    "avg_dep_delay": 20.1,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.912,
    "scored": 703
   },
@@ -442,7 +442,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 27.5,
    "avg_dep_delay": 17.7,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.913,
    "scored": 680
   },
@@ -457,7 +457,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 28.0,
    "avg_dep_delay": 16.5,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.912,
    "scored": 673
   },
@@ -472,7 +472,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 30.5,
    "avg_dep_delay": 17.8,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.902,
    "scored": 730
   },
@@ -487,7 +487,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 28.5,
    "avg_dep_delay": 12.9,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.927,
    "scored": 765
   },
@@ -502,7 +502,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 31.0,
    "avg_dep_delay": 24.1,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.917,
    "scored": 839
   },
@@ -517,7 +517,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 24.5,
    "avg_dep_delay": 13.7,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.729,
    "scored": 630
   },
@@ -532,7 +532,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 27.0,
    "avg_dep_delay": 17.4,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.993,
    "scored": 758
   },
@@ -547,7 +547,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 28.0,
    "avg_dep_delay": 19.3,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.999,
    "scored": 753
   },
@@ -562,7 +562,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 29.0,
    "avg_dep_delay": 19.1,
-   "metars": null,
+   "metars": 48,
    "conversion": 1.0,
    "scored": 747
   },
@@ -577,7 +577,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 32.0,
    "avg_dep_delay": 22.3,
-   "metars": null,
+   "metars": 48,
    "conversion": 1.0,
    "scored": 762
   },
@@ -592,7 +592,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 33.0,
    "avg_dep_delay": 22.9,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.999,
    "scored": 755
   },
@@ -607,7 +607,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 26.5,
    "avg_dep_delay": 22.3,
-   "metars": null,
+   "metars": 48,
    "conversion": 1.0,
    "scored": 650
   },
@@ -622,7 +622,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 28.0,
    "avg_dep_delay": 19.0,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.894,
    "scored": 501
   },
@@ -637,7 +637,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 36.0,
    "avg_dep_delay": 24.3,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.982,
    "scored": 787
   },
@@ -652,7 +652,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 34.0,
    "avg_dep_delay": 22.0,
-   "metars": null,
+   "metars": 48,
    "conversion": 1.0,
    "scored": 763
   },
@@ -667,7 +667,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 32.0,
    "avg_dep_delay": 22.5,
-   "metars": null,
+   "metars": 48,
    "conversion": 1.0,
    "scored": 791
   },
@@ -682,7 +682,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 33.0,
    "avg_dep_delay": 21.7,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.999,
    "scored": 796
   },
@@ -697,7 +697,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 34.0,
    "avg_dep_delay": 23.8,
-   "metars": null,
+   "metars": 48,
    "conversion": 1.0,
    "scored": 738
   },
@@ -712,7 +712,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 34.0,
    "avg_dep_delay": 21.8,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.999,
    "scored": 769
   },
@@ -727,7 +727,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 36.0,
    "avg_dep_delay": 31.1,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.941,
    "scored": 716
   },
@@ -742,7 +742,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 37.0,
    "avg_dep_delay": 21.3,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.908,
    "scored": 766
   },
@@ -757,7 +757,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 36.5,
    "avg_dep_delay": 23.4,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.919,
    "scored": 754
   },
@@ -772,7 +772,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 31.0,
    "avg_dep_delay": 26.0,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.928,
    "scored": 772
   },
@@ -787,7 +787,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 27.0,
    "avg_dep_delay": 18.4,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.891,
    "scored": 707
   },
@@ -802,7 +802,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 39.0,
    "avg_dep_delay": 31.0,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.998,
    "scored": 750
   },
@@ -817,7 +817,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 32.5,
    "avg_dep_delay": 23.6,
-   "metars": null,
+   "metars": 48,
    "conversion": 1.0,
    "scored": 772
   },
@@ -832,7 +832,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 31.0,
    "avg_dep_delay": 23.0,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.999,
    "scored": 780
   },
@@ -847,7 +847,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 32.0,
    "avg_dep_delay": 21.5,
-   "metars": null,
+   "metars": 48,
    "conversion": 1.0,
    "scored": 843
   },
@@ -862,7 +862,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 28.0,
    "avg_dep_delay": 23.3,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.999,
    "scored": 826
   },
@@ -877,7 +877,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 31.0,
    "avg_dep_delay": 22.8,
-   "metars": null,
+   "metars": 48,
    "conversion": 1.0,
    "scored": 848
   },
@@ -892,7 +892,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 31.0,
    "avg_dep_delay": 24.3,
-   "metars": null,
+   "metars": 48,
    "conversion": 1.0,
    "scored": 1141
   },
@@ -907,7 +907,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 34.0,
    "avg_dep_delay": 29.5,
-   "metars": null,
+   "metars": 48,
    "conversion": 1.0,
    "scored": 832
   },
@@ -922,7 +922,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 32.0,
    "avg_dep_delay": 23.4,
-   "metars": null,
+   "metars": 48,
    "conversion": 1.0,
    "scored": 858
   },
@@ -937,7 +937,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 31.0,
    "avg_dep_delay": 25.6,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.999,
    "scored": 807
   },
@@ -952,7 +952,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 32.0,
    "avg_dep_delay": 23.6,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.999,
    "scored": 834
   },
@@ -967,7 +967,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 32.0,
    "avg_dep_delay": 21.8,
-   "metars": null,
+   "metars": 48,
    "conversion": 1.0,
    "scored": 824
   },
@@ -982,7 +982,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 29.0,
    "avg_dep_delay": 20.7,
-   "metars": null,
+   "metars": 48,
    "conversion": 1.0,
    "scored": 856
   },
@@ -997,7 +997,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 31.0,
    "avg_dep_delay": 20.3,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.999,
    "scored": 817
   },
@@ -1012,7 +1012,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 35.0,
    "avg_dep_delay": 20.4,
-   "metars": null,
+   "metars": 48,
    "conversion": 1.0,
    "scored": 775
   },
@@ -1027,7 +1027,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 33.0,
    "avg_dep_delay": 24.0,
-   "metars": null,
+   "metars": 48,
    "conversion": 1.0,
    "scored": 822
   },
@@ -1042,7 +1042,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 31.0,
    "avg_dep_delay": 20.5,
-   "metars": null,
+   "metars": 48,
    "conversion": 1.0,
    "scored": 804
   },
@@ -1057,7 +1057,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 32.0,
    "avg_dep_delay": 20.7,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.999,
    "scored": 854
   },
@@ -1072,7 +1072,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 32.0,
    "avg_dep_delay": 20.6,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.999,
    "scored": 838
   },
@@ -1087,7 +1087,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 32.0,
    "avg_dep_delay": 24.9,
-   "metars": null,
+   "metars": 48,
    "conversion": 0.999,
    "scored": 844
   },
@@ -1102,7 +1102,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 36.0,
    "avg_dep_delay": 23.8,
-   "metars": null,
+   "metars": 48,
    "conversion": 1.0,
    "scored": 830
   },
@@ -1117,7 +1117,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 32.0,
    "avg_dep_delay": 24.5,
-   "metars": null,
+   "metars": 48,
    "conversion": 1.0,
    "scored": 815
   },
@@ -1132,7 +1132,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 33.0,
    "avg_dep_delay": 23.7,
-   "metars": null,
+   "metars": 47,
    "conversion": 0.999,
    "scored": 843
   },
@@ -1147,7 +1147,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 34.0,
    "avg_dep_delay": 24.1,
-   "metars": null,
+   "metars": 47,
    "conversion": 1.0,
    "scored": 818
   },
@@ -1162,7 +1162,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 31.0,
    "avg_dep_delay": 20.9,
-   "metars": null,
+   "metars": 46,
    "conversion": 0.999,
    "scored": 864
   },
@@ -1177,7 +1177,7 @@
    "median_delay": 0.0,
    "median_when_delayed": 34.0,
    "avg_dep_delay": 21.5,
-   "metars": 34,
+   "metars": 46,
    "conversion": 1.0,
    "scored": 843
   },
@@ -1333,35 +1333,50 @@
   },
   {
    "date": "2026-07-29",
-   "movements": 1293,
-   "flights": 84,
-   "flew": 80,
+   "movements": 1654,
+   "flights": 87,
+   "flew": 83,
    "delayed": 20,
-   "ontime": 60,
+   "ontime": 63,
    "cancelled": 1,
    "median_delay": 0.0,
    "median_when_delayed": 29.0,
    "avg_dep_delay": 25.1,
    "metars": 48,
-   "conversion": 0.568,
-   "scored": 80
+   "conversion": 0.588,
+   "scored": 83
   },
   {
    "date": "2026-07-30",
-   "movements": 224,
-   "flights": 5,
-   "flew": 5,
+   "movements": 1509,
+   "flights": 83,
+   "flew": 80,
+   "delayed": 7,
+   "ontime": 73,
+   "cancelled": 0,
+   "median_delay": 0.0,
+   "median_when_delayed": 22.0,
+   "avg_dep_delay": 12.3,
+   "metars": 48,
+   "conversion": 0.535,
+   "scored": 80
+  },
+  {
+   "date": "2026-07-31",
+   "movements": 216,
+   "flights": 3,
+   "flew": 3,
    "delayed": 0,
-   "ontime": 5,
+   "ontime": 3,
    "cancelled": 0,
    "median_delay": 0.0,
    "median_when_delayed": null,
    "avg_dep_delay": null,
    "metars": 37,
-   "conversion": 0.065,
-   "scored": 5
+   "conversion": 0.107,
+   "scored": 3
   }
  ],
- "latest_metar": "METAR LTFM 301820Z 07014KT CAVOK 24/15 Q1019 NOSIG",
- "match_rate": null
+ "latest_metar": "METAR LTFM 311820Z 05018KT 9999 FEW027 24/18 Q1015 NOSIG",
+ "match_rate": 0.014
 }
