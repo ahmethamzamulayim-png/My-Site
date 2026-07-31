@@ -127,9 +127,11 @@
           <p data-i18n="q.ml.p">
             Bir uçuşun 15+ dk rötarlı olma olasılığını tahmin et — kalkış saati,
             havayolu, rota, hava durumu (METAR) ve uçağın önceki bacağının
-            rötarından. Geçmiş rötar medyanı temel çizgidir; modelin onu geçmesi
-            gerekir. Önce basit sınıflandırma (rötarlı mı, değil mi), sonra dakika
-            tahmini.
+            rötarından. Kuruldu ve ölçüldü: Mayıs–Haziran'da eğitilip Temmuz'da
+            körlemesine test edildi ve hibrit model referans tabloyu yalnızca
+            0,007 AUC geçti. Ölçülen sebep şu: eğitim aylarında toplam beş saatlik
+            gök gürültülü fırtına var — model, rötarı üçe katlayan tek etkiyi
+            öğrenemiyor. Kışın veri biriktikçe tekrar bakılacak.
           </p>
         </div>
 
@@ -229,7 +231,7 @@
         "hero.text": "The second stage built on the IST delay dataset: a delay prediction model, and the concrete findings learned along the way. The roadmap and first results are below.",
         "q.priority": "Priority · main quest",
         "q.ml.h": "Delay prediction model",
-        "q.ml.p": "Predict the chance a flight is 15+ min late — from departure hour, airline, route, weather (METAR), and the aircraft's previous-leg delay. The historical median is the baseline the model must beat. Classification first (late or not), exact-minutes later.",
+        "q.ml.p": "Predict the chance a flight is 15+ min late — from departure hour, airline, route, weather (METAR), and the aircraft's previous-leg delay. Built and measured: trained on May–June, tested blind on July, the hybrid beat the lookup baseline by 0.007 AUC. The measured reason it is not more: the training months hold five thunderstorm hours in total, so the model cannot learn the one effect that triples delay. Revisited as winter data accumulates.",
         "q.done": "Side quest · first results ready ↓",
         "q.done2": "Side quest · ready →",
         "q.rhythm.h": "The airport's pulse",

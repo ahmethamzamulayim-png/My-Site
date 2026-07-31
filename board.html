@@ -225,10 +225,13 @@
           <div class="dgrid" id="val"></div>
           <div class="callout" data-i18n="val.caveat">
             <b>Dürüst olan taraf:</b> model uçuşları <b>sıralamada</b> iyi —
-            riskli dediklerinin çok daha fazlası gerçekten rötar yaptı. Ama
-            seviyeyi olduğundan düşük tahmin ediyor: kötü bir günde tüm pano
-            yukarı kaymalı. Bunu düzeltecek şey canlı havalimanı durumu (son
-            saatlerde ne kadar geciktiği) — o veri şu an birikiyor.
+            riskli dediklerinin çok daha fazlası gerçekten rötar yaptı ve %40
+            dediği yerde neredeyse tam isabet. Hata, güvenli dediklerinde:
+            hiç görmediği daha yoğun bir ayda test edildiğinde, %2 dediği
+            uçuşlar %6 oranında rötar yaptı. Kronik geciken rotalar zaten
+            gecikiyor; kötü bir ayın yükü normalde dakik olan uçuşlara biniyor
+            ve geçmişte bunu haber veren hiçbir şey yok. Eksik olan gün
+            seviyesindeki terim: hava durumu ve canlı havalimanı durumu.
           </div>
         </div>
 
@@ -265,7 +268,7 @@
         "board.partial": "<b>Why is the board short?</b> The free data plan returns about 77 rows of tomorrow's schedule per run, not the whole day. The nightly job fills this board out as the day approaches. So this is the flights we hold a schedule for — not the full day.",
         "val.h": "Does it work?",
         "val.note": "The same method applied to a day it had never seen: built from everything before that day, then asked to score it, then checked against what actually happened.",
-        "val.caveat": "<b>The honest part:</b> the model <b>ranks</b> flights well — far more of the ones it called risky really did run late. But it under-states the level: on a bad day the whole board should shift up. The thing that fixes that is live airport state (how late the airport has been running in the last few hours) — that data is accumulating now.",
+        "val.caveat": "<b>The honest part:</b> the model <b>ranks</b> flights well — far more of the ones it called risky really did run late, and where it says 40% it is almost exactly right. Where it misses is the flights it calls safe: tested blind on a busier month it had never seen, the flights it scored at 2% ran late 6% of the time. Chronically late routes stay late; a bad month lands on the ordinarily punctual ones, and nothing in their history warns of it. The missing term is day-level — weather and live airport state.",
         "method.h": "Method and limits",
         "method.p": "Delay = aviationstack's gate departure delay, threshold 15+ min. Departures only; cargo and cancellations excluded. Each flight is scored by walking down these rungs: flight number → airline+destination+hour → airline+destination → destination → airport average. Cells with thin history are smoothed toward the rung above, so a route flown three times doesn't shout \"0%\" or \"100%\". This is a prediction, not an airline's official estimate.",
         "footer.p": "Data: IST · aviationstack + OpenSky Network · retrained nightly",
