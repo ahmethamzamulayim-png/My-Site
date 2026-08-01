@@ -144,6 +144,16 @@
       .sat-ctl button:hover { border-color: var(--accent); color: var(--accent); }
       .sat-ctl input[type="range"] { flex: 1; accent-color: var(--vol); min-width: 0; }
 
+      .planes { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 22px; }
+      .plane {
+        border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden;
+        background: var(--panel-strong); box-shadow: var(--shadow);
+      }
+      .plane img { display: block; width: 100%; height: 300px; object-fit: cover; }
+      .plane figcaption { padding: 16px var(--rail) 18px; color: var(--muted); font-size: 0.88rem; line-height: 1.6; }
+      .plane figcaption b { color: var(--text); font-family: "Space Grotesk", sans-serif; }
+      @media (max-width: 860px) { .planes { grid-template-columns: 1fr; } }
+
       .srcs { color: var(--muted); font-size: 0.86rem; line-height: 1.7; }
       .srcs a { color: var(--text); }
       .credit-list { list-style: none; padding: 0; margin: 14px 0 0; color: var(--muted); font-size: 0.8rem; line-height: 1.65; }
@@ -403,6 +413,37 @@
 
       <section class="section" data-reveal>
         <div class="section-heading">
+          <p class="eyebrow" data-i18n="fleet.eyebrow">Oraya inip kalkanlar</p>
+          <h2 data-i18n="fleet.h2">327 destinasyon, 82.733 bağlantı.</h2>
+          <p class="hero-text" data-i18n="fleet.text">
+            IST 2025'te dünyanın en bağlantılı havalimanı oldu — yoğunlukta 8.,
+            ama bağlantı sayısında 1. Bu, günde 750 kalkışın büyük gövdeli
+            uçaklarla dört kıtaya dağılması demek.
+          </p>
+        </div>
+        <div class="planes">
+          <figure class="plane">
+            <img src="assets/img/ist-thy787.jpg" alt="Turkish Airlines Boeing 787-9 Dreamliner climbing" loading="lazy" />
+            <figcaption data-i18n="fleet.c1">
+              <b>Turkish Airlines 787-9 Dreamliner</b> — TK45 seferinde,
+              Cape Town'dan İstanbul'a tırmanışta. IST'in uzun menzilli
+              ağının tipik uçağı.
+            </figcaption>
+          </figure>
+          <figure class="plane">
+            <img src="assets/img/ist-a380.jpg" alt="Emirates Airbus A380 on final approach" loading="lazy" />
+            <figcaption data-i18n="fleet.c2">
+              <b>Emirates A380</b> — son yaklaşmada. Emirates bu tipi
+              İstanbul'a günlük uçuruyor; fotoğraf başka bir havalimanında
+              çekildi, çünkü IST'te çekilmiş serbest lisanslı bir kalkış
+              fotoğrafı bulamadım.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
           <p class="eyebrow" data-i18n="src.eyebrow">Kaynaklar ve görseller</p>
           <h2 data-i18n="src.h2">Her sayı sayılabilir bir yerden geliyor.</h2>
         </div>
@@ -499,6 +540,11 @@
         "c6.h3": "Busier, and less late",
         "c6.p": "In the first half of 2022 the airport was producing <b>18.95 minutes</b> of delay per departure at 521 departures a day. By the first half of 2025 it was running <b>713 departures a day</b> — far busier — and delay had fallen to <b>11.90 minutes</b>.",
         "c6.f": "Across the monthly record the correlation between how busy IST is and how late it runs is only <b>+0.41</b>. Snow closes the airport (25 January 2022: 15 departures), an earthquake fills it (February 2023: departures rose as delay climbed to 75 minutes) — two opposite fingerprints in the same data.",
+        "fleet.eyebrow": "What flies in and out",
+        "fleet.h2": "327 destinations, 82,733 connections.",
+        "fleet.text": "IST was the world's most connected airport in 2025 — 8th by traffic, but 1st by connections. That means 750 departures a day fanning out across four continents on widebodies.",
+        "fleet.c1": "<b>Turkish Airlines 787-9 Dreamliner</b> — climbing out on TK45, Cape Town to Istanbul. The typical aircraft of IST's long-haul network.",
+        "fleet.c2": "<b>Emirates A380</b> — on final approach. Emirates flies the type to Istanbul daily; this photograph was taken at a different airport, because I could not find a freely licensed departure shot taken at IST itself.",
         "src.eyebrow": "Sources and images",
         "src.h2": "Every number here comes from somewhere countable.",
         "src.p": "Traffic and delay figures are from the EUROCONTROL Performance Review Unit's open datasets: <em>Airport Traffic</em> (daily IFR movements, 2018–2026) and <em>All / ATC pre-departure delays</em> (daily, all causes). © European Organisation for the Safety of Air Navigation (EUROCONTROL). The data may be reproduced in whole or in part providing this copyright notice and disclaimer are included; EUROCONTROL makes no warranty, implied or express, as to the accuracy, completeness or usefulness of the information, and the interpretations here do not necessarily reflect EUROCONTROL's official views. Satellite frames are Sentinel-2 L2A true-colour scenes (contains modified Copernicus Sentinel data 2017–2025) from the open archive on AWS. Ranking and passenger figures are ACI World and İGA statements. Tender, cost, site and metro details come from İGA's environmental impact assessment and contemporary reporting. I have not found an explanation for the 90.9 minutes per departure recorded on 1 October 2023 — traffic was normal that day.",
