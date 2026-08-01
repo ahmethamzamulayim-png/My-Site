@@ -127,16 +127,44 @@
         background: rgba(0, 0, 0, 0.62);
         pointer-events: none;
       }
-      .flap.turn { animation: flapturn 78ms linear; }
+      /* Two identical keyframes, alternated leaf by leaf. Changing the animation
+         NAME restarts it for free; the old code restarted a single animation by
+         re-reading offsetWidth, which forces a synchronous layout of the entire
+         board on every character of every tile. That was the lag. */
+      .flap.t0 { animation: flapturn 78ms linear; }
+      .flap.t1 { animation: flapturn2 78ms linear; }
       @keyframes flapturn {
         0%   { transform: rotateX(0deg);   filter: brightness(1); }
         49%  { transform: rotateX(-88deg); filter: brightness(0.55); }
         50%  { transform: rotateX(88deg);  filter: brightness(0.55); }
         100% { transform: rotateX(0deg);   filter: brightness(1); }
       }
-      @media (prefers-reduced-motion: reduce) {
-        .flap.turn { animation: none; }
+      @keyframes flapturn2 {
+        0%   { transform: rotateX(0deg);   filter: brightness(1); }
+        49%  { transform: rotateX(-88deg); filter: brightness(0.55); }
+        50%  { transform: rotateX(88deg);  filter: brightness(0.55); }
+        100% { transform: rotateX(0deg);   filter: brightness(1); }
       }
+      @media (prefers-reduced-motion: reduce) {
+        .flap.t0, .flap.t1 { animation: none; }
+      }
+
+      /* Pager. A full IST day is ~700 departures; winding all of them at once is
+         30,000 leaves, so the board shows one page at a time. */
+      .pager {
+        display: flex; align-items: center; justify-content: center;
+        gap: 14px; margin-top: 14px;
+      }
+      .pager:empty { display: none; }
+      .pager button {
+        font: inherit; font-size: 0.85rem; font-weight: 600;
+        padding: 7px 15px; border-radius: 999px; cursor: pointer;
+        color: var(--text); background: var(--panel-strong);
+        border: 1px solid var(--line);
+      }
+      .pager button:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+      .pager button:disabled { opacity: 0.35; cursor: default; }
+      .pager span { color: var(--muted); font-size: 0.85rem; font-variant-numeric: tabular-nums; }
       .flap.dim { color: #9a90a4; }
       .flapgrp.late .flap { color: #ff5c6e; }
       .flapgrp.ontime .flap { color: #5fbf72; }
@@ -206,12 +234,15 @@
             Bir satıra tıkla — sayının nereden geldiğini gör.
           </p>
           <div class="flapboard" id="board"></div>
+          <div class="pager" id="pager"></div>
           <div class="detail" id="detail" hidden></div>
           <div class="callout alt" data-i18n="board.partial">
-            <b>Pano neden kısa?</b> Ücretsiz veri planı yarının tarifesinin
-            tamamını değil, günde yaklaşık 77 satırını getiriyor. Gün ilerledikçe
-            gece çalışan iş bu panoyu dolduruyor. Yani bu, günün tamamı değil —
-            elimizde tarifesi olan uçuşlar.
+            <b>Pano neden 04:00'te bitiyor?</b> Ücretsiz plan istek başına 100
+            satır veriyor ve o sayfa yarının tarifesinin <b>en başından</b>
+            başlıyor — yani gece yarısından itibaren yaklaşık dört saat. Panonun
+            orada kesilmesinin sebebi uçuş seçimi değil, sayfanın bitmesi. Günün
+            tamamı (~1.700 kalkış) 17 istek eder; ücretsiz kota ise ayda 100
+            istek — ve şu an tükenmiş durumda.
           </div>
         </div>
 
@@ -265,7 +296,7 @@
         "hero.text": "Every scheduled departure from IST, scored against its own history: how often has this flight number, this route and this hour run late before? Like an airport board — except the numbers are a prediction, not an announcement.",
         "board.h": "Flights on the board",
         "board.note": "Click a row to see where its number came from.",
-        "board.partial": "<b>Why is the board short?</b> The free data plan returns about 77 rows of tomorrow's schedule per run, not the whole day. The nightly job fills this board out as the day approaches. So this is the flights we hold a schedule for — not the full day.",
+        "board.partial": "<b>Why does the board stop at 04:00?</b> The free plan returns 100 rows per request, and that page starts at the very <b>beginning</b> of tomorrow's schedule — roughly the first four hours after midnight. It cuts off there because the page ran out, not because these flights were chosen. A whole day (~1,700 departures) would take 17 requests; the free quota is 100 requests a month — and it is currently exhausted.",
         "val.h": "Does it work?",
         "val.note": "The same method applied to a day it had never seen: built from everything before that day, then asked to score it, then checked against what actually happened.",
         "val.caveat": "<b>The honest part:</b> the model <b>ranks</b> flights well — far more of the ones it called risky really did run late, and where it says 40% it is almost exactly right. Where it misses is the flights it calls safe: tested blind on a busier month it had never seen, the flights it scored at 2% ran late 6% of the time. Chronically late routes stay late; a bad month lands on the ordinarily punctual ones, and nothing in their history warns of it. The missing term is day-level — weather and live airport state.",
@@ -300,6 +331,8 @@
         "v.day": "on the whole test day",
         "v.n": "flights scored blind",
         "empty": "No schedule on the board yet — the nightly job fills it as the day approaches.",
+        "pg.prev": "Previous",
+        "pg.next": "Next",
       };
     </script>
 
@@ -322,6 +355,7 @@
         "v.lift": "kat daha riskli", "v.top": "en riskli %10'un rötar oranı",
         "v.day": "o günün geneli", "v.n": "kör puanlanan uçuş",
         "empty": "Panoda henüz tarife yok — gece çalışan iş gün yaklaştıkça dolduruyor.",
+        "pg.prev": "Önceki", "pg.next": "Sonraki",
       };
 
       // risk is ordered magnitude -> one hue, pale to deep. Same ramp as the
@@ -358,7 +392,7 @@
       const outcomeCls = (r) => r.actual === "late" ? "late"
         : r.actual === "ontime" ? "ontime" : "dimgrp";
 
-      let DATA = null, sel = null;
+      let DATA = null, sel = null, page = 0;
 
       // every character has to exist on the drum, so no Turkish diacritics and
       // no punctuation beyond what the leaves carry
@@ -395,37 +429,9 @@
       const DRUM = " ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789:%+.-";
       const MAX_STEPS = 13;      // cap the wind so a lone "Z" can't stall a row
       const STEP_MS = 62;
+      const PAGE = 50;           // rows per board page
       const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
-      let flapTimers = [];
-
-      function stopFlaps() {
-        flapTimers.forEach(clearTimeout);
-        flapTimers = [];
-      }
-
-      /** wind one tile from whatever it shows to `target` */
-      function windTile(el, target, delay) {
-        const to = Math.max(0, DRUM.indexOf(target));
-        if (reduceMotion) {
-          flapTimers.push(setTimeout(() => (el.textContent = DRUM[to]), 0));
-          return;
-        }
-        let from = DRUM.indexOf(el.textContent || " ");
-        if (from < 0) from = 0;
-        let steps = (to - from + DRUM.length) % DRUM.length;
-        if (steps > MAX_STEPS) {           // start closer instead of truncating,
-          from = (to - MAX_STEPS + DRUM.length) % DRUM.length;  // so it still lands right
-          steps = MAX_STEPS;
-        }
-        for (let s = 1; s <= steps; s++) {
-          flapTimers.push(setTimeout(() => {
-            el.textContent = DRUM[(from + s) % DRUM.length];
-            el.classList.remove("turn");
-            void el.offsetWidth;           // restart the animation on every leaf
-            el.classList.add("turn");
-          }, delay + s * STEP_MS));
-        }
-      }
+      let raf = 0, settle = 0;
 
       /** a fixed-width group of tiles; returns the element */
       function flapGroup(text, width, cls) {
@@ -444,15 +450,63 @@
         return g;
       }
 
-      /** wind every tile on the board, cascading down and across */
+      /** Wind every tile on the board, cascading down and across.
+
+          One rAF loop drives the whole board. The previous version scheduled a
+          setTimeout per leaf per character — a 50-row page is ~30,000 of them,
+          each forcing a layout flush — and re-ran the entire lot every time a
+          row was clicked. That is what made the panel crawl. */
       function runFlaps(root) {
-        stopFlaps();
-        const rows = [...root.querySelectorAll(".flaprow:not(.head)")]; // mast included: it winds too
-        rows.forEach((row, ri) => {
-          [...row.querySelectorAll(".flap")].forEach((f, ci) => {
-            windTile(f, f.dataset.target, ri * 55 + ci * 11);
+        cancelAnimationFrame(raf);
+        clearTimeout(settle);
+        const q = [];
+        // mast included: it winds too. The header row has no tiles.
+        [...root.querySelectorAll(".flaprow:not(.head)")].forEach((row, ri) => {
+          [...row.querySelectorAll(".flap")].forEach((el, ci) => {
+            const to = Math.max(0, DRUM.indexOf(el.dataset.target));
+            let from = Math.max(0, DRUM.indexOf(el.textContent || " "));
+            let steps = (to - from + DRUM.length) % DRUM.length;
+            if (steps > MAX_STEPS) {         // start closer instead of truncating,
+              from = (to - MAX_STEPS + DRUM.length) % DRUM.length;  // so it lands right
+              steps = MAX_STEPS;
+            }
+            if (reduceMotion || !steps) { el.textContent = DRUM[to]; return; }
+            q.push({ el, from, steps, delay: ri * 55 + ci * 11, at: -1 });
           });
         });
+        if (!q.length) return;
+        const t0 = performance.now();
+        const tick = (now) => {
+          const t = now - t0;
+          let live = 0;
+          for (const f of q) {
+            if (f.at === f.steps) continue;              // this leaf has landed
+            live++;
+            const s = Math.floor((t - f.delay) / STEP_MS);
+            if (s < 0 || s === f.at) continue;           // not started, or same leaf
+            f.at = Math.min(s, f.steps);
+            f.el.textContent = DRUM[(f.from + f.at) % DRUM.length];
+            // alternating the animation NAME restarts it with no forced reflow
+            f.el.classList.toggle("t0", f.at % 2 === 0);
+            f.el.classList.toggle("t1", f.at % 2 === 1);
+          }
+          if (live) raf = requestAnimationFrame(tick);
+        };
+        raf = requestAnimationFrame(tick);
+        // Safety net: rAF pauses in a background tab and is throttled in some
+        // headless/low-power cases, and a half-wound board shows nonsense. One
+        // timer for the whole board (not one per leaf) force-lands every tile at
+        // the moment it was due to land anyway. A no-op when rAF is healthy.
+        const end = Math.max(...q.map((f) => f.delay + f.steps * STEP_MS));
+        settle = setTimeout(() => {
+          cancelAnimationFrame(raf);
+          for (const f of q) {
+            if (f.at === f.steps) continue;
+            f.at = f.steps;
+            f.el.textContent = DRUM[(f.from + f.steps) % DRUM.length];
+            f.el.classList.remove("t0", "t1");
+          }
+        }, end + 120);
       }
 
       function render() {
@@ -465,13 +519,26 @@
           `<span>${t("trained on", "eğitim verisi")} <b>${b.trained_on.flights.toLocaleString(getLang() === "tr" ? "tr-TR" : "en-US")}</b> ${t("flights", "uçuş")} · ${b.trained_on.days} ${t("days", "gün")}</span>` +
           (b.scoreboard ? scoreLine(b.scoreboard) : "");
 
+        // before the board, so an empty schedule doesn't also blank this panel
+        const v = b.validation, vg = document.getElementById("val");
+        vg.innerHTML = !v ? "" :
+          `<div class="dbox"><b>${v.lift}×</b><span>${key("v.lift")}</span></div>
+           <div class="dbox"><b>${v.top_decile_pct.toString().replace(".", getLang() === "tr" ? "," : ".")}%</b>
+             <span>${key("v.top")}</span></div>
+           <div class="dbox"><b>${v.actual_pct.toString().replace(".", getLang() === "tr" ? "," : ".")}%</b>
+             <span>${key("v.day")} (${v.day})</span></div>
+           <div class="dbox"><b>${v.flights}</b><span>${key("v.n")}</span></div>`;
+
         const rows = b.departures || [];
         const brd = document.getElementById("board");
         brd.innerHTML = "";
         if (!rows.length) {
           brd.innerHTML = `<p class="empty">${key("empty")}</p>`;
+          document.getElementById("pager").innerHTML = "";
           return;
         }
+        page = Math.min(page, Math.ceil(rows.length / PAGE) - 1);
+        const view = rows.slice(page * PAGE, page * PAGE + PAGE);
 
         const W = { time: 5, flight: 7, dest: 4, airline: 16, risk: 4, med: 4, actual: 9 };
 
@@ -495,9 +562,11 @@
             .join("") + `<span style="min-width:11ch">${key("col.basis")}</span>`;
         brd.appendChild(head);
 
-        rows.forEach((r, i) => {
+        view.forEach((r, j) => {
+          const i = page * PAGE + j;              // index into the FULL list
           const row = document.createElement("div");
           row.className = "flaprow" + (i === sel ? " sel" : "");
+          row.dataset.i = i;
           row.tabIndex = 0;
           row.setAttribute("role", "button");
           row.append(
@@ -517,16 +586,50 @@
           conf.textContent = `${key("basis." + r.basis)} · n=${r.n}`;
           row.appendChild(conf);
           row.querySelectorAll(".dimgrp .flap").forEach((f) => f.classList.add("dim"));
-          const open = () => { sel = i; render(); };
-          row.onclick = open;
+          // selecting a row must NOT rebuild the board — that re-wound every leaf
+          row.onclick = () => select(i);
           row.onkeydown = (e) => {
-            if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); }
+            if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(i); }
           };
           brd.appendChild(row);
         });
         runFlaps(brd);
+        renderPager(rows.length);
+        renderDetail();
+      }
 
-        // --- detail ---
+      /** Move the highlight and swap the detail panel. Nothing else — the board
+          itself is untouched, so no tiles wind. */
+      function select(i) {
+        sel = i;
+        const brd = document.getElementById("board");
+        brd.querySelectorAll(".flaprow.sel").forEach((r) => r.classList.remove("sel"));
+        const row = brd.querySelector(`.flaprow[data-i="${i}"]`);
+        if (row) row.classList.add("sel");
+        renderDetail();
+      }
+
+      function renderPager(total) {
+        const p = document.getElementById("pager");
+        p.innerHTML = "";
+        const pages = Math.ceil(total / PAGE);
+        if (pages < 2) return;
+        const btn = (label, to, dis) => {
+          const el = document.createElement("button");
+          el.type = "button";
+          el.textContent = label;
+          el.disabled = dis;
+          el.onclick = () => { page = to; render(); };
+          return el;
+        };
+        const lab = document.createElement("span");
+        lab.textContent = `${page * PAGE + 1}–${Math.min(total, (page + 1) * PAGE)} / ${total}`;
+        p.append(btn("‹ " + key("pg.prev"), page - 1, page === 0), lab,
+                 btn(key("pg.next") + " ›", page + 1, page >= pages - 1));
+      }
+
+      function renderDetail() {
+        const b = DATA, base = b.baseline, rows = b.departures || [];
         const d = document.getElementById("detail");
         if (sel == null || !rows[sel]) { d.hidden = true; } else {
           const r = rows[sel];
@@ -553,16 +656,6 @@
              </div>
              <p class="split">${splitSentence(r, base)}</p>`;
         }
-
-        // --- validation ---
-        const v = b.validation, vg = document.getElementById("val");
-        vg.innerHTML = !v ? "" :
-          `<div class="dbox"><b>${v.lift}×</b><span>${key("v.lift")}</span></div>
-           <div class="dbox"><b>${v.top_decile_pct.toString().replace(".", getLang() === "tr" ? "," : ".")}%</b>
-             <span>${key("v.top")}</span></div>
-           <div class="dbox"><b>${v.actual_pct.toString().replace(".", getLang() === "tr" ? "," : ".")}%</b>
-             <span>${key("v.day")} (${v.day})</span></div>
-           <div class="dbox"><b>${v.flights}</b><span>${key("v.n")}</span></div>`;
       }
 
       fetch("board.json", { cache: "no-store" })
