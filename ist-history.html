@@ -74,7 +74,7 @@
         box-shadow: var(--shadow);
       }
       .chapter.flip .ch-media { order: 2; }
-      .ch-media { position: relative; min-height: 320px; background: #1b1f2a; }
+      .ch-media { position: relative; min-height: 380px; background: #1b1f2a; }
       .ch-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
       .ch-body { padding: 32px var(--rail); }
       .ch-body .when {
@@ -431,7 +431,9 @@
     </footer>
 
     <script>
-      const I18N_EN = {
+      // HTML holds Turkish; this dict translates INTO English (see i18n.js).
+      window.I18N_LANG = "en";
+      window.I18N = {
         "brand.name": "Logistics of IST",
         "brand.sub": "the world's 8th busiest airport",
         "nav.back": "← Portfolio",
@@ -502,7 +504,6 @@
         "src.p": "Traffic and delay figures are from the EUROCONTROL Performance Review Unit's open datasets: <em>Airport Traffic</em> (daily IFR movements, 2018–2026) and <em>All / ATC pre-departure delays</em> (daily, all causes). © European Organisation for the Safety of Air Navigation (EUROCONTROL). The data may be reproduced in whole or in part providing this copyright notice and disclaimer are included; EUROCONTROL makes no warranty, implied or express, as to the accuracy, completeness or usefulness of the information, and the interpretations here do not necessarily reflect EUROCONTROL's official views. Satellite frames are Sentinel-2 L2A true-colour scenes (contains modified Copernicus Sentinel data 2017–2025) from the open archive on AWS. Ranking and passenger figures are ACI World and İGA statements. Tender, cost, site and metro details come from İGA's environmental impact assessment and contemporary reporting. I have not found an explanation for the 90.9 minutes per departure recorded on 1 October 2023 — traffic was normal that day.",
         "footer.p": "Data: EUROCONTROL PRU · ACI World · photographs from Wikimedia Commons"
       };
-      if (window.I18N) window.I18N.en = I18N_EN;
     </script>
 
     <script>
