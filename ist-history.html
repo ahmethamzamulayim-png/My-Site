@@ -124,6 +124,26 @@
         content: ""; display: inline-block; width: 10px; height: 0;
         border-top: 2px dashed var(--muted); vertical-align: middle; margin-right: 7px;
       }
+      /* satellite timelapse */
+      .sat-stage { position: relative; border-radius: 14px; overflow: hidden; background: #1b1f2a; aspect-ratio: 900 / 679; }
+      .sat-stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.18s; }
+      .sat-stage img.on { opacity: 1; }
+      .sat-year {
+        position: absolute; left: 14px; bottom: 12px; z-index: 2;
+        font-family: "Space Grotesk", sans-serif; color: #fff;
+        text-shadow: 0 2px 12px rgba(0,0,0,0.7); pointer-events: none;
+      }
+      .sat-year b { display: block; font-size: 2rem; letter-spacing: -0.03em; line-height: 1; }
+      .sat-year span { font-size: 0.8rem; opacity: 0.8; }
+      .sat-ctl { display: flex; align-items: center; gap: 14px; margin-top: 14px; }
+      .sat-ctl button {
+        flex: none; width: 42px; height: 42px; border-radius: 50%;
+        border: 1px solid var(--line); background: var(--panel-strong); color: var(--text);
+        font-size: 0.95rem; cursor: pointer; line-height: 1;
+      }
+      .sat-ctl button:hover { border-color: var(--accent); color: var(--accent); }
+      .sat-ctl input[type="range"] { flex: 1; accent-color: var(--vol); min-width: 0; }
+
       .srcs { color: var(--muted); font-size: 0.86rem; line-height: 1.7; }
       .srcs a { color: var(--text); }
       .credit-list { list-style: none; padding: 0; margin: 14px 0 0; color: var(--muted); font-size: 0.8rem; line-height: 1.65; }
@@ -233,6 +253,24 @@
             </p>
           </div>
         </article>
+
+        <div class="chart-card" data-reveal>
+          <h3 data-i18n="sat.h3">Uzaydan: 2017 → 2025</h3>
+          <p class="sub" data-i18n="sat.sub">Sentinel-2 · 10 m çözünürlük · her kare bulutsuz bir yaz gününden</p>
+          <div class="sat-stage" id="satStage">
+            <div class="sat-year"><b id="satY">2017</b><span id="satD"></span></div>
+          </div>
+          <div class="sat-ctl">
+            <button type="button" id="satPlay" aria-label="play">▶</button>
+            <input type="range" id="satRange" min="0" max="8" value="0" step="1" aria-label="year" />
+          </div>
+          <p class="sub" style="margin: 16px 0 0" data-i18n="sat.note">
+            Pistlerin ve terminalin nasıl belirdiğini izleyin — ve etrafındaki
+            taş ocağı göllerini. Kareler ortak bir pozlamaya eşitlendi, yoksa
+            sıralama havalimanının değil mevsimin değişimini gösterirdi; geriye
+            kalan renk farkı ise gerçek: 2025 yazı daha kuru geçti.
+          </p>
+        </div>
 
         <article class="chapter" data-reveal>
           <div class="ch-media"><img src="assets/img/ist-entrance.jpg" alt="Istanbul Airport terminal entrance" loading="lazy" /></div>
@@ -376,6 +414,8 @@
           Veri, telif ve sorumluluk reddi bildirimiyle birlikte kısmen çoğaltılabilir;
           EUROCONTROL doğruluk, eksiksizlik veya kullanışlılık konusunda hiçbir
           garanti vermez ve buradaki yorumlar EUROCONTROL'ün resmî görüşünü yansıtmaz.
+          Uydu kareleri Sentinel-2 L2A gerçek renk görüntülerinden (Copernicus
+          Sentinel verisi 2017–2025, işlenmiştir) — AWS üzerindeki açık arşivden.
           Sıralama ve yolcu sayıları ACI World ve İGA açıklamaları. İhale, maliyet,
           arazi ve metro bilgileri İGA'nın çevresel etki raporu ile dönemin haber
           kaynaklarından. 1 Ekim 2023'teki kalkış başına 90,9 dakikalık zirveye
@@ -432,6 +472,9 @@
         "c5.h3": "A metro was built to reach it",
         "c5.p": "The airport opened 40 km from the city centre, and for four years getting there meant the motorway. On 22 January 2023 the M11 line opened between Kağıthane and Istanbul Airport; the Gayrettepe connection followed in January 2024 and the Arnavutköy stops in March 2024.",
         "c5.f": "At <b>120 km/h</b> it is the fastest metro in Turkey, and the airport is <b>about 30 minutes</b> from Gayrettepe. Only at this point was it genuinely joined to the city.",
+        "sat.h3": "From orbit: 2017 → 2025",
+        "sat.sub": "Sentinel-2 · 10 m resolution · each frame from one cloudless summer day",
+        "sat.note": "Watch the runways and the terminal appear — and the quarry lakes around them. The frames are matched to a common exposure, otherwise the sequence would show the season changing rather than the airport; the colour difference that remains is real, as the summer of 2025 was drier.",
         "px.h3": "Passengers per year",
         "px.sub": "millions · İGA / ACI World statements",
         "px.cap": "annual capacity: 90 million",
@@ -456,7 +499,7 @@
         "c6.f": "Across the monthly record the correlation between how busy IST is and how late it runs is only <b>+0.41</b>. Snow closes the airport (25 January 2022: 15 departures), an earthquake fills it (February 2023: departures rose as delay climbed to 75 minutes) — two opposite fingerprints in the same data.",
         "src.eyebrow": "Sources and images",
         "src.h2": "Every number here comes from somewhere countable.",
-        "src.p": "Traffic and delay figures are from the EUROCONTROL Performance Review Unit's open datasets: <em>Airport Traffic</em> (daily IFR movements, 2018–2026) and <em>All / ATC pre-departure delays</em> (daily, all causes). © European Organisation for the Safety of Air Navigation (EUROCONTROL). The data may be reproduced in whole or in part providing this copyright notice and disclaimer are included; EUROCONTROL makes no warranty, implied or express, as to the accuracy, completeness or usefulness of the information, and the interpretations here do not necessarily reflect EUROCONTROL's official views. Ranking and passenger figures are ACI World and İGA statements. Tender, cost, site and metro details come from İGA's environmental impact assessment and contemporary reporting. I have not found an explanation for the 90.9 minutes per departure recorded on 1 October 2023 — traffic was normal that day.",
+        "src.p": "Traffic and delay figures are from the EUROCONTROL Performance Review Unit's open datasets: <em>Airport Traffic</em> (daily IFR movements, 2018–2026) and <em>All / ATC pre-departure delays</em> (daily, all causes). © European Organisation for the Safety of Air Navigation (EUROCONTROL). The data may be reproduced in whole or in part providing this copyright notice and disclaimer are included; EUROCONTROL makes no warranty, implied or express, as to the accuracy, completeness or usefulness of the information, and the interpretations here do not necessarily reflect EUROCONTROL's official views. Satellite frames are Sentinel-2 L2A true-colour scenes (contains modified Copernicus Sentinel data 2017–2025) from the open archive on AWS. Ranking and passenger figures are ACI World and İGA statements. Tender, cost, site and metro details come from İGA's environmental impact assessment and contemporary reporting. I have not found an explanation for the 90.9 minutes per departure recorded on 1 October 2023 — traffic was normal that day.",
         "footer.p": "Data: EUROCONTROL PRU · ACI World · photographs from Wikimedia Commons"
       };
       if (window.I18N) window.I18N.en = I18N_EN;
@@ -569,6 +612,43 @@
       }).catch(() => {
         document.querySelectorAll(".chart-card .sub").forEach(p => { p.textContent = "chart data unavailable"; });
       });
+
+      // ---- satellite timelapse. Frames preload so scrubbing never shows a gap.
+      fetch("data-ist-satellite.json").then(r => r.json()).then(frames => {
+        const stage = document.getElementById("satStage");
+        const range = document.getElementById("satRange");
+        const play = document.getElementById("satPlay");
+        const yEl = document.getElementById("satY"), dEl = document.getElementById("satD");
+        if (!stage || !frames.length) return;
+        range.max = frames.length - 1;
+        const imgs = frames.map((f, i) => {
+          const im = new Image();
+          im.src = f.file;
+          im.alt = "Istanbul Airport from Sentinel-2, " + f.date;
+          if (i === 0) im.className = "on";
+          stage.insertBefore(im, stage.firstChild);
+          return im;
+        });
+        let at = 0, timer = null;
+        const show = i => {
+          at = ((i % frames.length) + frames.length) % frames.length;
+          imgs.forEach((im, k) => im.classList.toggle("on", k === at));
+          yEl.textContent = frames[at].y;
+          dEl.textContent = frames[at].date;
+          range.value = at;
+        };
+        range.addEventListener("input", () => { stop(); show(+range.value); });
+        function stop() { if (timer) { clearInterval(timer); timer = null; play.textContent = "▶"; } }
+        play.addEventListener("click", () => {
+          if (timer) return stop();
+          play.textContent = "❚❚";
+          timer = setInterval(() => {
+            if (at === frames.length - 1) { stop(); return; }
+            show(at + 1);
+          }, 900);
+        });
+        show(0);
+      }).catch(() => {});
 
       // photo credits, straight from the file the downloader wrote — so the
       // attribution can never drift from what is actually on the page
