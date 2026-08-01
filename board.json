@@ -1,15 +1,22 @@
 {
- "generated_utc": "2026-07-31T18:45:57+00:00",
+ "generated_utc": "2026-08-01T18:45:50+00:00",
  "airport": "IST",
  "board_date": "2026-08-01",
  "late_threshold_min": 15,
  "baseline": 0.1161,
  "trained_on": {
-  "flights": 63010,
+  "flights": 63236,
   "days": 89,
   "through": "2026-07-31"
  },
- "scoreboard": null,
+ "scoreboard": {
+  "resolved": 3,
+  "total": 70,
+  "late": 0,
+  "ontime": 3,
+  "mean_predicted": 0.1446,
+  "actual_rate": 0.0
+ },
  "hourly": [
   {
    "h": 0,
@@ -28,108 +35,108 @@
   },
   {
    "h": 3,
-   "pct": 0.1364,
-   "n": 535
+   "pct": 0.1354,
+   "n": 539
   },
   {
    "h": 4,
-   "pct": 0.1153,
-   "n": 503
+   "pct": 0.1146,
+   "n": 506
   },
   {
    "h": 5,
-   "pct": 0.2057,
-   "n": 316
+   "pct": 0.2082,
+   "n": 317
   },
   {
    "h": 6,
    "pct": 0.0504,
-   "n": 3786
+   "n": 3788
   },
   {
    "h": 7,
-   "pct": 0.0823,
-   "n": 5794
+   "pct": 0.0825,
+   "n": 5818
   },
   {
    "h": 8,
-   "pct": 0.0677,
-   "n": 3085
+   "pct": 0.0671,
+   "n": 3129
   },
   {
    "h": 9,
-   "pct": 0.1153,
-   "n": 1162
+   "pct": 0.1148,
+   "n": 1167
   },
   {
    "h": 10,
-   "pct": 0.0812,
-   "n": 1873
+   "pct": 0.0814,
+   "n": 1891
   },
   {
    "h": 11,
-   "pct": 0.0786,
-   "n": 2546
+   "pct": 0.0785,
+   "n": 2559
   },
   {
    "h": 12,
    "pct": 0.1172,
-   "n": 3234
+   "n": 3251
   },
   {
    "h": 13,
-   "pct": 0.1412,
-   "n": 3788
+   "pct": 0.1408,
+   "n": 3800
   },
   {
    "h": 14,
    "pct": 0.1273,
-   "n": 3756
+   "n": 3763
   },
   {
    "h": 15,
-   "pct": 0.1584,
-   "n": 4609
+   "pct": 0.1585,
+   "n": 4619
   },
   {
    "h": 16,
-   "pct": 0.1603,
-   "n": 3924
+   "pct": 0.1609,
+   "n": 3960
   },
   {
    "h": 17,
-   "pct": 0.1501,
-   "n": 2731
+   "pct": 0.1513,
+   "n": 2743
   },
   {
    "h": 18,
-   "pct": 0.136,
-   "n": 4662
+   "pct": 0.1359,
+   "n": 4665
   },
   {
    "h": 19,
    "pct": 0.1168,
-   "n": 2962
+   "n": 2963
   },
   {
    "h": 20,
    "pct": 0.125,
-   "n": 3407
+   "n": 3408
   },
   {
    "h": 21,
-   "pct": 0.1334,
-   "n": 2369
+   "pct": 0.1332,
+   "n": 2373
   },
   {
    "h": 22,
-   "pct": 0.1139,
-   "n": 1264
+   "pct": 0.1141,
+   "n": 1271
   },
   {
    "h": 23,
-   "pct": 0.1358,
-   "n": 965
+   "pct": 0.1355,
+   "n": 967
   }
  ],
  "median_late_overall": 30,
@@ -227,7 +234,7 @@
    "risk": 0.0393,
    "basis": "flight+hour",
    "n": 77,
-   "median_late": 27,
+   "median_late": 26,
    "median_from": "route",
    "hour_rate": 0.0939,
    "actual": null,
@@ -632,7 +639,7 @@
    "risk": 0.0385,
    "basis": "flight+hour",
    "n": 27,
-   "median_late": 23,
+   "median_late": 24,
    "median_from": "route",
    "hour_rate": 0.0939,
    "actual": null,
@@ -710,7 +717,7 @@
    "median_late": 53,
    "median_from": "flight",
    "hour_rate": 0.0939,
-   "actual": null,
+   "actual": "ontime",
    "actual_delay": null
   },
   {
@@ -1025,7 +1032,7 @@
    "median_late": 30,
    "median_from": "route",
    "hour_rate": 0.1012,
-   "actual": null,
+   "actual": "ontime",
    "actual_delay": null
   },
   {
@@ -1049,13 +1056,13 @@
    "flight": "BM503",
    "dest": "HLLM",
    "airline": "Medsky Airways",
-   "risk": 0.3591,
+   "risk": 0.359,
    "basis": "flight",
    "n": 58,
    "median_late": 58,
    "median_from": "flight",
-   "hour_rate": 0.1364,
-   "actual": null,
+   "hour_rate": 0.1354,
+   "actual": "ontime",
    "actual_delay": null
   },
   {
@@ -1064,12 +1071,12 @@
    "flight": null,
    "dest": "HLLM",
    "airline": "empty",
-   "risk": 0.0191,
+   "risk": 0.019,
    "basis": "route+hour",
    "n": 38,
    "median_late": 45,
    "median_from": "destination",
-   "hour_rate": 0.1364,
+   "hour_rate": 0.1354,
    "actual": null,
    "actual_delay": null
   },
@@ -1079,12 +1086,12 @@
    "flight": "TK1224",
    "dest": "EDDF",
    "airline": "Turkish Airlines",
-   "risk": 0.0358,
+   "risk": 0.0315,
    "basis": "flight+hour",
-   "n": 5,
+   "n": 6,
    "median_late": 25,
    "median_from": "route",
-   "hour_rate": 0.1364,
+   "hour_rate": 0.1354,
    "actual": null,
    "actual_delay": null
   },
@@ -1094,12 +1101,12 @@
    "flight": "TK1220",
    "dest": "EDDB",
    "airline": "Turkish Airlines",
-   "risk": 0.0097,
+   "risk": 0.009,
    "basis": "flight+hour",
-   "n": 20,
+   "n": 21,
    "median_late": 26,
    "median_from": "route",
-   "hour_rate": 0.1364,
+   "hour_rate": 0.1354,
    "actual": null,
    "actual_delay": null
   },
@@ -1109,12 +1116,12 @@
    "flight": "LH1743",
    "dest": "EDDM",
    "airline": "Lufthansa",
-   "risk": 0.0118,
+   "risk": 0.0117,
    "basis": "flight+hour",
-   "n": 85,
-   "median_late": 23,
+   "n": 86,
+   "median_late": 24,
    "median_from": "destination",
-   "hour_rate": 0.1364,
+   "hour_rate": 0.1354,
    "actual": null,
    "actual_delay": null
   },
@@ -1124,12 +1131,12 @@
    "flight": "TU217",
    "dest": "DTTA",
    "airline": "Tunisair",
-   "risk": 0.3485,
+   "risk": 0.3483,
    "basis": "flight+hour",
    "n": 24,
    "median_late": 82,
    "median_from": "flight",
-   "hour_rate": 0.1364,
+   "hour_rate": 0.1354,
    "actual": null,
    "actual_delay": null
   },
@@ -1144,7 +1151,7 @@
    "n": 77,
    "median_late": 28,
    "median_from": "route",
-   "hour_rate": 0.1364,
+   "hour_rate": 0.1354,
    "actual": null,
    "actual_delay": null
   },
@@ -1159,7 +1166,7 @@
    "n": 5,
    "median_late": 50,
    "median_from": "destination",
-   "hour_rate": 0.1364,
+   "hour_rate": 0.1354,
    "actual": null,
    "actual_delay": null
   },
@@ -1174,7 +1181,7 @@
    "n": 81,
    "median_late": 36,
    "median_from": "flight",
-   "hour_rate": 0.1153,
+   "hour_rate": 0.1146,
    "actual": null,
    "actual_delay": null
   },
@@ -1184,12 +1191,12 @@
    "flight": "HV3411",
    "dest": "LFPO",
    "airline": "Transavia",
-   "risk": 0.0369,
+   "risk": 0.0355,
    "basis": "flight+hour",
    "n": 8,
    "median_late": 32,
    "median_from": "route",
-   "hour_rate": 0.1153,
+   "hour_rate": 0.1146,
    "actual": null,
    "actual_delay": null
   }
