@@ -6,12 +6,12 @@
     <title>Logistics of IST — the world's 8th busiest airport | Ahmet Hamza Mülayim</title>
     <meta
       name="description"
-      content="How Istanbul moved an entire airport in 29 hours, and what happened next — traffic and delay at IST from 2018 to 2026, measured against EUROCONTROL's own figures."
+      content="How Istanbul built an airport on top of abandoned coal pits, moved into it in 29 hours, and grew it into the world's 8th busiest — traffic and delay from 2018 to 2026, read from EUROCONTROL's own records."
     />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e81932'/%3E%3Ctext x='32' y='45' font-size='38' font-family='sans-serif' font-weight='700' text-anchor='middle' fill='%23fff'%3EA%3C/text%3E%3C/svg%3E" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Logistics of IST — the world's 8th busiest airport" />
-    <meta property="og:description" content="An airport moved in 29 hours, a pandemic, a third runway, a snowstorm and an earthquake — read from EUROCONTROL's daily traffic and delay records." />
+    <meta property="og:description" content="Built over abandoned coal pits, moved into in 29 hours, grown to 84 million passengers — the infrastructure story of Istanbul Airport, in data." />
     <meta property="og:url" content="https://ahmethmzamlym.engineer/ist-history.html" />
     <meta property="og:image" content="https://ahmethmzamlym.engineer/assets/og-image.png" />
     <meta property="og:image:width" content="1200" />
@@ -29,106 +29,114 @@
     <script src="i18n.js"></script>
     <script defer src="script.js"></script>
     <style>
-      /* one project, one colour: cobalt for how MUCH, red for how LATE.
-         #3f63c9 not the token --cobalt #24439b — the darker step fails the
-         validator's lightness band on this surface (checked, not guessed). */
+      /* one project, one colour pair: cobalt = how MUCH, red = how LATE.
+         #3f63c9 not the token --cobalt #24439b — the darker step FAILS the
+         dataviz validator's lightness band on this surface (checked, not guessed). */
       .hist { --vol: #3f63c9; --dly: #e81932; }
 
-      .hero-band {
+      .ph-hero {
+        position: relative;
         margin-top: 18px;
         border-radius: var(--radius);
+        overflow: hidden;
         border: 1px solid var(--line);
         box-shadow: var(--shadow);
-        background: linear-gradient(135deg, #1b1f2a 0%, #2b2132 55%, #3a1d24 100%);
-        color: #fff;
-        padding: 46px var(--rail) 40px;
+        min-height: 440px;
+        display: flex;
+        align-items: flex-end;
+        background: #1b1f2a;
       }
-      .hero-band h2 { color: #fff; margin: 0 0 14px; }
-      .hero-band .hero-text { color: rgba(255, 255, 255, 0.82); max-width: 62ch; }
-      .hero-band .eyebrow { color: rgba(255, 255, 255, 0.62); }
+      .ph-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.9; }
+      .ph-hero .scrim {
+        position: absolute; inset: 0;
+        background: linear-gradient(180deg, rgba(20,22,26,0.18) 0%, rgba(20,22,26,0.42) 45%, rgba(20,22,26,0.9) 100%);
+      }
+      .ph-hero .inner { position: relative; padding: 44px var(--rail) 36px; color: #fff; width: 100%; }
+      .ph-hero h2 { color: #fff; margin: 0 0 14px; }
+      .ph-hero .hero-text { color: rgba(255,255,255,0.84); max-width: 60ch; }
+      .ph-hero .eyebrow { color: rgba(255,255,255,0.6); }
 
-      .bignum {
+      .bignum { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 18px; margin-top: 30px; }
+      .bignum div { border-left: 2px solid rgba(255,255,255,0.25); padding-left: 14px; }
+      .bignum strong { display: block; font-family: "Space Grotesk", sans-serif; font-size: 1.6rem; letter-spacing: -0.03em; color: #fff; }
+      .bignum span { color: rgba(255,255,255,0.66); font-size: 0.82rem; line-height: 1.45; }
+
+      /* alternating photo + text chapters */
+      .chapter {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-        gap: 18px;
-        margin-top: 30px;
-      }
-      .bignum div { border-left: 2px solid rgba(255, 255, 255, 0.25); padding-left: 14px; }
-      .bignum strong {
-        display: block;
-        font-family: "Space Grotesk", sans-serif;
-        font-size: 1.75rem;
-        letter-spacing: -0.03em;
-        color: #fff;
-      }
-      .bignum span { color: rgba(255, 255, 255, 0.66); font-size: 0.84rem; line-height: 1.45; }
-
-      .chart-card {
-        background: var(--panel-strong);
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        margin-top: 22px;
         border: 1px solid var(--line);
         border-radius: var(--radius);
+        overflow: hidden;
+        background: var(--panel-strong);
         box-shadow: var(--shadow);
-        padding: 26px var(--rail);
-        margin-top: 22px;
       }
-      .chart-card h3 {
+      .chapter.flip .ch-media { order: 2; }
+      .ch-media { position: relative; min-height: 320px; background: #1b1f2a; }
+      .ch-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+      .ch-body { padding: 32px var(--rail); }
+      .ch-body .when {
         font-family: "Space Grotesk", sans-serif;
-        letter-spacing: -0.03em;
-        margin: 0 0 4px;
+        font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
+        color: var(--accent); margin: 0 0 8px;
       }
+      .ch-body h3 { font-family: "Space Grotesk", sans-serif; letter-spacing: -0.03em; margin: 0 0 12px; }
+      .ch-body p { color: var(--muted); line-height: 1.7; margin: 0 0 12px; }
+      .ch-body p b, .ch-body p strong { color: var(--text); }
+      .ch-fact {
+        margin-top: 14px; padding-left: 13px; border-left: 2px solid var(--line);
+        font-size: 0.88rem; color: var(--muted);
+      }
+      .ch-fact b { color: var(--text); font-family: "Space Grotesk", sans-serif; }
+
+      /* passenger infographic — plain bars, one hue, magnitude over time */
+      .pax { margin-top: 8px; }
+      .pax-row { display: grid; grid-template-columns: 54px 1fr 96px; align-items: center; gap: 12px; margin-bottom: 9px; }
+      .pax-row .yr { font-family: "Space Grotesk", sans-serif; color: var(--muted); font-size: 0.86rem; }
+      .pax-bar { display: block; height: 22px; border-radius: 4px; background: var(--vol); min-width: 3px; }
+      /* bars are scaled so stated capacity IS 100% of the track, so a dashed
+         right edge on every row draws the capacity line exactly, for free */
+      .pax-track { display: block; border-right: 2px dashed rgba(43, 39, 50, 0.3); }
+      .pax-row .val { font-family: "Space Grotesk", sans-serif; font-size: 0.9rem; color: var(--text); }
+      .pax-row .val small { color: var(--muted); font-weight: 400; }
+      .pax-cap { display: flex; align-items: center; gap: 9px; margin-top: 12px; color: var(--muted); font-size: 0.82rem; }
+      .pax-cap i { display: inline-block; width: 16px; border-top: 2px dashed var(--muted); }
+
+      .chart-card {
+        background: var(--panel-strong); border: 1px solid var(--line);
+        border-radius: var(--radius); box-shadow: var(--shadow);
+        padding: 26px var(--rail); margin-top: 22px;
+      }
+      .chart-card h3 { font-family: "Space Grotesk", sans-serif; letter-spacing: -0.03em; margin: 0 0 4px; }
       .chart-card .sub { color: var(--muted); font-size: 0.9rem; margin: 0 0 18px; }
       .chart-wrap { position: relative; overflow-x: auto; }
       .chart-wrap svg { display: block; width: 100%; height: auto; min-width: 520px; }
-
       .tip {
-        position: absolute;
-        pointer-events: none;
-        background: #2b2732;
-        color: #fff;
-        border-radius: 10px;
-        padding: 8px 11px;
-        font-size: 0.8rem;
-        line-height: 1.4;
-        opacity: 0;
-        transition: opacity 0.12s;
-        white-space: nowrap;
-        z-index: 5;
+        position: absolute; pointer-events: none; background: #2b2732; color: #fff;
+        border-radius: 10px; padding: 8px 11px; font-size: 0.8rem; line-height: 1.4;
+        opacity: 0; transition: opacity 0.12s; white-space: nowrap; z-index: 5;
       }
       .tip b { font-family: "Space Grotesk", sans-serif; }
-
-      .evkey {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px 18px;
-        margin-top: 14px;
-        color: var(--muted);
-        font-size: 0.82rem;
-      }
+      .evkey { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 14px; color: var(--muted); font-size: 0.82rem; }
       .evkey span::before {
-        content: "";
-        display: inline-block;
-        width: 10px;
-        height: 0;
-        border-top: 2px dashed var(--muted);
-        vertical-align: middle;
-        margin-right: 7px;
+        content: ""; display: inline-block; width: 10px; height: 0;
+        border-top: 2px dashed var(--muted); vertical-align: middle; margin-right: 7px;
       }
-
-      .tl-note {
-        margin-top: 10px;
-        font-size: 0.86rem;
-        color: var(--muted);
-        border-left: 2px solid var(--line);
-        padding-left: 12px;
-      }
-      .tl-note b { color: var(--text); font-family: "Space Grotesk", sans-serif; }
-
       .srcs { color: var(--muted); font-size: 0.86rem; line-height: 1.7; }
       .srcs a { color: var(--text); }
+      .credit-list { list-style: none; padding: 0; margin: 14px 0 0; color: var(--muted); font-size: 0.8rem; line-height: 1.65; }
 
+      @media (max-width: 860px) {
+        .chapter { grid-template-columns: 1fr; }
+        .chapter.flip .ch-media { order: 0; }
+        .ch-media { min-height: 220px; }
+      }
       @media (max-width: 720px) {
-        .hero-band { padding: 34px 23px 30px; }
-        .chart-card { padding: 22px 23px; }
+        .ph-hero .inner { padding: 32px 23px 28px; }
+        .ch-body, .chart-card { padding: 24px 23px; }
+        .pax-row { grid-template-columns: 44px 1fr 78px; }
       }
     </style>
   </head>
@@ -153,180 +161,147 @@
 
     <main>
       <section class="section" data-reveal>
-        <div class="hero-band">
-          <p class="eyebrow" data-i18n="hero.eyebrow">Havacılık · veri hikâyesi</p>
-          <h2 data-i18n="hero.h2">Bir havalimanı 29 saatte nasıl taşınır?</h2>
-          <p class="hero-text" data-i18n="hero.text">
-            5 Nisan 2019'da Türk Hava Yolları bütün bir havalimanını taşımaya
-            başladı. Kurum 45 saat ayırmıştı; iş 29 saatte bitti. 686 tır, 47.000
-            ton ekipman, 1.800 kişi. Bu sayfa o günden bugüne İstanbul
-            Havalimanı'nın kaydını izliyor — bir pandemi, üçüncü bir pist, bir kar
-            fırtınası ve bir deprem — hepsi EUROCONTROL'ün kendi günlük trafik ve
-            rötar rakamlarından okunuyor.
-          </p>
-          <div class="bignum">
-            <div><strong data-i18n="k1.n">29 saat</strong><span data-i18n="k1.t">planlanan 45 saat yerine, taşınmanın gerçek süresi</span></div>
-            <div><strong data-i18n="k2.n">686</strong><span data-i18n="k2.t">tır · 47.000 ton ekipman · 1.800 personel</span></div>
-            <div><strong data-i18n="k3.n">28 → 8</strong><span data-i18n="k3.t">dünya sıralaması, 2019'dan 2025'e (ACI)</span></div>
-            <div><strong data-i18n="k4.n">1.703</strong><span data-i18n="k4.t">tek günde en yüksek hareket sayısı — 31 Mayıs 2026</span></div>
+        <div class="ph-hero">
+          <img src="assets/img/ist-hero.jpg" alt="Istanbul Airport terminal" />
+          <div class="scrim"></div>
+          <div class="inner">
+            <p class="eyebrow" data-i18n="hero.eyebrow">Havacılık · altyapı ve veri</p>
+            <h2 data-i18n="hero.h2">Kömür ocaklarının üstüne kurulan havalimanı</h2>
+            <p class="hero-text" data-i18n="hero.text">
+              Terk edilmiş açık kömür ocakları ve 70 taş ocağı gölünden oluşan
+              7.600 hektarlık bir araziye bir havalimanı kuruldu. Yedi yıl sonra
+              dünyanın 8. en yoğun, bağlantı sayısında ise 1. havalimanı. Bu
+              sayfa nasıl olduğunu anlatıyor — plandan ihaleye, taşınmadan
+              metroya — ve her adımı EUROCONTROL'ün kendi günlük kayıtlarıyla
+              ölçüyor.
+            </p>
+            <div class="bignum">
+              <div><strong data-i18n="k1.n">7.600 ha</strong><span data-i18n="k1.t">arazi — eski linyit ocakları ve 70 göl</span></div>
+              <div><strong data-i18n="k2.n">€10,2 mlr</strong><span data-i18n="k2.t">yatırım + 25 yıl için €22,2 mlr kira</span></div>
+              <div><strong data-i18n="k3.n">29 saat</strong><span data-i18n="k3.t">taşınma — 45 saat ayrılmıştı</span></div>
+              <div><strong data-i18n="k4.n">84,5 mn</strong><span data-i18n="k4.t">yolcu (2025) · dünyada 8. sırada</span></div>
+            </div>
           </div>
         </div>
       </section>
 
-      <section class="section timeline-section" id="story">
+      <section class="section" id="story">
         <div class="section-heading" data-reveal>
-          <p class="eyebrow" data-i18n="story.eyebrow">Zaman çizelgesi</p>
-          <h2 data-i18n="story.h2">Boş bir pistten dünyanın en bağlantılı havalimanına.</h2>
+          <p class="eyebrow" data-i18n="story.eyebrow">Kronoloji</p>
+          <h2 data-i18n="story.h2">Bir ihaleden dünyanın en bağlantılı havalimanına.</h2>
           <p class="hero-text" data-i18n="story.text">
-            Her adımın altındaki sayı EUROCONTROL'ün günlük kaydından geliyor —
-            anlatı değil, ölçüm.
+            Her bölümün altındaki rakam ya EUROCONTROL'ün günlük kaydından ya da
+            kaynağı belirtilen bir açıklamadan geliyor.
           </p>
         </div>
 
-        <div class="timeline">
-          <div class="timeline-item" data-reveal>
-            <div class="timeline-marker"></div>
-            <div>
-              <h3 data-i18n="t1.h3">29 Ekim 2018 — kurdele, sonra sessizlik</h3>
-              <p data-i18n="t1.p">
-                Havalimanı Cumhuriyet Bayramı'nda açıldı, ama gerçek trafik
-                gelmedi: sadece birkaç sembolik sefer. Kasım 2018'de günde
-                <b>4 kalkış</b> vardı. Dünyanın en büyük terminali beş ay boyunca
-                neredeyse boş bekledi.
-              </p>
-            </div>
+        <article class="chapter" data-reveal>
+          <div class="ch-media"><img src="assets/img/ist-ataturk-2007.jpg" alt="Istanbul Atatürk Airport in 2007" loading="lazy" /></div>
+          <div class="ch-body">
+            <p class="when" data-i18n="c1.when">Mayıs 2013 · ihale</p>
+            <h3 data-i18n="c1.h3">Atatürk sıkışmıştı</h3>
+            <p data-i18n="c1.p">
+              Atatürk Havalimanı şehrin içinde kalmıştı: iki kesişen pist, büyüyecek
+              yer yok. Mayıs 2013'te Cengiz–Kolin–Limak–Mapa–Kalyon ortak
+              girişimi yeni havalimanı ihalesini kazandı. Model yap-işlet-devret:
+              şirket inşa eder, <b>25 yıl işletir</b>, sonra devlete devreder.
+            </p>
+            <p class="ch-fact" data-i18n="c1.f">
+              Yatırım bedeli <b>10,2 milyar euro</b>; üstüne 25 yıl boyunca
+              devlete ödenecek <b>22,2 milyar euro</b> kira. Dünyanın en büyük
+              özel havalimanı işletmesi.
+            </p>
           </div>
+        </article>
 
-          <div class="timeline-item" data-reveal>
-            <div class="timeline-marker"></div>
-            <div>
-              <h3 data-i18n="t2.h3">5–6 Nisan 2019 — Büyük Göç</h3>
-              <p data-i18n="t2.p">
-                Atatürk Havalimanı ticari trafiğe kapandı ve her şey 40 km
-                kuzeye taşındı. 686 tır, 47.000 ton ekipman, 1.800 kişi; taşınan
-                yükün kapladığı alan 33 futbol sahası kadardı. Devlet 45 saatlik
-                pencere vermişti — operasyon <b>29 saatte</b> bitti. Bir uçağın
-                bakım tezgâhı sabah Atatürk'te, akşam İstanbul'daydı.
-              </p>
-              <p class="tl-note" data-i18n="t2.n">
-                Veride: Ocak 2019'da günde <b>12 kalkış</b> → Nisan 2019'da
-                <b>444</b>. Havacılık tarihinin tek seferde en büyük taşınması.
-              </p>
-            </div>
+        <article class="chapter flip" data-reveal>
+          <div class="ch-media"><img src="assets/img/ist-aerial.jpg" alt="Aerial view of Istanbul Airport" loading="lazy" /></div>
+          <div class="ch-body">
+            <p class="when" data-i18n="c2.when">Arazi</p>
+            <h3 data-i18n="c2.h3">Terk edilmiş ocakların üstüne</h3>
+            <p data-i18n="c2.p">
+              Seçilen yer Arnavutköy'de, Terkos Gölü yakınında, Karadeniz
+              kıyısında <b>7.600 hektar</b>. Ama boş bir arazi değildi: bölge
+              yıllarca kum, çakıl ve linyit için kazılmıştı. Proje alanında
+              <b>16 ruhsatlı maden</b> vardı ve eski açık ocaklar toprakla
+              dolduruldu.
+            </p>
+            <p class="ch-fact" data-i18n="c2.f">
+              Eski kazılardan geriye kalan <b>70 ayrı su kütlesi</b> — 0,17
+              hektardan 100 hektara kadar, toplam 610 hektar. Pistlerin altındaki
+              zemin, bir madencilik peyzajının üzerine yeniden inşa edildi.
+            </p>
           </div>
+        </article>
 
-          <div class="timeline-item" data-reveal>
-            <div class="timeline-marker"></div>
-            <div>
-              <h3 data-i18n="t3.h3">Yaz 2019 — ilk gerçek sınav</h3>
-              <p data-i18n="t3.p">
-                Açıldıktan üç ay sonra havalimanı günde <b>634 kalkışa</b> ulaştı.
-                O yıl dünya sıralamasında 28. sıradaydı — bir yer değiştirmenin
-                değil, bir başlangıcın rakamı.
-              </p>
-            </div>
+        <article class="chapter" data-reveal>
+          <div class="ch-media"><img src="assets/img/ist-entrance.jpg" alt="Istanbul Airport terminal entrance" loading="lazy" /></div>
+          <div class="ch-body">
+            <p class="when" data-i18n="c3.when">29–31 Ekim 2018 · açılış</p>
+            <h3 data-i18n="c3.h3">Açıldı, ama adı IST değildi</h3>
+            <p data-i18n="c3.p">
+              Havalimanı 29 Ekim 2018'de, Cumhuriyet Bayramı'nda törenle açıldı.
+              İlk ticari sefer iki gün sonra kalktı: <b>31 Ekim 2018, TK2124,
+              Ankara</b>. Sonra beş ay boyunca neredeyse hiçbir şey olmadı —
+              Kasım 2018'de günde ortalama <b>4 kalkış</b>.
+            </p>
+            <p class="ch-fact" data-i18n="c3.f">
+              Bu dönemde yeni havalimanının IATA kodu <b>ISL</b>'di; <b>IST</b>
+              hâlâ Atatürk'e aitti. Kodlar henüz yer değiştirmemişti.
+            </p>
           </div>
+        </article>
 
-          <div class="timeline-item somber" data-reveal>
-            <div class="timeline-marker"></div>
-            <div>
-              <h3 data-i18n="t4.h3">Nisan 2020 — gökyüzü boşalıyor</h3>
-              <p data-i18n="t4.p">
-                Pandemi trafiği bir ayda sildi: günde <b>22 kalkış</b>, bir önceki
-                yılın aynı ayına göre <b>%96 düşüş</b>. Yeni açılmış, dünyanın en
-                büyük terminallerinden biri, günde yirmi küsur uçak uğurluyordu.
-              </p>
-            </div>
+        <article class="chapter flip" data-reveal>
+          <div class="ch-media"><img src="assets/img/ist-terminal.jpg" alt="Istanbul Airport terminal interior" loading="lazy" /></div>
+          <div class="ch-body">
+            <p class="when" data-i18n="c4.when">5–6 Nisan 2019 · Büyük Göç</p>
+            <h3 data-i18n="c4.h3">45 saat verildi, 29 saatte bitti</h3>
+            <p data-i18n="c4.p">
+              Atatürk ticari trafiğe kapandı ve bir havalimanının bütün işleyen
+              parçası 40 km kuzeye taşındı: <b>686 tır</b>, <b>47.000 ton</b>
+              ekipman, <b>1.800 kişi</b>. Taşınan yükün kapladığı alan 33 futbol
+              sahası kadardı, tırların kat ettiği toplam yol 400.000 km. Devlet
+              45 saatlik bir pencere vermişti; operasyon <b>29 saatte</b> bitti.
+            </p>
+            <p class="ch-fact" data-i18n="c4.f">
+              Ve kodlar takas edildi: <b>IST</b> yeni havalimanına geçti,
+              Atatürk <b>ISL</b> oldu. Veride: Ocak 2019'da günde 12 kalkış →
+              Nisan 2019'da <b>444</b>.
+            </p>
           </div>
+        </article>
 
-          <div class="timeline-item" data-reveal>
-            <div class="timeline-marker"></div>
-            <div>
-              <h3 data-i18n="t5.h3">14 Haziran 2020 — boş göğe açılan üçüncü pist</h3>
-              <p data-i18n="t5.p">
-                Üçüncü bağımsız pist, trafiğin dibi gördüğü ay açıldı. İGA'ya
-                göre iniş süreleri ortalama 7, kalkış süreleri 4 dakika kısaldı —
-                ama o an sıkışacak trafik yoktu. Kapasite, ihtiyaçtan yıllar önce
-                yerindeydi; etkisi ancak trafik döndüğünde görülecekti.
-              </p>
-            </div>
+        <article class="chapter" data-reveal>
+          <div class="ch-media"><img src="assets/img/ist-metro.jpg" alt="M11 metro station at Istanbul Airport" loading="lazy" /></div>
+          <div class="ch-body">
+            <p class="when" data-i18n="c5.when">22 Ocak 2023 · M11</p>
+            <h3 data-i18n="c5.h3">Havalimanına bir metro yapıldı</h3>
+            <p data-i18n="c5.p">
+              Havalimanı şehir merkezine 40 km uzakta açıldı ve dört yıl boyunca
+              oraya ulaşmak demek otoyol demekti. 22 Ocak 2023'te M11 metro hattı
+              Kağıthane–İstanbul Havalimanı arasında açıldı; Gayrettepe bağlantısı
+              Ocak 2024'te, Arnavutköy durakları Mart 2024'te eklendi.
+            </p>
+            <p class="ch-fact" data-i18n="c5.f">
+              Saatte <b>120 km</b> ile Türkiye'nin en hızlı metrosu; havalimanından
+              Gayrettepe'ye <b>yaklaşık 30 dakika</b>. Havalimanı ancak bu noktada
+              şehre gerçekten bağlandı.
+            </p>
           </div>
+        </article>
+      </section>
 
-          <div class="timeline-item somber" data-reveal>
-            <div class="timeline-marker"></div>
-            <div>
-              <h3 data-i18n="t6.h3">24–25 Ocak 2022 — kar</h3>
-              <p data-i18n="t6.p">
-                Yoğun kar altında kargo terminalinin çatısı çöktü ve uçuşlar
-                durduruldu; THY tek başına 265 sefer iptal etti. Yolcular
-                terminalde kartonların üzerinde sabahladı.
-              </p>
-              <p class="tl-note" data-i18n="t6.n">
-                Veride, bir kapanmanın tam imzası: 23 Ocak <b>424 kalkış</b> →
-                24 Ocak <b>205</b> → 25 Ocak <b>15 kalkış</b> ve kalkış başına
-                <b>194 dakika</b> rötar. Üç gün sonra 490 kalkışla normale döndü.
-              </p>
-            </div>
-          </div>
-
-          <div class="timeline-item somber" data-reveal>
-            <div class="timeline-marker"></div>
-            <div>
-              <h3 data-i18n="t7.h3">6 Şubat 2023 — deprem</h3>
-              <p data-i18n="t7.p">
-                Kahramanmaraş depremlerinden sonra İstanbul Havalimanı yardım
-                köprüsüne döndü. Kar fırtınasının tam tersi bir iz bıraktı:
-                havalimanı kapanmadı, <b>doldu</b>.
-              </p>
-              <p class="tl-note" data-i18n="t7.n">
-                Kalkışlar <b>556'dan 681'e çıkarken</b> rötar 45 dakikadan
-                <b>75 dakikaya</b> tırmandı. Kar trafiği düşürür, afet yükseltir —
-                ikisi de aynı veride, birbirinin zıddı iki parmak izi.
-              </p>
-            </div>
-          </div>
-
-          <div class="timeline-item" data-reveal>
-            <div class="timeline-marker"></div>
-            <div>
-              <h3 data-i18n="t8.h3">2023 — en kötü dönem</h3>
-              <p data-i18n="t8.p">
-                Trafik toparlanırken rötar da onunla büyüdü. 2023'ün ikinci
-                yarısında kalkış başına <b>21,4 dakika</b> — kaydın en yüksek
-                seviyesi. Bu noktada büyümenin bedeli gecikme gibi görünüyordu.
-              </p>
-            </div>
-          </div>
-
-          <div class="timeline-item" data-reveal>
-            <div class="timeline-marker"></div>
-            <div>
-              <h3 data-i18n="t9.h3">2025 — bağın kopuşu</h3>
-              <p data-i18n="t9.p">
-                Sonra ikisi ayrıldı. 2025'in ilk yarısında havalimanı günde
-                <b>713 kalkışla</b> 2022'nin ilk yarısındaki 521 kalkıştan çok
-                daha yoğundu — ama rötar <b>18,95 dakikadan 11,90'a</b> düşmüştü.
-                Aynı trafikte yarı yarıya gecikme.
-              </p>
-              <p class="tl-note" data-i18n="t9.n">
-                Aylık veride yoğunluk ile rötar arasındaki korelasyon sadece
-                <b>+0,41</b>. IST daha yoğun olmayı öğrendi, daha geç kalmayı değil.
-              </p>
-            </div>
-          </div>
-
-          <div class="timeline-item" data-reveal>
-            <div class="timeline-marker"></div>
-            <div>
-              <h3 data-i18n="t10.h3">Bugün — 8. sırada, en bağlantılı 1.</h3>
-              <p data-i18n="t10.p">
-                2025'te 84,4 milyon yolcuyla dünyanın <b>8. en yoğun</b>
-                havalimanı — 2019'da 28. sıradaydı. Bağlantı sayısında ise
-                birinci: 82.733 bağlantı, 327 destinasyon. En yoğun günü
-                31 Mayıs 2026: <b>1.703 hareket</b>.
-              </p>
-            </div>
-          </div>
+      <section class="section" data-reveal>
+        <div class="chart-card">
+          <h3 data-i18n="px.h3">Yıllık yolcu sayısı</h3>
+          <p class="sub" data-i18n="px.sub">milyon yolcu · İGA / ACI World açıklamaları</p>
+          <div class="pax" id="paxWrap"></div>
+          <div class="pax-cap"><i></i><span data-i18n="px.cap">yıllık kapasite: 90 milyon</span></div>
+          <p class="sub" style="margin: 16px 0 0" data-i18n="px.note">
+            2022 burada yok: diğerleriyle aynı güvenilirlikte bir kaynak
+            bulamadım, tahmin edilmiş bir çubuk ise boşluktan kötüdür.
+          </p>
         </div>
       </section>
 
@@ -341,34 +316,56 @@
         </div>
 
         <div class="chart-card" data-reveal>
-          <h3 data-i18n="c1.h3">Günlük kalkış sayısı</h3>
-          <p class="sub" data-i18n="c1.sub">aylık ortalama · LTFM · EUROCONTROL</p>
-          <div class="chart-wrap"><svg id="svgVol" viewBox="0 0 900 340" role="img"
-            aria-labelledby="c1t"><title id="c1t">Istanbul Airport mean daily departures by month, 2018–2026</title></svg>
-            <div class="tip" id="tipVol"></div></div>
+          <h3 data-i18n="c1c.h3">Günlük kalkış sayısı</h3>
+          <p class="sub" data-i18n="c1c.sub">aylık ortalama · LTFM · EUROCONTROL</p>
+          <div class="chart-wrap"><svg id="svgVol" viewBox="0 0 900 340" role="img" aria-labelledby="c1t"><title id="c1t">Istanbul Airport mean daily departures by month, 2018–2026</title></svg><div class="tip" id="tipVol"></div></div>
           <div class="evkey">
-            <span data-i18n="c1.e1">Büyük Göç · Nisan 2019</span>
-            <span data-i18n="c1.e2">Pandemi · Mart 2020</span>
-            <span data-i18n="c1.e3">3. pist · Haziran 2020</span>
+            <span data-i18n="c1c.e1">Büyük Göç · Nisan 2019</span>
+            <span data-i18n="c1c.e2">Pandemi · Mart 2020</span>
+            <span data-i18n="c1c.e3">3. pist · Haziran 2020</span>
+            <span data-i18n="c1c.e4">Metro · Ocak 2023</span>
           </div>
         </div>
 
         <div class="chart-card" data-reveal>
-          <h3 data-i18n="c2.h3">Kalkış başına rötar</h3>
-          <p class="sub" data-i18n="c2.sub">aylık ortalama dakika · tüm sebepler · 2021'den itibaren</p>
-          <div class="chart-wrap"><svg id="svgDly" viewBox="0 0 900 320" role="img"
-            aria-labelledby="c2t"><title id="c2t">Istanbul Airport mean pre-departure delay per departure by month</title></svg>
-            <div class="tip" id="tipDly"></div></div>
+          <h3 data-i18n="c2c.h3">Kalkış başına rötar</h3>
+          <p class="sub" data-i18n="c2c.sub">aylık ortalama dakika · tüm sebepler · 2021'den itibaren</p>
+          <div class="chart-wrap"><svg id="svgDly" viewBox="0 0 900 320" role="img" aria-labelledby="c2t"><title id="c2t">Istanbul Airport mean pre-departure delay per departure by month</title></svg><div class="tip" id="tipDly"></div></div>
           <div class="evkey">
-            <span data-i18n="c2.e1">Kar · Ocak 2022</span>
-            <span data-i18n="c2.e2">Deprem · Şubat 2023</span>
+            <span data-i18n="c2c.e1">Kar · Ocak 2022</span>
+            <span data-i18n="c2c.e2">Deprem · Şubat 2023</span>
           </div>
         </div>
+
+        <article class="chapter" data-reveal style="margin-top: 22px">
+          <div class="ch-media" style="background: linear-gradient(135deg,#1b1f2a,#2b2132 55%,#3a1d24); display: grid; place-items: center;">
+            <span style="font-family:'Space Grotesk',sans-serif; color:#fff; text-align:center; line-height:1.1;">
+              <span style="display:block; font-size:2.6rem; font-weight:700; letter-spacing:-0.03em;">18,95 → 11,90</span>
+              <span data-i18n="c6.badge" style="display:block; font-size:0.8rem; opacity:0.6; margin-top:8px;">dakika · kalkış başına</span>
+            </span>
+          </div>
+          <div class="ch-body">
+            <p class="when" data-i18n="c6.when">2022 → 2025 · bulgu</p>
+            <h3 data-i18n="c6.h3">Daha yoğun, ama daha az geç</h3>
+            <p data-i18n="c6.p">
+              2022'nin ilk yarısında havalimanı günde 521 kalkışta kalkış başına
+              <b>18,95 dakika</b> rötar üretiyordu. 2025'in ilk yarısında günde
+              <b>713 kalkışa</b> çıkmıştı — çok daha yoğun — ama rötar
+              <b>11,90 dakikaya</b> inmişti.
+            </p>
+            <p class="ch-fact" data-i18n="c6.f">
+              Aylık kayıtta yoğunluk ile rötar arasındaki korelasyon yalnızca
+              <b>+0,41</b>. Kar havalimanını kapatır (25 Ocak 2022: 15 kalkış),
+              deprem doldurur (Şubat 2023: kalkışlar artarken rötar 75 dakikaya
+              çıktı) — aynı veride birbirinin zıddı iki parmak izi.
+            </p>
+          </div>
+        </article>
       </section>
 
       <section class="section" data-reveal>
         <div class="section-heading">
-          <p class="eyebrow" data-i18n="src.eyebrow">Kaynaklar</p>
+          <p class="eyebrow" data-i18n="src.eyebrow">Kaynaklar ve görseller</p>
           <h2 data-i18n="src.h2">Her sayı sayılabilir bir yerden geliyor.</h2>
         </div>
         <p class="srcs" data-i18n="src.p">
@@ -379,16 +376,17 @@
           Veri, telif ve sorumluluk reddi bildirimiyle birlikte kısmen çoğaltılabilir;
           EUROCONTROL doğruluk, eksiksizlik veya kullanışlılık konusunda hiçbir
           garanti vermez ve buradaki yorumlar EUROCONTROL'ün resmî görüşünü yansıtmaz.
-          Sıralama ve yolcu sayıları ACI World 2025 verisi. Taşınma ve pist
-          rakamları THY ve İGA açıklamaları ile dönemin haber kaynaklarından.
-          1 Ekim 2023'teki kalkış başına 90,9 dakikalık zirveye henüz açıklama
-          bulamadım — trafik normaldi; nedeni araştırılmayı bekliyor.
+          Sıralama ve yolcu sayıları ACI World ve İGA açıklamaları. İhale, maliyet,
+          arazi ve metro bilgileri İGA'nın çevresel etki raporu ile dönemin haber
+          kaynaklarından. 1 Ekim 2023'teki kalkış başına 90,9 dakikalık zirveye
+          henüz bir açıklama bulamadım — o gün trafik normaldi.
         </p>
+        <ul class="credit-list" id="credits"></ul>
       </section>
     </main>
 
     <footer class="footer">
-      <p data-i18n="footer.p">Veri: EUROCONTROL PRU · ACI World · grafikler ham SVG</p>
+      <p data-i18n="footer.p">Veri: EUROCONTROL PRU · ACI World · fotoğraflar Wikimedia Commons</p>
       <p id="year"></p>
     </footer>
 
@@ -400,68 +398,74 @@
         "nav.story": "The story",
         "nav.charts": "The record",
         "nav.data": "The dataset →",
-        "hero.eyebrow": "Aviation · a data story",
-        "hero.h2": "How do you move an airport in 29 hours?",
-        "hero.text": "On 5 April 2019 Turkish Airlines began moving an entire airport. The state had allowed 45 hours; it was done in 29. 686 trucks, 47,000 tonnes of equipment, 1,800 people. This page follows Istanbul Airport's record from that day to this — a pandemic, a third runway, a snowstorm and an earthquake — read from EUROCONTROL's own daily traffic and delay figures.",
-        "k1.n": "29 hours",
-        "k1.t": "the move's actual duration, against 45 allowed",
-        "k2.n": "686",
-        "k2.t": "trucks · 47,000 tonnes of equipment · 1,800 staff",
-        "k3.n": "28 → 8",
-        "k3.t": "world rank, 2019 to 2025 (ACI)",
-        "k4.n": "1,703",
-        "k4.t": "movements on its busiest single day — 31 May 2026",
-        "story.eyebrow": "Timeline",
-        "story.h2": "From an empty runway to the world's most connected airport.",
-        "story.text": "The number under each step comes from EUROCONTROL's daily record — measurement, not narrative.",
-        "t1.h3": "29 October 2018 — a ribbon, then silence",
-        "t1.p": "The airport opened on Republic Day, but the traffic did not follow: a handful of symbolic flights. In November 2018 it averaged <b>4 departures a day</b>. The largest terminal in the world sat nearly empty for five months.",
-        "t2.h3": "5–6 April 2019 — the Big Move",
-        "t2.p": "Atatürk closed to commercial traffic and everything moved 40 km north. 686 trucks, 47,000 tonnes of equipment, 1,800 people; the load covered the area of 33 football pitches. The state allowed a 45-hour window — the operation finished in <b>29 hours</b>. An aircraft maintenance rig that started the morning at Atatürk ended the evening at Istanbul.",
-        "t2.n": "In the data: <b>12 departures a day</b> in January 2019 → <b>444</b> in April. The largest single relocation in aviation history.",
-        "t3.h3": "Summer 2019 — the first real test",
-        "t3.p": "Three months after the move the airport was running <b>634 departures a day</b>. It ranked 28th in the world that year — the number of a beginning, not of a relocation.",
-        "t4.h3": "April 2020 — the sky empties",
-        "t4.p": "The pandemic erased the traffic in a month: <b>22 departures a day</b>, a <b>96% fall</b> on the same month a year earlier. One of the largest terminals ever built, newly opened, was seeing off twenty-odd aircraft a day.",
-        "t5.h3": "14 June 2020 — a third runway into an empty sky",
-        "t5.p": "The third independent runway opened in the month traffic hit bottom. İGA reported landing times falling by 7 minutes on average and take-off times by 4 — but there was no congestion left to relieve. The capacity was in place years before it was needed, and its effect could only show once the traffic came back.",
-        "t6.h3": "24–25 January 2022 — snow",
-        "t6.p": "Under heavy snow the roof of the cargo terminal collapsed and flights were suspended; Turkish Airlines alone cancelled 265 of them. Passengers slept in the terminal on flattened cardboard.",
-        "t6.n": "In the data, the exact signature of a shutdown: 23 Jan <b>424 departures</b> → 24 Jan <b>205</b> → 25 Jan <b>15 departures</b> at <b>194 minutes</b> of delay each. Three days later it was back to 490.",
-        "t7.h3": "6 February 2023 — the earthquake",
-        "t7.p": "After the Kahramanmaraş earthquakes Istanbul Airport became a relief bridge. It left the opposite mark to the snowstorm: the airport did not close, it <b>filled</b>.",
-        "t7.n": "Departures climbed from <b>556 to 681</b> while delay rose from 45 minutes to <b>75</b>. Snow pushes traffic down, a disaster pushes it up — two opposite fingerprints in the same dataset.",
-        "t8.h3": "2023 — the worst of it",
-        "t8.p": "As traffic recovered, delay grew with it. In the second half of 2023 it reached <b>21.4 minutes per departure</b>, the highest in the record. At that point the price of growth looked like lateness.",
-        "t9.h3": "2025 — the decoupling",
-        "t9.p": "Then the two came apart. In the first half of 2025 the airport was far busier than the first half of 2022 — <b>713 departures a day against 521</b> — yet delay had fallen from <b>18.95 minutes to 11.90</b>. The same traffic, half the delay.",
-        "t9.n": "Across the monthly record, the correlation between how busy IST is and how late it runs is only <b>+0.41</b>. It learned to be busier without learning to be later.",
-        "t10.h3": "Today — 8th busiest, 1st most connected",
-        "t10.p": "84.4 million passengers in 2025 make it the world's <b>8th busiest</b> airport; in 2019 it was 28th. On connections it is first: 82,733 connections to 327 destinations. Its busiest single day was 31 May 2026 — <b>1,703 movements</b>.",
+        "hero.eyebrow": "Aviation · infrastructure and data",
+        "hero.h2": "The airport built on top of coal pits",
+        "hero.text": "An airport was built across 7,600 hectares of abandoned open-cast mines and 70 quarry lakes. Seven years later it is the world's 8th busiest and its most connected. This page is how that happened — from the tender to the move to the metro — with every step measured against EUROCONTROL's own daily records.",
+        "k1.n": "7,600 ha",
+        "k1.t": "of ground — former lignite pits and 70 lakes",
+        "k2.n": "€10.2 bn",
+        "k2.t": "to build, plus €22.2 bn in rent over 25 years",
+        "k3.n": "29 hours",
+        "k3.t": "to move in — 45 had been allowed",
+        "k4.n": "84.5 m",
+        "k4.t": "passengers (2025) · 8th in the world",
+        "story.eyebrow": "Chronology",
+        "story.h2": "From a tender to the world's most connected airport.",
+        "story.text": "The figure under each chapter comes either from EUROCONTROL's daily record or from a cited statement.",
+        "c1.when": "May 2013 · the tender",
+        "c1.h3": "Atatürk had run out of room",
+        "c1.p": "Atatürk Airport had been swallowed by the city: two intersecting runways and nowhere to grow. In May 2013 the Cengiz–Kolin–Limak–Mapa–Kalyon consortium won the tender for a replacement. The model was build-operate-transfer: the company builds it, <b>runs it for 25 years</b>, then hands it to the state.",
+        "c1.f": "The build cost <b>€10.2 billion</b>, on top of <b>€22.2 billion</b> in rent owed to the state across those 25 years. It is the largest privately operated airport in the world.",
+        "c2.when": "The ground",
+        "c2.h3": "Built over abandoned mines",
+        "c2.p": "The site is <b>7,600 hectares</b> at Arnavutköy, near Lake Terkos on the Black Sea coast. It was not empty land: the area had been dug for sand, gravel and lignite for years. <b>Sixteen licensed mines</b> sat inside the project area, and the old open pits were backfilled with soil.",
+        "c2.f": "Those excavations left <b>70 separate bodies of water</b> behind — from 0.17 to 100 hectares each, 610 hectares in total. The ground under the runways is a mining landscape, rebuilt.",
+        "c3.when": "29–31 October 2018 · opening",
+        "c3.h3": "It opened, but it was not called IST",
+        "c3.p": "The airport was inaugurated on 29 October 2018, Republic Day. The first commercial flight left two days later: <b>31 October 2018, TK2124 to Ankara</b>. Then almost nothing happened for five months — an average of <b>4 departures a day</b> in November 2018.",
+        "c3.f": "Through this period the new airport's IATA code was <b>ISL</b>; <b>IST</b> still belonged to Atatürk. The codes had not yet changed hands.",
+        "c4.when": "5–6 April 2019 · the Big Move",
+        "c4.h3": "45 hours allowed, finished in 29",
+        "c4.p": "Atatürk closed to commercial traffic and every working part of an airport moved 40 km north: <b>686 trucks</b>, <b>47,000 tonnes</b> of equipment, <b>1,800 people</b>. The load covered the area of 33 football pitches and the trucks drove 400,000 km between them. The state had allowed a 45-hour window; the operation finished in <b>29 hours</b>.",
+        "c4.f": "And the codes swapped: <b>IST</b> moved to the new airport and Atatürk became <b>ISL</b>. In the data: 12 departures a day in January 2019 → <b>444</b> in April.",
+        "c5.when": "22 January 2023 · M11",
+        "c5.h3": "A metro was built to reach it",
+        "c5.p": "The airport opened 40 km from the city centre, and for four years getting there meant the motorway. On 22 January 2023 the M11 line opened between Kağıthane and Istanbul Airport; the Gayrettepe connection followed in January 2024 and the Arnavutköy stops in March 2024.",
+        "c5.f": "At <b>120 km/h</b> it is the fastest metro in Turkey, and the airport is <b>about 30 minutes</b> from Gayrettepe. Only at this point was it genuinely joined to the city.",
+        "px.h3": "Passengers per year",
+        "px.sub": "millions · İGA / ACI World statements",
+        "px.cap": "annual capacity: 90 million",
+        "px.note": "2022 is missing here: I could not source it to the same standard as the others, and a guessed bar is worse than a gap.",
         "ch.eyebrow": "The record",
         "ch.h2": "Eight years, two measures.",
         "ch.text": "Two separate charts, because these are two different units — movements and minutes. Stacking them on one axis with two scales would mislead.",
-        "c1.h3": "Departures per day",
-        "c1.sub": "monthly mean · LTFM · EUROCONTROL",
-        "c1.e1": "Big Move · Apr 2019",
-        "c1.e2": "Pandemic · Mar 2020",
-        "c1.e3": "3rd runway · Jun 2020",
-        "c2.h3": "Delay per departure",
-        "c2.sub": "monthly mean minutes · all causes · from 2021",
-        "c2.e1": "Snow · Jan 2022",
-        "c2.e2": "Earthquake · Feb 2023",
-        "src.eyebrow": "Sources",
+        "c1c.h3": "Departures per day",
+        "c1c.sub": "monthly mean · LTFM · EUROCONTROL",
+        "c1c.e1": "Big Move · Apr 2019",
+        "c1c.e2": "Pandemic · Mar 2020",
+        "c1c.e3": "3rd runway · Jun 2020",
+        "c1c.e4": "Metro · Jan 2023",
+        "c2c.h3": "Delay per departure",
+        "c2c.sub": "monthly mean minutes · all causes · from 2021",
+        "c2c.e1": "Snow · Jan 2022",
+        "c2c.e2": "Earthquake · Feb 2023",
+        "c6.badge": "minutes · per departure",
+        "c6.when": "2022 → 2025 · the finding",
+        "c6.h3": "Busier, and less late",
+        "c6.p": "In the first half of 2022 the airport was producing <b>18.95 minutes</b> of delay per departure at 521 departures a day. By the first half of 2025 it was running <b>713 departures a day</b> — far busier — and delay had fallen to <b>11.90 minutes</b>.",
+        "c6.f": "Across the monthly record the correlation between how busy IST is and how late it runs is only <b>+0.41</b>. Snow closes the airport (25 January 2022: 15 departures), an earthquake fills it (February 2023: departures rose as delay climbed to 75 minutes) — two opposite fingerprints in the same data.",
+        "src.eyebrow": "Sources and images",
         "src.h2": "Every number here comes from somewhere countable.",
-        "src.p": "Traffic and delay figures are from the EUROCONTROL Performance Review Unit's open datasets: <em>Airport Traffic</em> (daily IFR movements, 2018–2026) and <em>All / ATC pre-departure delays</em> (daily, all causes). © European Organisation for the Safety of Air Navigation (EUROCONTROL). The data may be reproduced in whole or in part providing this copyright notice and disclaimer are included; EUROCONTROL makes no warranty, implied or express, as to the accuracy, completeness or usefulness of the information, and the interpretations here do not necessarily reflect EUROCONTROL's official views. Ranking and passenger figures are ACI World 2025. Relocation and runway figures come from Turkish Airlines and İGA statements and contemporary reporting. I have not found an explanation for the 90.9 minutes per departure recorded on 1 October 2023 — traffic was normal that day; the cause is still open.",
-        "footer.p": "Data: EUROCONTROL PRU · ACI World · charts are hand-built SVG"
+        "src.p": "Traffic and delay figures are from the EUROCONTROL Performance Review Unit's open datasets: <em>Airport Traffic</em> (daily IFR movements, 2018–2026) and <em>All / ATC pre-departure delays</em> (daily, all causes). © European Organisation for the Safety of Air Navigation (EUROCONTROL). The data may be reproduced in whole or in part providing this copyright notice and disclaimer are included; EUROCONTROL makes no warranty, implied or express, as to the accuracy, completeness or usefulness of the information, and the interpretations here do not necessarily reflect EUROCONTROL's official views. Ranking and passenger figures are ACI World and İGA statements. Tender, cost, site and metro details come from İGA's environmental impact assessment and contemporary reporting. I have not found an explanation for the 90.9 minutes per departure recorded on 1 October 2023 — traffic was normal that day.",
+        "footer.p": "Data: EUROCONTROL PRU · ACI World · photographs from Wikimedia Commons"
       };
       if (window.I18N) window.I18N.en = I18N_EN;
     </script>
 
     <script>
-      // ---- charts: two single-series lines. One series needs no legend box —
-      // the title names it. Events are dashed rules in muted ink, never a
-      // second colour competing with the data.
+      // ---- two single-series line charts. One series needs no legend box: the
+      // title names it. Events are dashed rules in muted ink, never a second
+      // colour competing with the data.
       const VOL = getComputedStyle(document.body).getPropertyValue("--vol").trim() || "#3f63c9";
       const DLY = getComputedStyle(document.body).getPropertyValue("--dly").trim() || "#e81932";
       const NS = "http://www.w3.org/2000/svg";
@@ -473,7 +477,7 @@
         const pts = rows.filter(r => r[key] !== null && r[key] !== undefined);
         if (!pts.length) return;
         const xs = i => L + (W - L - R) * (i / (rows.length - 1));
-        // round the top up to a clean step so the axis reads 0/200/400, not 0/221/442
+        // round the top up to a clean step so the axis reads 0/250/500, not 0/221/442
         const raw = Math.max(...pts.map(r => r[key])) * 1.08;
         const ticks = 4;
         const mag = Math.pow(10, Math.floor(Math.log10(raw / ticks)));
@@ -481,25 +485,20 @@
         const max = step * ticks;
         const ys = v => H - B - (H - T - B) * (v / max);
 
-        // recessive grid + axis labels in muted ink, never the series colour
         for (let i = 0; i <= ticks; i++) {
           const v = step * i;
           svg.appendChild(el("line", { x1: L, x2: W - R, y1: ys(v), y2: ys(v),
             stroke: "rgba(43,39,50,0.10)", "stroke-width": 1 }));
-          const t = el("text", { x: L - 9, y: ys(v) + 4, "text-anchor": "end",
-            fill: "#6f6878", "font-size": 11 });
+          const t = el("text", { x: L - 9, y: ys(v) + 4, "text-anchor": "end", fill: "#6f6878", "font-size": 11 });
           t.textContent = step < 1 ? v.toFixed(1) : Math.round(v);
           svg.appendChild(t);
         }
         rows.forEach((r, i) => {
           if (!r.m.endsWith("-01")) return;
-          const t = el("text", { x: xs(i), y: H - 12, "text-anchor": "middle",
-            fill: "#6f6878", "font-size": 11 });
+          const t = el("text", { x: xs(i), y: H - 12, "text-anchor": "middle", fill: "#6f6878", "font-size": 11 });
           t.textContent = r.m.slice(0, 4);
           svg.appendChild(t);
         });
-
-        // event rules, drawn UNDER the data
         (events || []).forEach(ev => {
           const i = rows.findIndex(r => r.m === ev.m);
           if (i < 0) return;
@@ -507,7 +506,6 @@
             stroke: "#6f6878", "stroke-width": 1.5, "stroke-dasharray": "4 4", opacity: 0.5 }));
         });
 
-        // the line: 2px, round joins, drawn in segments so gaps stay gaps
         let d = "", pen = false;
         rows.forEach((r, i) => {
           const v = r[key];
@@ -515,13 +513,11 @@
           d += (pen ? "L" : "M") + xs(i).toFixed(1) + " " + ys(v).toFixed(1) + " ";
           pen = true;
         });
-        svg.appendChild(el("path", { d, fill: "none", stroke: color,
-          "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round" }));
+        svg.appendChild(el("path", { d, fill: "none", stroke: color, "stroke-width": 2,
+          "stroke-linejoin": "round", "stroke-linecap": "round" }));
 
-        // hover layer: crosshair + tooltip, hit target far bigger than the mark
         const hit = el("rect", { x: L, y: T, width: W - L - R, height: H - T - B, fill: "transparent" });
-        const cross = el("line", { x1: 0, x2: 0, y1: T, y2: H - B, stroke: "#6f6878",
-          "stroke-width": 1, opacity: 0 });
+        const cross = el("line", { x1: 0, x2: 0, y1: T, y2: H - B, stroke: "#6f6878", "stroke-width": 1, opacity: 0 });
         const dot = el("circle", { r: 4.5, fill: color, stroke: "#fff", "stroke-width": 2, opacity: 0 });
         svg.appendChild(hit); svg.appendChild(cross); svg.appendChild(dot);
         hit.addEventListener("pointermove", e => {
@@ -535,10 +531,8 @@
           });
           if (bi < 0) return;
           const r = rows[bi];
-          cross.setAttribute("x1", xs(bi)); cross.setAttribute("x2", xs(bi));
-          cross.setAttribute("opacity", 0.35);
-          dot.setAttribute("cx", xs(bi)); dot.setAttribute("cy", ys(r[key]));
-          dot.setAttribute("opacity", 1);
+          cross.setAttribute("x1", xs(bi)); cross.setAttribute("x2", xs(bi)); cross.setAttribute("opacity", 0.35);
+          dot.setAttribute("cx", xs(bi)); dot.setAttribute("cy", ys(r[key])); dot.setAttribute("opacity", 1);
           tip.innerHTML = "<b>" + fmt(r[key]) + "</b> " + unit + "<br>" + r.m;
           tip.style.opacity = 1;
           const lx = (xs(bi) / W) * box.width;
@@ -550,19 +544,43 @@
         });
       }
 
+      function paxBars(pax, cap) {
+        const wrap = document.getElementById("paxWrap");
+        if (!wrap || !pax) return;
+        const top = Math.max(cap || 0, ...pax.map(p => p.p));
+        pax.forEach(p => {
+          const row = document.createElement("div");
+          row.className = "pax-row";
+          const note = p.note ? ' <small>(' + (window.getLang && window.getLang() === "tr" ? "10 ay" : p.note) + ')</small>' : "";
+          row.innerHTML = '<span class="yr">' + p.y + '</span>' +
+            '<span class="pax-track"><span class="pax-bar" style="width:' + (100 * p.p / top).toFixed(1) + '%"></span></span>' +
+            '<span class="val">' + p.p.toFixed(1).replace(".", window.getLang && window.getLang() === "tr" ? "," : ".") + note + "</span>";
+          wrap.appendChild(row);
+        });
+      }
+
       fetch("data-ist-history.json").then(r => r.json()).then(j => {
         const rows = j.monthly;
-        draw(document.getElementById("svgVol"), document.getElementById("tipVol"),
-          rows, "dep", VOL, "dep/day",
-          [{ m: "2019-04" }, { m: "2020-03" }, { m: "2020-06" }], v => Math.round(v));
-        draw(document.getElementById("svgDly"), document.getElementById("tipDly"),
-          rows, "dly", DLY, "min/dep",
+        draw(document.getElementById("svgVol"), document.getElementById("tipVol"), rows, "dep", VOL, "dep/day",
+          [{ m: "2019-04" }, { m: "2020-03" }, { m: "2020-06" }, { m: "2023-01" }], v => Math.round(v));
+        draw(document.getElementById("svgDly"), document.getElementById("tipDly"), rows, "dly", DLY, "min/dep",
           [{ m: "2022-01" }, { m: "2023-02" }], v => v.toFixed(1));
+        paxBars(j.pax, j.capacity);
       }).catch(() => {
-        document.querySelectorAll(".chart-card .sub").forEach(p => {
-          p.textContent = "chart data unavailable";
-        });
+        document.querySelectorAll(".chart-card .sub").forEach(p => { p.textContent = "chart data unavailable"; });
       });
+
+      // photo credits, straight from the file the downloader wrote — so the
+      // attribution can never drift from what is actually on the page
+      fetch("assets/img/credits-ist.json").then(r => r.json()).then(c => {
+        const ul = document.getElementById("credits");
+        c.forEach(x => {
+          const li = document.createElement("li");
+          li.innerHTML = x.title + " — " + x.author + ", <a href=\"" + x.licenseUrl + "\">" +
+            x.license + "</a> (<a href=\"" + x.sourcePage + "\">Wikimedia Commons</a>)";
+          ul.appendChild(li);
+        });
+      }).catch(() => {});
     </script>
   </body>
 </html>
