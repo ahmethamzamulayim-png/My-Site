@@ -1,44 +1,44 @@
 {
- "generated_utc": "2026-08-01T18:45:48+00:00",
- "days": 92,
+ "generated_utc": "2026-08-02T18:45:54+00:00",
+ "days": 93,
  "first_date": "2026-05-01",
- "last_date": "2026-08-01",
- "total_flights": 132480,
- "cargo_flights": 6542,
- "movements_tracked": 81017,
- "cross_validated": 43724,
- "delay_known": 63239,
+ "last_date": "2026-08-02",
+ "total_flights": 132567,
+ "cargo_flights": 6546,
+ "movements_tracked": 82535,
+ "cross_validated": 43770,
+ "delay_known": 63322,
  "median_delay": 0.0,
  "median_when_delayed": 31.0,
  "delay_hist": [
   {
    "bin": "<15",
-   "count": 55895
+   "count": 55965
   },
   {
    "bin": "15–30",
-   "count": 3613
+   "count": 3618
   },
   {
    "bin": "30–60",
-   "count": 2326
+   "count": 2329
   },
   {
    "bin": "60+",
-   "count": 1405
+   "count": 1410
   }
  ],
- "delayed_15": 7344,
- "ontime": 55895,
+ "delayed_15": 7357,
+ "ontime": 55965,
  "pct_delayed": 11.6,
  "pct_ontime": 88.4,
  "recent": {
   "days": 14,
-  "first_date": "2026-07-17",
-  "last_date": "2026-07-30",
-  "flights": 9085,
-  "delayed_15": 1444,
-  "pct_delayed": 15.9
+  "first_date": "2026-07-18",
+  "last_date": "2026-07-31",
+  "flights": 8327,
+  "delayed_15": 1331,
+  "pct_delayed": 16.0
  },
  "daily": [
   {
@@ -1378,7 +1378,7 @@
   },
   {
    "date": "2026-07-31",
-   "movements": 1383,
+   "movements": 1518,
    "flights": 115,
    "flew": 106,
    "delayed": 11,
@@ -1393,20 +1393,35 @@
   },
   {
    "date": "2026-08-01",
-   "movements": 235,
-   "flights": 5,
+   "movements": 1372,
+   "flights": 88,
+   "flew": 83,
+   "delayed": 13,
+   "ontime": 70,
+   "cancelled": 1,
+   "median_delay": 0.0,
+   "median_when_delayed": 36.0,
+   "avg_dep_delay": 24.0,
+   "metars": 48,
+   "conversion": 0.547,
+   "scored": 83
+  },
+  {
+   "date": "2026-08-02",
+   "movements": 246,
+   "flights": 4,
    "flew": 3,
    "delayed": 0,
    "ontime": 3,
-   "cancelled": 1,
+   "cancelled": 0,
    "median_delay": 0.0,
    "median_when_delayed": null,
    "avg_dep_delay": null,
    "metars": 37,
-   "conversion": 0.066,
+   "conversion": 0.061,
    "scored": 3
   }
  ],
- "latest_metar": "METAR LTFM 011820Z 04015KT CAVOK 24/20 Q1014 NOSIG",
- "match_rate": 0.017
+ "latest_metar": "METAR LTFM 021820Z 03008KT CAVOK 24/21 Q1014 NOSIG",
+ "match_rate": 0.016
 }
