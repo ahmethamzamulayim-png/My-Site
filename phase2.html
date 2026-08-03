@@ -121,19 +121,19 @@
       </section>
 
       <section class="section" data-reveal>
-        <div class="quest main">
-          <span class="quest-tag" data-i18n="q.priority">Öncelik · ana görev</span>
+        <a class="quest main link" href="model.html">
+          <span class="quest-tag" data-i18n="q.priority">Öncelik · ana görev · hazır →</span>
           <h3 data-i18n="q.ml.h">Rötar tahmin modeli</h3>
           <p data-i18n="q.ml.p">
-            Bir uçuşun 15+ dk rötarlı olma olasılığını tahmin et — kalkış saati,
-            havayolu, rota, hava durumu (METAR) ve uçağın önceki bacağının
-            rötarından. Kuruldu ve ölçüldü: Mayıs–Haziran'da eğitilip Temmuz'da
-            körlemesine test edildi ve hibrit model referans tabloyu yalnızca
-            0,007 AUC geçti. Ölçülen sebep şu: eğitim aylarında toplam beş saatlik
-            gök gürültülü fırtına var — model, rötarı üçe katlayan tek etkiyi
-            öğrenemiyor. Kışın veri biriktikçe tekrar bakılacak.
+            Bir uçuşun 15+ dk rötarlı kalkma olasılığını tahmin et — kalkış saati,
+            havayolu, rota, hava durumu ve uçağın önceki bacağından. Mayıs–Haziran'da
+            eğitildi, Temmuz'da körlemesine test edildi: referans tablo 0,711,
+            model <strong>0,742</strong> AUC; en riskli %10'da 3,44 kat rötar.
+            Asıl fark uçağın kendisinden geliyor — yerde 60 dakikadan az kalan
+            uçuşların %56,6'sı geç kalkıyor, referans tablo ise %20,7 diyor.
+            Nasıl kurulduğu, iki gerçek örnek ve nerede işe yaramadığı →
           </p>
-        </div>
+        </a>
 
         <div class="quest-grid">
           <a class="quest link" href="#sidequest1">
@@ -152,15 +152,6 @@
               İstanbul'dan en yüksek rötar riskiyle uçan 20 rota, 3B küre
               üzerinde — her rota gerçek rötar oranıyla renklendirilmiş. THY
               küresinin veriye dayalı, tarihsel kuzeni.
-            </p>
-          </a>
-          <a class="quest link" href="board.html">
-            <span class="quest-tag done" data-i18n="q.done2">Yan görev · hazır →</span>
-            <h3 data-i18n="q.board.h">Kalkış rötar panosu</h3>
-            <p data-i18n="q.board.p">
-              Ana görevin ilk çalışan yarısı: planlanan her kalkış, kendi
-              geçmişine göre puanlanıyor. Hiç görmediği bir günde en riskli %10,
-              günün geneline göre 2,85 kat daha fazla rötar yaptı.
             </p>
           </a>
           <div class="quest">
@@ -229,17 +220,15 @@
         "hero.eyebrow": "Phase 2",
         "hero.h2": "Delay prediction on the IST dataset",
         "hero.text": "The second stage built on the IST delay dataset: a delay prediction model, and the concrete findings learned along the way. The roadmap and first results are below.",
-        "q.priority": "Priority · main quest",
+        "q.priority": "Priority · main quest · ready →",
         "q.ml.h": "Delay prediction model",
-        "q.ml.p": "Predict the chance a flight is 15+ min late — from departure hour, airline, route, weather (METAR), and the aircraft's previous-leg delay. Built and measured: trained on May–June, tested blind on July, the hybrid beat the lookup baseline by 0.007 AUC. The measured reason it is not more: the training months hold five thunderstorm hours in total, so the model cannot learn the one effect that triples delay. Revisited as winter data accumulates.",
+        "q.ml.p": "Predict the chance a flight leaves 15+ min late — from departure hour, airline, route, weather and the aircraft's previous leg. Trained on May–June, tested blind on July: lookup baseline 0.711, model <strong>0.742</strong> AUC, with 3.44x the delay rate in the riskiest 10%. The difference comes from the aircraft itself — 56.6% of flights whose aircraft had under 60 minutes on the ground leave late, where the lookup table says 20.7%. How it was built, two real cases, and where it fails →",
         "q.done": "Side quest · first results ready ↓",
         "q.done2": "Side quest · ready →",
         "q.rhythm.h": "The airport's pulse",
         "q.rhythm.p": "IST's rhythm: hourly departure/arrival banks, traffic by day of week and by month, a 3-airport comparison. Quota-free and complete, from ADS-B movements alone.",
         "q.side": "Side quest",
         "q.globe.h": "Route delay globe",
-        "q.board.h": "Departure delay board",
-        "q.board.p": "The first working half of the main quest: every scheduled departure scored against its own history. On a day it had never seen, the riskiest 10% ran late 2.85x as often as the day overall.",
         "q.globe.p": "The 20 highest delay-risk routes out of Istanbul, on a 3D globe — each colored by its real share of delayed flights. The data-driven, historical cousin of the THY globe.",
         "q.fleet.h": "Fleet & aircraft rotation",
         "q.fleet.p": "Track aircraft by tail number (icao24): which types fly, how many rotations a single plane makes per day, how tight the turnarounds are. Both concrete knowledge and the prediction model's strongest feature.",
