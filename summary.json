@@ -1,19 +1,19 @@
 {
- "generated_utc": "2026-08-03T19:23:13+00:00",
+ "generated_utc": "2026-08-03T21:08:24+00:00",
  "days": 94,
  "first_date": "2026-05-01",
  "last_date": "2026-08-03",
- "total_flights": 132732,
- "cargo_flights": 6551,
- "movements_tracked": 84273,
- "cross_validated": 43869,
+ "total_flights": 132715,
+ "cargo_flights": 6532,
+ "movements_tracked": 84306,
+ "cross_validated": 45560,
  "delay_known": 63481,
  "median_delay": 0.0,
  "median_when_delayed": 31.0,
  "delay_hist": [
   {
    "bin": "<15",
-   "count": 56104
+   "count": 56103
   },
   {
    "bin": "15–30",
@@ -21,15 +21,15 @@
   },
   {
    "bin": "30–60",
-   "count": 2336
+   "count": 2337
   },
   {
    "bin": "60+",
    "count": 1417
   }
  ],
- "delayed_15": 7377,
- "ontime": 56104,
+ "delayed_15": 7378,
+ "ontime": 56103,
  "pct_delayed": 11.6,
  "pct_ontime": 88.4,
  "recent": {
@@ -449,37 +449,37 @@
   {
    "date": "2026-05-28",
    "movements": 1288,
-   "flights": 1456,
-   "flew": 680,
+   "flights": 1452,
+   "flew": 678,
    "delayed": 54,
-   "ontime": 626,
+   "ontime": 624,
    "cancelled": 22,
    "median_delay": 0.0,
    "median_when_delayed": 28.0,
    "avg_dep_delay": 16.5,
    "metars": 48,
    "conversion": 0.922,
-   "scored": 680
+   "scored": 678
   },
   {
    "date": "2026-05-29",
    "movements": 1332,
-   "flights": 1541,
-   "flew": 741,
+   "flights": 1542,
+   "flew": 742,
    "delayed": 54,
-   "ontime": 687,
+   "ontime": 688,
    "cancelled": 16,
    "median_delay": 0.0,
    "median_when_delayed": 30.5,
    "avg_dep_delay": 17.8,
    "metars": 48,
    "conversion": 0.917,
-   "scored": 741
+   "scored": 742
   },
   {
    "date": "2026-05-30",
    "movements": 1136,
-   "flights": 1612,
+   "flights": 1609,
    "flew": 768,
    "delayed": 63,
    "ontime": 705,
@@ -509,17 +509,17 @@
   {
    "date": "2026-06-01",
    "movements": 1271,
-   "flights": 1417,
-   "flew": 687,
+   "flights": 1421,
+   "flew": 688,
    "delayed": 31,
-   "ontime": 656,
+   "ontime": 657,
    "cancelled": 17,
    "median_delay": 0.0,
    "median_when_delayed": 25.0,
    "avg_dep_delay": 13.7,
    "metars": 48,
    "conversion": 0.829,
-   "scored": 687
+   "scored": 688
   },
   {
    "date": "2026-06-02",
@@ -629,7 +629,7 @@
   {
    "date": "2026-06-11",
    "movements": 1022,
-   "flights": 1042,
+   "flights": 1044,
    "flew": 506,
    "delayed": 54,
    "ontime": 452,
@@ -734,7 +734,7 @@
   {
    "date": "2026-06-18",
    "movements": 1133,
-   "flights": 1567,
+   "flights": 1565,
    "flew": 719,
    "delayed": 65,
    "ontime": 654,
@@ -749,32 +749,32 @@
   {
    "date": "2026-06-19",
    "movements": 1258,
-   "flights": 1607,
-   "flew": 768,
+   "flights": 1604,
+   "flew": 769,
    "delayed": 69,
-   "ontime": 699,
+   "ontime": 700,
    "cancelled": 13,
    "median_delay": 0.0,
    "median_when_delayed": 37.0,
    "avg_dep_delay": 21.3,
    "metars": 48,
    "conversion": 0.917,
-   "scored": 768
+   "scored": 769
   },
   {
    "date": "2026-06-20",
    "movements": 1322,
-   "flights": 1581,
-   "flew": 760,
+   "flights": 1578,
+   "flew": 759,
    "delayed": 70,
-   "ontime": 690,
+   "ontime": 689,
    "cancelled": 17,
    "median_delay": 0.0,
    "median_when_delayed": 36.5,
    "avg_dep_delay": 23.4,
    "metars": 48,
    "conversion": 0.927,
-   "scored": 760
+   "scored": 759
   },
   {
    "date": "2026-06-21",
@@ -794,14 +794,14 @@
   {
    "date": "2026-06-22",
    "movements": 1284,
-   "flights": 1527,
+   "flights": 1528,
    "flew": 725,
-   "delayed": 85,
-   "ontime": 640,
+   "delayed": 86,
+   "ontime": 639,
    "cancelled": 17,
    "median_delay": 0.0,
-   "median_when_delayed": 28.0,
-   "avg_dep_delay": 21.5,
+   "median_when_delayed": 28.5,
+   "avg_dep_delay": 21.6,
    "metars": 48,
    "conversion": 0.912,
    "scored": 725
@@ -1214,7 +1214,7 @@
   {
    "date": "2026-07-20",
    "movements": 1131,
-   "flights": 1716,
+   "flights": 1715,
    "flew": 829,
    "delayed": 103,
    "ontime": 726,
@@ -1229,7 +1229,7 @@
   {
    "date": "2026-07-21",
    "movements": 1363,
-   "flights": 1710,
+   "flights": 1708,
    "flew": 807,
    "delayed": 102,
    "ontime": 705,
@@ -1244,7 +1244,7 @@
   {
    "date": "2026-07-22",
    "movements": 1279,
-   "flights": 1743,
+   "flights": 1742,
    "flew": 820,
    "delayed": 180,
    "ontime": 640,
@@ -1259,7 +1259,7 @@
   {
    "date": "2026-07-23",
    "movements": 1408,
-   "flights": 1695,
+   "flights": 1691,
    "flew": 806,
    "delayed": 108,
    "ontime": 698,
@@ -1274,7 +1274,7 @@
   {
    "date": "2026-07-24",
    "movements": 1434,
-   "flights": 1709,
+   "flights": 1707,
    "flew": 849,
    "delayed": 154,
    "ontime": 695,
@@ -1289,7 +1289,7 @@
   {
    "date": "2026-07-25",
    "movements": 1319,
-   "flights": 1563,
+   "flights": 1561,
    "flew": 791,
    "delayed": 221,
    "ontime": 570,
@@ -1304,7 +1304,7 @@
   {
    "date": "2026-07-26",
    "movements": 1220,
-   "flights": 1599,
+   "flights": 1596,
    "flew": 813,
    "delayed": 158,
    "ontime": 655,
@@ -1320,21 +1320,21 @@
    "date": "2026-07-27",
    "movements": 1065,
    "flights": 992,
-   "flew": 553,
+   "flew": 552,
    "delayed": 67,
-   "ontime": 486,
+   "ontime": 485,
    "cancelled": 7,
    "median_delay": 0.0,
    "median_when_delayed": 30.0,
    "avg_dep_delay": 18.4,
    "metars": 48,
    "conversion": 0.714,
-   "scored": 553
+   "scored": 552
   },
   {
    "date": "2026-07-28",
    "movements": 1388,
-   "flights": 128,
+   "flights": 131,
    "flew": 105,
    "delayed": 7,
    "ontime": 98,
@@ -1364,22 +1364,22 @@
   {
    "date": "2026-07-30",
    "movements": 1643,
-   "flights": 83,
-   "flew": 80,
+   "flights": 84,
+   "flew": 81,
    "delayed": 7,
-   "ontime": 73,
+   "ontime": 74,
    "cancelled": 0,
    "median_delay": 0.0,
    "median_when_delayed": 22.0,
    "avg_dep_delay": 12.3,
    "metars": 48,
    "conversion": 0.535,
-   "scored": 80
+   "scored": 81
   },
   {
    "date": "2026-07-31",
    "movements": 1518,
-   "flights": 115,
+   "flights": 116,
    "flew": 106,
    "delayed": 11,
    "ontime": 95,
@@ -1394,7 +1394,7 @@
   {
    "date": "2026-08-01",
    "movements": 1516,
-   "flights": 89,
+   "flights": 90,
    "flew": 84,
    "delayed": 13,
    "ontime": 71,
@@ -1408,8 +1408,8 @@
   },
   {
    "date": "2026-08-02",
-   "movements": 1564,
-   "flights": 166,
+   "movements": 1565,
+   "flights": 165,
    "flew": 159,
    "delayed": 20,
    "ontime": 139,
@@ -1418,12 +1418,12 @@
    "median_when_delayed": 46.0,
    "avg_dep_delay": 24.7,
    "metars": 48,
-   "conversion": 0.776,
+   "conversion": 0.771,
    "scored": 159
   },
   {
    "date": "2026-08-03",
-   "movements": 276,
+   "movements": 308,
    "flights": 2,
    "flew": 2,
    "delayed": 0,
@@ -1432,11 +1432,11 @@
    "median_delay": 0.0,
    "median_when_delayed": null,
    "avg_dep_delay": null,
-   "metars": 38,
+   "metars": 42,
    "conversion": 0.026,
    "scored": 2
   }
  ],
- "latest_metar": "METAR LTFM 031850Z 02009KT CAVOK 24/22 Q1015 NOSIG",
- "match_rate": 0.007
+ "latest_metar": "METAR LTFM 032050Z 01006KT CAVOK 24/22 Q1015 NOSIG",
+ "match_rate": 0.006
 }
