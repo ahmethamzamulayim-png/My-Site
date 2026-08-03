@@ -176,6 +176,23 @@
         flex: none;
         min-width: 11ch;
       }
+      /* which estimator scored the row — earned, not decorative, so only the
+         upgraded tiers get colour and the default stays quiet */
+      .tier {
+        display: inline-block;
+        margin-left: 7px;
+        padding: 1px 6px;
+        border-radius: 999px;
+        font-size: 0.6rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        border: 1px solid currentColor;
+        opacity: 0.75;
+      }
+      .tier-lookup { color: #8d8496; border-color: #4a4550; }
+      .tier-hybrid { color: #7fa4ff; }
+      .tier-model { color: #6fe3c4; opacity: 1; }
 
       /* detail panel */
       .detail { margin-top: 18px; padding: 18px 20px; border-radius: 18px; background: var(--bg-alt); border: 1px solid var(--line); }
@@ -316,6 +333,13 @@
         "score.none": "None of these have flown yet — the verdict fills in once the day is collected.",
         "d.med": "typical delay when it IS late",
         "d.hour": "this hour across all of IST",
+        "tier.lookup": "lookup",
+        "tier.hybrid": "hybrid",
+        "tier.model": "model",
+        "tier.turn": "aircraft on stand {m} min — scored by the model",
+        "tier.lookup.why": "aircraft not yet known — scored from this flight's history",
+        "tier.hybrid.why": "current weather known, aircraft not yet — scored by the tree",
+        "tier.model.why": "scored by the model",
         "basis.flight": "this flight number",
         "basis.flight+hour": "this flight, this hour",
         "basis.route+hour": "airline + route + hour",
@@ -347,6 +371,13 @@
         "out.late": "ROTARLI", "out.ontime": "ZAMANINDA",
         "score.none": "Bunlarin hicbiri henuz ucmadi — sonuc, gun toplandiginda doluyor.",
         "d.med": "rötarlıysa tipik gecikme", "d.hour": "bu saatte IST geneli",
+        "tier.lookup": "tablo",
+        "tier.hybrid": "hibrit",
+        "tier.model": "model",
+        "tier.turn": "uçak {m} dk yerde — model puanladı",
+        "tier.lookup.why": "uçağı henüz belli değil — uçuşun geçmişinden puanlandı",
+        "tier.hybrid.why": "hava durumu belli, uçağı değil — ağaç puanladı",
+        "tier.model.why": "model puanladı",
         "basis.flight": "bu uçuş numarası", "basis.flight+hour": "bu uçuş, bu saat", "basis.route+hour": "havayolu + rota + saat",
         "basis.route": "havayolu + rota", "basis.destination": "varış noktası",
         "basis.airport": "havalimanı ortalaması",
@@ -584,6 +615,18 @@
           const conf = document.createElement("span");
           conf.className = "conf";
           conf.textContent = `${key("basis." + r.basis)} · n=${r.n}`;
+          // which estimator actually scored this row. A flight is only upgraded
+          // once the information it needs exists — its aircraft has to land
+          // before a turnaround can be known — so this fills in through the day.
+          if (r.tier) {
+            const tag = document.createElement("span");
+            tag.className = "tier tier-" + r.tier;
+            tag.textContent = key("tier." + r.tier);
+            tag.title = r.turnaround_min != null
+              ? key("tier.turn").replace("{m}", r.turnaround_min)
+              : key("tier." + r.tier + ".why");
+            conf.appendChild(tag);
+          }
           row.appendChild(conf);
           row.querySelectorAll(".dimgrp .flap").forEach((f) => f.classList.add("dim"));
           // selecting a row must NOT rebuild the board — that re-wound every leaf

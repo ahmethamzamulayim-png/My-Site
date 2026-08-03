@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-08-03T19:23:14+00:00",
+ "generated_utc": "2026-08-03T21:06:25+00:00",
  "airport": "IST",
  "board_date": "2026-08-04",
  "late_threshold_min": 15,
@@ -8,6 +8,19 @@
   "flights": 63481,
   "days": 92,
   "through": "2026-08-03"
+ },
+ "tiers": {
+  "lookup": 77,
+  "hybrid": 5
+ },
+ "tier_auc": {
+  "lookup": 0.711,
+  "hybrid": 0.716,
+  "model": 0.742
+ },
+ "model_trained": {
+  "trained_rows": 63481,
+  "trained_through": "2026-08-03"
  },
  "scoreboard": null,
  "hourly": [
@@ -28,8 +41,8 @@
   },
   {
    "h": 3,
-   "pct": 0.133,
-   "n": 549
+   "pct": 0.1332,
+   "n": 548
   },
   {
    "h": 4,
@@ -38,13 +51,13 @@
   },
   {
    "h": 5,
-   "pct": 0.2082,
-   "n": 317
+   "pct": 0.2075,
+   "n": 318
   },
   {
    "h": 6,
    "pct": 0.0504,
-   "n": 3788
+   "n": 3787
   },
   {
    "h": 7,
@@ -53,13 +66,13 @@
   },
   {
    "h": 8,
-   "pct": 0.0669,
-   "n": 3154
+   "pct": 0.0672,
+   "n": 3155
   },
   {
    "h": 9,
-   "pct": 0.1155,
-   "n": 1169
+   "pct": 0.1154,
+   "n": 1170
   },
   {
    "h": 10,
@@ -84,12 +97,12 @@
   {
    "h": 14,
    "pct": 0.1273,
-   "n": 3763
+   "n": 3762
   },
   {
    "h": 15,
-   "pct": 0.1585,
-   "n": 4619
+   "pct": 0.1584,
+   "n": 4620
   },
   {
    "h": 16,
@@ -119,7 +132,7 @@
   {
    "h": 21,
    "pct": 0.1332,
-   "n": 2373
+   "n": 2372
   },
   {
    "h": 22,
@@ -135,10 +148,10 @@
  "median_late_overall": 30,
  "validation": {
   "day": "2026-07-27",
-  "flights": 553,
+  "flights": 552,
   "actual_pct": 12.1,
-  "brier": 0.1003,
-  "brier_baseline": 0.1065,
+  "brier": 0.1005,
+  "brier_baseline": 0.1067,
   "top_decile_pct": 36.4,
   "lift": 3.0
  },
@@ -149,14 +162,18 @@
    "flight": "W5115",
    "dest": "OIIE",
    "airline": "Mahan Air",
-   "risk": 0.4299,
+   "risk": 0.3572,
    "basis": "flight",
    "n": 38,
    "median_late": 72,
    "median_from": "flight",
    "hour_rate": 0.1527,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "lookup_risk": 0.4299,
+   "tier": "hybrid",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "00:15",
@@ -164,14 +181,18 @@
    "flight": "RJ8164",
    "dest": "OJAI",
    "airline": "Royal Jordanian",
-   "risk": 0.0411,
+   "risk": 0.0281,
    "basis": "flight+hour",
    "n": 1,
    "median_late": 88,
    "median_from": "route",
    "hour_rate": 0.1527,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "lookup_risk": 0.0411,
+   "tier": "hybrid",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "00:40",
@@ -179,14 +200,18 @@
    "flight": "TK828",
    "dest": "OLBA",
    "airline": "Turkish Airlines",
-   "risk": 0.1843,
+   "risk": 0.1814,
    "basis": "flight+hour",
    "n": 52,
    "median_late": 26,
    "median_from": "flight",
    "hour_rate": 0.1527,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "lookup_risk": 0.1843,
+   "tier": "hybrid",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "00:40",
@@ -194,14 +219,18 @@
    "flight": "TK744",
    "dest": "OPLA",
    "airline": "Turkish Airlines",
-   "risk": 0.184,
+   "risk": 0.2457,
    "basis": "flight+hour",
    "n": 76,
    "median_late": 28,
    "median_from": "flight",
    "hour_rate": 0.1527,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "lookup_risk": 0.184,
+   "tier": "hybrid",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "00:45",
@@ -209,14 +238,18 @@
    "flight": "TK344",
    "dest": "UCFM",
    "airline": "Turkish Airlines",
-   "risk": 0.0262,
+   "risk": 0.0266,
    "basis": "flight+hour",
    "n": 77,
    "median_late": 25,
    "median_from": "route",
    "hour_rate": 0.1527,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "lookup_risk": 0.0262,
+   "tier": "hybrid",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "00:55",
@@ -231,7 +264,10 @@
    "median_from": "route",
    "hour_rate": 0.1527,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "00:55",
@@ -246,7 +282,10 @@
    "median_from": "route",
    "hour_rate": 0.1527,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:05",
@@ -261,7 +300,10 @@
    "median_from": "flight",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:05",
@@ -276,7 +318,10 @@
    "median_from": "flight",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:05",
@@ -291,7 +336,10 @@
    "median_from": "route",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:05",
@@ -306,7 +354,10 @@
    "median_from": "destination",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:10",
@@ -321,7 +372,10 @@
    "median_from": "route",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:10",
@@ -336,7 +390,10 @@
    "median_from": "flight",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:10",
@@ -351,7 +408,10 @@
    "median_from": "route",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:15",
@@ -366,7 +426,10 @@
    "median_from": "route",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:15",
@@ -381,7 +444,10 @@
    "median_from": "airport",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:15",
@@ -396,7 +462,10 @@
    "median_from": "route",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:20",
@@ -411,7 +480,10 @@
    "median_from": "route",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:20",
@@ -426,7 +498,10 @@
    "median_from": "flight",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:25",
@@ -441,7 +516,10 @@
    "median_from": "route",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:25",
@@ -456,7 +534,10 @@
    "median_from": "flight",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:30",
@@ -471,7 +552,10 @@
    "median_from": "route",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:30",
@@ -486,7 +570,10 @@
    "median_from": "flight",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:30",
@@ -501,7 +588,10 @@
    "median_from": "flight",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:35",
@@ -516,7 +606,10 @@
    "median_from": "route",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:35",
@@ -531,7 +624,10 @@
    "median_from": "flight",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:35",
@@ -546,7 +642,10 @@
    "median_from": "route",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:35",
@@ -561,7 +660,10 @@
    "median_from": "route",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:35",
@@ -576,7 +678,10 @@
    "median_from": "airport",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:40",
@@ -591,7 +696,10 @@
    "median_from": "route",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:40",
@@ -606,7 +714,10 @@
    "median_from": "route",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:40",
@@ -621,7 +732,10 @@
    "median_from": "flight",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:40",
@@ -636,7 +750,10 @@
    "median_from": "route",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:40",
@@ -651,7 +768,10 @@
    "median_from": "flight",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:45",
@@ -666,7 +786,10 @@
    "median_from": "airport",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:45",
@@ -681,7 +804,10 @@
    "median_from": "flight",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:50",
@@ -696,7 +822,10 @@
    "median_from": "route",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:50",
@@ -711,7 +840,10 @@
    "median_from": "route",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:50",
@@ -726,7 +858,10 @@
    "median_from": "route",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:50",
@@ -741,7 +876,10 @@
    "median_from": "airport",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:50",
@@ -756,7 +894,10 @@
    "median_from": "flight",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:50",
@@ -771,7 +912,10 @@
    "median_from": "flight",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:55",
@@ -786,7 +930,10 @@
    "median_from": "route",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:55",
@@ -801,7 +948,10 @@
    "median_from": "route",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:55",
@@ -816,7 +966,10 @@
    "median_from": "route",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:55",
@@ -831,7 +984,10 @@
    "median_from": "route",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:55",
@@ -846,7 +1002,10 @@
    "median_from": "destination",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "01:55",
@@ -861,7 +1020,10 @@
    "median_from": "flight",
    "hour_rate": 0.0938,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "02:00",
@@ -876,7 +1038,10 @@
    "median_from": "route",
    "hour_rate": 0.1025,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "02:00",
@@ -891,7 +1056,10 @@
    "median_from": "route",
    "hour_rate": 0.1025,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "02:00",
@@ -906,7 +1074,10 @@
    "median_from": "route",
    "hour_rate": 0.1025,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "02:00",
@@ -921,7 +1092,10 @@
    "median_from": "route",
    "hour_rate": 0.1025,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "02:00",
@@ -936,7 +1110,10 @@
    "median_from": "route",
    "hour_rate": 0.1025,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "02:00",
@@ -951,7 +1128,10 @@
    "median_from": "flight",
    "hour_rate": 0.1025,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "02:00",
@@ -966,7 +1146,10 @@
    "median_from": "route",
    "hour_rate": 0.1025,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "02:00",
@@ -981,7 +1164,10 @@
    "median_from": "route",
    "hour_rate": 0.1025,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "02:05",
@@ -996,7 +1182,10 @@
    "median_from": "airport",
    "hour_rate": 0.1025,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "02:05",
@@ -1011,7 +1200,10 @@
    "median_from": "flight",
    "hour_rate": 0.1025,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "02:05",
@@ -1026,7 +1218,10 @@
    "median_from": "flight",
    "hour_rate": 0.1025,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "02:10",
@@ -1041,7 +1236,10 @@
    "median_from": "flight",
    "hour_rate": 0.1025,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "02:10",
@@ -1056,7 +1254,10 @@
    "median_from": "flight",
    "hour_rate": 0.1025,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "02:15",
@@ -1071,7 +1272,10 @@
    "median_from": "flight",
    "hour_rate": 0.1025,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "02:15",
@@ -1086,7 +1290,10 @@
    "median_from": "route",
    "hour_rate": 0.1025,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "02:15",
@@ -1101,7 +1308,10 @@
    "median_from": "airport",
    "hour_rate": 0.1025,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "02:20",
@@ -1116,7 +1326,10 @@
    "median_from": "flight",
    "hour_rate": 0.1025,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "02:20",
@@ -1131,7 +1344,10 @@
    "median_from": "flight",
    "hour_rate": 0.1025,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "02:25",
@@ -1146,7 +1362,10 @@
    "median_from": "flight",
    "hour_rate": 0.1025,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "02:40",
@@ -1161,7 +1380,10 @@
    "median_from": "route",
    "hour_rate": 0.1025,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "03:30",
@@ -1174,9 +1396,12 @@
    "n": 77,
    "median_late": 45,
    "median_from": "flight",
-   "hour_rate": 0.133,
+   "hour_rate": 0.1332,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "03:30",
@@ -1189,9 +1414,12 @@
    "n": 38,
    "median_late": 45,
    "median_from": "destination",
-   "hour_rate": 0.133,
+   "hour_rate": 0.1332,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "03:45",
@@ -1204,9 +1432,12 @@
    "n": 23,
    "median_late": 26,
    "median_from": "route",
-   "hour_rate": 0.133,
+   "hour_rate": 0.1332,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "03:45",
@@ -1219,9 +1450,12 @@
    "n": 88,
    "median_late": 24,
    "median_from": "destination",
-   "hour_rate": 0.133,
+   "hour_rate": 0.1332,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "03:50",
@@ -1234,9 +1468,12 @@
    "n": 78,
    "median_late": 28,
    "median_from": "route",
-   "hour_rate": 0.133,
+   "hour_rate": 0.1332,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "04:00",
@@ -1251,7 +1488,10 @@
    "median_from": "destination",
    "hour_rate": 0.1139,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "04:00",
@@ -1266,7 +1506,10 @@
    "median_from": "destination",
    "hour_rate": 0.1139,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "04:00",
@@ -1281,7 +1524,10 @@
    "median_from": "flight",
    "hour_rate": 0.1139,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "04:10",
@@ -1296,7 +1542,10 @@
    "median_from": "route",
    "hour_rate": 0.1139,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "04:25",
@@ -1311,7 +1560,10 @@
    "median_from": "route",
    "hour_rate": 0.1139,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "04:25",
@@ -1326,7 +1578,10 @@
    "median_from": "flight",
    "hour_rate": 0.1139,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "04:45",
@@ -1341,7 +1596,10 @@
    "median_from": "route",
    "hour_rate": 0.1139,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "05:00",
@@ -1354,9 +1612,12 @@
    "n": 1,
    "median_late": 30,
    "median_from": "airport",
-   "hour_rate": 0.2082,
+   "hour_rate": 0.2075,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   },
   {
    "time": "05:00",
@@ -1369,9 +1630,12 @@
    "n": 36,
    "median_late": 40,
    "median_from": "flight",
-   "hour_rate": 0.2082,
+   "hour_rate": 0.2075,
    "actual": null,
-   "actual_delay": null
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
   }
  ]
 }
