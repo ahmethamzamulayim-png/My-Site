@@ -1,0 +1,833 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Web Piano — falling notes &amp; real MIDI files | Ahmet Hamza Mülayim</title>
+    <meta
+      name="description"
+      content="A browser piano you can play by hand, with a real MIDI keyboard, or by loading a .mid file — keys light up as they're struck and a falling-notes display previews what's coming next."
+    />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e81932'/%3E%3Ctext x='32' y='45' font-size='38' font-family='sans-serif' font-weight='700' text-anchor='middle' fill='%23fff'%3EA%3C/text%3E%3C/svg%3E" />
+    <link rel="canonical" href="https://ahmethmzamlym.engineer/piano" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Web Piano — falling notes &amp; real MIDI files" />
+    <meta property="og:description" content="Play it by hand, plug in a real MIDI keyboard, or load a .mid file and watch it play itself — keys light up, and falling bars preview what's next." />
+    <meta property="og:url" content="https://ahmethmzamlym.engineer/piano" />
+    <meta property="og:image" content="https://ahmethmzamlym.engineer/assets/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Web Piano | Ahmet Hamza Mülayim" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://ahmethmzamlym.engineer/assets/og-image.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="i18n.js"></script>
+    <script defer src="script.js"></script>
+    <style>
+      .piece-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin-top: 18px; }
+      .piece-card { padding: 22px; border-top: 3px solid var(--line); display: flex; flex-direction: column; gap: 10px; }
+      .piece-grid .piece-card:nth-child(1) { border-top-color: var(--accent); }
+      .piece-grid .piece-card:nth-child(2) { border-top-color: var(--cobalt); }
+      .piece-grid .piece-card:nth-child(3) { border-top-color: var(--turquoise); }
+      .piece-grid .piece-card:nth-child(4) { border-top-color: var(--leaf); }
+      .piece-grid .piece-card:nth-child(5) { border-top-color: var(--gold); }
+      .piece-grid .piece-card:nth-child(6) { border-top-color: var(--plum); }
+      .piece-card .composer { margin: 0; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); }
+      .piece-card h3 { margin: 0; font-family: "Space Grotesk", sans-serif; letter-spacing: -0.02em; font-size: 1.18rem; line-height: 1.25; }
+      .piece-card .lore { margin: 0; color: var(--muted); line-height: 1.65; font-size: 0.92rem; flex: 1; }
+      .piece-card .piece-credit { margin: 0; font-size: 0.72rem; color: var(--muted); opacity: 0.8; }
+      .piece-card .piece-credit a { color: inherit; }
+      .piece-card button.button { min-height: 40px; padding: 0 16px; font-size: 0.9rem; align-self: flex-start; }
+
+      .piano-section { display: flex; flex-direction: column; gap: 16px; }
+
+      .stage-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+      .stage-toolbar input[type="range"] { flex: 1; min-width: 160px; accent-color: var(--gold); }
+      #timeLabel { font-variant-numeric: tabular-nums; color: var(--muted); font-size: 0.85rem; min-width: 96px; }
+      .speed-control { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--muted); }
+      .speed-control input[type="range"] { flex: none; width: 100px; min-width: 0; }
+      #speedLabel { font-variant-numeric: tabular-nums; min-width: 3.4em; }
+
+      button.button, label.button { cursor: pointer; border: 0; font: inherit; }
+      button.button:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+      .song-info { margin: 0; color: var(--muted); font-size: 0.88rem; min-height: 1.3em; }
+      .tracklegend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 0; font-size: 0.78rem; color: var(--muted); }
+      .tracklegend span { display: inline-flex; align-items: center; }
+      .tracklegend i { width: 8px; height: 8px; border-radius: 999px; margin-right: 5px; flex: none; }
+
+      .stage-scroll {
+        overflow-x: auto;
+        overflow-y: hidden;
+        border-radius: 16px;
+        border: 1px solid var(--line);
+        background: linear-gradient(180deg, #fbf7ef 0%, #f2ece0 100%);
+      }
+      .stage-inner { position: relative; }
+      #fall { display: block; }
+      .keys { position: relative; }
+      .key {
+        position: absolute;
+        top: 0;
+        cursor: pointer;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+        transition: background 60ms linear, box-shadow 60ms linear;
+      }
+      .key.white {
+        height: 170px;
+        background: #fffdf7;
+        border: 1px solid rgba(43, 39, 50, 0.16);
+        border-top: none;
+        border-radius: 0 0 7px 7px;
+      }
+      .key.black {
+        height: 104px;
+        background: #232026;
+        border-radius: 0 0 5px 5px;
+        box-shadow: 0 3px 4px rgba(0, 0, 0, 0.35);
+        z-index: 2;
+      }
+      .key.white:hover { background: #f3ecd8; }
+      .key.black:hover { background: #3a3540; }
+
+      .stage-footer { display: flex; flex-direction: column; gap: 6px; }
+      .hint { margin: 0; font-size: 0.82rem; color: var(--muted); }
+      .kb-help summary { cursor: pointer; color: var(--cobalt); font-size: 0.85rem; }
+      .kb-help p { margin: 8px 0 0; font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+      .credit { margin: 0; font-size: 0.74rem; color: var(--muted); opacity: 0.8; }
+      .credit a { color: inherit; }
+
+      @media (max-width: 720px) {
+        .piano-section { padding: 22px; }
+      }
+    </style>
+    <script src="https://unpkg.com/tone@15.1.22/build/Tone.js"></script>
+    <script src="https://unpkg.com/@tonejs/midi@2.0.28/build/Midi.js"></script>
+    <script data-goatcounter="https://ahmethmzamlym.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+  </head>
+  <body>
+    <div class="noise"></div>
+    <header class="site-header">
+      <a class="brand" href="/">
+        <span class="brand-mark">A</span>
+        <span>
+          <strong data-i18n="brand.name">Web Piano</strong>
+          <small data-i18n="brand.sub">Manual play, real MIDI keyboards, and .mid files</small>
+        </span>
+      </a>
+      <nav class="site-nav">
+        <a href="/#offclock" data-i18n="nav.back">← Portfolio</a>
+        <button class="lang-toggle" type="button">TR</button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="hero.eyebrow">Web / Interactive · off the clock</p>
+          <h2 data-i18n="hero.h2">A piano you can play — or feed a MIDI file and watch it play itself.</h2>
+        </div>
+        <p class="hero-text" data-i18n="hero.p">
+          Click the keys, type on your computer keyboard, or plug in a real MIDI
+          keyboard — every note lights up as it's struck, with real sampled piano
+          sound. Load a .mid file and it plays itself while colored bars fall from
+          the top so you can see what's coming, the same way piano-practice games do.
+        </p>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="fp.eyebrow">Six pieces, six stories</p>
+          <h2 data-i18n="fp.h2">Everything here has some lore behind it — click one and it plays itself.</h2>
+        </div>
+        <div class="piece-grid" id="pieceGrid"></div>
+      </section>
+
+      <section class="section piano-section" data-reveal>
+        <div class="stage-toolbar">
+          <label class="button secondary file-btn">
+            <input type="file" id="midiFile" accept=".mid,.midi" hidden />
+            <span data-i18n="tb.load">Load a MIDI file</span>
+          </label>
+          <button id="playBtn" class="button primary" type="button" disabled>▶ Play</button>
+          <button id="stopBtn" class="button secondary" type="button" disabled>■ Stop</button>
+          <input id="seek" type="range" min="0" max="0" step="0.01" value="0" disabled aria-label="Seek" />
+          <span id="timeLabel">0:00 / 0:00</span>
+          <label class="speed-control">
+            <span data-i18n="tb.speed">Speed</span>
+            <input id="speed" type="range" min="0.4" max="3" step="0.05" value="1" aria-label="Playback speed" />
+            <span id="speedLabel">1.00×</span>
+          </label>
+        </div>
+        <p id="songInfo" class="song-info"></p>
+        <p id="trackLegend" class="tracklegend"></p>
+
+        <div class="stage-scroll" id="stageScroll">
+          <div class="stage-inner" id="stageInner">
+            <canvas id="fall"></canvas>
+            <div id="keys" class="keys"></div>
+          </div>
+        </div>
+
+        <div class="stage-footer">
+          <p id="audioStatus" class="hint" data-i18n="hint.loading">Loading piano samples…</p>
+          <p id="midiStatus" class="hint"></p>
+          <details class="kb-help">
+            <summary data-i18n="hint.kbSummary">Computer-keyboard mapping</summary>
+            <p data-i18n="hint.kb">
+              Z X C V B N M and , . / play one octave of white keys; S D · G H J · L ;
+              are the black keys between them. Q W E R T Y U I O P repeats the same
+              pattern an octave higher, with 2 3 5 6 7 9 0 as its black keys.
+            </p>
+          </details>
+          <p class="credit" data-i18n="hint.credit">
+            Piano samples: VSCO2 community edition via
+            <a href="https://github.com/nbrosowsky/tonejs-instruments" target="_blank" rel="noreferrer">tonejs-instruments</a>
+            (CC BY 3.0) · Audio engine: <a href="https://tonejs.github.io/" target="_blank" rel="noreferrer">Tone.js</a>
+            · MIDI parsing: <a href="https://github.com/Tonejs/Midi" target="_blank" rel="noreferrer">@tonejs/midi</a>
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p data-i18n="footer.p">A browser piano, built for the love of the instrument.</p>
+      <p id="year"></p>
+    </footer>
+
+    <script>
+      window.I18N_LANG = "tr";
+      window.I18N = {
+        "brand.name": "Web Piyano",
+        "brand.sub": "Elle çal, gerçek MIDI klavyeler ve .mid dosyaları",
+        "nav.back": "← Portföy",
+        "hero.eyebrow": "Web / Etkileşimli · mesai dışı",
+        "hero.h2": "Elinle çalabileceğin — ya da bir MIDI dosyası verip kendi kendine çalmasını izleyebileceğin bir piyano.",
+        "hero.p": "Tuşlara tıkla, bilgisayar klavyeni kullan ya da gerçek bir MIDI klavye tak — her nota gerçek örneklenmiş piyano sesiyle, vurulduğu anda ışıyor. Bir .mid dosyası yükle, kendi kendine çalsın; üstten düşen renkli çubuklar, piyano pratik oyunlarındaki gibi sırada ne olduğunu gösteriyor.",
+        "tb.load": "MIDI dosyası yükle",
+        "tb.speed": "Hız",
+        "fp.eyebrow": "Altı eser, altı hikâye",
+        "fp.h2": "Buradaki her şeyin bir hikâyesi var — birine tıkla, kendi kendine çalsın.",
+        "hint.loading": "Piyano örnekleri yükleniyor…",
+        "hint.kbSummary": "Bilgisayar klavyesi eşlemesi",
+        "hint.kb": "Z X C V B N M ve , . / bir oktavın beyaz tuşlarını çalar; S D · G H J · L ; aralarındaki siyah tuşlardır. Q W E R T Y U I O P aynı düzeni bir oktav yukarıda tekrarlar, siyah tuşları 2 3 5 6 7 9 0'dır.",
+        "hint.credit": 'Piyano örnekleri: <a href="https://github.com/nbrosowsky/tonejs-instruments" target="_blank" rel="noreferrer">tonejs-instruments</a> üzerinden VSCO2 topluluk sürümü (CC BY 3.0) · Ses motoru: <a href="https://tonejs.github.io/" target="_blank" rel="noreferrer">Tone.js</a> · MIDI ayrıştırma: <a href="https://github.com/Tonejs/Midi" target="_blank" rel="noreferrer">@tonejs/midi</a>',
+        "footer.p": "Enstrümanı sevdiği için yapılmış bir tarayıcı piyanosu.",
+      };
+    </script>
+
+    <script>
+      // ------------------------------------------------------------------
+      // Key geometry: 88 keys, A0(21)..C8(108). White keys lay out left to
+      // right at a fixed step; every black key immediately follows exactly
+      // one white key in MIDI order (no two black keys are adjacent on a
+      // piano), so its x can be derived from the white key right before it
+      // in the same pass — no separate lookup table needed.
+      // ------------------------------------------------------------------
+      const WHITE_W = 32, WHITE_H = 170, BLACK_W = 19, BLACK_H = 104;
+      const FALL_H = 300, LOOKAHEAD = 3.0;
+      const NOTE_NAMES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+      const TRACK_COLORS = ["#24439b", "#1f9e93", "#3e8e4e", "#c98a1a", "#7a3e9e"]; // cobalt, turquoise, leaf, gold, plum
+      const MANUAL_COLOR = "#e81932"; // THY red — reserved for live input (mouse/keyboard/hardware), never a file track
+
+      function midiToName(m) {
+        return NOTE_NAMES[m % 12] + (Math.floor(m / 12) - 1);
+      }
+
+      const KEYS = [];
+      {
+        let wi = 0;
+        for (let m = 21; m <= 108; m++) {
+          const name = midiToName(m);
+          const black = name.includes("#");
+          const k = { midi: m, name, black };
+          if (!black) {
+            k.x = wi * WHITE_W;
+            wi++;
+          } else {
+            k.x = KEYS[KEYS.length - 1].x + WHITE_W - BLACK_W / 2;
+          }
+          KEYS.push(k);
+        }
+        window.TOTAL_WIDTH = wi * WHITE_W;
+      }
+
+      const keyEls = {}; // midi -> DOM element
+      const keyGeom = {}; // midi -> {x, black}
+      KEYS.forEach((k) => (keyGeom[k.midi] = { x: k.x, black: k.black }));
+
+      function renderKeyboard() {
+        const container = document.getElementById("keys");
+        const stageInner = document.getElementById("stageInner");
+        const canvas = document.getElementById("fall");
+        stageInner.style.width = TOTAL_WIDTH + "px";
+        container.style.width = TOTAL_WIDTH + "px";
+        container.style.height = WHITE_H + "px";
+
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = TOTAL_WIDTH * dpr;
+        canvas.height = FALL_H * dpr;
+        canvas.style.width = TOTAL_WIDTH + "px";
+        canvas.style.height = FALL_H + "px";
+        canvas.getContext("2d").scale(dpr, dpr);
+
+        // whites first so blacks paint on top
+        KEYS.filter((k) => !k.black).forEach((k) => container.appendChild(makeKeyEl(k)));
+        KEYS.filter((k) => k.black).forEach((k) => container.appendChild(makeKeyEl(k)));
+      }
+
+      function makeKeyEl(k) {
+        const el = document.createElement("div");
+        el.className = "key " + (k.black ? "black" : "white");
+        el.style.left = k.x + "px";
+        el.style.width = (k.black ? BLACK_W : WHITE_W - 2) + "px";
+        el.dataset.midi = k.midi;
+        keyEls[k.midi] = el;
+
+        const press = (e) => {
+          e.preventDefault();
+          pressManual(k.midi);
+        };
+        const release = () => releaseManual(k.midi);
+        el.addEventListener("mousedown", press);
+        el.addEventListener("mouseup", release);
+        el.addEventListener("mouseleave", release);
+        el.addEventListener("touchstart", press, { passive: false });
+        el.addEventListener("touchend", release);
+        el.addEventListener("touchcancel", release);
+        return el;
+      }
+
+      // ------------------------------------------------------------------
+      // Highlight stack: several sources (a MIDI track, manual play, a
+      // hardware keyboard) can light the same physical key at once. Each
+      // activation pushes a color; deactivation pops it; the key stays lit
+      // in whichever color is now on top instead of going dark early.
+      // ------------------------------------------------------------------
+      const activeStack = new Map(); // midi -> color[]
+
+      function paintKey(midi, color) {
+        const el = keyEls[midi];
+        if (!el) return;
+        el.style.background = color;
+        el.style.boxShadow = `0 0 16px 3px ${color}99, inset 0 -6px 10px ${color}`;
+      }
+      function clearKey(midi) {
+        const el = keyEls[midi];
+        if (!el) return;
+        el.style.background = "";
+        el.style.boxShadow = "";
+      }
+      function setKeyActive(midi, color) {
+        const arr = activeStack.get(midi) || [];
+        arr.push(color);
+        activeStack.set(midi, arr);
+        paintKey(midi, color);
+      }
+      function setKeyInactive(midi, color) {
+        const arr = activeStack.get(midi) || [];
+        const idx = arr.lastIndexOf(color);
+        if (idx !== -1) arr.splice(idx, 1);
+        if (arr.length) paintKey(midi, arr[arr.length - 1]);
+        else clearKey(midi);
+      }
+      function clearAllActive() {
+        activeStack.clear();
+        KEYS.forEach((k) => clearKey(k.midi));
+      }
+
+      // ------------------------------------------------------------------
+      // Audio: Tone.Sampler over real piano samples, sparsely loaded every
+      // major third (~22 files instead of 88) — Tone repitches the gaps,
+      // which keeps the initial download small without sounding synthetic.
+      // ------------------------------------------------------------------
+      let sampler = null;
+      let samplerReady = false;
+
+      function buildSamplerUrls() {
+        const urls = {};
+        for (let m = 24; m <= 108; m += 4) {
+          const name = midiToName(m);
+          urls[name] = name.replace("#", "s") + ".mp3";
+        }
+        return urls;
+      }
+
+      function initAudio() {
+        sampler = new Tone.Sampler({
+          urls: buildSamplerUrls(),
+          baseUrl: "https://cdn.jsdelivr.net/gh/nbrosowsky/tonejs-instruments@master/samples/piano/",
+          onload: () => {
+            samplerReady = true;
+            document.getElementById("audioStatus").textContent = t("Piano ready.", "Piyano hazır.");
+          },
+          onerror: () => {
+            document.getElementById("audioStatus").textContent = t(
+              "Couldn't load piano samples — check your connection.",
+              "Piyano örnekleri yüklenemedi — bağlantını kontrol et."
+            );
+          },
+        }).toDestination();
+      }
+
+      function ensureContext() {
+        return Tone.context.state === "running" ? Promise.resolve() : Tone.start();
+      }
+
+      // ------------------------------------------------------------------
+      // Manual play: mouse/touch on a key, the computer-keyboard map below,
+      // or a real MIDI controller all funnel through these two functions.
+      // ------------------------------------------------------------------
+      const heldManual = new Set();
+
+      function pressManual(midi, velocity = 0.85) {
+        if (heldManual.has(midi)) return;
+        heldManual.add(midi);
+        setKeyActive(midi, MANUAL_COLOR);
+        // Sampler takes a Frequency: a bare number means Hz, not a MIDI note,
+        // so every trigger call goes through midiToName() first.
+        if (samplerReady) ensureContext().then(() => sampler.triggerAttack(midiToName(midi), Tone.now(), velocity));
+      }
+      function releaseManual(midi) {
+        if (!heldManual.has(midi)) return;
+        heldManual.delete(midi);
+        setKeyInactive(midi, MANUAL_COLOR);
+        if (samplerReady) sampler.triggerRelease(midiToName(midi), Tone.now());
+      }
+      window.addEventListener("blur", () => {
+        [...heldManual].forEach(releaseManual);
+      });
+
+      // Computer keyboard — event.code so it's independent of layout (works
+      // the same on a Turkish Q keyboard as a US one).
+      const KB_MAP = {
+        KeyZ: 60, KeyS: 61, KeyX: 62, KeyD: 63, KeyC: 64, KeyV: 65, KeyG: 66, KeyB: 67, KeyH: 68, KeyN: 69, KeyJ: 70, KeyM: 71,
+        Comma: 72, KeyL: 73, Period: 74, Semicolon: 75, Slash: 76,
+        KeyQ: 72, Digit2: 73, KeyW: 74, Digit3: 75, KeyE: 76, KeyR: 77, Digit5: 78, KeyT: 79, Digit6: 80, KeyY: 81, Digit7: 82, KeyU: 83,
+        KeyI: 84, Digit9: 85, KeyO: 86, Digit0: 87, KeyP: 88,
+      };
+      window.addEventListener("keydown", (e) => {
+        if (e.repeat || e.ctrlKey || e.metaKey || e.altKey) return;
+        const active = document.activeElement;
+        if (active && (active.tagName === "INPUT" || active.tagName === "SELECT" || active.tagName === "TEXTAREA")) return;
+        const midi = KB_MAP[e.code];
+        if (midi == null) return;
+        e.preventDefault();
+        pressManual(midi);
+      });
+      window.addEventListener("keyup", (e) => {
+        const midi = KB_MAP[e.code];
+        if (midi != null) releaseManual(midi);
+      });
+
+      // Real MIDI hardware, if the browser and device support it.
+      if (navigator.requestMIDIAccess) {
+        navigator
+          .requestMIDIAccess()
+          .then((access) => {
+            const hook = (input) => {
+              input.onmidimessage = (e) => {
+                const [status, note, vel] = e.data;
+                const cmd = status & 0xf0;
+                if (cmd === 0x90 && vel > 0) pressManual(note, vel / 127);
+                else if (cmd === 0x80 || (cmd === 0x90 && vel === 0)) releaseManual(note);
+              };
+            };
+            const refresh = () => {
+              const names = [...access.inputs.values()].map((i) => i.name);
+              access.inputs.forEach(hook);
+              document.getElementById("midiStatus").textContent = names.length
+                ? t(`MIDI keyboard connected: ${names.join(", ")}`, `MIDI klavye bağlı: ${names.join(", ")}`)
+                : t("No MIDI device connected — plug one in any time.", "Bağlı MIDI cihaz yok — istediğin an tak.");
+            };
+            access.onstatechange = refresh;
+            refresh();
+          })
+          .catch(() => {
+            document.getElementById("midiStatus").textContent = t(
+              "MIDI device access was denied.",
+              "MIDI cihaz erişimi reddedildi."
+            );
+          });
+      } else {
+        document.getElementById("midiStatus").textContent = t(
+          "This browser doesn't support real MIDI keyboards (try Chrome or Edge) — mouse, touch, and computer-keyboard play still work.",
+          "Bu tarayıcı gerçek MIDI klavyeleri desteklemiyor (Chrome ya da Edge dene) — fare, dokunmatik ve bilgisayar klavyesiyle çalma yine çalışır."
+        );
+      }
+
+      // ------------------------------------------------------------------
+      // MIDI file playback: @tonejs/midi resolves tempo/ticks into plain
+      // seconds, so every note just gets scheduled at its absolute time.
+      // Audio triggers on Tone.Transport (sample-accurate); the matching
+      // key-light toggle rides Tone.Draw so it lands on the right animation
+      // frame instead of Transport's internal look-ahead.
+      // ------------------------------------------------------------------
+      let songNotes = [];
+      let songDuration = 0;
+
+      const playBtn = document.getElementById("playBtn");
+      const stopBtn = document.getElementById("stopBtn");
+      const seek = document.getElementById("seek");
+      const fileInput = document.getElementById("midiFile");
+      const speedEl = document.getElementById("speed");
+      const speedLabel = document.getElementById("speedLabel");
+
+      function fmtTime(s) {
+        s = Math.max(0, s | 0);
+        return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
+      }
+
+      function setPlayLabel(playing) {
+        playBtn.textContent = playing ? t("⏸ Pause", "⏸ Duraklat") : t("▶ Play", "▶ Çal");
+      }
+      document.addEventListener("langchange", () => setPlayLabel(Tone.Transport.state === "started"));
+
+      let currentMidi = null;
+
+      function loadSong(midi, name, speed) {
+        currentMidi = { midi, name };
+        speed = speed || parseFloat(speedEl.value) || 1;
+        speedEl.value = speed;
+        speedLabel.textContent = speed.toFixed(2) + "×";
+
+        Tone.Transport.stop();
+        Tone.Transport.cancel(0);
+        clearAllActive();
+        setPlayLabel(false);
+
+        songNotes = [];
+        const trackColors = [];
+        midi.tracks.forEach((track, ti) => {
+          if (!track.notes.length) return;
+          const color = TRACK_COLORS[ti % TRACK_COLORS.length];
+          trackColors.push({ name: track.name || t(`Track ${ti + 1}`, `Parça ${ti + 1}`), color });
+
+          // Recorded performances (as opposed to score engravings) release
+          // the key the instant the pianist's finger lifts and rely on the
+          // sustain pedal for the note to actually keep ringing. We never
+          // read the pedal, so without this every note gets cut dead —
+          // simulate it by stretching each note to the end of whatever
+          // pedal-down span it falls in.
+          const pedalCC = (track.controlChanges && track.controlChanges[64]) || [];
+          const pedalSpans = [];
+          let downAt = null;
+          pedalCC.forEach((cc) => {
+            // Real captures report continuous pedal position, not on/off —
+            // half-pedaling makes the reading dip and recover many times a
+            // second. A midpoint threshold slices that flutter into hundreds
+            // of tiny on/off spans, so notes get extended then un-extended
+            // unpredictably (heard as random cutoffs). Only a fully released
+            // pedal (0) should count as "up" — any engagement still sustains.
+            const down = cc.value > 0;
+            if (down && downAt == null) downAt = cc.time;
+            else if (!down && downAt != null) {
+              pedalSpans.push([downAt, cc.time]);
+              downAt = null;
+            }
+          });
+          if (downAt != null) pedalSpans.push([downAt, downAt + 6]); // pedal never lifted (end of piece) — cap it
+
+          // Real captured performances can carry sensor noise: single-tick
+          // "notes" a few milliseconds long, scattered across random pitches,
+          // that no pianist actually played (nothing in music is 1ms long).
+          // Left in, each one gets floored to an audible blip below and
+          // truncates whatever real note came before it — heard as random
+          // clicks. Drop anything shorter than a real note could ever be.
+          const MIN_NOTE_S = 0.008;
+          const realNotes = track.notes.filter((n) => n.duration >= MIN_NOTE_S);
+
+          const trackNotes = realNotes.map((n) => {
+            let end = n.time + n.duration;
+            const span = pedalSpans.find((s) => end >= s[0] && end <= s[1]);
+            if (span) end = Math.min(span[1], n.time + 8); // cap any one note's sustain regardless
+            return { time: n.time, end, midi: n.midi, velocity: n.velocity || 0.8 };
+          });
+
+          // Sampler.triggerRelease(pitch) stops EVERY currently-ringing voice
+          // of that pitch at once, not just the one that scheduled it — Tone
+          // has no per-voice release in its public API. So if the same key
+          // is struck again before the first strike's release fires (a
+          // trill, a tremolo, repeated octaves), that release kills the new
+          // strike too, mid-note. Truncating each note to end no later than
+          // the next same-pitch onset guarantees only one release is ever
+          // pending per pitch — which is also just what a real piano does
+          // when you re-strike a key.
+          const byPitch = new Map();
+          trackNotes.forEach((n) => {
+            if (!byPitch.has(n.midi)) byPitch.set(n.midi, []);
+            byPitch.get(n.midi).push(n);
+          });
+          byPitch.forEach((list) => {
+            list.sort((a, b) => a.time - b.time);
+            for (let i = 0; i < list.length - 1; i++) {
+              list[i].end = Math.min(list[i].end, list[i + 1].time);
+            }
+          });
+
+          trackNotes.forEach((n) => {
+            songNotes.push({
+              time: n.time,
+              duration: Math.max(n.end - n.time, 0.05),
+              midi: n.midi,
+              velocity: n.velocity,
+              color,
+            });
+          });
+        });
+
+        // A lot of engraved (non-performance) MIDI files carry no real tempo
+        // at all — LilyPond falls back to a flat 60 BPM when a score never
+        // set an explicit metronome mark, regardless of what the movement is
+        // actually marked (Presto, Allegro...). speed is a uniform rescale
+        // of the times we already resolved, applied after pedal/overlap
+        // handling so those stay correct in the file's own time-space.
+        if (speed !== 1) {
+          songNotes.forEach((n) => {
+            n.time /= speed;
+            n.duration /= speed;
+          });
+        }
+
+        songNotes.sort((a, b) => a.time - b.time);
+        songDuration = songNotes.reduce((m, n) => Math.max(m, n.time + n.duration), 0);
+
+        songNotes.forEach((n) => {
+          Tone.Transport.schedule((time) => {
+            if (samplerReady) sampler.triggerAttackRelease(midiToName(n.midi), n.duration, time, n.velocity);
+            Tone.Draw.schedule(() => setKeyActive(n.midi, n.color), time);
+          }, n.time);
+          Tone.Transport.schedule((time) => {
+            Tone.Draw.schedule(() => setKeyInactive(n.midi, n.color), time);
+          }, n.time + n.duration);
+        });
+        Tone.Transport.schedule((time) => {
+          Tone.Draw.schedule(() => {
+            Tone.Transport.stop();
+            Tone.Transport.seconds = 0;
+            setPlayLabel(false);
+          }, time);
+        }, songDuration + 0.05);
+
+        seek.max = songDuration;
+        seek.disabled = false;
+        playBtn.disabled = false;
+        stopBtn.disabled = false;
+
+        document.getElementById("songInfo").textContent =
+          `${name} — ${fmtTime(songDuration)}, ${midi.tracks.length} ${t("track(s)", "parça")}, ${songNotes.length} ${t("notes", "nota")}`;
+        document.getElementById("trackLegend").innerHTML = trackColors
+          .map((tc) => `<span><i style="background:${tc.color}"></i>${tc.name}</span>`)
+          .join("");
+      }
+
+      // ------------------------------------------------------------------
+      // Featured pieces: six public-domain / openly-licensed MIDI files
+      // with real backstory, one click away from playing. Provenance for
+      // every file lives in assets/midi/credits.json.
+      // ------------------------------------------------------------------
+      const FEATURED = [
+        {
+          file: "assets/midi/chopin-revolutionary.mid",
+          composer: "Frédéric Chopin",
+          title: 'Étude Op. 10 No. 12 — "Revolutionary" (1831)',
+          lore: {
+            en: "Chopin wrote this étude in Stuttgart in September 1831, days after learning that Russian troops had crushed the November Uprising and taken Warsaw — the city he'd left eight months earlier, sure he'd be back soon. He never saw Poland again. The relentless left-hand torrent under the melody is the sound most listeners hear as rage he had no other outlet for.",
+            tr: "Chopin bu etüdü Eylül 1831'de Stuttgart'ta, Rus birliklerinin Kasım Ayaklanması'nı bastırıp Varşova'yı ele geçirdiğini öğrendikten birkaç gün sonra yazdı — sekiz ay önce yakında döneceğine emin şekilde ayrıldığı şehri. Bir daha Polonya'yı hiç görmedi. Melodinin altındaki durmak bilmeyen sol el fırtınası, çoğu dinleyicinin başka türlü dışa vuramadığı bir öfke olarak duyduğu şey.",
+          },
+          credit: { source: "Mutopia Project", license: "Public Domain", url: "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=743" },
+        },
+        {
+          file: "assets/midi/bach-chaconne.mid",
+          composer: "Johann Sebastian Bach",
+          title: "Chaconne, from Partita No. 2 in D minor, BWV 1004 (c. 1720)",
+          lore: {
+            en: "Fifteen minutes built from a single four-bar bass line, repeated and reinvented some 64 times, for an instrument that can barely play one note at a time. Bach wrote it not long after coming home from a trip to find his wife Maria Barbara had died and already been buried — some scholars read the Chaconne as grief, encoded into music. It unsettled later composers enough that Brahms, unable to leave it alone, arranged it for piano left hand only, saying that had he written it himself, the excitement of it would have driven him out of his mind.",
+            tr: "Dört ölçülük tek bir bas çizgisi üzerine kurulu, aşağı yukarı 64 kez tekrarlanıp yeniden icat edilen, aynı anda zar zor tek nota çalabilen bir çalgı için on beş dakika. Bach bunu, bir seyahatten dönüp eşi Maria Barbara'nın öldüğünü ve çoktan gömüldüğünü öğrendikten kısa süre sonra yazdı — bazı araştırmacılar Chaconne'u, müziğe kodlanmış bir yas olarak okur. Sonraki bestecileri o kadar sarstı ki Brahms eserden bir türlü kopamayıp onu yalnızca sol el için piyanoya uyarladı; kendisi yazmış olsaydı bu heyecanın aklını kaçırtacağını söyleyerek.",
+          },
+          credit: { source: "Mutopia Project", license: "CC BY-SA 3.0", url: "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=1426" },
+        },
+        {
+          file: "assets/midi/beethoven-symphony5.mid",
+          composer: "Ludwig van Beethoven",
+          title: "Symphony No. 5, Op. 67 — piano reduction (1808)",
+          lore: {
+            en: "Four notes that became the sound of fate knocking — premiered 22 December 1808 in an unheated Vienna theater, in a four-hour concert that also debuted the 6th Symphony, the 4th Piano Concerto, and the Choral Fantasy, all conducted by an increasingly deaf Beethoven with an underrehearsed orchestra that reportedly fell apart mid-performance. The 5th survived that chaos to become one of the most recognizable openings in music.",
+            tr: "Kaderin kapıyı çaldığı ses haline gelmiş dört nota — 22 Aralık 1808'de, ısıtılmamış bir Viyana tiyatrosunda, aynı gece 6. Senfoni'nin, 4. Piyano Konçertosu'nun ve Koral Fantezi'nin de galasını yapan dört saatlik bir konserde seslendirildi; hepsini giderek sağırlaşan Beethoven'in kendisi, yeterince prova yapamamış bir orkestrayla yönetti — orkestranın performans sırasında dağıldığı bile aktarılır. 5. Senfoni bu kaosu atlatıp müziğin en tanınabilir açılışlarından biri haline geldi.",
+          },
+          credit: { source: "Mutopia Project", license: "Public Domain", url: "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=497" },
+        },
+        {
+          file: "assets/midi/beethoven-moonlight-3.mid",
+          composer: "Ludwig van Beethoven",
+          title: 'Sonata No. 14 "Moonlight", Op. 27 No. 2 — III. Presto agitato (1801)',
+          lore: {
+            en: 'Everyone knows the calm opening movement — Beethoven never called it "Moonlight"; a poet compared it to moonlight on a lake decades after Beethoven died, and the name stuck to a piece he considered something else entirely. This is the movement he actually meant as the point: marked Presto agitato, a stormy, technically brutal outburst with almost nothing in common with the popular image of the sonata — written around the same years Beethoven began privately confronting his own encroaching deafness.',
+            tr: 'Herkes o sakin açılış bölümünü bilir — Beethoven ona "Moonlight" (Ay Işığı) hiç dememişti; bir şair, Beethoven öldükten onlarca yıl sonra onu bir göl üzerindeki ay ışığına benzetti ve isim, bestecinin aslında bambaşka bir şey olarak düşündüğü esere yapıştı kaldı. İşte bu, Beethoven\'in gerçek ağırlık merkezi saydığı bölüm: Presto agitato işaretli, fırtınalı ve teknik olarak acımasız bir patlama — sonatın popüler imgesiyle neredeyse hiçbir ortak yanı yok. Beethoven\'in kendi ilerleyen sağırlığıyla özel olarak yüzleşmeye başladığı yıllarla aynı döneme denk geliyor.',
+          },
+          credit: { source: "Mutopia Project", license: "CC BY-SA 2.5", url: "https://www.mutopiaproject.org/cgibin/piece-info.cgi?id=276" },
+          speed: 2.8, // same flat-60-BPM engraving default — nowhere near "Presto agitato" at 1×
+        },
+        {
+          file: "assets/midi/liszt-la-campanella.mid",
+          composer: "Franz Liszt",
+          title: '"La Campanella", from Grandes études de Paganini, S.141 No. 3',
+          lore: {
+            en: "In 1832, a 20-year-old Liszt watched Niccolò Paganini play in Paris and came out of it obsessed — he shut himself away for months to rebuild his own technique from scratch, determined to become \"the Paganini of the piano.\" La Campanella is the result: a piano transcription of the bell-imitating finale from Paganini's Violin Concerto No. 2, built around huge, rapid-fire leaps to a single high note that has to land dead center every time, at speed, or the whole illusion of a bell breaks.",
+            tr: "1832'de, 20 yaşındaki Liszt, Paris'te Niccolò Paganini'yi izledi ve buna saplantı haline gelecek kadar etkilendi — kendi tekniğini sıfırdan yeniden kurmak için aylarca kendini eve kapattı, \"piyanonun Paganini'si\" olmaya kararlıydı. La Campanella bunun sonucu: Paganini'nin 2. Keman Konçertosu'ndaki, çan sesini taklit eden finalin bir piyano uyarlaması — sürekli tekrarlanan, hızlı ve büyük sıçramalarla tek bir tiz notaya kurulu; o nota her seferinde, hızlı tempoda tam isabetle vurulmazsa çan illüzyonu bozuluyor.",
+          },
+          credit: { source: "piano-midi.de (Bernd Krueger)", license: "CC BY-SA 3.0 DE", url: "http://www.piano-midi.de/liszt.htm" },
+        },
+        {
+          file: "assets/midi/lyapunov-lezginka.mid",
+          composer: "Sergei Lyapunov",
+          title: '"Lesghinka", Étude Op. 11 No. 10',
+          lore: {
+            en: "Liszt's own 12 Transcendental Études cover twelve keys and stop; decades later, Lyapunov wrote his own set of twelve in the remaining keys Liszt never touched, dedicated to Liszt's memory, deliberately completing the cycle. This one is named for the lezginka, a blisteringly fast Caucasian folk dance traditionally danced on the toes with mock daggers drawn — the same \"exotic East\" that fascinated Lyapunov's mentor Balakirev, whose own unplayable Islamey Lyapunov would later help finish editing after Balakirev's death.",
+            tr: 'Liszt\'in kendi 12 Aşkın Ötesinde Etüdü on iki tondan geçip orada duruyordu; Lyapunov, on yıllar sonra, Liszt\'in hiç dokunmadığı kalan on iki tonda kendi on iki etüdünü yazdı, Liszt\'in anısına adadı ve döngüyü bilerek tamamladı. Bu eser adını, geleneksel olarak parmak uçlarında ve taklit hançerler çekilerek oynanan, yıldırım hızında bir Kafkas halk dansı olan lezginkadan alıyor — Lyapunov\'un hocası Balakirev\'i büyüleyen aynı "egzotik Doğu"; Balakirev\'in kendi çalınması imkânsız Islamey\'ini de Lyapunov, hocasının ölümünden sonra düzenlemeye yardım edecekti.',
+          },
+          credit: { source: "MuseScore upload", license: "CC0 1.0", url: "https://musescore.com/user/34770323/scores/6632195" },
+        },
+      ];
+
+      function renderFeatured() {
+        const lang = getLang();
+        document.getElementById("pieceGrid").innerHTML = FEATURED.map(
+          (p, i) => `
+          <article class="card piece-card">
+            <p class="composer">${p.composer}</p>
+            <h3>${p.title}</h3>
+            <p class="lore">${p.lore[lang] || p.lore.en}</p>
+            <p class="piece-credit">MIDI: <a href="${p.credit.url}" target="_blank" rel="noreferrer">${p.credit.source}</a> · ${p.credit.license}</p>
+            <button class="button secondary" type="button" data-i="${i}">${t("▶ Load & play", "▶ Yükle ve çal")}</button>
+          </article>`
+        ).join("");
+        document.querySelectorAll("#pieceGrid button[data-i]").forEach((btn) => {
+          btn.addEventListener("click", () => playFeatured(FEATURED[+btn.dataset.i]));
+        });
+      }
+      document.addEventListener("langchange", renderFeatured);
+
+      async function playFeatured(piece) {
+        try {
+          const res = await fetch(piece.file);
+          const buf = await res.arrayBuffer();
+          loadSong(new Midi(buf), piece.title, piece.speed || 1);
+          document.getElementById("stageScroll").scrollIntoView({ behavior: "smooth", block: "center" });
+          await ensureContext();
+          Tone.Transport.start();
+          setPlayLabel(true);
+        } catch (err) {
+          document.getElementById("songInfo").textContent = t("Couldn't load that piece — try again in a moment.", "Eser yüklenemedi — biraz sonra tekrar dene.");
+        }
+      }
+
+      fileInput.addEventListener("change", async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        try {
+          const buf = await file.arrayBuffer();
+          loadSong(new Midi(buf), file.name.replace(/\.midi?$/i, ""), 1);
+        } catch (err) {
+          document.getElementById("songInfo").textContent = t("Couldn't read that file — is it a .mid?", "Dosya okunamadı — .mid mi?");
+        }
+      });
+
+      playBtn.addEventListener("click", () => {
+        ensureContext().then(() => {
+          if (Tone.Transport.state === "started") {
+            Tone.Transport.pause();
+            setPlayLabel(false);
+          } else {
+            Tone.Transport.start();
+            setPlayLabel(true);
+          }
+        });
+      });
+      stopBtn.addEventListener("click", () => {
+        Tone.Transport.stop();
+        Tone.Transport.seconds = 0;
+        setPlayLabel(false);
+        clearAllActive();
+      });
+      seek.addEventListener("input", () => {
+        Tone.Transport.seconds = parseFloat(seek.value);
+        clearAllActive();
+      });
+      speedEl.addEventListener("input", () => {
+        const speed = parseFloat(speedEl.value);
+        speedLabel.textContent = speed.toFixed(2) + "×";
+        if (currentMidi) {
+          const wasPlaying = Tone.Transport.state === "started";
+          const fraction = songDuration ? Tone.Transport.seconds / songDuration : 0;
+          loadSong(currentMidi.midi, currentMidi.name, speed);
+          Tone.Transport.seconds = fraction * songDuration;
+          if (wasPlaying) {
+            ensureContext().then(() => {
+              Tone.Transport.start();
+              setPlayLabel(true);
+            });
+          }
+        }
+      });
+
+      // ------------------------------------------------------------------
+      // Falling notes: one canvas redraw per frame, reading the live
+      // transport clock — continuous motion can't ride Tone.Draw's
+      // discrete event scheduling the way the key lights do.
+      // ------------------------------------------------------------------
+      const fallCtx = document.getElementById("fall").getContext("2d");
+      const hasRoundRect = typeof fallCtx.roundRect === "function";
+      const timeLabel = document.getElementById("timeLabel");
+
+      function drawBar(x, y, w, h, color) {
+        fallCtx.fillStyle = color;
+        if (hasRoundRect) {
+          fallCtx.beginPath();
+          fallCtx.roundRect(x, y, w, Math.max(h, 3), 4);
+          fallCtx.fill();
+        } else {
+          fallCtx.fillRect(x, y, w, Math.max(h, 3));
+        }
+      }
+
+      function drawLoop() {
+        requestAnimationFrame(drawLoop);
+        fallCtx.clearRect(0, 0, TOTAL_WIDTH, FALL_H);
+
+        const now = Tone.Transport.seconds;
+        const pxPerSec = FALL_H / LOOKAHEAD;
+        for (const n of songNotes) {
+          const dt = n.time - now;
+          if (dt > LOOKAHEAD || dt + n.duration < 0) continue;
+          const geom = keyGeom[n.midi];
+          if (!geom) continue;
+          const h = n.duration * pxPerSec;
+          const y = FALL_H - dt * pxPerSec - h;
+          const w = (geom.black ? BLACK_W : WHITE_W - 2) - 2;
+          drawBar(geom.x + 1, y, w, h, n.color);
+        }
+
+        if (document.activeElement !== seek) seek.value = now;
+        timeLabel.textContent = fmtTime(now) + " / " + fmtTime(songDuration);
+      }
+
+      // ------------------------------------------------------------------
+      // Boot
+      // ------------------------------------------------------------------
+      renderKeyboard();
+      renderFeatured();
+      initAudio();
+      requestAnimationFrame(drawLoop);
+      const stageScroll = document.getElementById("stageScroll");
+      stageScroll.scrollLeft = keyGeom[60].x - stageScroll.clientWidth / 2 + WHITE_W;
+    </script>
+  </body>
+</html>

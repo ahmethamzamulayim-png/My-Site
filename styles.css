@@ -575,7 +575,8 @@ body::before {
 }
 .offclock-card:hover { transform: translateY(-3px); }
 .offclock-media { position: relative; min-height: 260px; background: #23262c; }
-.offclock-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.offclock-media img,
+.offclock-media svg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .offclock-media::after {
   content: "";
   position: absolute;
