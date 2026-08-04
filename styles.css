@@ -1,3 +1,10 @@
+/* Cross-document view transitions: opts every page sharing this stylesheet
+   into a native cross-fade when navigating between them. Chrome/Edge 126+
+   only; other browsers ignore the unknown at-rule and just navigate normally. */
+@view-transition {
+  navigation: auto;
+}
+
 /* palette: İznik çini on white — THY red, cobalt, turquoise, leaf green,
    one color per project. thy-globe.html overrides tokens to stay dark red. */
 :root {
