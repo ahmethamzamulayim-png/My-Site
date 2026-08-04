@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-08-04T09:16:40+00:00",
+ "generated_utc": "2026-08-04T11:36:58+00:00",
  "airport": "IST",
  "board_date": "2026-08-04",
  "late_threshold_min": 15,
@@ -19,15 +19,15 @@
   "model": 0.742
  },
  "model_trained": {
-  "trained_rows": 63494,
+  "trained_rows": 63495,
   "trained_through": "2026-08-04"
  },
  "scoreboard": {
-  "resolved": 8,
+  "resolved": 9,
   "total": 82,
   "late": 0,
-  "ontime": 8,
-  "mean_predicted": 0.1266,
+  "ontime": 9,
+  "mean_predicted": 0.1168,
   "actual_rate": 0.0
  },
  "hourly": [
@@ -169,7 +169,7 @@
    "flight": "W5115",
    "dest": "OIIE",
    "airline": "Mahan Air",
-   "risk": 0.7863,
+   "risk": 0.7555,
    "basis": "flight",
    "n": 38,
    "median_late": 72,
@@ -1472,7 +1472,7 @@
    "median_late": 28,
    "median_from": "route",
    "hour_rate": 0.1325,
-   "actual": null,
+   "actual": "ontime",
    "actual_delay": null,
    "tier": "lookup",
    "turnaround_min": null,
@@ -1628,7 +1628,7 @@
    "flight": "AH3019",
    "dest": "DAAG",
    "airline": "Air Algerie",
-   "risk": 0.2347,
+   "risk": 0.1852,
    "basis": "flight+hour",
    "n": 36,
    "median_late": 40,
