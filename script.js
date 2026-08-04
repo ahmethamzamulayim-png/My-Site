@@ -151,3 +151,76 @@ if (istNote) {
     }, 2800);
   }
 })();
+
+// Per-page custom cursor: <body data-cursor="din|bearing|plane">. Bearing mode
+// spins with momentum — angular velocity builds from horizontal mouse speed
+// and decays each frame, like a real wheel coasting down, instead of
+// snapping straight to a rotation.
+(() => {
+  const mode = document.body.dataset.cursor;
+  if (!mode || !window.matchMedia("(pointer: fine)").matches) return;
+
+  const icons = {
+    plane:
+      '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>',
+    bearing:
+      '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2">' +
+      '<circle cx="16" cy="16" r="14"/><circle cx="16" cy="16" r="6"/>' +
+      '<g fill="currentColor" stroke="none">' +
+      '<circle cx="26" cy="16" r="1.8"/><circle cx="23.07" cy="23.07" r="1.8"/>' +
+      '<circle cx="16" cy="26" r="1.8"/><circle cx="8.93" cy="23.07" r="1.8"/>' +
+      '<circle cx="6" cy="16" r="1.8"/><circle cx="8.93" cy="8.93" r="1.8"/>' +
+      '<circle cx="16" cy="6" r="1.8"/><circle cx="23.07" cy="8.93" r="1.8"/>' +
+      "</g></svg>",
+    din:
+      '<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="2"/>' +
+      '<path d="M21 16 L18.5 20.33 L13.5 20.33 L11 16 L13.5 11.67 L18.5 11.67 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>',
+  };
+  const icon = icons[mode];
+  if (!icon) return;
+
+  const cursorEl = document.createElement("div");
+  cursorEl.className = "custom-cursor";
+  cursorEl.dataset.mode = mode;
+  cursorEl.innerHTML = icon;
+  document.body.appendChild(cursorEl);
+
+  const spinEnabled = mode === "bearing" && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let x = innerWidth / 2,
+    y = innerHeight / 2,
+    lastX = x,
+    lastT = performance.now(),
+    angle = 0,
+    angVel = 0,
+    stretch = 1;
+
+  document.addEventListener("mousemove", (event) => {
+    cursorEl.classList.add("active");
+    if (spinEnabled) {
+      const now = performance.now();
+      const kick = ((event.clientX - lastX) / Math.max(now - lastT, 1)) * 6;
+      angVel = Math.max(-25, Math.min(25, angVel + Math.max(-15, Math.min(15, kick))));
+      lastT = now;
+    }
+    x = event.clientX;
+    y = event.clientY;
+    lastX = event.clientX;
+  });
+
+  // webOS Magic Remote-style squash/stretch: scrolling elongates the bearing
+  // vertically, like it's rolling on the scrollbar, easing back to round after.
+  if (spinEnabled) {
+    window.addEventListener("wheel", () => { stretch = 1.6; }, { passive: true });
+  }
+
+  (function tick() {
+    if (spinEnabled) {
+      angle += angVel;
+      angVel *= 0.94;
+      stretch += (1 - stretch) * 0.12;
+    }
+    const scale = stretch !== 1 ? ` scale(${(2 - stretch).toFixed(3)}, ${stretch.toFixed(3)})` : "";
+    cursorEl.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%) rotate(${angle}deg)${scale}`;
+    requestAnimationFrame(tick);
+  })();
+})();
