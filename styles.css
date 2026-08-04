@@ -821,19 +821,19 @@ body::before {
 .easter-plane {
   position: fixed;
   top: 16vh;
-  left: -8vw;
-  width: 64px;
-  height: 64px;
+  left: -14vw;
+  width: 120px;
+  height: 36px;
   color: var(--accent, #e81932);
   z-index: 9999;
   pointer-events: none;
-  transform: rotate(45deg);
+  transform: rotate(-6deg);
   filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.25));
-  animation: easter-fly 1.1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: easter-fly 2.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 @keyframes easter-fly {
-  0% { left: -8vw; opacity: 0; }
+  0% { left: -14vw; opacity: 0; }
   8% { opacity: 1; }
   92% { opacity: 1; }
   100% { left: 108vw; opacity: 0; }
@@ -841,7 +841,7 @@ body::before {
 
 .easter-boom {
   position: fixed;
-  top: calc(16vh + 32px);
+  top: calc(16vh + 18px);
   left: 50vw;
   width: 12px;
   height: 12px;
@@ -851,8 +851,8 @@ body::before {
   z-index: 9998;
   pointer-events: none;
   opacity: 0;
-  animation: easter-boom 0.6s ease-out forwards;
-  animation-delay: 0.5s;
+  animation: easter-boom 0.7s ease-out forwards;
+  animation-delay: 1.3s;
 }
 
 @keyframes easter-boom {

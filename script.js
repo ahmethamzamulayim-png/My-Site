@@ -135,14 +135,19 @@ if (istNote) {
   function flyConcorde() {
     const plane = document.createElement("div");
     plane.className = "easter-plane";
+    // Concorde silhouette: needle nose, delta wing, tail fin — nose points right (+x)
     plane.innerHTML =
-      '<svg viewBox="0 0 24 24" fill="currentColor" width="100%" height="100%"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>';
+      '<svg viewBox="0 0 200 60" fill="currentColor" width="100%" height="100%">' +
+      '<path d="M10 30 L10 22 Q100 17 185 27 L198 30 L185 33 Q120 38 60 36 L10 34 Z"/>' +
+      '<path d="M55 32 L145 29 L105 48 Z"/>' +
+      '<path d="M14 24 L14 6 L28 25 Z"/>' +
+      "</svg>";
     const boom = document.createElement("div");
     boom.className = "easter-boom";
     document.body.append(plane, boom);
     setTimeout(() => {
       plane.remove();
       boom.remove();
-    }, 1300);
+    }, 2800);
   }
 })();
