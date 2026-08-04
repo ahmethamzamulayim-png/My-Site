@@ -63,7 +63,7 @@
           </p>
           <div class="hero-actions">
             <a class="button primary" href="#projects" data-i18n="hero.see">See projects</a>
-            <a class="button secondary" href="mailto:ahmet.mulayim@marun.edu.tr" data-i18n="hero.email">Email me</a>
+            <a class="button secondary" href="#contact" data-i18n="hero.email">Contact me</a>
           </div>
           <div class="hero-metrics">
             <article>
@@ -379,16 +379,25 @@
           <p class="eyebrow" data-i18n="contact.eyebrow">Contact</p>
           <h2 data-i18n="contact.h2">Make the domain do something useful.</h2>
           <p data-i18n="contact.p">
-            Reach me at my school email or use the domain as a live portfolio for
-            engineering, robotics, and data science work.
+            Send a message with the form, attach a file if you need to, or find
+            me on GitHub.
           </p>
           <div class="contact-actions">
-            <a class="button primary" href="mailto:ahmet.mulayim@marun.edu.tr">ahmet.mulayim@marun.edu.tr</a>
             <a class="button secondary" href="https://github.com/ahmethamzamulayim-png" target="_blank" rel="noreferrer">GitHub</a>
           </div>
         </div>
-        <form class="contact-form" id="contact-form">
+        <form
+          class="contact-form"
+          id="contact-form"
+          action="https://formsubmit.co/ahmet.mulayim@marun.edu.tr"
+          method="POST"
+          enctype="multipart/form-data"
+          target="contact-frame"
+        >
           <input type="text" name="_honey" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
+          <input type="hidden" name="_subject" value="New message from ahmethmzamlym.engineer" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_captcha" value="false" />
           <label>
             <span data-i18n="contact.name">Name</span>
             <input type="text" name="name" required />
@@ -401,9 +410,14 @@
             <span data-i18n="contact.message">Message</span>
             <textarea name="message" rows="4" required></textarea>
           </label>
+          <label>
+            <span data-i18n="contact.attach">Attachment (optional, 10MB max)</span>
+            <input type="file" name="attachment" multiple />
+          </label>
           <button type="submit" class="button primary" data-i18n="contact.send">Send message</button>
           <p class="form-status" role="status" aria-live="polite"></p>
         </form>
+        <iframe name="contact-frame" class="hp-field" title="form submission target"></iframe>
       </section>
     </main>
 
@@ -423,7 +437,7 @@
         "hero.h1": "Tasarım, analiz ve kanıt üzerine kurulu makine mühendisliği.",
         "hero.text": "Ben Ahmet Hamza Mülayim, Marmara Üniversitesi'nde makine mühendisliği öğrencisiyim; CAD, prototipleme, veriye dayalı analiz ve fikirleri test edilebilir sonuçlara dönüştürmeye odaklanıyorum. Bu portföy, gerçek mühendislik işlerini göstermek için derli toplu bir yer.",
         "hero.see": "Projelere bak",
-        "hero.email": "E-posta gönder",
+        "hero.email": "İletişime geç",
         "metric.ugv": "yarışma deneyimi",
         "metric.ml": "veri setleri arası RUL çalışmasındaki rulman sayısı",
         "metric.cswa": "Sertifikalı SOLIDWORKS Design Associate",
@@ -515,10 +529,11 @@
         "tl3.p": "Mevcut işleri; işverenlere, kulüplere ve iş birlikçilerine hitap eden derli toplu sayfalara dönüştürüyorum.",
         "contact.eyebrow": "İletişim",
         "contact.h2": "Alan adı işe yarasın.",
-        "contact.p": "Bana okul e-postamdan ulaşabilirsin; bu alan adı mühendislik, robotik ve veri bilimi işleri için canlı bir portföy.",
+        "contact.p": "Formu kullanarak mesaj gönder, gerekirse dosya ekle, ya da GitHub'dan bul beni.",
         "contact.name": "İsim",
         "contact.email": "E-posta",
         "contact.message": "Mesaj",
+        "contact.attach": "Ek (isteğe bağlı, en fazla 10MB)",
         "contact.send": "Mesaj gönder",
         "contact.sending": "Gönderiliyor…",
         "contact.success": "Gönderildi — en kısa sürede dönüş yapacağım.",

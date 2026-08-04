@@ -27,41 +27,45 @@ const contactForm = document.getElementById("contact-form");
 if (contactForm) {
   const status = contactForm.querySelector(".form-status");
   const submitBtn = contactForm.querySelector("button[type=submit]");
+  const resultFrame = document.querySelector('iframe[name="contact-frame"]');
   const t = window.t || ((en) => en);
+  const maxAttachBytes = 10 * 1024 * 1024;
+  let submitted = false;
 
-  contactForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    if (contactForm.elements._honey.value) return;
+  // File uploads only work via a real multipart POST (FormSubmit's AJAX/JSON
+  // endpoint rejects them), so this submits natively into a hidden iframe
+  // instead of using fetch. That means the response body can't be read back —
+  // "load" fires the same for a FormSubmit success page as an error page, so
+  // the confirmation below is optimistic, not a verified delivery receipt.
+  contactForm.addEventListener("submit", (event) => {
+    if (contactForm.elements._honey.value) {
+      event.preventDefault();
+      return;
+    }
 
+    const attachBytes = Array.from(contactForm.elements.attachment.files).reduce(
+      (sum, file) => sum + file.size,
+      0
+    );
+    if (attachBytes > maxAttachBytes) {
+      event.preventDefault();
+      status.className = "form-status err";
+      status.textContent = t("Attachment too large — 10MB max.", "Ek çok büyük — en fazla 10MB.");
+      return;
+    }
+
+    submitted = true;
     submitBtn.disabled = true;
     status.className = "form-status";
     status.textContent = t("Sending…", "Gönderiliyor…");
+  });
 
-    try {
-      const res = await fetch("https://formsubmit.co/ajax/ahmet.mulayim@marun.edu.tr", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          name: contactForm.elements.name.value,
-          email: contactForm.elements.email.value,
-          message: contactForm.elements.message.value,
-          _subject: "New message from ahmethmzamlym.engineer",
-          _template: "table",
-          _captcha: "false",
-        }),
-      });
-      if (!res.ok) throw new Error("request failed");
-      status.classList.add("ok");
-      status.textContent = t("Sent — I'll get back to you soon.", "Gönderildi — en kısa sürede dönüş yapacağım.");
-      contactForm.reset();
-    } catch {
-      status.classList.add("err");
-      status.textContent = t(
-        "Something went wrong — email me directly instead.",
-        "Bir şeyler ters gitti — bunun yerine doğrudan e-posta gönder."
-      );
-    } finally {
-      submitBtn.disabled = false;
-    }
+  resultFrame.addEventListener("load", () => {
+    if (!submitted) return;
+    submitted = false;
+    submitBtn.disabled = false;
+    status.className = "form-status ok";
+    status.textContent = t("Sent — I'll get back to you soon.", "Gönderildi — en kısa sürede dönüş yapacağım.");
+    contactForm.reset();
   });
 }
