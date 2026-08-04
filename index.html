@@ -382,11 +382,28 @@
             Reach me at my school email or use the domain as a live portfolio for
             engineering, robotics, and data science work.
           </p>
+          <div class="contact-actions">
+            <a class="button primary" href="mailto:ahmet.mulayim@marun.edu.tr">ahmet.mulayim@marun.edu.tr</a>
+            <a class="button secondary" href="https://github.com/ahmethamzamulayim-png" target="_blank" rel="noreferrer">GitHub</a>
+          </div>
         </div>
-        <div class="contact-actions">
-          <a class="button primary" href="mailto:ahmet.mulayim@marun.edu.tr">ahmet.mulayim@marun.edu.tr</a>
-          <a class="button secondary" href="https://github.com/ahmethamzamulayim-png" target="_blank" rel="noreferrer">GitHub</a>
-        </div>
+        <form class="contact-form" id="contact-form">
+          <input type="text" name="_honey" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
+          <label>
+            <span data-i18n="contact.name">Name</span>
+            <input type="text" name="name" required />
+          </label>
+          <label>
+            <span data-i18n="contact.email">Email</span>
+            <input type="email" name="email" required />
+          </label>
+          <label>
+            <span data-i18n="contact.message">Message</span>
+            <textarea name="message" rows="4" required></textarea>
+          </label>
+          <button type="submit" class="button primary" data-i18n="contact.send">Send message</button>
+          <p class="form-status" role="status" aria-live="polite"></p>
+        </form>
       </section>
     </main>
 
@@ -499,6 +516,13 @@
         "contact.eyebrow": "İletişim",
         "contact.h2": "Alan adı işe yarasın.",
         "contact.p": "Bana okul e-postamdan ulaşabilirsin; bu alan adı mühendislik, robotik ve veri bilimi işleri için canlı bir portföy.",
+        "contact.name": "İsim",
+        "contact.email": "E-posta",
+        "contact.message": "Mesaj",
+        "contact.send": "Mesaj gönder",
+        "contact.sending": "Gönderiliyor…",
+        "contact.success": "Gönderildi — en kısa sürede dönüş yapacağım.",
+        "contact.error": "Bir şeyler ters gitti — bunun yerine doğrudan e-posta gönder.",
         "footer.p": "GitHub Pages üzerinde bir makine mühendisliği portföyü için yapıldı."
       };
     </script>
