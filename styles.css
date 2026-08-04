@@ -887,3 +887,9 @@ body::before {
 .custom-cursor[data-mode="din"],
 .custom-cursor[data-mode="bearing"] { color: var(--text); }
 .custom-cursor[data-mode="plane"] { color: var(--turquoise); }
+.custom-cursor[data-mode="concorde"] {
+  width: 32px;
+  height: 50px;
+  color: var(--accent);
+}
+.custom-cursor[data-mode="concorde"] svg { shape-rendering: crispEdges; }

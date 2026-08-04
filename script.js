@@ -152,13 +152,22 @@ if (istNote) {
   }
 })();
 
-// Per-page custom cursor: <body data-cursor="din|bearing|plane">. Bearing mode
-// spins with momentum — angular velocity builds from horizontal mouse speed
-// and decays each frame, like a real wheel coasting down, instead of
-// snapping straight to a rotation.
+// Per-page custom cursor: <body data-cursor="din|bearing|plane|concorde">.
+// Bearing mode spins with momentum — angular velocity builds from horizontal
+// mouse speed and decays each frame, like a real wheel coasting down, instead
+// of snapping straight to a rotation — and stretches vertically on scroll.
+// Concorde mode is a pixel-art top view whose afterburners flash on scroll.
 (() => {
   const mode = document.body.dataset.cursor;
   if (!mode || !window.matchMedia("(pointer: fine)").matches) return;
+
+  const flameUnit =
+    '<g id="cc-flame">' +
+    '<rect x="-3" y="0" width="2" height="2" fill="#fff59d"/><rect x="-1" y="0" width="2" height="2" fill="#fff59d"/><rect x="1" y="0" width="2" height="2" fill="#fff59d"/>' +
+    '<rect x="-3" y="2" width="2" height="2" fill="#ffb300"/><rect x="-1" y="2" width="2" height="2" fill="#ffb300"/><rect x="1" y="2" width="2" height="2" fill="#ffb300"/>' +
+    '<rect x="-2" y="4" width="2" height="2" fill="#ff6f00"/><rect x="0" y="4" width="2" height="2" fill="#ff6f00"/>' +
+    '<rect x="-1" y="6" width="2" height="2" fill="#e64a19"/><rect x="-1" y="8" width="2" height="2" fill="#5c6bc0"/>' +
+    "</g>";
 
   const icons = {
     plane:
@@ -175,6 +184,17 @@ if (istNote) {
     din:
       '<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="2"/>' +
       '<path d="M21 16 L18.5 20.33 L13.5 20.33 L11 16 L13.5 11.67 L18.5 11.67 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>',
+    concorde:
+      '<svg viewBox="0 0 32 50" fill="currentColor">' +
+      '<rect x="14" y="0" width="4" height="16"/><rect x="12" y="16" width="8" height="4"/>' +
+      '<rect x="10" y="20" width="12" height="4"/><rect x="8" y="24" width="16" height="4"/>' +
+      '<rect x="4" y="28" width="24" height="4"/><rect x="2" y="32" width="28" height="4"/>' +
+      '<rect x="0" y="36" width="32" height="2"/><rect x="2" y="38" width="28" height="2"/>' +
+      '<rect x="6" y="40" width="20" height="2"/><rect x="10" y="42" width="12" height="2"/>' +
+      '<rect x="12" y="44" width="8" height="2"/><rect x="14" y="46" width="4" height="2"/>' +
+      `<defs>${flameUnit}</defs>` +
+      '<g class="cc-flame" opacity="0"><use href="#cc-flame" transform="translate(9,40)"/><use href="#cc-flame" transform="translate(23,40)"/></g>' +
+      "</svg>",
   };
   const icon = icons[mode];
   if (!icon) return;
@@ -185,14 +205,17 @@ if (istNote) {
   cursorEl.innerHTML = icon;
   document.body.appendChild(cursorEl);
 
-  const spinEnabled = mode === "bearing" && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const motionOK = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const spinEnabled = mode === "bearing" && motionOK;
+  const flameEl = mode === "concorde" ? cursorEl.querySelector(".cc-flame") : null;
   let x = innerWidth / 2,
     y = innerHeight / 2,
     lastX = x,
     lastT = performance.now(),
     angle = 0,
     angVel = 0,
-    stretch = 1;
+    stretch = 1,
+    flame = 0;
 
   document.addEventListener("mousemove", (event) => {
     cursorEl.classList.add("active");
@@ -212,12 +235,19 @@ if (istNote) {
   if (spinEnabled) {
     window.addEventListener("wheel", () => { stretch = 1.6; }, { passive: true });
   }
+  if (flameEl && motionOK) {
+    window.addEventListener("wheel", () => { flame = 1; }, { passive: true });
+  }
 
   (function tick() {
     if (spinEnabled) {
       angle += angVel;
       angVel *= 0.94;
       stretch += (1 - stretch) * 0.12;
+    }
+    if (flameEl) {
+      flame += (0 - flame) * 0.06;
+      flameEl.setAttribute("opacity", flame.toFixed(3));
     }
     const scale = stretch !== 1 ? ` scale(${(2 - stretch).toFixed(3)}, ${stretch.toFixed(3)})` : "";
     cursorEl.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%) rotate(${angle}deg)${scale}`;
