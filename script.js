@@ -69,3 +69,80 @@ if (contactForm) {
     contactForm.reset();
   });
 }
+
+// Homepage hero tiles: swap the static blurb for a live number once it
+// arrives. Feeds through the existing i18n dict/apply so language toggling
+// still works after the live text lands, instead of just setting textContent.
+function setLiveTileText(id, i18nKey, en, tr) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.dataset.orig = en;
+  (window.I18N || (window.I18N = {}))[i18nKey] = tr;
+  if (window.setLang && window.getLang) window.setLang(window.getLang());
+}
+
+const globeNote = document.getElementById("live-globe-note");
+if (globeNote) {
+  fetch("https://civil-nightingale-6719.ahmethamzamulayim-png.deno.net/api/states")
+    .then((res) => (res.ok ? res.json() : null))
+    .then((data) => {
+      if (!data) return;
+      const count = (data.states || []).filter(
+        (s) => s[1] && s[1].trim().startsWith("THY") && !s[8] && s[5] != null && s[6] != null
+      ).length;
+      if (count > 0) {
+        setLiveTileText(
+          "live-globe-note",
+          "tile.globe.note",
+          `${count} flights on a 3D globe, live`,
+          `3B kürede ${count} uçuş, canlı`
+        );
+      }
+    })
+    .catch(() => {});
+}
+
+const istNote = document.getElementById("live-ist-note");
+if (istNote) {
+  fetch("summary.json", { cache: "no-store" })
+    .then((res) => (res.ok ? res.json() : null))
+    .then((data) => {
+      if (!data || !data.delay_known) return;
+      const nEN = data.delay_known.toLocaleString("en-US");
+      const nTR = data.delay_known.toLocaleString("tr-TR");
+      setLiveTileText("live-ist-note", "tile.ist.note", `${nEN} flown departures`, `${nTR} uçan kalkış`);
+    })
+    .catch(() => {});
+}
+
+// Easter egg: type "concorde" anywhere on the site to fly a plane across the screen.
+(() => {
+  const TARGET = "concorde";
+  let buffer = "";
+
+  document.addEventListener("keydown", (event) => {
+    const active = document.activeElement;
+    const typing = active && (active.tagName === "INPUT" || active.tagName === "TEXTAREA" || active.isContentEditable);
+    if (typing || event.key.length !== 1) return;
+
+    buffer = (buffer + event.key.toLowerCase()).slice(-TARGET.length);
+    if (buffer === TARGET) {
+      buffer = "";
+      flyConcorde();
+    }
+  });
+
+  function flyConcorde() {
+    const plane = document.createElement("div");
+    plane.className = "easter-plane";
+    plane.innerHTML =
+      '<svg viewBox="0 0 24 24" fill="currentColor" width="100%" height="100%"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>';
+    const boom = document.createElement("div");
+    boom.className = "easter-boom";
+    document.body.append(plane, boom);
+    setTimeout(() => {
+      plane.remove();
+      boom.remove();
+    }, 1300);
+  }
+})();
