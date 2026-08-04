@@ -544,8 +544,20 @@
         if (!DATA) return;
         const b = DATA, base = b.baseline;
 
+        // IST schedules ~1,400 departures a day. On the free aviationstack tier
+        // the collector can only bank ~80 of them, so say so rather than let the
+        // board imply it is showing the whole airport.
+        const IST_DAILY_DEPARTURES = 1400;
+        const shown = b.departures.length;
+        const partial = shown < 0.6 * IST_DAILY_DEPARTURES;
+
         document.getElementById("meta").innerHTML =
           `<span>${t("Board for", "Pano tarihi")} <b>${b.board_date}</b></span>` +
+          `<span>${t("showing", "gösterilen")} <b>${shown}</b>` +
+          (partial
+            ? ` ${t(`of ~${IST_DAILY_DEPARTURES} scheduled departures — free-tier sample`,
+                    `/ ~${IST_DAILY_DEPARTURES} planlı kalkış — ücretsiz kota örneklemi`)}`
+            : ` ${t("departures", "kalkış")}`) + `</span>` +
           `<span>${t("airport average", "havalimanı ortalaması")} <b>${pct(base, 1)}</b></span>` +
           `<span>${t("trained on", "eğitim verisi")} <b>${b.trained_on.flights.toLocaleString(getLang() === "tr" ? "tr-TR" : "en-US")}</b> ${t("flights", "uçuş")} · ${b.trained_on.days} ${t("days", "gün")}</span>` +
           (b.scoreboard ? scoreLine(b.scoreboard) : "");
