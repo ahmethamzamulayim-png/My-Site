@@ -1,19 +1,19 @@
 {
- "generated_utc": "2026-08-05T03:40:47+00:00",
+ "generated_utc": "2026-08-05T05:22:19+00:00",
  "days": 96,
  "first_date": "2026-05-01",
  "last_date": "2026-08-05",
- "total_flights": 132814,
+ "total_flights": 132817,
  "cargo_flights": 6539,
- "movements_tracked": 86353,
- "cross_validated": 45624,
- "delay_known": 63571,
+ "movements_tracked": 86451,
+ "cross_validated": 45627,
+ "delay_known": 63574,
  "median_delay": 0.0,
  "median_when_delayed": 31.0,
  "delay_hist": [
   {
    "bin": "<15",
-   "count": 56181
+   "count": 56184
   },
   {
    "bin": "15–30",
@@ -29,7 +29,7 @@
   }
  ],
  "delayed_15": 7390,
- "ontime": 56181,
+ "ontime": 56184,
  "pct_delayed": 11.6,
  "pct_ontime": 88.4,
  "recent": {
@@ -1438,7 +1438,7 @@
   },
   {
    "date": "2026-08-04",
-   "movements": 569,
+   "movements": 579,
    "flights": 9,
    "flew": 9,
    "delayed": 0,
@@ -1453,20 +1453,20 @@
   },
   {
    "date": "2026-08-05",
-   "movements": 28,
-   "flights": 4,
-   "flew": 2,
+   "movements": 116,
+   "flights": 7,
+   "flew": 5,
    "delayed": 0,
-   "ontime": 2,
+   "ontime": 5,
    "cancelled": 0,
    "median_delay": 0.0,
    "median_when_delayed": null,
    "avg_dep_delay": null,
-   "metars": 7,
-   "conversion": 0.051,
-   "scored": 2
+   "metars": 10,
+   "conversion": 0.09,
+   "scored": 5
   }
  ],
- "latest_metar": "METAR LTFM 050320Z 34006KT 300V360 6000 2800W BR SCT004 24/23 Q1014 BECMG TL0400 9999 NSW",
- "match_rate": 0.143
+ "latest_metar": "METAR LTFM 050450Z 36011KT 9999 SCT008 25/22 Q1015 NOSIG",
+ "match_rate": 0.06
 }
