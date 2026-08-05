@@ -1,9 +1,9 @@
 {
- "generated_utc": "2026-08-05T18:46:23+00:00",
+ "generated_utc": "2026-08-05T19:59:59+00:00",
  "airport": "IST",
  "board_date": "2026-08-06",
- "window_start_utc": "2026-08-05T18:46:15+00:00",
- "window_end_utc": "2026-08-06T06:46:15+00:00",
+ "window_start_utc": "2026-08-05T19:59:51+00:00",
+ "window_end_utc": "2026-08-06T07:59:51+00:00",
  "window_hours": 12,
  "window_mode": "upcoming",
  "late_threshold_min": 15,
@@ -14,7 +14,8 @@
   "through": "2026-08-05"
  },
  "tiers": {
-  "lookup": 31
+  "hybrid": 2,
+  "lookup": 29
  },
  "tier_auc": {
   "lookup": 0.711,
@@ -167,7 +168,7 @@
    "flight": "SU641",
    "dest": "URSS",
    "airline": "Aeroflot",
-   "risk": 0.3372,
+   "risk": 0.2584,
    "basis": "flight",
    "n": 78,
    "median_late": 77,
@@ -175,7 +176,8 @@
    "hour_rate": 0.1525,
    "actual": null,
    "actual_delay": null,
-   "tier": "lookup",
+   "lookup_risk": 0.3372,
+   "tier": "hybrid",
    "turnaround_min": null,
    "inbound_delay_min": null
   },
@@ -187,7 +189,7 @@
    "flight": "TK",
    "dest": "UUWW",
    "airline": "Turkish Airlines",
-   "risk": 0.0987,
+   "risk": 0.1664,
    "basis": "flight+hour",
    "n": 4,
    "median_late": 25,
@@ -195,7 +197,8 @@
    "hour_rate": 0.094,
    "actual": null,
    "actual_delay": null,
-   "tier": "lookup",
+   "lookup_risk": 0.0987,
+   "tier": "hybrid",
    "turnaround_min": null,
    "inbound_delay_min": null
   },
