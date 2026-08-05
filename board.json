@@ -1,7 +1,11 @@
 {
- "generated_utc": "2026-08-05T03:40:58+00:00",
+ "generated_utc": "2026-08-05T05:17:24+00:00",
  "airport": "IST",
  "board_date": "2026-08-05",
+ "window_start_utc": "2026-08-04T13:05:00+00:00",
+ "window_end_utc": "2026-08-05T01:05:00+00:00",
+ "window_hours": 12,
+ "window_mode": "recent",
  "late_threshold_min": 15,
  "baseline": 0.1163,
  "trained_on": {
@@ -21,14 +25,7 @@
   "trained_rows": 63571,
   "trained_through": "2026-08-05"
  },
- "scoreboard": {
-  "resolved": 2,
-  "total": 71,
-  "late": 0,
-  "ontime": 2,
-  "mean_predicted": 0.3241,
-  "actual_rate": 0.0
- },
+ "scoreboard": null,
  "hourly": [
   {
    "h": 0,
@@ -165,6 +162,8 @@
   {
    "time": "00:00",
    "hour": 0,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T21:00:00+00:00",
    "flight": null,
    "dest": "OIIE",
    "airline": "empty",
@@ -183,6 +182,8 @@
   {
    "time": "01:05",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:05:00+00:00",
    "flight": "TK2856",
    "dest": "LTCB",
    "airline": "Turkish Airlines",
@@ -201,6 +202,8 @@
   {
    "time": "01:05",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:05:00+00:00",
    "flight": "TK706",
    "dest": "OAKB",
    "airline": "Turkish Airlines",
@@ -219,6 +222,8 @@
   {
    "time": "01:05",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:05:00+00:00",
    "flight": "TK501",
    "dest": "GOBD",
    "airline": "Turkish Airlines",
@@ -237,6 +242,8 @@
   {
    "time": "01:10",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:10:00+00:00",
    "flight": "TK405",
    "dest": "ULLI",
    "airline": "Turkish Airlines",
@@ -255,6 +262,8 @@
   {
    "time": "01:10",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:10:00+00:00",
    "flight": "TK324",
    "dest": "UTAA",
    "airline": "Turkish Airlines",
@@ -273,6 +282,8 @@
   {
    "time": "01:10",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:10:00+00:00",
    "flight": "TK964",
    "dest": "LCEN",
    "airline": "Turkish Airlines",
@@ -291,6 +302,8 @@
   {
    "time": "01:10",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:10:00+00:00",
    "flight": "TK374",
    "dest": "UZSS",
    "airline": "Turkish Airlines",
@@ -309,6 +322,8 @@
   {
    "time": "01:15",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:15:00+00:00",
    "flight": "CZ6036",
    "dest": "ZWWW",
    "airline": "China Southern Airlines",
@@ -327,6 +342,8 @@
   {
    "time": "01:15",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:15:00+00:00",
    "flight": "TK275",
    "dest": "LUKK",
    "airline": "Turkish Airlines",
@@ -345,6 +362,8 @@
   {
    "time": "01:15",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:15:00+00:00",
    "flight": "TK96",
    "dest": "OEJN",
    "airline": "Turkish Airlines",
@@ -363,6 +382,8 @@
   {
    "time": "01:20",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:20:00+00:00",
    "flight": "TK72",
    "dest": "ZGGG",
    "airline": "Turkish Airlines",
@@ -381,6 +402,8 @@
   {
    "time": "01:20",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:20:00+00:00",
    "flight": "TK66",
    "dest": "WADD",
    "airline": "Turkish Airlines",
@@ -399,6 +422,8 @@
   {
    "time": "01:25",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:25:00+00:00",
    "flight": "TK802",
    "dest": "ORBI",
    "airline": "Turkish Airlines",
@@ -417,6 +442,8 @@
   {
    "time": "01:25",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:25:00+00:00",
    "flight": "TK368",
    "dest": "UZTT",
    "airline": "Turkish Airlines",
@@ -435,6 +462,8 @@
   {
    "time": "01:30",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:30:00+00:00",
    "flight": "TK70",
    "dest": "VHHH",
    "airline": "Turkish Airlines",
@@ -453,6 +482,8 @@
   {
    "time": "01:30",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:30:00+00:00",
    "flight": "TK24",
    "dest": "RCTP",
    "airline": "Turkish Airlines",
@@ -471,6 +502,8 @@
   {
    "time": "01:30",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:30:00+00:00",
    "flight": "TK26",
    "dest": "ZSPD",
    "airline": "Turkish Airlines",
@@ -489,6 +522,8 @@
   {
    "time": "01:35",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:35:00+00:00",
    "flight": "TK144",
    "dest": "OERK",
    "airline": "Turkish Airlines",
@@ -507,6 +542,8 @@
   {
    "time": "01:35",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:35:00+00:00",
    "flight": "TK2818",
    "dest": "LTFH",
    "airline": "Turkish Airlines",
@@ -525,6 +562,8 @@
   {
    "time": "01:35",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:35:00+00:00",
    "flight": "TK646",
    "dest": "HCMM",
    "airline": "Turkish Airlines",
@@ -543,6 +582,8 @@
   {
    "time": "01:35",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:35:00+00:00",
    "flight": "TK338",
    "dest": "UBBB",
    "airline": "Turkish Airlines",
@@ -561,6 +602,8 @@
   {
    "time": "01:40",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:40:00+00:00",
    "flight": "TK60",
    "dest": "WMKK",
    "airline": "Turkish Airlines",
@@ -579,6 +622,8 @@
   {
    "time": "01:40",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:40:00+00:00",
    "flight": "TK42",
    "dest": "FAOR",
    "airline": "Turkish Airlines",
@@ -597,6 +642,8 @@
   {
    "time": "01:40",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:40:00+00:00",
    "flight": "TK2240",
    "dest": "LTAJ",
    "airline": "Turkish Airlines",
@@ -615,6 +662,8 @@
   {
    "time": "01:40",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:40:00+00:00",
    "flight": "TK1841",
    "dest": "LGAV",
    "airline": "Turkish Airlines",
@@ -633,6 +682,8 @@
   {
    "time": "01:40",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:40:00+00:00",
    "flight": "TK88",
    "dest": "ZBAA",
    "airline": "Turkish Airlines",
@@ -651,6 +702,8 @@
   {
    "time": "01:40",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:40:00+00:00",
    "flight": "AH3015",
    "dest": "DAAG",
    "airline": "Air Algerie",
@@ -669,6 +722,8 @@
   {
    "time": "01:45",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:45:00+00:00",
    "flight": "TK56",
    "dest": "WIII",
    "airline": "Turkish Airlines",
@@ -687,6 +742,8 @@
   {
    "time": "01:45",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:45:00+00:00",
    "flight": "TK44",
    "dest": "FACT",
    "airline": "Turkish Airlines",
@@ -705,6 +762,8 @@
   {
    "time": "01:50",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:50:00+00:00",
    "flight": "TK184",
    "dest": "MMMX",
    "airline": "Turkish Airlines",
@@ -723,6 +782,8 @@
   {
    "time": "01:50",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:50:00+00:00",
    "flight": "TK162",
    "dest": "VVTS",
    "airline": "Turkish Airlines",
@@ -741,6 +802,8 @@
   {
    "time": "01:50",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:50:00+00:00",
    "flight": "TK172",
    "dest": "VTSP",
    "airline": "Turkish Airlines",
@@ -759,6 +822,8 @@
   {
    "time": "01:50",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:50:00+00:00",
    "flight": "TK157",
    "dest": "KMIA",
    "airline": "Turkish Airlines",
@@ -777,6 +842,8 @@
   {
    "time": "01:50",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:50:00+00:00",
    "flight": "TK2232",
    "dest": "LTAU",
    "airline": "Turkish Airlines",
@@ -795,6 +862,8 @@
   {
    "time": "01:50",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:50:00+00:00",
    "flight": "TK376",
    "dest": "UGTB",
    "airline": "Turkish Airlines",
@@ -813,6 +882,8 @@
   {
    "time": "01:50",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:50:00+00:00",
    "flight": "TK90",
    "dest": "RKSI",
    "airline": "Turkish Airlines",
@@ -831,6 +902,8 @@
   {
    "time": "01:55",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:55:00+00:00",
    "flight": "TK692",
    "dest": "HECA",
    "airline": "Turkish Airlines",
@@ -849,6 +922,8 @@
   {
    "time": "01:55",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:55:00+00:00",
    "flight": "TK54",
    "dest": "WSSS",
    "airline": "Turkish Airlines",
@@ -867,6 +942,8 @@
   {
    "time": "01:55",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:55:00+00:00",
    "flight": "TK2528",
    "dest": "LTFE",
    "airline": "Turkish Airlines",
@@ -885,6 +962,8 @@
   {
    "time": "01:55",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:55:00+00:00",
    "flight": "TK2480",
    "dest": "LTDB",
    "airline": "Turkish Airlines",
@@ -903,6 +982,8 @@
   {
    "time": "01:55",
    "hour": 1,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T22:55:00+00:00",
    "flight": "TK2042",
    "dest": "LTAN",
    "airline": "Turkish Airlines",
@@ -921,6 +1002,8 @@
   {
    "time": "02:00",
    "hour": 2,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T23:00:00+00:00",
    "flight": "TK68",
    "dest": "VTBS",
    "airline": "Turkish Airlines",
@@ -939,6 +1022,8 @@
   {
    "time": "02:00",
    "hour": 2,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T23:00:00+00:00",
    "flight": "TK2572",
    "dest": "LTBS",
    "airline": "Turkish Airlines",
@@ -957,6 +1042,8 @@
   {
    "time": "02:00",
    "hour": 2,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T23:00:00+00:00",
    "flight": "TK2440",
    "dest": "LTAI",
    "airline": "Turkish Airlines",
@@ -975,6 +1062,8 @@
   {
    "time": "02:00",
    "hour": 2,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T23:00:00+00:00",
    "flight": "TK2192",
    "dest": "LTAC",
    "airline": "Turkish Airlines",
@@ -993,6 +1082,8 @@
   {
    "time": "02:00",
    "hour": 2,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T23:00:00+00:00",
    "flight": "TK814",
    "dest": "OJAI",
    "airline": "Turkish Airlines",
@@ -1011,6 +1102,8 @@
   {
    "time": "02:05",
    "hour": 2,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T23:05:00+00:00",
    "flight": "TK198",
    "dest": "RJTT",
    "airline": "Turkish Airlines",
@@ -1029,6 +1122,8 @@
   {
    "time": "02:10",
    "hour": 2,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T23:10:00+00:00",
    "flight": "TK734",
    "dest": "VRMM",
    "airline": "Turkish Airlines",
@@ -1047,6 +1142,8 @@
   {
    "time": "02:10",
    "hour": 2,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T23:10:00+00:00",
    "flight": "TK164",
    "dest": "VVNB",
    "airline": "Turkish Airlines",
@@ -1065,6 +1162,8 @@
   {
    "time": "02:10",
    "hour": 2,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T23:10:00+00:00",
    "flight": "FZ756",
    "dest": "OMDB",
    "airline": "flydubai",
@@ -1083,6 +1182,8 @@
   {
    "time": "02:15",
    "hour": 2,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T23:15:00+00:00",
    "flight": "TK429",
    "dest": "UWKD",
    "airline": "Turkish Airlines",
@@ -1101,6 +1202,8 @@
   {
    "time": "02:15",
    "hour": 2,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T23:15:00+00:00",
    "flight": "TK176",
    "dest": "FIMP",
    "airline": "Turkish Airlines",
@@ -1119,6 +1222,8 @@
   {
    "time": "02:15",
    "hour": 2,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T23:15:00+00:00",
    "flight": "TK84",
    "dest": "RPLL",
    "airline": "Turkish Airlines",
@@ -1137,6 +1242,8 @@
   {
    "time": "02:20",
    "hour": 2,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T23:20:00+00:00",
    "flight": "TK407",
    "dest": "UUWW",
    "airline": "Turkish Airlines",
@@ -1155,6 +1262,8 @@
   {
    "time": "02:25",
    "hour": 2,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T23:25:00+00:00",
    "flight": "TK86",
    "dest": "RJBB",
    "airline": "Turkish Airlines",
@@ -1173,6 +1282,8 @@
   {
    "time": "02:30",
    "hour": 2,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T23:30:00+00:00",
    "flight": "AH3023",
    "dest": "DABC",
    "airline": "Air Algerie",
@@ -1191,6 +1302,8 @@
   {
    "time": "02:40",
    "hour": 2,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-04T23:40:00+00:00",
    "flight": "TK360",
    "dest": "UDYZ",
    "airline": "Turkish Airlines",
@@ -1209,6 +1322,8 @@
   {
    "time": "03:15",
    "hour": 3,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-05T00:15:00+00:00",
    "flight": "FQ753",
    "dest": "HLLM",
    "airline": "Crown Airlines",
@@ -1227,6 +1342,8 @@
   {
    "time": "03:15",
    "hour": 3,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-05T00:15:00+00:00",
    "flight": "LH8461",
    "dest": "EDDF",
    "airline": "Lufthansa",
@@ -1245,6 +1362,8 @@
   {
    "time": "03:30",
    "hour": 3,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-05T00:30:00+00:00",
    "flight": "YL101",
    "dest": "HLLM",
    "airline": "Libyan Wings",
@@ -1263,6 +1382,8 @@
   {
    "time": "03:30",
    "hour": 3,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-05T00:30:00+00:00",
    "flight": null,
    "dest": "HLLM",
    "airline": "empty",
@@ -1281,6 +1402,8 @@
   {
    "time": "03:45",
    "hour": 3,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-05T00:45:00+00:00",
    "flight": "TK1220",
    "dest": "EDDB",
    "airline": "Turkish Airlines",
@@ -1299,6 +1422,8 @@
   {
    "time": "03:45",
    "hour": 3,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-05T00:45:00+00:00",
    "flight": "SU813",
    "dest": "URMM",
    "airline": "Aeroflot",
@@ -1317,6 +1442,8 @@
   {
    "time": "03:45",
    "hour": 3,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-05T00:45:00+00:00",
    "flight": "LH1743",
    "dest": "EDDM",
    "airline": "Lufthansa",
@@ -1335,6 +1462,8 @@
   {
    "time": "03:50",
    "hour": 3,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-05T00:50:00+00:00",
    "flight": "TU217",
    "dest": "DTTA",
    "airline": "Tunisair",
@@ -1353,6 +1482,8 @@
   {
    "time": "03:50",
    "hour": 3,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-05T00:50:00+00:00",
    "flight": "TO3415",
    "dest": "LFPO",
    "airline": "Transavia France",
@@ -1371,6 +1502,8 @@
   {
    "time": "03:50",
    "hour": 3,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-05T00:50:00+00:00",
    "flight": "MS746",
    "dest": "HECA",
    "airline": "Egyptair",
@@ -1389,6 +1522,8 @@
   {
    "time": "04:00",
    "hour": 4,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-05T01:00:00+00:00",
    "flight": "MB600",
    "dest": "EDDK",
    "airline": "Chrono Jet",
@@ -1407,6 +1542,8 @@
   {
    "time": "04:00",
    "hour": 4,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-05T01:00:00+00:00",
    "flight": "SU2133",
    "dest": "UUEE",
    "airline": "Aeroflot",
@@ -1425,6 +1562,8 @@
   {
    "time": "04:05",
    "hour": 4,
+   "date": "2026-08-05",
+   "scheduled_utc": "2026-08-05T01:05:00+00:00",
    "flight": "TO3411",
    "dest": "LFPO",
    "airline": "Transavia France",

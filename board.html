@@ -563,8 +563,24 @@
         const shown = b.departures.length;
         const partial = shown < 0.6 * IST_DAILY_DEPARTURES;
 
+        // The board is a rolling 12-hour window, not a calendar day. When nothing
+        // is upcoming (most of the day on the free tier) it falls back to the last
+        // completed window — which must be said out loud, or departed flights read
+        // as a forecast.
+        const span = b.window_start_utc
+          ? `${new Date(b.window_start_utc).toLocaleString(getLang() === "tr" ? "tr-TR" : "en-GB",
+              { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" })}` +
+            ` – ${new Date(b.window_end_utc).toLocaleTimeString(getLang() === "tr" ? "tr-TR" : "en-GB",
+              { hour: "2-digit", minute: "2-digit" })}`
+          : b.board_date;
+        const label = b.window_mode === "recent"
+          ? t("Last completed window", "Son tamamlanan pencere")
+          : b.window_mode === "upcoming"
+            ? t(`Next ${b.window_hours} hours`, `Önümüzdeki ${b.window_hours} saat`)
+            : t("Board for", "Pano tarihi");
+
         document.getElementById("meta").innerHTML =
-          `<span>${t("Board for", "Pano tarihi")} <b>${b.board_date}</b></span>` +
+          `<span>${label} <b>${span}</b></span>` +
           `<span>${t("showing", "gösterilen")} <b>${shown}</b>` +
           (partial
             ? ` ${t(`of ~${IST_DAILY_DEPARTURES} scheduled departures — free-tier sample`,
@@ -704,7 +720,7 @@
           d.hidden = false;
           d.innerHTML =
             `<h4>${r.flight || "—"}</h4>
-             <p class="sub">${r.airline || ""} · ${b.board_date} ${r.time}</p>
+             <p class="sub">${r.airline || ""} · ${r.date || b.board_date} ${r.time}</p>
              <div class="droute">
                <span class="ap">LTFM</span><span class="arrow">→</span><span class="ap">${r.dest}</span>
              </div>
