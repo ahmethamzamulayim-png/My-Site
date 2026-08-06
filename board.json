@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-08-06T09:15:03+00:00",
+ "generated_utc": "2026-08-06T11:37:24+00:00",
  "airport": "IST",
  "board_date": "2026-08-06",
  "window_start_utc": "2026-08-05T13:05:00+00:00",
@@ -9,7 +9,7 @@
  "late_threshold_min": 15,
  "baseline": 0.1162,
  "trained_on": {
-  "flights": 63664,
+  "flights": 63672,
   "days": 94,
   "through": "2026-08-05"
  },
@@ -22,7 +22,7 @@
   "model": 0.742
  },
  "model_trained": {
-  "trained_rows": 63668,
+  "trained_rows": 63676,
   "trained_through": "2026-08-06"
  },
  "scoreboard": {
@@ -42,8 +42,8 @@
   },
   {
    "h": 1,
-   "pct": 0.094,
-   "n": 3361
+   "pct": 0.0939,
+   "n": 3364
   },
   {
    "h": 2,
@@ -52,13 +52,13 @@
   },
   {
    "h": 3,
-   "pct": 0.1308,
-   "n": 558
+   "pct": 0.1299,
+   "n": 562
   },
   {
    "h": 4,
-   "pct": 0.1132,
-   "n": 521
+   "pct": 0.113,
+   "n": 522
   },
   {
    "h": 5,
@@ -200,7 +200,7 @@
    "n": 4,
    "median_late": 25,
    "median_from": "flight",
-   "hour_rate": 0.094,
+   "hour_rate": 0.0939,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
@@ -640,7 +640,7 @@
    "n": 38,
    "median_late": 45,
    "median_from": "destination",
-   "hour_rate": 0.1308,
+   "hour_rate": 0.1299,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
@@ -660,7 +660,7 @@
    "n": 78,
    "median_late": 45,
    "median_from": "flight",
-   "hour_rate": 0.1308,
+   "hour_rate": 0.1299,
    "actual": "ontime",
    "actual_delay": null,
    "tier": "lookup",
@@ -675,12 +675,12 @@
    "flight": "TK1220",
    "dest": "EDDB",
    "airline": "Turkish Airlines",
-   "risk": 0.0067,
+   "risk": 0.0062,
    "basis": "flight+hour",
-   "n": 25,
+   "n": 26,
    "median_late": 26,
    "median_from": "route",
-   "hour_rate": 0.1308,
+   "hour_rate": 0.1299,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
@@ -695,12 +695,12 @@
    "flight": "LH1743",
    "dest": "EDDM",
    "airline": "Lufthansa",
-   "risk": 0.0112,
+   "risk": 0.0111,
    "basis": "flight+hour",
-   "n": 90,
+   "n": 91,
    "median_late": 24,
    "median_from": "destination",
-   "hour_rate": 0.1308,
+   "hour_rate": 0.1299,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
@@ -715,12 +715,12 @@
    "flight": "TO3415",
    "dest": "LFPO",
    "airline": "Transavia",
-   "risk": 0.0073,
+   "risk": 0.0064,
    "basis": "flight+hour",
-   "n": 4,
+   "n": 5,
    "median_late": 32,
    "median_from": "route",
-   "hour_rate": 0.1308,
+   "hour_rate": 0.1299,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
@@ -740,7 +740,7 @@
    "n": 81,
    "median_late": 28,
    "median_from": "route",
-   "hour_rate": 0.1308,
+   "hour_rate": 0.1299,
    "actual": "ontime",
    "actual_delay": null,
    "tier": "lookup",
@@ -760,7 +760,7 @@
    "n": 85,
    "median_late": 37,
    "median_from": "flight",
-   "hour_rate": 0.1132,
+   "hour_rate": 0.113,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
@@ -775,12 +775,12 @@
    "flight": "TO3411",
    "dest": "LFPO",
    "airline": "Transavia France",
-   "risk": 0.0054,
+   "risk": 0.0047,
    "basis": "flight+hour",
-   "n": 6,
+   "n": 7,
    "median_late": 32,
    "median_from": "destination",
-   "hour_rate": 0.1132,
+   "hour_rate": 0.113,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
