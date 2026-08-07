@@ -526,6 +526,52 @@ body::before {
 .project-grid .card:nth-child(5) .card-tag { color: var(--leaf); }
 .project-grid .card:nth-child(6) .card-tag { color: var(--gold); }
 
+/* BiggerBrother card: on hover it recolors into the app's own dark/scanner-green
+   palette (pulled from its repo logo) instead of the site's çini set, with a
+   momentary glitch — fits a security tool, and it's the only project whose
+   card intentionally breaks the site's light theme. */
+.card-bb {
+  --bb-bg: #0a0d13;
+  --bb-line: #232c3d;
+  --bb-accent: #4ade80; /* logo's scanner green — only readable on the dark hover bg */
+  --bb-accent-light: #15803d; /* same hue, darkened for contrast on the light card */
+  border-top-color: var(--bb-accent-light);
+  transition: background-color 380ms ease, border-color 380ms ease, box-shadow 380ms ease;
+}
+.card-bb .card-tag { color: var(--bb-accent-light); transition: color 380ms ease; }
+.card-bb h3 { transition: color 380ms ease, text-shadow 150ms steps(3, end); }
+.card-bb p,
+.card-bb ul,
+.card-bb .card-link { transition: color 380ms ease; }
+
+.card-bb:hover {
+  background: var(--bb-bg);
+  border-color: var(--bb-line);
+  box-shadow: 0 24px 60px rgba(10, 13, 19, 0.5);
+  animation: bb-glitch 320ms steps(2, end) 1;
+}
+.card-bb:hover .card-tag,
+.card-bb:hover .card-link { color: var(--bb-accent); }
+.card-bb:hover h3 { color: #f2f6f3; animation: bb-glitch-text 320ms steps(2, end) 1; }
+.card-bb:hover p,
+.card-bb:hover ul { color: #92a09c; }
+
+@keyframes bb-glitch {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-3px, 1px); }
+  40% { transform: translate(3px, -1px); }
+  60% { transform: translate(-2px, 0); }
+  80% { transform: translate(2px, 1px); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes bb-glitch-text {
+  0%, 100% { text-shadow: none; }
+  25% { text-shadow: -2px 0 #ff2965, 2px 0 var(--bb-accent); }
+  50% { text-shadow: 2px 0 #ff2965, -2px 0 var(--bb-accent); }
+  75% { text-shadow: -1px 0 #ff2965, 1px 0 var(--bb-accent); }
+}
+
 .card h3,
 .timeline-item h3 {
   margin: 0 0 10px;
@@ -863,6 +909,7 @@ body::before {
 
 @media (prefers-reduced-motion: reduce) {
   .easter-plane, .easter-boom { animation: none; display: none; }
+  .card-bb:hover, .card-bb:hover h3 { animation: none; }
 }
 
 /* Per-page custom cursors (DIN 912 screw / bearing / plane): see script.js */
@@ -879,7 +926,7 @@ body::before {
   pointer-events: none;
   z-index: 10000;
   opacity: 0;
-  transition: opacity 0.15s ease;
+  transition: opacity 0.15s ease, color 200ms ease;
   filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.25));
 }
 
@@ -894,3 +941,6 @@ body::before {
   color: var(--accent);
 }
 .custom-cursor[data-mode="concorde"] svg { shape-rendering: crispEdges; }
+
+/* card-bb's hover flips its background near-black — keep the cursor visible on it */
+body:has(.card-bb:hover) .custom-cursor { color: #fff; }
