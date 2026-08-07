@@ -1,9 +1,9 @@
 {
- "generated_utc": "2026-08-07T09:11:57+00:00",
+ "generated_utc": "2026-08-07T10:16:03+00:00",
  "airport": "IST",
  "board_date": "2026-08-07",
- "window_start_utc": "2026-08-07T09:11:47+00:00",
- "window_end_utc": "2026-08-07T21:11:47+00:00",
+ "window_start_utc": "2026-08-07T10:15:53+00:00",
+ "window_end_utc": "2026-08-07T22:15:53+00:00",
  "window_hours": 12,
  "window_mode": "upcoming",
  "late_threshold_min": 15,
@@ -14,7 +14,8 @@
   "through": "2026-08-06"
  },
  "tiers": {
-  "lookup": 39,
+  "hybrid": 2,
+  "lookup": 37,
   "model": 2
  },
  "tier_auc": {
@@ -176,7 +177,7 @@
    "flight": "TK",
    "dest": "EFHK",
    "airline": "Turkish Airlines",
-   "risk": 0.084,
+   "risk": 0.0718,
    "basis": "flight+hour",
    "n": 32,
    "median_late": 25,
@@ -184,7 +185,8 @@
    "hour_rate": 0.1584,
    "actual": null,
    "actual_delay": null,
-   "tier": "lookup",
+   "lookup_risk": 0.084,
+   "tier": "hybrid",
    "turnaround_min": null,
    "inbound_delay_min": null
   },
@@ -196,7 +198,7 @@
    "flight": "3U",
    "dest": "ZUTF",
    "airline": "Sichuan Airlines",
-   "risk": 0.0043,
+   "risk": 0.0186,
    "basis": "flight+hour",
    "n": 58,
    "median_late": 41,
@@ -204,7 +206,8 @@
    "hour_rate": 0.1584,
    "actual": null,
    "actual_delay": null,
-   "tier": "lookup",
+   "lookup_risk": 0.0043,
+   "tier": "hybrid",
    "turnaround_min": null,
    "inbound_delay_min": null
   },
