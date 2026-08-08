@@ -1,35 +1,35 @@
 {
- "generated_utc": "2026-08-08T15:51:18+00:00",
+ "generated_utc": "2026-08-08T18:45:55+00:00",
  "days": 99,
  "first_date": "2026-05-01",
  "last_date": "2026-08-08",
- "total_flights": 133139,
- "cargo_flights": 6559,
- "movements_tracked": 93711,
- "cross_validated": 45820,
- "delay_known": 63866,
+ "total_flights": 133239,
+ "cargo_flights": 6563,
+ "movements_tracked": 93933,
+ "cross_validated": 45842,
+ "delay_known": 63961,
  "median_delay": 0.0,
  "median_when_delayed": 31.0,
  "delay_hist": [
   {
    "bin": "<15",
-   "count": 56444
+   "count": 56533
   },
   {
    "bin": "15–30",
-   "count": 3646
+   "count": 3648
   },
   {
    "bin": "30–60",
-   "count": 2349
+   "count": 2351
   },
   {
    "bin": "60+",
-   "count": 1427
+   "count": 1429
   }
  ],
- "delayed_15": 7422,
- "ontime": 56444,
+ "delayed_15": 7428,
+ "ontime": 56533,
  "pct_delayed": 11.6,
  "pct_ontime": 88.4,
  "recent": {
@@ -1468,7 +1468,7 @@
   },
   {
    "date": "2026-08-06",
-   "movements": 1661,
+   "movements": 1774,
    "flights": 108,
    "flew": 100,
    "delayed": 13,
@@ -1484,21 +1484,21 @@
   {
    "date": "2026-08-07",
    "movements": 1744,
-   "flights": 31,
-   "flew": 26,
-   "delayed": 0,
-   "ontime": 26,
-   "cancelled": 1,
+   "flights": 131,
+   "flew": 121,
+   "delayed": 6,
+   "ontime": 115,
+   "cancelled": 2,
    "median_delay": 0.0,
-   "median_when_delayed": null,
-   "avg_dep_delay": null,
+   "median_when_delayed": 41.0,
+   "avg_dep_delay": 19.6,
    "metars": 48,
-   "conversion": 0.261,
-   "scored": 26
+   "conversion": 0.771,
+   "scored": 121
   },
   {
    "date": "2026-08-08",
-   "movements": 432,
+   "movements": 541,
    "flights": 10,
    "flew": 8,
    "delayed": 0,
@@ -1507,11 +1507,11 @@
    "median_delay": 0.0,
    "median_when_delayed": null,
    "avg_dep_delay": null,
-   "metars": 31,
+   "metars": 37,
    "conversion": 0.357,
    "scored": 8
   }
  ],
- "latest_metar": "METAR LTFM 081520Z 36011KT 9999 SCT022 27/22 Q1010 NOSIG",
- "match_rate": 0.021
+ "latest_metar": "METAR LTFM 081820Z 01011KT 9999 SCT009 25/23 Q1011 BECMG BKN009",
+ "match_rate": 0.017
 }
