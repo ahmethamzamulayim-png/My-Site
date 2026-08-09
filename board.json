@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-08-09T13:25:47+00:00",
+ "generated_utc": "2026-08-09T15:52:43+00:00",
  "airport": "IST",
  "board_date": "2026-08-09",
  "window_start_utc": "2026-08-08T13:05:00+00:00",
@@ -9,12 +9,13 @@
  "late_threshold_min": 15,
  "baseline": 0.1161,
  "trained_on": {
-  "flights": 63961,
+  "flights": 63964,
   "days": 97,
   "through": "2026-08-08"
  },
  "tiers": {
-  "lookup": 72
+  "lookup": 71,
+  "model": 1
  },
  "tier_auc": {
   "lookup": 0.711,
@@ -22,16 +23,16 @@
   "model": 0.742
  },
  "model_trained": {
-  "trained_rows": 63967,
+  "trained_rows": 63970,
   "trained_through": "2026-08-09"
  },
  "scoreboard": {
-  "resolved": 117,
+  "resolved": 120,
   "total": 236,
   "late": 6,
-  "ontime": 111,
-  "mean_predicted": 0.1106,
-  "actual_rate": 0.0513,
+  "ontime": 114,
+  "mean_predicted": 0.1086,
+  "actual_rate": 0.05,
   "window_days": 14
  },
  "hourly": [
@@ -52,13 +53,13 @@
   },
   {
    "h": 3,
-   "pct": 0.13,
-   "n": 577
+   "pct": 0.1295,
+   "n": 579
   },
   {
    "h": 4,
-   "pct": 0.1126,
-   "n": 533
+   "pct": 0.1124,
+   "n": 534
   },
   {
    "h": 5,
@@ -395,7 +396,7 @@
    "flight": "BM505",
    "dest": "HLLM",
    "airline": "Medsky Airways",
-   "risk": 0.3687,
+   "risk": 0.2624,
    "basis": "flight",
    "n": 16,
    "median_late": 32,
@@ -403,8 +404,9 @@
    "hour_rate": 0.0934,
    "actual": null,
    "actual_delay": null,
-   "tier": "lookup",
-   "turnaround_min": null,
+   "lookup_risk": 0.3687,
+   "tier": "model",
+   "turnaround_min": 70,
    "inbound_delay_min": null
   },
   {
@@ -1440,7 +1442,7 @@
    "n": 38,
    "median_late": 45,
    "median_from": "destination",
-   "hour_rate": 0.13,
+   "hour_rate": 0.1295,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
@@ -1460,7 +1462,7 @@
    "n": 80,
    "median_late": 44,
    "median_from": "flight",
-   "hour_rate": 0.13,
+   "hour_rate": 0.1295,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
@@ -1475,12 +1477,12 @@
    "flight": "TK1224",
    "dest": "EDDF",
    "airline": "Turkish Airlines",
-   "risk": 0.0239,
+   "risk": 0.0215,
    "basis": "flight+hour",
-   "n": 8,
+   "n": 9,
    "median_late": 25,
    "median_from": "route",
-   "hour_rate": 0.13,
+   "hour_rate": 0.1295,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
@@ -1495,12 +1497,12 @@
    "flight": "TK1220",
    "dest": "EDDB",
    "airline": "Turkish Airlines",
-   "risk": 0.0054,
+   "risk": 0.0051,
    "basis": "flight+hour",
-   "n": 28,
+   "n": 29,
    "median_late": 26,
    "median_from": "route",
-   "hour_rate": 0.13,
+   "hour_rate": 0.1295,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
@@ -1520,7 +1522,7 @@
    "n": 94,
    "median_late": 24,
    "median_from": "destination",
-   "hour_rate": 0.13,
+   "hour_rate": 0.1295,
    "actual": "ontime",
    "actual_delay": null,
    "tier": "lookup",
@@ -1540,7 +1542,7 @@
    "n": 26,
    "median_late": 82,
    "median_from": "flight",
-   "hour_rate": 0.13,
+   "hour_rate": 0.1295,
    "actual": "ontime",
    "actual_delay": null,
    "tier": "lookup",
@@ -1560,7 +1562,7 @@
    "n": 84,
    "median_late": 28,
    "median_from": "route",
-   "hour_rate": 0.13,
+   "hour_rate": 0.1295,
    "actual": "ontime",
    "actual_delay": null,
    "tier": "lookup",
@@ -1580,7 +1582,7 @@
    "n": 89,
    "median_late": 36,
    "median_from": "flight",
-   "hour_rate": 0.1126,
+   "hour_rate": 0.1124,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
@@ -1600,7 +1602,7 @@
    "n": 7,
    "median_late": 32,
    "median_from": "destination",
-   "hour_rate": 0.1126,
+   "hour_rate": 0.1124,
    "actual": "ontime",
    "actual_delay": null,
    "tier": "lookup",
