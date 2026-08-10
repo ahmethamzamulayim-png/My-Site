@@ -98,18 +98,18 @@
               <span data-i18n="panel.top">Projects, sized by scope</span>
             </div>
             <div class="treemap">
+              <a class="tile t-xds" href="bearing-universal">
+                <span class="tile-tag" data-i18n="tile.xds.tag">Condition Monitoring · Flagship</span>
+                <strong data-i18n="tile.xds.name">Universal bearing RUL</strong>
+                <span class="tile-note" data-i18n="tile.xds.note">3 rigs · 36 bearings</span>
+              </a>
               <a class="tile t-globe" href="thy-globe">
                 <span class="tile-tag" data-i18n="tile.globe.tag">Web · live now</span>
                 <strong data-i18n="tile.globe.name">THY flight globe</strong>
                 <span class="tile-note" id="live-globe-note" data-i18n="tile.globe.note">130+ flights on a 3D globe</span>
               </a>
-              <a class="tile t-xds" href="bearing-universal">
-                <span class="tile-tag" data-i18n="tile.xds.tag">Data / ML · new</span>
-                <strong data-i18n="tile.xds.name">Universal bearing RUL</strong>
-                <span class="tile-note" data-i18n="tile.xds.note">3 rigs · 36 bearings</span>
-              </a>
               <a class="tile t-ml" href="bearing">
-                <span class="tile-tag" data-i18n="tile.ml.tag">Data / ML</span>
+                <span class="tile-tag" data-i18n="tile.ml.tag">Condition Monitoring</span>
                 <strong data-i18n="tile.ml.name">Bearing failure prediction</strong>
               </a>
               <a class="tile t-ugv" href="#ugv">
@@ -161,10 +161,10 @@
           <h2 data-i18n="projects.h2">Projects that show engineering judgment, not just buzzwords.</h2>
         </div>
         <div class="project-grid">
-          <p class="group-heading" data-reveal data-i18n="group.flagship">Flagship</p>
+          <p class="group-heading" data-reveal data-i18n="group.flagship">Featured Engineering Work</p>
           <p class="group-note" data-reveal data-i18n="group.flagship.note">Full case studies — real numbers, honest limitations included.</p>
 
-          <article class="card card-plum" data-reveal>
+          <article class="card card-plum card-hero" data-reveal>
             <p class="card-tag" data-i18n="xds.tag">Condition Monitoring · Part 2 · Flagship</p>
             <h3 data-i18n="xds.h3">Universal bearing RUL — cross-dataset study</h3>
             <p data-i18n="xds.p">Does a prognostics model trained on one rig transfer to a rig it has never seen?</p>
@@ -188,7 +188,22 @@
             <a class="card-link" href="bearing" data-i18n="ml.link">Open the case study →</a>
           </article>
 
-          <p class="group-heading" data-reveal data-i18n="group.aviation">Aviation Data</p>
+          <article class="card" id="ugv" data-reveal>
+            <p class="card-tag" data-i18n="ugv.tag">University Project · Robotics</p>
+            <h3 data-i18n="ugv.h3">UGV Competition Project</h3>
+            <p data-i18n="ugv.p">
+              A university UGV competition project exploring mechanical design,
+              system integration, and engineering trade-offs. The team reached
+              the report stage; we did not advance to the later rounds.
+            </p>
+            <ul data-i18n="ugv.ul">
+              <li>Collaborative mechanical design and technical documentation</li>
+              <li>Mechatronic system integration across a small team</li>
+              <li>Worked within real design and schedule constraints</li>
+            </ul>
+          </article>
+
+          <p class="group-heading" data-reveal data-i18n="group.aviation">Aviation Data &amp; Systems</p>
           <p class="group-note" data-reveal data-i18n="group.aviation.note">Live flight tracking, a delay dataset I built myself, and the model and comparisons built on top of it.</p>
 
           <article class="card card-red" data-reveal>
@@ -261,24 +276,6 @@
               <span class="card-link" data-i18n="ih.link">Read the story →</span>
             </div>
           </a>
-
-          <p class="group-heading" data-reveal data-i18n="group.ugv">University project</p>
-          <p class="group-note" data-reveal data-i18n="group.ugv.note">A team competition project that reached the report stage — not one of the case studies above.</p>
-
-          <article class="card" id="ugv" data-reveal>
-            <p class="card-tag" data-i18n="ugv.tag">University Project · Robotics</p>
-            <h3 data-i18n="ugv.h3">Unmanned Ground Vehicle competition</h3>
-            <p data-i18n="ugv.p">
-              A university UGV competition project exploring mechanical design,
-              system integration, and engineering trade-offs. The team reached
-              the report stage; we did not advance to the later rounds.
-            </p>
-            <ul data-i18n="ugv.ul">
-              <li>Collaborative mechanical design and technical documentation</li>
-              <li>Mechatronic system integration across a small team</li>
-              <li>Working within real design and schedule constraints</li>
-            </ul>
-          </article>
         </div>
       </section>
 
@@ -404,12 +401,13 @@
       <section class="section contact" id="contact" data-reveal>
         <div>
           <p class="eyebrow" data-i18n="contact.eyebrow">Contact</p>
-          <h2 data-i18n="contact.h2">Have a project, research idea, or opportunity?</h2>
+          <h2 data-i18n="contact.h2">Want to talk engineering?</h2>
           <p data-i18n="contact.p">
-            Send a message with the form, attach a file if you need to, or find
-            me on GitHub.
+            Projects, research ideas, technical collaboration, or an
+            opportunity — reach out by email, GitHub, or the form.
           </p>
           <div class="contact-actions">
+            <a class="button secondary" href="mailto:ahmet.mulayim@marun.edu.tr">Email</a>
             <a class="button secondary" href="https://github.com/ahmethamzamulayim-png" target="_blank" rel="noreferrer">GitHub</a>
             <a class="button secondary" href="https://www.linkedin.com/in/ahmet-hamza-m%C3%BClayim-b74707390/" target="_blank" rel="noreferrer">LinkedIn</a>
           </div>
@@ -439,7 +437,7 @@
             <textarea name="message" rows="4" required></textarea>
           </label>
           <label>
-            <span data-i18n="contact.attach">Attachment (optional, 10MB max)</span>
+            <span data-i18n="contact.attach">Attachment (optional)</span>
             <input type="file" name="attachment" multiple />
           </label>
           <button type="submit" class="button primary" data-i18n="contact.send">Send message</button>
@@ -473,10 +471,10 @@
         "tile.globe.tag": "Web · şu an canlı",
         "tile.globe.name": "THY uçuş küresi",
         "tile.globe.note": "3B kürede 130+ uçuş",
-        "tile.xds.tag": "Veri / ML · yeni",
+        "tile.xds.tag": "Durum İzleme · Öne çıkan",
         "tile.xds.name": "Evrensel rulman RUL",
         "tile.xds.note": "3 düzenek · 36 rulman",
-        "tile.ml.tag": "Veri / ML",
+        "tile.ml.tag": "Durum İzleme",
         "tile.ml.name": "Rulman arızası tahmini",
         "tile.ugv.tag": "Robotik",
         "tile.ugv.name": "İKA yarışması",
@@ -491,12 +489,10 @@
         "tile.hubs.note": "IST, LHR ve FRA'yı geçiyor",
         "projects.eyebrow": "Seçilmiş işler",
         "projects.h2": "İçi boş kelimeler değil, mühendislik muhakemesi gösteren projeler.",
-        "group.flagship": "Öne çıkanlar",
+        "group.flagship": "Öne Çıkan Mühendislik İşleri",
         "group.flagship.note": "Tam vaka çalışmaları — gerçek sayılar, sınırlamalar dahil.",
-        "group.aviation": "Havacılık Verisi",
+        "group.aviation": "Havacılık Verisi ve Sistemleri",
         "group.aviation.note": "Canlı uçuş takibi, kendi kurduğum bir rötar veri seti, ve üzerine inşa ettiğim model ve karşılaştırmalar.",
-        "group.ugv": "Üniversite projesi",
-        "group.ugv.note": "Rapor aşamasına kadar ilerleyen bir takım yarışma projesi — yukarıdaki vaka çalışmalarından biri değil.",
         "xds.tag": "Durum İzleme · Bölüm 2 · Öne çıkan",
         "xds.h3": "Evrensel rulman RUL — veri setleri arası çalışma",
         "xds.p": "Bir düzenekte eğitilen bir prognostik model, hiç görmediği bir düzeneğe taşınır mı?",
@@ -544,9 +540,9 @@
         "th.m3": "Aynı kaynaktan gün",
         "th.link": "Karşılaştırmayı gör →",
         "ugv.tag": "Üniversite Projesi · Robotik",
-        "ugv.h3": "İnsansız Kara Aracı yarışması",
+        "ugv.h3": "İKA Yarışma Projesi",
         "ugv.p": "Mekanik tasarım, sistem entegrasyonu ve mühendislik ödünleşimlerini konu alan bir üniversite İKA yarışma projesi. Takım rapor aşamasına kadar ilerledi; sonraki turlara geçemedik.",
-        "ugv.ul": "<li>Ortak mekanik tasarım ve teknik dokümantasyon</li><li>Küçük bir takımda mekatronik sistem entegrasyonu</li><li>Gerçek tasarım ve takvim kısıtları altında çalışma</li>",
+        "ugv.ul": "<li>Ortak mekanik tasarım ve teknik dokümantasyon</li><li>Küçük bir takımda mekatronik sistem entegrasyonu</li><li>Gerçek tasarım ve takvim kısıtları altında çalışıldı</li>",
         "bb.tag": "Sistem / Windows · kendi reposu",
         "bb.h3": "BiggerBrother — kendi makinen için bir trafik gözlemevi",
         "bb.p": "Windows'ta her DNS sorgusunu ve soketi, ETW üzerinden onu oluşturan uygulamaya bağlar — üstüne tarayıcının hangi çerezleri hangi izleyicilere verdiğini gösteren bir tarayıcı-içi istek kaydedici. Yalnızca yerel: bulut yok, TLS araya girme yok, hiçbir şey makineden çıkmıyor.",
@@ -570,12 +566,12 @@
         "pn.ul": "<li>Tam 88 tuş, sentetik bip değil örneklenmiş piyano sesi</li><li>Fare, bilgisayar klavyesi ya da takılı bir MIDI kontrolcü</li><li>Gerçek hikâyeleriyle altı eser, tek tıkla çal — ya da kendi .mid dosyanı yükle</li>",
         "pn.link": "Piyanoyu aç →",
         "contact.eyebrow": "İletişim",
-        "contact.h2": "Bir projen, araştırma fikrin ya da bir fırsatın mı var?",
-        "contact.p": "Formu kullanarak mesaj gönder, gerekirse dosya ekle, ya da GitHub'dan bul beni.",
+        "contact.h2": "Mühendislik konuşmak ister misin?",
+        "contact.p": "Projeler, araştırma fikirleri, teknik iş birliği ya da bir fırsat — e-posta, GitHub ya da formla ulaş.",
         "contact.name": "İsim",
         "contact.email": "E-posta",
         "contact.message": "Mesaj",
-        "contact.attach": "Ek (isteğe bağlı, en fazla 10MB)",
+        "contact.attach": "Ek (isteğe bağlı)",
         "contact.send": "Mesaj gönder",
         "contact.sending": "Gönderiliyor…",
         "contact.success": "Gönderildi — en kısa sürede dönüş yapacağım.",

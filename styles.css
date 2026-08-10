@@ -444,12 +444,14 @@ textarea:focus-visible,
   color: var(--muted);
 }
 
-.t-globe {
-  grid-area: 1 / 1 / 2 / 3; /* the lead project keeps the full-width top row */
-  background: rgba(232, 25, 50, 0.16);
+/* the strongest project keeps the full-width top row — Universal bearing RUL,
+   not the flight globe, so the tile sizes actually match project hierarchy */
+.t-xds {
+  grid-area: 1 / 1 / 2 / 3;
+  background: rgba(122, 62, 158, 0.16);
 }
 
-.t-globe strong {
+.t-xds strong {
   font-size: 1.4rem;
 }
 
@@ -460,9 +462,9 @@ textarea:focus-visible,
   background: rgba(36, 67, 155, 0.13);
 }
 
-.t-xds {
+.t-globe {
   grid-area: 2 / 2 / 3 / 3;
-  background: rgba(122, 62, 158, 0.14);
+  background: rgba(232, 25, 50, 0.14);
 }
 
 .t-ugv {
@@ -675,6 +677,26 @@ textarea:focus-visible,
 .card h3,
 .timeline-item h3 {
   margin: 0 0 10px;
+  font-size: 1.4rem;
+}
+
+/* the one "sized by scope" card that gets the full-width, larger treatment —
+   reserved for the strongest project (Universal Bearing RUL) */
+.card-hero {
+  grid-column: 1 / -1;
+  padding: 32px;
+}
+
+.card-hero h3 {
+  font-size: 2rem;
+}
+
+.card-hero > p {
+  max-width: 65ch;
+  font-size: 1.05rem;
+}
+
+.card-hero .card-metrics strong {
   font-size: 1.4rem;
 }
 
