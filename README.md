@@ -38,7 +38,7 @@ Every airborne Turkish Airlines flight on an interactive 3D globe ([globe.gl](ht
 ## Notes
 
 - **Clean URLs**: GitHub Pages serves `/page` as `page.html` directly (no redirect), so every internal link skips the extension. `sitemap.xml` and `robots.txt` list the canonical extensionless URLs.
-- **Analytics**: [GoatCounter](https://www.goatcounter.com/) on every page — no cookies, privacy-friendly.
+- **Analytics**: [Umami Cloud](https://umami.is/) on every page — no cookies, privacy-friendly. (Switched from GoatCounter 2026-08-10 after a prolonged outage.)
 - **Contact form**: submits via [FormSubmit](https://formsubmit.co/) directly to email, no backend. File attachments post natively into a hidden iframe (FormSubmit's file uploads require a real multipart POST, not their JSON endpoint).
 - **View transitions**: pages cross-fade into each other on navigation in Chromium browsers ([`@view-transition`](https://developer.mozilla.org/en-US/docs/Web/CSS/@view-transition) in `styles.css`); falls back to a normal navigation elsewhere.
 
