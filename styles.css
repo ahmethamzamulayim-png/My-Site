@@ -111,6 +111,7 @@ body::before {
 }
 
 .brand strong,
+.section-heading h1,
 .section-heading h2,
 .hero h1,
 .card h3,
@@ -118,6 +119,28 @@ body::before {
 .contact h2 {
   font-family: "Space Grotesk", sans-serif;
   letter-spacing: -0.03em;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+.tile:focus-visible {
+  outline: 2px solid var(--accent-2);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 .brand small,
@@ -196,6 +219,7 @@ body::before {
 }
 
 /* tulip divider under section headings, drawn from the çini motif */
+.section-heading h1::after,
 .section-heading h2::after,
 .contact h2::after {
   content: "";
@@ -465,6 +489,7 @@ body::before {
   margin-top: 18px;
 }
 
+.section-heading h1,
 .section-heading h2 {
   margin: 0;
   font-size: clamp(2rem, 4vw, 3rem);
@@ -507,24 +532,95 @@ body::before {
   letter-spacing: 0.18em;
 }
 
-/* one çini color per project: UGV turquoise, ML cobalt, globe red, rig leaf */
+/* one çini color per project, assigned by identity (not grid position) so
+   cards can be regrouped by hierarchy without their color jumping around.
+   UGV keeps the default neutral border — deliberately, it's not a flagship. */
 .project-grid .card {
   border-top: 3px solid var(--line);
 }
 
-.project-grid .card:nth-child(1) { border-top-color: var(--turquoise); }
-.project-grid .card:nth-child(2) { border-top-color: var(--cobalt); }
-.project-grid .card:nth-child(3) { border-top-color: var(--plum); }
-.project-grid .card:nth-child(4) { border-top-color: var(--accent); }
-.project-grid .card:nth-child(5) { border-top-color: var(--leaf); }
-.project-grid .card:nth-child(6) { border-top-color: var(--gold); }
+.card-teal { border-top-color: var(--turquoise); }
+.card-cobalt { border-top-color: var(--cobalt); }
+.card-plum { border-top-color: var(--plum); }
+.card-red { border-top-color: var(--accent); }
+.card-leaf { border-top-color: var(--leaf); }
+.card-gold { border-top-color: var(--gold); }
 
-.project-grid .card:nth-child(1) .card-tag { color: var(--turquoise); }
-.project-grid .card:nth-child(2) .card-tag { color: var(--cobalt); }
-.project-grid .card:nth-child(3) .card-tag { color: var(--plum); }
-.project-grid .card:nth-child(4) .card-tag { color: var(--accent); }
-.project-grid .card:nth-child(5) .card-tag { color: var(--leaf); }
-.project-grid .card:nth-child(6) .card-tag { color: var(--gold); }
+.card-teal .card-tag { color: var(--turquoise); }
+.card-cobalt .card-tag { color: var(--cobalt); }
+.card-plum .card-tag { color: var(--plum); }
+.card-red .card-tag { color: var(--accent); }
+.card-leaf .card-tag { color: var(--leaf); }
+.card-gold .card-tag { color: var(--gold); }
+
+/* project-group sub-headings inside the Projects section (Flagship / Aviation
+   Data / University project) */
+.group-heading {
+  grid-column: 1 / -1;
+  margin: 30px 0 0;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+}
+
+.group-note {
+  grid-column: 1 / -1;
+  margin: 2px 0 4px;
+  color: var(--muted);
+  font-size: 0.92rem;
+  max-width: 62ch;
+}
+
+/* compact numeric metrics inside a card — used only where the number is real */
+.card-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin: 18px 0 0;
+}
+
+.card-metrics div {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-metrics strong {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.card-metrics span {
+  margin-top: 2px;
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--muted);
+}
+
+/* homepage metrics strip: same restrained tile as hero-metrics, sized for a
+   standalone full-width row */
+.metrics-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 18px;
+}
+
+.metrics-strip strong {
+  display: block;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 2.1rem;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.metrics-strip span {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
 
 /* BiggerBrother card: on hover it recolors into the app's own dark/scanner-green
    palette (pulled from its repo logo) instead of the site's çini set, with a
@@ -555,6 +651,10 @@ body::before {
 .card-bb:hover h3 { color: #f2f6f3; animation: bb-glitch-text 320ms steps(2, end) 1; }
 .card-bb:hover p,
 .card-bb:hover ul { color: #92a09c; }
+
+/* higher specificity than .offclock-card's own border-top shorthand, so BB
+   keeps its green identity when placed among the gold-bordered experiments */
+.offclock-card.card-bb { border-top-color: var(--bb-accent-light); }
 
 @keyframes bb-glitch {
   0% { transform: translate(0, 0); }
@@ -643,6 +743,13 @@ body::before {
 @media (max-width: 720px) {
   .offclock-card { grid-template-columns: 1fr; }
   .offclock-media { min-height: 200px; }
+}
+
+/* lets an offclock-style photo card sit inside the 2-col project grid
+   (e.g. the IST history story, grouped visually with the aviation-data cards) */
+.project-grid .offclock-card {
+  grid-column: 1 / -1;
+  margin-top: 0;
 }
 
 .skill-list {

@@ -6,7 +6,7 @@
     <title>Ahmet Hamza Mülayim | Mechanical Engineering Portfolio</title>
     <meta
       name="description"
-      content="Ahmet Hamza Mülayim's mechanical engineering portfolio with projects, skills, and contact info. Built for GitHub Pages."
+      content="Ahmet Hamza Mülayim's mechanical engineering portfolio — bearing prognostics, condition monitoring, robotics, and data-driven flight-delay analysis."
     />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e81932'/%3E%3Ctext x='32' y='45' font-size='38' font-family='sans-serif' font-weight='700' text-anchor='middle' fill='%23fff'%3EA%3C/text%3E%3C/svg%3E" />
     <link rel="canonical" href="https://ahmethmzamlym.engineer/" />
@@ -30,6 +30,28 @@
     <script src="i18n.js"></script>
     <script defer src="script.js"></script>
     <script data-goatcounter="https://ahmethmzamlym.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Ahmet Hamza Mülayim",
+        "url": "https://ahmethmzamlym.engineer/",
+        "affiliation": { "@type": "CollegeOrUniversity", "name": "Marmara University" },
+        "sameAs": [
+          "https://github.com/ahmethamzamulayim-png",
+          "https://www.linkedin.com/in/ahmet-hamza-m%C3%BClayim-b74707390/"
+        ],
+        "knowsAbout": [
+          "Mechanical Engineering",
+          "CAD",
+          "Robotics",
+          "Vibration Analysis",
+          "Condition Monitoring",
+          "Data Analysis",
+          "Python"
+        ]
+      }
+    </script>
   </head>
   <body data-cursor="din">
     <div class="noise"></div>
@@ -42,9 +64,10 @@
         </span>
       </a>
       <nav class="site-nav">
-        <a href="#about" data-i18n="nav.about">About</a>
         <a href="#projects" data-i18n="nav.projects">Projects</a>
-        <a href="#timeline" data-i18n="nav.timeline">Timeline</a>
+        <a href="about" data-i18n="nav.about">About</a>
+        <a href="https://github.com/ahmethamzamulayim-png" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="https://www.linkedin.com/in/ahmet-hamza-m%C3%BClayim-b74707390/" target="_blank" rel="noreferrer">LinkedIn</a>
         <a href="#contact" data-i18n="nav.contact">Contact</a>
         <button class="lang-toggle" type="button">TR</button>
       </nav>
@@ -57,27 +80,14 @@
           <h1 data-i18n="hero.h1">Mechanical engineering, built around design, analysis, and proof.</h1>
           <p class="hero-text" data-i18n="hero.text">
             I’m Ahmet Hamza Mülayim, a mechanical engineering student at Marmara
-            University focused on CAD, prototyping, data-driven analysis, and
-            turning ideas into testable results. This portfolio is a compact place
-            to show real engineering work.
+            University. I build physical systems, analyze how they behave, and
+            increasingly lean on data — vibration signals, flight records — to
+            understand them better. This portfolio is the real projects behind
+            that, not a résumé.
           </p>
           <div class="hero-actions">
-            <a class="button primary" href="#projects" data-i18n="hero.see">See projects</a>
-            <a class="button secondary" href="#contact" data-i18n="hero.email">Contact me</a>
-          </div>
-          <div class="hero-metrics">
-            <article>
-              <strong>UGV</strong>
-              <span data-i18n="metric.ugv">competition experience</span>
-            </article>
-            <article>
-              <strong>36</strong>
-              <span data-i18n="metric.ml">bearings in a cross-dataset RUL study</span>
-            </article>
-            <article>
-              <strong>CSWA</strong>
-              <span data-i18n="metric.cswa">Certified SOLIDWORKS Design Associate</span>
-            </article>
+            <a class="button primary" href="#projects" data-i18n="hero.see">View projects</a>
+            <a class="button secondary" href="about" data-i18n="hero.about">About me</a>
           </div>
         </div>
 
@@ -102,7 +112,7 @@
                 <span class="tile-tag" data-i18n="tile.ml.tag">Data / ML</span>
                 <strong data-i18n="tile.ml.name">Bearing failure prediction</strong>
               </a>
-              <a class="tile t-ugv" href="#projects">
+              <a class="tile t-ugv" href="#ugv">
                 <span class="tile-tag" data-i18n="tile.ugv.tag">Robotics</span>
                 <strong data-i18n="tile.ugv.name">UGV competition</strong>
               </a>
@@ -126,25 +136,23 @@
         </div>
       </section>
 
-      <section class="section" id="about" data-reveal>
-        <div class="section-heading">
-          <p class="eyebrow" data-i18n="about.eyebrow">About</p>
-          <h2 data-i18n="about.h2">Built for a mechanical engineering student with real projects to show.</h2>
-        </div>
-        <div class="about-grid">
-          <p data-i18n="about.p1">
-            I’m Ahmet Hamza Mülayim, a mechanical engineering student at Marmara
-            University interested in design, systems thinking, and practical
-            problem solving. I like work that starts in physics, moves through
-            analysis, and ends in something you can test and improve.
-          </p>
-          <p data-i18n="about.p2">
-            Right now I have competition experience with unmanned ground vehicles
-            and a two-part bearing prognostics project: failure prediction on NASA
-            vibration data, extended into a cross-dataset remaining-useful-life
-            study over three test rigs and 36 run-to-failure bearings.
-          </p>
-        </div>
+      <section class="section metrics-strip" data-reveal aria-label="Key figures from the work below">
+        <article>
+          <strong>36</strong>
+          <span data-i18n="ms.bearings">bearings, 3 rigs — cross-dataset RUL study</span>
+        </article>
+        <article>
+          <strong>0.742</strong>
+          <span data-i18n="ms.auc">delay-model AUC vs. 0.711 lookup baseline</span>
+        </article>
+        <article>
+          <strong>172K+</strong>
+          <span data-i18n="ms.hubs">IST departures compared across 3 hubs</span>
+        </article>
+        <article>
+          <strong>130+</strong>
+          <span data-i18n="ms.globe">Turkish Airlines flights tracked live</span>
+        </article>
       </section>
 
       <section class="section" id="projects">
@@ -153,140 +161,131 @@
           <h2 data-i18n="projects.h2">Projects that show engineering judgment, not just buzzwords.</h2>
         </div>
         <div class="project-grid">
-          <article class="card" data-reveal>
-            <p class="card-tag" data-i18n="ugv.tag">Robotics / Competition</p>
-            <h3 data-i18n="ugv.h3">Unmanned Ground Vehicle competition</h3>
-            <p data-i18n="ugv.p">
-              I participated in a competition focused on unmanned ground vehicles,
-              where the work involved design tradeoffs, integration, and getting a
-              system to perform under real constraints.
-            </p>
-            <ul data-i18n="ugv.ul">
-              <li>Mechatronic system thinking</li>
-              <li>Integration and troubleshooting</li>
-              <li>Team-based engineering under pressure</li>
-            </ul>
-          </article>
-          <article class="card" data-reveal>
-            <p class="card-tag" data-i18n="ml.tag">Data Science / ML</p>
-            <h3 data-i18n="ml.h3">IMS bearing failure prediction</h3>
-            <p data-i18n="ml.p">
-              A machine learning side project using public IMS bearing vibration
-              data to predict failures. The dataset comes from test-to-failure
-              experiments with 1-second vibration snapshots recorded at 20 kHz.
-            </p>
-            <ul data-i18n="ml.ul">
-              <li>3 data sets and 20,480-point samples</li>
-              <li>Feature extraction from raw vibration signals</li>
-              <li>Outer race and roller defect prediction</li>
-            </ul>
-            <a class="card-link" href="bearing" data-i18n="ml.link">Open the case study →</a>
-          </article>
-          <article class="card" data-reveal>
-            <p class="card-tag" data-i18n="xds.tag">Data Science / ML · Part 2</p>
+          <p class="group-heading" data-reveal data-i18n="group.flagship">Flagship</p>
+          <p class="group-note" data-reveal data-i18n="group.flagship.note">Full case studies — real numbers, honest limitations included.</p>
+
+          <article class="card card-plum" data-reveal>
+            <p class="card-tag" data-i18n="xds.tag">Condition Monitoring · Part 2 · Flagship</p>
             <h3 data-i18n="xds.h3">Universal bearing RUL — cross-dataset study</h3>
-            <p data-i18n="xds.p">
-              Does a prognostics model transfer to a rig it has never seen? Three
-              public run-to-failure datasets (IMS, XJTU-SY, FEMTO — 36 bearings,
-              lifetimes from 37 minutes to 45 days) pooled into one life-fraction
-              model, with the generalization gap measured directly.
-            </p>
-            <ul data-i18n="xds.ul">
-              <li>Geometry-derived envelope features, physics-validated</li>
-              <li>Leave-one-bearing-out vs leave-one-dataset-out</li>
-              <li>Honest reporting: worst cases and leakage checks included</li>
-            </ul>
+            <p data-i18n="xds.p">Does a prognostics model trained on one rig transfer to a rig it has never seen?</p>
+            <div class="card-metrics">
+              <div><strong>36</strong><span data-i18n="xds.m1">Bearings analyzed</span></div>
+              <div><strong>3</strong><span data-i18n="xds.m2">Rigs — IMS, XJTU-SY, FEMTO</span></div>
+              <div><strong data-i18n="xds.m3v">LOBO / LODO</strong><span data-i18n="xds.m3">Cross-dataset validation</span></div>
+            </div>
             <a class="card-link" href="bearing-universal" data-i18n="xds.link">Open the study →</a>
           </article>
-          <article class="card" data-reveal>
-            <p class="card-tag" data-i18n="globe.tag">Web / Live Data</p>
+
+          <article class="card card-cobalt" data-reveal>
+            <p class="card-tag" data-i18n="ml.tag">Condition Monitoring · Part 1</p>
+            <h3 data-i18n="ml.h3">IMS bearing failure prediction</h3>
+            <p data-i18n="ml.p">Can vibration alone forecast a rolling-element bearing's remaining life before it fails?</p>
+            <div class="card-metrics">
+              <div><strong>3</strong><span data-i18n="ml.m1">Run-to-failure tests</span></div>
+              <div><strong>20 kHz</strong><span data-i18n="ml.m2">Vibration sampling rate</span></div>
+              <div><strong data-i18n="ml.m3v">20,480</strong><span data-i18n="ml.m3">Points per snapshot</span></div>
+            </div>
+            <a class="card-link" href="bearing" data-i18n="ml.link">Open the case study →</a>
+          </article>
+
+          <p class="group-heading" data-reveal data-i18n="group.aviation">Aviation Data</p>
+          <p class="group-note" data-reveal data-i18n="group.aviation.note">Live flight tracking, a delay dataset I built myself, and the model and comparisons built on top of it.</p>
+
+          <article class="card card-red" data-reveal>
+            <p class="card-tag" data-i18n="globe.tag">Aviation Data · Live</p>
             <h3 data-i18n="globe.h3">Live Turkish Airlines flight globe</h3>
-            <p data-i18n="globe.p">
-              A real-time web app that plots every airborne Turkish Airlines
-              flight on an interactive 3D globe, using live ADS-B transponder
-              data from the OpenSky Network.
-            </p>
-            <ul data-i18n="globe.ul">
-              <li>WebGL globe with 130+ flights tracked live</li>
-              <li>Aircraft size classes and cargo vs passenger split</li>
-              <li>15-second polling, search, camera focus on click</li>
-            </ul>
+            <p data-i18n="globe.p">Where is every Turkish Airlines aircraft right now, and what is it flying?</p>
+            <div class="card-metrics">
+              <div><strong>130+</strong><span data-i18n="globe.m1">Flights tracked live</span></div>
+              <div><strong>15s</strong><span data-i18n="globe.m2">Refresh interval</span></div>
+              <div><strong>ADS-B</strong><span data-i18n="globe.m3">Live transponder data</span></div>
+            </div>
             <a class="card-link" href="thy-globe" data-i18n="globe.link">Open the live globe →</a>
           </article>
-          <article class="card" data-reveal>
-            <p class="card-tag" data-i18n="ist.tag">Data Engineering / Live Pipeline</p>
+
+          <article class="card card-leaf" data-reveal>
+            <p class="card-tag" data-i18n="ist.tag">Aviation Data · Pipeline</p>
             <h3 data-i18n="ist.h3">IST flight delay dataset</h3>
-            <p data-i18n="ist.p">
-              There is no public historical delay dataset for Istanbul Airport —
-              so I'm building one. A zero-maintenance GitHub Actions pipeline
-              collects every IST flight daily, joins actual movements with
-              schedules, and archives METAR weather alongside.
-            </p>
+            <p data-i18n="ist.p">Istanbul Airport has no public historical delay dataset — so what does one look like once you build it?</p>
             <ul data-i18n="ist.ul">
               <li>OpenSky + aviationstack joined on callsign</li>
               <li>Append-only CSVs with quality flags</li>
-              <li>Phase 2: a delay prediction model</li>
+              <li>Collected daily by a zero-maintenance GitHub Actions pipeline</li>
             </ul>
             <a class="card-link" href="ist-rotar" data-i18n="ist.link">Open the status dashboard →</a>
           </article>
-          <article class="card" data-reveal>
-            <p class="card-tag" data-i18n="p2.tag">Data Science / ML · Phase 2</p>
+
+          <article class="card card-gold" data-reveal>
+            <p class="card-tag" data-i18n="p2.tag">Aviation Data · Prediction</p>
             <h3 data-i18n="p2.h3">Delay prediction: Phase 2</h3>
-            <p data-i18n="p2.p">
-              The second stage built on the IST dataset: a delay-prediction
-              model, plus the concrete findings gathered along the way —
-              hourly, weekly, and monthly traffic patterns compared across
-              three European hubs.
-            </p>
-            <ul data-i18n="p2.ul">
-              <li>The model: 0.742 AUC against a 0.711 lookup baseline, tested blind</li>
-              <li>IST vs. Heathrow vs. Frankfurt, side by side</li>
-              <li>Reactionary delay: under 60 min on stand, 56.6% leave late</li>
-            </ul>
+            <p data-i18n="p2.p">Can a model beat a simple delay lookup table — and if so, why?</p>
+            <div class="card-metrics">
+              <div><strong data-i18n="p2.m1v">0.742</strong><span data-i18n="p2.m1">Model AUC</span></div>
+              <div><strong data-i18n="p2.m2v">0.711</strong><span data-i18n="p2.m2">Lookup baseline</span></div>
+              <div><strong data-i18n="p2.m3v">Blind</strong><span data-i18n="p2.m3">Tested on July hold-out</span></div>
+            </div>
             <a class="card-link" href="model" data-i18n="p2.link2">Open the model →</a>
             <a class="card-link" href="phase2" data-i18n="p2.link">All of Phase 2 →</a>
           </article>
 
-          <article class="card" data-reveal>
-            <p class="card-tag" data-i18n="th.tag">Data Science · comparison</p>
+          <article class="card card-teal" data-reveal>
+            <p class="card-tag" data-i18n="th.tag">Aviation Data · Comparison</p>
             <h3 data-i18n="th.h3">Three hubs: who is actually on time?</h3>
-            <p data-i18n="th.p">
-              Istanbul, Heathrow and Frankfurt measured over the same 86 days,
-              from the same source, with the same delay definition — 172,000
-              departures. The busiest of the three turns out to be the most
-              punctual, and the hourly curves show why.
-            </p>
-            <ul data-i18n="th.ul">
-              <li>IST 11.7% delayed vs. Heathrow 16.6%, Frankfurt 19.1%</li>
-              <li>FRA and LHR compound delay through the day; IST stays flat</li>
-              <li>Frankfurt is late often but briefly, Heathrow rarely but badly</li>
-            </ul>
+            <p data-i18n="th.p">Is Istanbul's busiest-in-Europe traffic actually less punctual than Heathrow or Frankfurt?</p>
+            <div class="card-metrics">
+              <div><strong>172K+</strong><span data-i18n="th.m1">Departures compared</span></div>
+              <div><strong>3</strong><span data-i18n="th.m2">Airports, same window</span></div>
+              <div><strong>86</strong><span data-i18n="th.m3">Days, same source</span></div>
+            </div>
             <a class="card-link" href="three-hubs" data-i18n="th.link">See the comparison →</a>
           </article>
 
-          <article class="card card-bb" data-reveal>
-            <p class="card-tag" data-i18n="bb.tag">Systems / Windows · own repo</p>
-            <h3 data-i18n="bb.h3">BiggerBrother — a traffic observatory for your own machine</h3>
-            <p data-i18n="bb.p">
-              Ties every DNS query and socket on Windows to the process that made
-              it, via ETW — plus an in-browser request recorder that shows exactly
-              which cookies your browser handed to which trackers. Local-only: no
-              cloud, no TLS interception, nothing leaves the machine.
+          <a class="offclock-card" href="ist-history" data-reveal>
+            <div class="offclock-media">
+              <img src="assets/img/ist-hero.jpg" alt="Istanbul Airport terminal from the air" loading="lazy" />
+            </div>
+            <div class="offclock-body">
+              <p class="card-tag" data-i18n="ih.tag">Data story · aviation logistics</p>
+              <h3 data-i18n="ih.h3">Logistics of IST — the world's 8th busiest airport</h3>
+              <p data-i18n="ih.p">
+                84.5 million passengers, 327 destinations, and a terminal laid
+                over abandoned coal pits. How Istanbul built the world's 8th
+                busiest airport — the tender, the ground, the 29-hour move, the
+                metro — with a satellite timelapse of the site from 2017 to 2025.
+              </p>
+              <ul data-i18n="ih.ul">
+                <li>84.5m passengers in 2025 — 8th busiest in the world</li>
+                <li>327 destinations and 82,733 connections — the most connected airport on earth</li>
+                <li>7,600 hectares of former lignite mines and 70 quarry lakes</li>
+              </ul>
+              <span class="card-link" data-i18n="ih.link">Read the story →</span>
+            </div>
+          </a>
+
+          <p class="group-heading" data-reveal data-i18n="group.ugv">University project</p>
+          <p class="group-note" data-reveal data-i18n="group.ugv.note">A team competition project that reached the report stage — not one of the case studies above.</p>
+
+          <article class="card" id="ugv" data-reveal>
+            <p class="card-tag" data-i18n="ugv.tag">University Project · Robotics</p>
+            <h3 data-i18n="ugv.h3">Unmanned Ground Vehicle competition</h3>
+            <p data-i18n="ugv.p">
+              A university UGV competition project exploring mechanical design,
+              system integration, and engineering trade-offs. The team reached
+              the report stage; we did not advance to the later rounds.
             </p>
-            <ul data-i18n="bb.ul">
-              <li>Per-process attribution: who talked to whom, and who owns the far end</li>
-              <li>In-page cookie/tracker capture without touching TLS</li>
-              <li>Per-process kill switch — drops an app's live TCP connections with Cut or Choke</li>
+            <ul data-i18n="ugv.ul">
+              <li>Collaborative mechanical design and technical documentation</li>
+              <li>Mechatronic system integration across a small team</li>
+              <li>Working within real design and schedule constraints</li>
             </ul>
-            <a class="card-link" href="https://github.com/ahmethamzamulayim-png/BiggerBrother" target="_blank" rel="noreferrer" data-i18n="bb.link">View the repo on GitHub →</a>
           </article>
         </div>
       </section>
 
       <section class="section" id="offclock">
         <div class="section-heading" data-reveal>
-          <p class="eyebrow" data-i18n="off.eyebrow">Off the clock</p>
-          <h2 data-i18n="off.h2">A passion project, built for the love of it.</h2>
+          <p class="eyebrow" data-i18n="off.eyebrow">Experiments &amp; side projects</p>
+          <h2 data-i18n="off.h2">Built out of curiosity, not part of the mechanical engineering thread above.</h2>
         </div>
         <a class="offclock-card" href="concorde" data-reveal>
           <div class="offclock-media">
@@ -356,93 +355,56 @@
           </div>
         </a>
 
-        <a class="offclock-card" href="ist-history" data-reveal>
+        <a class="offclock-card card-bb" href="https://github.com/ahmethamzamulayim-png/BiggerBrother" target="_blank" rel="noreferrer" data-reveal>
           <div class="offclock-media">
-            <img src="assets/img/ist-hero.jpg" alt="Istanbul Airport terminal from the air" loading="lazy" />
+            <svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" role="img" aria-hidden="true">
+              <rect width="400" height="260" fill="#0a0d13" />
+              <g stroke="#232c3d" stroke-width="1" fill="none">
+                <line x1="80" y1="70" x2="200" y2="130" />
+                <line x1="200" y1="130" x2="330" y2="60" />
+                <line x1="200" y1="130" x2="150" y2="210" />
+                <line x1="200" y1="130" x2="320" y2="190" />
+                <line x1="80" y1="70" x2="60" y2="180" />
+              </g>
+              <g stroke="#4ade80" stroke-width="1.5" fill="none" opacity="0.7">
+                <line x1="200" y1="130" x2="330" y2="60" />
+                <line x1="200" y1="130" x2="320" y2="190" />
+              </g>
+              <circle cx="200" cy="130" r="7" fill="#4ade80" />
+              <g fill="#3a4456">
+                <circle cx="80" cy="70" r="5" />
+                <circle cx="60" cy="180" r="5" />
+                <circle cx="150" cy="210" r="5" />
+              </g>
+              <g fill="#4ade80" opacity="0.85">
+                <circle cx="330" cy="60" r="5" />
+                <circle cx="320" cy="190" r="5" />
+              </g>
+            </svg>
           </div>
           <div class="offclock-body">
-            <p class="card-tag" data-i18n="ih.tag">Data story · aviation logistics</p>
-            <h3 data-i18n="ih.h3">Logistics of IST — the world's 8th busiest airport</h3>
-            <p data-i18n="ih.p">
-              84.5 million passengers, 327 destinations, and a terminal laid
-              over abandoned coal pits. How Istanbul built the world's 8th
-              busiest airport — the tender, the ground, the 29-hour move, the
-              metro — with a satellite timelapse of the site from 2017 to 2025.
+            <p class="card-tag" data-i18n="bb.tag">Systems / Windows · own repo</p>
+            <h3 data-i18n="bb.h3">BiggerBrother — a traffic observatory for your own machine</h3>
+            <p data-i18n="bb.p">
+              Ties every DNS query and socket on Windows to the process that made
+              it, via ETW — plus an in-browser request recorder that shows exactly
+              which cookies your browser handed to which trackers. Local-only: no
+              cloud, no TLS interception, nothing leaves the machine.
             </p>
-            <ul data-i18n="ih.ul">
-              <li>84.5m passengers in 2025 — 8th busiest in the world</li>
-              <li>327 destinations and 82,733 connections — the most connected airport on earth</li>
-              <li>7,600 hectares of former lignite mines and 70 quarry lakes</li>
+            <ul data-i18n="bb.ul">
+              <li>Per-process attribution: who talked to whom, and who owns the far end</li>
+              <li>In-page cookie/tracker capture without touching TLS</li>
+              <li>Per-process kill switch — drops an app's live TCP connections with Cut or Choke</li>
             </ul>
-            <span class="card-link" data-i18n="ih.link">Read the story →</span>
+            <span class="card-link" data-i18n="bb.link">View the repo on GitHub →</span>
           </div>
         </a>
-      </section>
-
-      <section class="section split" id="skills" data-reveal>
-        <div class="section-heading">
-          <p class="eyebrow" data-i18n="skills.eyebrow">Skills</p>
-          <h2 data-i18n="skills.h2">Tools and strengths that matter in the real world.</h2>
-        </div>
-        <div>
-          <div class="skill-list" data-i18n="skills.list">
-            <span>SolidWorks</span>
-            <span>AutoCAD</span>
-            <span>Inventor</span>
-            <span>Creo</span>
-            <span>Siemens NX</span>
-            <span>Python</span>
-            <span>Machine learning</span>
-            <span>Data analysis</span>
-            <span>Thermodynamics</span>
-            <span>Manufacturing</span>
-            <span>3D printing</span>
-            <span>Robotics</span>
-          </div>
-          <a class="cert" href="https://www.credly.com/badges/5dbdd7b4-85bb-4138-837d-cc2bfd011448/public_url" target="_blank" rel="noreferrer">
-            <img src="assets/img/cswa-badge.png" alt="Certified SOLIDWORKS Design Associate badge issued by Dassault Systèmes" width="72" height="72" loading="lazy" />
-            <span>
-              <strong>Certified SOLIDWORKS Design Associate (CSWA)</strong>
-              <small data-i18n="skills.cert">Dassault Systèmes · July 2026 · verify on Credly ↗</small>
-            </span>
-          </a>
-        </div>
-      </section>
-
-      <section class="section timeline-section" id="timeline">
-        <div class="section-heading" data-reveal>
-          <p class="eyebrow" data-i18n="tl.eyebrow">Timeline</p>
-          <h2 data-i18n="tl.h2">A path that connects engineering, robotics, and data science.</h2>
-        </div>
-        <div class="timeline" data-reveal>
-          <div class="timeline-item">
-            <span>2025-2030</span>
-            <div>
-              <h3 data-i18n="tl1.h3">Mechanical engineering student at Marmara University</h3>
-              <p data-i18n="tl1.p">Started in 2025, so the four-year path points toward a 2029 or 2030 graduation depending on the academic calendar. Building a portfolio around design, analysis, fabrication, and applied computation.</p>
-            </div>
-          </div>
-          <div class="timeline-item">
-            <span data-i18n="tl2.when">Now</span>
-            <div>
-              <h3 data-i18n="tl2.h3">UGV competition and a two-part bearing prognostics project</h3>
-              <p data-i18n="tl2.p">Robotics competition experience, plus bearing failure prediction on NASA data extended into a cross-dataset RUL study — groundwork for a physical test rig whose data will become dataset #4.</p>
-            </div>
-          </div>
-          <div class="timeline-item">
-            <span data-i18n="tl3.when">Next</span>
-            <div>
-              <h3 data-i18n="tl3.h3">Internships and stronger case studies</h3>
-              <p data-i18n="tl3.p">Turning current work into polished pages that help with recruiters, clubs, and collaborators.</p>
-            </div>
-          </div>
-        </div>
       </section>
 
       <section class="section contact" id="contact" data-reveal>
         <div>
           <p class="eyebrow" data-i18n="contact.eyebrow">Contact</p>
-          <h2 data-i18n="contact.h2">Make the domain do something useful.</h2>
+          <h2 data-i18n="contact.h2">Have a project, research idea, or opportunity?</h2>
           <p data-i18n="contact.p">
             Send a message with the form, attach a file if you need to, or find
             me on GitHub.
@@ -497,16 +459,16 @@
       window.I18N = {
         "nav.about": "Hakkımda",
         "nav.projects": "Projeler",
-        "nav.timeline": "Zaman çizelgesi",
         "nav.contact": "İletişim",
         "hero.eyebrow": "GitHub Pages portföyü",
         "hero.h1": "Tasarım, analiz ve kanıt üzerine kurulu makine mühendisliği.",
-        "hero.text": "Ben Ahmet Hamza Mülayim, Marmara Üniversitesi'nde makine mühendisliği öğrencisiyim; CAD, prototipleme, veriye dayalı analiz ve fikirleri test edilebilir sonuçlara dönüştürmeye odaklanıyorum. Bu portföy, gerçek mühendislik işlerini göstermek için derli toplu bir yer.",
+        "hero.text": "Ben Ahmet Hamza Mülayim, Marmara Üniversitesi'nde makine mühendisliği öğrencisiyim. Fiziksel sistemler kuruyorum, nasıl davrandıklarını analiz ediyorum ve onları daha iyi anlamak için giderek daha çok veriye — titreşim sinyallerine, uçuş kayıtlarına — dayanıyorum. Bu portföy, bunun arkasındaki gerçek projeler; bir özgeçmiş değil.",
         "hero.see": "Projelere bak",
-        "hero.email": "İletişime geç",
-        "metric.ugv": "yarışma deneyimi",
-        "metric.ml": "veri setleri arası RUL çalışmasındaki rulman sayısı",
-        "metric.cswa": "Sertifikalı SOLIDWORKS Design Associate",
+        "hero.about": "Hakkımda",
+        "ms.bearings": "rulman, 3 düzenek — veri setleri arası RUL çalışması",
+        "ms.auc": "rötar modeli AUC'si, 0,711 referans tabloya karşı",
+        "ms.hubs": "3 havalimanı arasında karşılaştırılan IST kalkışı",
+        "ms.globe": "canlı izlenen Türk Hava Yolları uçuşu",
         "panel.top": "Projeler, kapsama göre boyutlu",
         "tile.globe.tag": "Web · şu an canlı",
         "tile.globe.name": "THY uçuş küresi",
@@ -527,54 +489,71 @@
         "tile.hubs.tag": "Veri · yeni",
         "tile.hubs.name": "3 havalimanı",
         "tile.hubs.note": "IST, LHR ve FRA'yı geçiyor",
-        "about.eyebrow": "Hakkımda",
-        "about.h2": "Gösterecek gerçek projeleri olan bir makine mühendisliği öğrencisi için kuruldu.",
-        "about.p1": "Ben Ahmet Hamza Mülayim, Marmara Üniversitesi'nde makine mühendisliği öğrencisiyim; tasarım, sistem düşüncesi ve pratik problem çözmeyle ilgileniyorum. Fizikle başlayıp analizden geçen ve test edip geliştirebileceğin bir şeyle biten işleri seviyorum.",
-        "about.p2": "Şu anda insansız kara araçlarıyla yarışma deneyimim ve iki bölümlü bir rulman prognostiği projem var: NASA titreşim verisiyle arıza tahmini, üç test düzeneği ve bozulana kadar çalıştırılan 36 rulmanı kapsayan veri setleri arası bir kalan-ömür çalışmasına genişletildi.",
         "projects.eyebrow": "Seçilmiş işler",
         "projects.h2": "İçi boş kelimeler değil, mühendislik muhakemesi gösteren projeler.",
-        "ugv.tag": "Robotik / Yarışma",
-        "ugv.h3": "İnsansız Kara Aracı yarışması",
-        "ugv.p": "İnsansız kara araçları odaklı bir yarışmaya katıldım; iş, tasarım ödünleşimleri, entegrasyon ve bir sistemi gerçek kısıtlar altında çalıştırmayı içeriyordu.",
-        "ugv.ul": "<li>Mekatronik sistem düşüncesi</li><li>Entegrasyon ve arıza giderme</li><li>Baskı altında takım mühendisliği</li>",
-        "ml.tag": "Veri Bilimi / ML",
-        "ml.h3": "IMS rulman arızası tahmini",
-        "ml.p": "Herkese açık IMS rulman titreşim verisiyle arıza tahmini yapan bir makine öğrenmesi yan projesi. Veri seti, 20 kHz'de kaydedilmiş 1 saniyelik titreşim kesitleriyle yapılan bozulana-kadar-çalıştırma deneylerinden geliyor.",
-        "ml.ul": "<li>3 veri seti, 20.480 noktalık örnekler</li><li>Ham titreşim sinyalinden öznitelik çıkarımı</li><li>Dış bilezik ve makara kusuru tahmini</li>",
-        "ml.link": "Vaka çalışmasını aç →",
-        "xds.tag": "Veri Bilimi / ML · Bölüm 2",
+        "group.flagship": "Öne çıkanlar",
+        "group.flagship.note": "Tam vaka çalışmaları — gerçek sayılar, sınırlamalar dahil.",
+        "group.aviation": "Havacılık Verisi",
+        "group.aviation.note": "Canlı uçuş takibi, kendi kurduğum bir rötar veri seti, ve üzerine inşa ettiğim model ve karşılaştırmalar.",
+        "group.ugv": "Üniversite projesi",
+        "group.ugv.note": "Rapor aşamasına kadar ilerleyen bir takım yarışma projesi — yukarıdaki vaka çalışmalarından biri değil.",
+        "xds.tag": "Durum İzleme · Bölüm 2 · Öne çıkan",
         "xds.h3": "Evrensel rulman RUL — veri setleri arası çalışma",
-        "xds.p": "Bir prognostik model hiç görmediği bir düzeneğe taşınır mı? Üç herkese açık bozulana-kadar-çalıştırma veri seti (IMS, XJTU-SY, FEMTO — 36 rulman, 37 dakikadan 45 güne ömürler) tek bir ömür-oranı modelinde birleştirildi ve genelleme açığı doğrudan ölçüldü.",
-        "xds.ul": "<li>Geometriden türetilen, fizikle doğrulanan zarf öznitelikleri</li><li>Bir-rulmanı-dışarıda-bırak vs bir-veri-setini-dışarıda-bırak</li><li>Dürüst raporlama: en kötü durumlar ve sızıntı kontrolleri dahil</li>",
+        "xds.p": "Bir düzenekte eğitilen bir prognostik model, hiç görmediği bir düzeneğe taşınır mı?",
+        "xds.m1": "İncelenen rulman",
+        "xds.m2": "Düzenek — IMS, XJTU-SY, FEMTO",
+        "xds.m3v": "LOBO / LODO",
+        "xds.m3": "Veri setleri arası doğrulama",
         "xds.link": "Çalışmayı aç →",
-        "globe.tag": "Web / Canlı Veri",
+        "ml.tag": "Durum İzleme · Bölüm 1",
+        "ml.h3": "IMS rulman arızası tahmini",
+        "ml.p": "Titreşim tek başına bir rulmanın arızadan önce kalan ömrünü öngörebilir mi?",
+        "ml.m1": "Bozulana-kadar-çalıştırma testi",
+        "ml.m2": "Titreşim örnekleme hızı",
+        "ml.m3v": "20.480",
+        "ml.m3": "Kesit başına örnek",
+        "ml.link": "Vaka çalışmasını aç →",
+        "globe.tag": "Havacılık Verisi · Canlı",
         "globe.h3": "Canlı Türk Hava Yolları uçuş küresi",
-        "globe.p": "Havadaki her Türk Hava Yolları uçuşunu, OpenSky Network'ün canlı ADS-B verisiyle etkileşimli bir 3B küre üzerinde gösteren gerçek zamanlı bir web uygulaması.",
-        "globe.ul": "<li>130+ uçuşun canlı izlendiği WebGL küre</li><li>Uçak boyut sınıfları ve kargo/yolcu ayrımı</li><li>15 saniyede bir güncelleme, arama, tıklayınca kamera odağı</li>",
+        "globe.p": "Şu anda her Türk Hava Yolları uçağı nerede ve ne uçuruyor?",
+        "globe.m1": "Canlı izlenen uçuş",
+        "globe.m2": "Güncelleme aralığı",
+        "globe.m3": "Canlı transponder verisi",
         "globe.link": "Canlı küreyi aç →",
-        "ist.tag": "Veri Mühendisliği / Canlı Boru Hattı",
+        "ist.tag": "Havacılık Verisi · Boru Hattı",
         "ist.h3": "IST uçuş rötarı veri seti",
-        "ist.p": "İstanbul Havalimanı için herkese açık tarihsel bir rötar veri seti yok — ben de kendiminkini yapıyorum. Bakım gerektirmeyen bir GitHub Actions hattı her gün IST uçuşlarını topluyor, gerçek hareketleri tarifelerle birleştiriyor ve yanına METAR hava durumunu arşivliyor.",
-        "ist.ul": "<li>Çağrı koduyla birleştirilen OpenSky + aviationstack</li><li>Kalite bayraklı, yalnızca eklenen CSV'ler</li><li>Aşama 2: rötar tahmin modeli</li>",
+        "ist.p": "İstanbul Havalimanı için herkese açık tarihsel bir rötar veri seti yok — peki kendin kursan nasıl görünür?",
+        "ist.ul": "<li>Çağrı koduyla birleştirilen OpenSky + aviationstack</li><li>Kalite bayraklı, yalnızca eklenen CSV'ler</li><li>Bakım gerektirmeyen bir GitHub Actions hattıyla her gün toplanıyor</li>",
         "ist.link": "Durum panosunu aç →",
-        "p2.tag": "Veri Bilimi / ML · Aşama 2",
+        "p2.tag": "Havacılık Verisi · Tahmin",
         "p2.h3": "Aşama 2: rötar tahmini",
-        "p2.p": "IST veri seti üzerine inşa edilen ikinci aşama: bir rötar tahmin modeli, ve yol boyunca toplanan somut bulgular — üç Avrupa merkezinde saatlik, haftalık, aylık trafik karşılaştırması.",
-        "p2.ul": "<li>Model: körlemesine testte 0,742 AUC, referans tablo 0,711</li><li>IST, Heathrow ve Frankfurt yan yana</li><li>Gecikme zinciri: yerde 60 dk'dan az kalanların %56,6'sı geç kalkıyor</li>",
+        "p2.p": "Bir model basit bir rötar referans tablosunu geçebilir mi — geçerse neden?",
+        "p2.m1": "Model AUC",
+        "p2.m1v": "0,742",
+        "p2.m2": "Referans tablo",
+        "p2.m2v": "0,711",
+        "p2.m3v": "Körlemesine",
+        "p2.m3": "Temmuz verisiyle test edildi",
         "p2.link2": "Modeli aç →",
         "p2.link": "Aşama 2'nin tamamı →",
-        "th.tag": "Veri Bilimi · karşılaştırma",
+        "th.tag": "Havacılık Verisi · Karşılaştırma",
         "th.h3": "3 havalimanı: kim gerçekten dakik?",
-        "th.p": "İstanbul, Heathrow ve Frankfurt aynı 86 günde, aynı kaynaktan, aynı rötar tanımıyla ölçüldü — 172.000 kalkış. Üçünün en yoğunu, aynı zamanda en dakiki çıktı; saatlik eğriler nedenini gösteriyor.",
-        "th.ul": "<li>IST %11,7 rötarlı; Heathrow %16,6, Frankfurt %19,1</li><li>FRA ve LHR gün içinde rötar biriktiriyor, IST düz gidiyor</li><li>Frankfurt sık ama kısa, Heathrow seyrek ama ağır gecikiyor</li>",
+        "th.p": "İstanbul'un Avrupa'nın en yoğun trafiği, Heathrow ya da Frankfurt'tan gerçekten daha mı az dakik?",
+        "th.m1": "Karşılaştırılan kalkış",
+        "th.m2": "Aynı pencerede havalimanı",
+        "th.m3": "Aynı kaynaktan gün",
         "th.link": "Karşılaştırmayı gör →",
+        "ugv.tag": "Üniversite Projesi · Robotik",
+        "ugv.h3": "İnsansız Kara Aracı yarışması",
+        "ugv.p": "Mekanik tasarım, sistem entegrasyonu ve mühendislik ödünleşimlerini konu alan bir üniversite İKA yarışma projesi. Takım rapor aşamasına kadar ilerledi; sonraki turlara geçemedik.",
+        "ugv.ul": "<li>Ortak mekanik tasarım ve teknik dokümantasyon</li><li>Küçük bir takımda mekatronik sistem entegrasyonu</li><li>Gerçek tasarım ve takvim kısıtları altında çalışma</li>",
         "bb.tag": "Sistem / Windows · kendi reposu",
         "bb.h3": "BiggerBrother — kendi makinen için bir trafik gözlemevi",
         "bb.p": "Windows'ta her DNS sorgusunu ve soketi, ETW üzerinden onu oluşturan uygulamaya bağlar — üstüne tarayıcının hangi çerezleri hangi izleyicilere verdiğini gösteren bir tarayıcı-içi istek kaydedici. Yalnızca yerel: bulut yok, TLS araya girme yok, hiçbir şey makineden çıkmıyor.",
         "bb.ul": "<li>Süreç bazlı ilişkilendirme: hangi uygulama kiminle konuştu, karşı taraf kime ait</li><li>TLS'e dokunmadan sayfa içi çerez/izleyici yakalama</li><li>Süreç bazlı kapatma anahtarı — Cut veya Choke ile bir uygulamanın canlı TCP bağlantılarını düşürür</li>",
         "bb.link": "GitHub'daki repoyu gör →",
-        "off.eyebrow": "Mesai dışı",
-        "off.h2": "Sırf sevdiğim için yaptığım bir tutku projesi.",
+        "off.eyebrow": "Deneyler ve yan projeler",
+        "off.h2": "Merak için yapıldı — yukarıdaki makine mühendisliği hattının parçası değil.",
         "ih.tag": "Veri hikâyesi · havacılık lojistiği",
         "ih.h3": "IST'in lojistiği — dünyanın 8. en yoğun havalimanı",
         "ih.p": "84,5 milyon yolcu, 327 destinasyon ve terk edilmiş kömür ocaklarının üstüne serilmiş bir terminal. İstanbul dünyanın 8. en yoğun havalimanını nasıl kurdu — ihale, arazi, 29 saatlik taşınma, metro — ve sahanın 2017'den 2025'e uydu zaman atlaması.",
@@ -590,22 +569,8 @@
         "pn.p": "Elinle, gerçek bir MIDI klavyeyle ya da bilgisayarından yüklediğin bir .mid dosyasıyla çalabileceğin bir tarayıcı piyanosu — tuşlar vurulduğunda ışıyor, üstten düşen renkli çubuklar da piyano pratik oyunlarındaki gibi sırada ne olduğunu gösteriyor.",
         "pn.ul": "<li>Tam 88 tuş, sentetik bip değil örneklenmiş piyano sesi</li><li>Fare, bilgisayar klavyesi ya da takılı bir MIDI kontrolcü</li><li>Gerçek hikâyeleriyle altı eser, tek tıkla çal — ya da kendi .mid dosyanı yükle</li>",
         "pn.link": "Piyanoyu aç →",
-        "skills.eyebrow": "Beceriler",
-        "skills.h2": "Gerçek dünyada işe yarayan araçlar ve güçlü yönler.",
-        "skills.cert": "Dassault Systèmes · Temmuz 2026 · Credly'de doğrula ↗",
-        "skills.list": "<span>SolidWorks</span><span>AutoCAD</span><span>Inventor</span><span>Creo</span><span>Siemens NX</span><span>Python</span><span>Makine öğrenmesi</span><span>Veri analizi</span><span>Termodinamik</span><span>İmalat</span><span>3B baskı</span><span>Robotik</span>",
-        "tl.eyebrow": "Zaman çizelgesi",
-        "tl.h2": "Mühendisliği, robotiği ve veri bilimini birleştiren bir yol.",
-        "tl1.h3": "Marmara Üniversitesi'nde makine mühendisliği öğrencisi",
-        "tl1.p": "2025'te başladım; dört yıllık yol, akademik takvime göre 2029 ya da 2030 mezuniyetine işaret ediyor. Portföyü tasarım, analiz, imalat ve uygulamalı hesaplama üzerine kuruyorum.",
-        "tl2.when": "Şimdi",
-        "tl2.h3": "İKA yarışması ve iki bölümlü rulman prognostiği projesi",
-        "tl2.p": "Robotik yarışma deneyimi; ayrıca NASA verisiyle rulman arızası tahmini, veri setleri arası bir RUL çalışmasına genişletildi — verisi 4. veri seti olacak fiziksel bir test düzeneğinin ön hazırlığı.",
-        "tl3.when": "Sırada",
-        "tl3.h3": "Stajlar ve daha güçlü vaka çalışmaları",
-        "tl3.p": "Mevcut işleri; işverenlere, kulüplere ve iş birlikçilerine hitap eden derli toplu sayfalara dönüştürüyorum.",
         "contact.eyebrow": "İletişim",
-        "contact.h2": "Alan adı işe yarasın.",
+        "contact.h2": "Bir projen, araştırma fikrin ya da bir fırsatın mı var?",
         "contact.p": "Formu kullanarak mesaj gönder, gerekirse dosya ekle, ya da GitHub'dan bul beni.",
         "contact.name": "İsim",
         "contact.email": "E-posta",
