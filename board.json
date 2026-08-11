@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-08-11T10:15:24+00:00",
+ "generated_utc": "2026-08-11T13:48:40+00:00",
  "airport": "IST",
  "board_date": "2026-08-11",
  "window_start_utc": "2026-08-10T13:00:00+00:00",
@@ -23,16 +23,16 @@
   "model": 0.742
  },
  "model_trained": {
-  "trained_rows": 64188,
+  "trained_rows": 64189,
   "trained_through": "2026-08-11"
  },
  "scoreboard": {
-  "resolved": 150,
+  "resolved": 151,
   "total": 347,
   "late": 8,
-  "ontime": 142,
-  "mean_predicted": 0.1082,
-  "actual_rate": 0.0533,
+  "ontime": 143,
+  "mean_predicted": 0.1096,
+  "actual_rate": 0.053,
   "window_days": 14
  },
  "hourly": [
@@ -176,7 +176,7 @@
    "flight": "R5272",
    "dest": "OJAI",
    "airline": "Jordan Aviation",
-   "risk": 0.6459,
+   "risk": 0.5647,
    "basis": "flight",
    "n": 63,
    "median_late": 50,
@@ -883,7 +883,7 @@
    "median_late": 36,
    "median_from": "flight",
    "hour_rate": 0.1123,
-   "actual": null,
+   "actual": "ontime",
    "actual_delay": null,
    "tier": "lookup",
    "turnaround_min": null,
