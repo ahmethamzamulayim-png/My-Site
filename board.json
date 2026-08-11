@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-08-11T07:43:05+00:00",
+ "generated_utc": "2026-08-11T10:15:24+00:00",
  "airport": "IST",
  "board_date": "2026-08-11",
  "window_start_utc": "2026-08-10T13:00:00+00:00",
@@ -9,12 +9,13 @@
  "late_threshold_min": 15,
  "baseline": 0.1162,
  "trained_on": {
-  "flights": 64182,
+  "flights": 64184,
   "days": 99,
   "through": "2026-08-10"
  },
  "tiers": {
-  "lookup": 36
+  "model": 1,
+  "lookup": 35
  },
  "tier_auc": {
   "lookup": 0.711,
@@ -22,16 +23,16 @@
   "model": 0.742
  },
  "model_trained": {
-  "trained_rows": 64186,
+  "trained_rows": 64188,
   "trained_through": "2026-08-11"
  },
  "scoreboard": {
-  "resolved": 148,
+  "resolved": 150,
   "total": 347,
   "late": 8,
-  "ontime": 140,
-  "mean_predicted": 0.1094,
-  "actual_rate": 0.0541,
+  "ontime": 142,
+  "mean_predicted": 0.1082,
+  "actual_rate": 0.0533,
   "window_days": 14
  },
  "hourly": [
@@ -52,8 +53,8 @@
   },
   {
    "h": 3,
-   "pct": 0.128,
-   "n": 586
+   "pct": 0.1276,
+   "n": 588
   },
   {
    "h": 4,
@@ -175,7 +176,7 @@
    "flight": "R5272",
    "dest": "OJAI",
    "airline": "Jordan Aviation",
-   "risk": 0.308,
+   "risk": 0.6459,
    "basis": "flight",
    "n": 63,
    "median_late": 50,
@@ -183,8 +184,9 @@
    "hour_rate": 0.1512,
    "actual": null,
    "actual_delay": null,
-   "tier": "lookup",
-   "turnaround_min": null,
+   "lookup_risk": 0.308,
+   "tier": "model",
+   "turnaround_min": 46,
    "inbound_delay_min": null
   },
   {
@@ -720,7 +722,7 @@
    "n": 118,
    "median_late": 51,
    "median_from": "destination",
-   "hour_rate": 0.128,
+   "hour_rate": 0.1276,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
@@ -740,7 +742,7 @@
    "n": 81,
    "median_late": 44,
    "median_from": "flight",
-   "hour_rate": 0.128,
+   "hour_rate": 0.1276,
    "actual": "ontime",
    "actual_delay": null,
    "tier": "lookup",
@@ -760,7 +762,7 @@
    "n": 38,
    "median_late": 45,
    "median_from": "destination",
-   "hour_rate": 0.128,
+   "hour_rate": 0.1276,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
@@ -775,12 +777,12 @@
    "flight": "TK1220",
    "dest": "EDDB",
    "airline": "Turkish Airlines",
-   "risk": 0.0048,
+   "risk": 0.0045,
    "basis": "flight+hour",
-   "n": 30,
+   "n": 31,
    "median_late": 26,
    "median_from": "route",
-   "hour_rate": 0.128,
+   "hour_rate": 0.1276,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
@@ -800,7 +802,7 @@
    "n": 96,
    "median_late": 24,
    "median_from": "destination",
-   "hour_rate": 0.128,
+   "hour_rate": 0.1276,
    "actual": "ontime",
    "actual_delay": null,
    "tier": "lookup",
@@ -815,12 +817,12 @@
    "flight": "MS746",
    "dest": "HECA",
    "airline": "Egyptair",
-   "risk": 0.0359,
+   "risk": 0.0355,
    "basis": "flight+hour",
-   "n": 85,
+   "n": 86,
    "median_late": 30,
    "median_from": "route",
-   "hour_rate": 0.128,
+   "hour_rate": 0.1276,
    "actual": "ontime",
    "actual_delay": null,
    "tier": "lookup",
