@@ -63,6 +63,7 @@
         border-color: var(--text);
       }
       .train-panel .eyebrow { margin-bottom: 6px; }
+      .updated { margin: 8px 0 0; font-size: 0.8rem; color: var(--muted); }
       .train-panel h1 {
         font-family: "Space Grotesk", sans-serif;
         font-size: 1.3rem;
@@ -119,14 +120,16 @@
 
     <aside class="train-panel">
       <h1>Live Train Map</h1>
-      <p class="eyebrow" data-i18n="panel.eyebrow">Phase 3 · static network</p>
+      <p class="eyebrow" data-i18n="panel.eyebrow">Phase 4 · one live line per city</p>
       <div class="city-switch">
         <button id="btn-london" class="active" type="button">London</button>
         <button id="btn-nyc" type="button">New York</button>
       </div>
+      <p class="updated" id="updated">connecting…</p>
       <p class="phase-note" data-i18n="panel.note">
-        Real line geometry from TfL's Route/Sequence API and the MTA's static GTFS
-        <code>shapes.txt</code> — no trains moving yet, that's next.
+        Victoria line (TfL Arrivals) and the L train (MTA GTFS-RT), polled every 20s
+        through a proxy that hides the TfL key and decodes MTA's protobuf. Positions
+        between polls are predicted from each train's ETA, not frozen.
       </p>
       <div class="legend-lines" id="legend"></div>
     </aside>
@@ -137,8 +140,8 @@
         "brand.name": "Canlı tren haritası",
         "brand.sub": "Londra Metrosu · NYC Subway",
         "nav.back": "← Portföy",
-        "panel.eyebrow": "Faz 3 · statik ağ",
-        "panel.note": "Gerçek hat geometrisi TfL'nin Route/Sequence API'sinden ve MTA'nın statik GTFS shapes.txt dosyasından — henüz hareket eden tren yok, sırada o var."
+        "panel.eyebrow": "Faz 4 · her şehirden bir canlı hat",
+        "panel.note": "Victoria hattı (TfL Arrivals) ve L treni (MTA GTFS-RT), 20 saniyede bir bir proxy üzerinden — TfL anahtarını gizler, MTA'nın protobuf'unu çözer. Anketler arası konumlar her trenin ETA'sından tahmin edilir, dondurulmaz."
       };
     </script>
 
@@ -155,6 +158,7 @@
         attributionControl: { compact: true },
       });
       map.addControl(new maplibregl.NavigationControl(), "top-right");
+      window.map = map; // debug hook
 
       let currentCity = "london";
 
@@ -232,6 +236,204 @@
 
       document.getElementById("btn-london").addEventListener("click", () => switchCity("london"));
       document.getElementById("btn-nyc").addEventListener("click", () => switchCity("nyc"));
+    </script>
+
+    <script>
+      // ---- Phase 4: one live line per city ----
+      // Local dev: run train-proxy-deno.ts locally (`deno run --allow-net --allow-env`)
+      // and it listens on :8000. Swap this to the *.deno.dev URL once deployed.
+      const API_BASE = "http://localhost:8000";
+      const POLL_MS = 20000;
+      const EASE_MS = 500; // correction glide when a fresh poll disagrees with the prediction
+      const FADE_START_MS = 15000; // start fading a train that's missed this many ms of polls
+      const STALE_MS = 45000; // remove it entirely past this
+
+      const lerp = (a, b, t) => a + (b - a) * t;
+      function haversine([lon1, lat1], [lon2, lat2]) {
+        const R = 6371000, toRad = (d) => (d * Math.PI) / 180;
+        const dLat = toRad(lat2 - lat1), dLon = toRad(lon2 - lon1);
+        const a = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2;
+        return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      }
+      function buildCumDist(path) {
+        const cum = [0];
+        for (let i = 1; i < path.length; i++) cum.push(cum[i - 1] + haversine(path[i - 1], path[i]));
+        return cum;
+      }
+      // walk the real polyline (not a straight lerp between stations) to the point at this arc length
+      function pointAtArcLen(path, cum, arcLen) {
+        arcLen = Math.max(0, Math.min(cum[cum.length - 1], arcLen));
+        let i = 1;
+        while (i < cum.length && cum[i] < arcLen) i++;
+        if (i >= cum.length) return path[path.length - 1];
+        const segLen = cum[i] - cum[i - 1];
+        const t = segLen === 0 ? 0 : (arcLen - cum[i - 1]) / segLen;
+        return [lerp(path[i - 1][0], path[i][0], t), lerp(path[i - 1][1], path[i][1], t)];
+      }
+
+      // normalizeId: TfL naptanIds match stations exactly; MTA real-time stopIds carry
+      // an N/S platform suffix ("L01N") the static-schedule-built station list also has,
+      // but a southbound (S) train's stopId must still resolve to the same physical station.
+      function buildLineModel(data, normalizeId = (id) => id) {
+        const cum = buildCumDist(data.path);
+        const idxByBase = new Map();
+        data.stations.forEach((s, i) => idxByBase.set(normalizeId(s.stopId), i));
+        return { path: data.path, cum, stations: data.stations, idxByBase, segments: data.segments };
+      }
+
+      // given the next station a train is heading to, find the segment it's on.
+      // forward = travelling in the direction stations[] index increases.
+      function locateOnLine(model, nextId, forward) {
+        const idx = model.idxByBase.get(nextId);
+        if (idx === undefined) return null;
+        const prevIdx = forward ? idx - 1 : idx + 1;
+        if (prevIdx < 0 || prevIdx >= model.stations.length) return null; // at a terminus, no predecessor yet
+        const segIdx = Math.min(idx, prevIdx);
+        const seg = model.segments[segIdx];
+        return {
+          prevArc: model.stations[prevIdx].arcLen,
+          nextArc: model.stations[idx].arcLen,
+          typicalSeconds: seg ? seg.typicalSeconds : Math.abs(model.stations[idx].arcLen - model.stations[prevIdx].arcLen) / 8.3,
+        };
+      }
+
+      let victoriaModel = null, lTrainModel = null;
+      const trainStates = new Map(); // key -> {city,prevArc,nextArc,segStart,segDur,easeFrom,easeStart,lastSeen}
+
+      function liveArcLen(state, now) {
+        const rawProgress = Math.max(0, Math.min(1, (now - state.segStart) / state.segDur));
+        const target = lerp(state.prevArc, state.nextArc, rawProgress);
+        const easeT = Math.max(0, Math.min(1, (now - state.easeStart) / EASE_MS));
+        return easeT >= 1 ? target : lerp(state.easeFrom, target, easeT);
+      }
+
+      function updateTrain(key, city, loc, etaSeconds, now) {
+        const typicalSeconds = Math.max(loc.typicalSeconds, 5);
+        const clampedEta = Math.max(0, Math.min(etaSeconds, typicalSeconds));
+        const progress = 1 - clampedEta / typicalSeconds;
+        const segStart = now - progress * typicalSeconds * 1000;
+        const segDur = typicalSeconds * 1000;
+        const prior = trainStates.get(key);
+        const easeFrom = prior ? liveArcLen(prior, now) : lerp(loc.prevArc, loc.nextArc, progress);
+        trainStates.set(key, { city, prevArc: loc.prevArc, nextArc: loc.nextArc, segStart, segDur, easeFrom, easeStart: now, lastSeen: now });
+      }
+
+      let tflOk = false, mtaOk = false, tflLastUpdate = 0, mtaLastUpdate = 0;
+
+      async function pollTfl() {
+        if (!victoriaModel) return;
+        try {
+          const res = await fetch(`${API_BASE}/api/tfl/victoria`);
+          if (!res.ok) throw new Error("proxy tfl " + res.status);
+          const preds = await res.json();
+          const now = Date.now();
+          const byVehicle = new Map();
+          for (const p of preds) {
+            if (!byVehicle.has(p.vehicleId)) byVehicle.set(p.vehicleId, []);
+            byVehicle.get(p.vehicleId).push(p);
+          }
+          for (const [vehicleId, rows] of byVehicle) {
+            const soonest = rows.sort((a, b) => a.timeToStation - b.timeToStation)[0];
+            // TfL occasionally reports the literal string "undefined" for direction — a known
+            // API quirk, not our bug. Skip rather than guess which way the train is heading.
+            if (soonest.direction !== "inbound" && soonest.direction !== "outbound") continue;
+            const loc = locateOnLine(victoriaModel, soonest.naptanId, soonest.direction === "inbound");
+            if (!loc) continue;
+            updateTrain("tfl:" + vehicleId, "london", loc, soonest.timeToStation, now);
+          }
+          tflLastUpdate = now;
+          tflOk = true;
+        } catch (e) {
+          console.error("TfL poll failed:", e);
+          tflOk = false;
+        }
+      }
+
+      async function pollMta() {
+        if (!lTrainModel) return;
+        try {
+          const res = await fetch(`${API_BASE}/api/mta/l`);
+          if (!res.ok) throw new Error("proxy mta " + res.status);
+          const feed = await res.json();
+          const now = Date.now();
+          for (const ent of feed.entity || []) {
+            const tu = ent.tripUpdate;
+            if (!tu || tu.trip.routeId !== "L") continue;
+            const stops = tu.stopTimeUpdate || [];
+            const next = stops[0];
+            if (!next || !next.stopId || !next.arrival) continue;
+            const dirMatch = tu.trip.tripId.match(/\.\.([NS])/); // direction is embedded mid-id, not the last char
+            if (!dirMatch) continue;
+            const loc = locateOnLine(lTrainModel, next.stopId.slice(0, -1), dirMatch[1] === "N");
+            if (!loc) continue;
+            const etaSeconds = Number(next.arrival.time) - now / 1000;
+            updateTrain("mta:" + tu.trip.tripId, "nyc", loc, etaSeconds, now);
+          }
+          mtaLastUpdate = now;
+          mtaOk = true;
+        } catch (e) {
+          console.error("MTA poll failed:", e);
+          mtaOk = false;
+        }
+      }
+
+      function statusText() {
+        const ok = currentCity === "london" ? tflOk : mtaOk;
+        const last = currentCity === "london" ? tflLastUpdate : mtaLastUpdate;
+        if (!last) return "connecting…";
+        const ago = Math.round((Date.now() - last) / 1000);
+        return ok ? `updated ${ago}s ago` : `feed error — last good data ${ago}s ago`;
+      }
+
+      function renderFrame() {
+        const now = Date.now();
+        const features = [];
+        for (const [key, state] of trainStates) {
+          const age = now - state.lastSeen;
+          if (age > STALE_MS) { trainStates.delete(key); continue; }
+          if (state.city !== currentCity) continue;
+          const opacity = age <= FADE_START_MS ? 1 : 1 - (age - FADE_START_MS) / (STALE_MS - FADE_START_MS);
+          const model = state.city === "london" ? victoriaModel : lTrainModel;
+          const [lon, lat] = pointAtArcLen(model.path, model.cum, liveArcLen(state, now));
+          const color = state.city === "london" ? "#0098D8" : "#7C858C";
+          features.push({ type: "Feature", properties: { color, opacity }, geometry: { type: "Point", coordinates: [lon, lat] } });
+        }
+        const src = map.getSource("trains");
+        if (src) src.setData({ type: "FeatureCollection", features });
+        const el = document.getElementById("updated");
+        if (el) el.textContent = statusText();
+        requestAnimationFrame(renderFrame);
+      }
+
+      map.on("load", () => {
+        map.addSource("trains", { type: "geojson", data: { type: "FeatureCollection", features: [] } });
+        map.addLayer({
+          id: "trains",
+          type: "circle",
+          source: "trains",
+          paint: {
+            "circle-radius": 6,
+            "circle-color": ["get", "color"],
+            "circle-stroke-width": 2,
+            "circle-stroke-color": "#ffffff",
+            "circle-opacity": ["get", "opacity"],
+            "circle-stroke-opacity": ["get", "opacity"],
+          },
+        });
+        requestAnimationFrame(renderFrame);
+      });
+
+      Promise.all([
+        fetch("trains/victoria-line.json").then((r) => r.json()),
+        fetch("trains/l-train-line.json").then((r) => r.json()),
+      ]).then(([v, l]) => {
+        victoriaModel = buildLineModel(v);
+        lTrainModel = buildLineModel(l, (id) => id.slice(0, -1));
+        pollTfl();
+        pollMta();
+        setInterval(pollTfl, POLL_MS);
+        setInterval(pollMta, POLL_MS);
+      });
     </script>
   </body>
 </html>
