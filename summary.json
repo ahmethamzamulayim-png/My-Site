@@ -1,19 +1,19 @@
 {
- "generated_utc": "2026-08-12T10:31:34+00:00",
+ "generated_utc": "2026-08-12T13:53:32+00:00",
  "days": 103,
  "first_date": "2026-05-01",
  "last_date": "2026-08-12",
- "total_flights": 133607,
+ "total_flights": 133608,
  "cargo_flights": 6581,
- "movements_tracked": 101682,
- "cross_validated": 46024,
- "delay_known": 64300,
+ "movements_tracked": 101801,
+ "cross_validated": 46025,
+ "delay_known": 64301,
  "median_delay": 0.0,
  "median_when_delayed": 31.0,
  "delay_hist": [
   {
    "bin": "<15",
-   "count": 56825
+   "count": 56826
   },
   {
    "bin": "15–30",
@@ -29,7 +29,7 @@
   }
  ],
  "delayed_15": 7475,
- "ontime": 56825,
+ "ontime": 56826,
  "pct_delayed": 11.6,
  "pct_ontime": 88.4,
  "recent": {
@@ -1558,20 +1558,20 @@
   },
   {
    "date": "2026-08-12",
-   "movements": 237,
-   "flights": 10,
-   "flew": 5,
+   "movements": 356,
+   "flights": 11,
+   "flew": 6,
    "delayed": 0,
-   "ontime": 5,
+   "ontime": 6,
    "cancelled": 2,
    "median_delay": 0.0,
    "median_when_delayed": null,
    "avg_dep_delay": null,
-   "metars": 10,
-   "conversion": 0.357,
-   "scored": 5
+   "metars": 27,
+   "conversion": 0.393,
+   "scored": 6
   }
  ],
- "latest_metar": "METAR LTFM 120450Z 04014KT CAVOK 25/21 Q1015 NOSIG",
- "match_rate": 0.034
+ "latest_metar": "METAR LTFM 121320Z 03013KT CAVOK 28/20 Q1016 NOSIG",
+ "match_rate": 0.025
 }
