@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Live Train Map | Ahmet Hamza Mülayim</title>
+    <meta
+      name="description"
+      content="London Underground and NYC Subway line geometry, real data from TfL and MTA open feeds. Phase 3: static network, trains coming next."
+    />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e81932'/%3E%3Ctext x='32' y='45' font-size='38' font-family='sans-serif' font-weight='700' text-anchor='middle' fill='%23fff'%3EA%3C/text%3E%3C/svg%3E" />
+    <link rel="canonical" href="https://ahmethmzamlym.engineer/trains" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" />
+    <script src="i18n.js"></script>
+    <script defer src="script.js"></script>
+    <style>
+      body { overflow: hidden; height: 100vh; height: 100dvh; }
+      #map { position: fixed; inset: 0; z-index: 0; }
+      .site-header { position: relative; z-index: 2; }
+      .maplibregl-ctrl-attrib { font-size: 0.7rem; }
+
+      .train-panel {
+        position: fixed;
+        left: 24px;
+        bottom: 24px;
+        z-index: 2;
+        width: 280px;
+        padding: 22px;
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(14px);
+      }
+      .city-switch {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 14px;
+      }
+      .city-switch button {
+        flex: 1;
+        padding: 8px 10px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: transparent;
+        color: var(--muted);
+        font-family: "Manrope", sans-serif;
+        font-size: 0.82rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 150ms ease;
+      }
+      .city-switch button.active {
+        background: var(--text);
+        color: var(--bg);
+        border-color: var(--text);
+      }
+      .train-panel .eyebrow { margin-bottom: 6px; }
+      .train-panel h1 {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.3rem;
+        margin: 0 0 4px;
+      }
+      .phase-note {
+        font-size: 0.82rem;
+        color: var(--muted);
+        line-height: 1.5;
+        margin: 8px 0 0;
+      }
+      .legend-lines {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 10px;
+        margin-top: 12px;
+        max-height: 140px;
+        overflow-y: auto;
+      }
+      .legend-lines span {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 0.72rem;
+        color: var(--muted);
+      }
+      .legend-lines i {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 3px;
+        flex: none;
+      }
+    </style>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="53acc321-a620-42d2-abf8-92a0c2813e8b"></script>
+  </head>
+  <body>
+    <div class="noise"></div>
+    <div id="map"></div>
+
+    <header class="site-header">
+      <a class="brand" href="/">
+        <span class="brand-mark">A</span>
+        <span>
+          <strong data-i18n="brand.name">Live train map</strong>
+          <small data-i18n="brand.sub">London Underground · NYC Subway</small>
+        </span>
+      </a>
+      <nav class="site-nav">
+        <a href="/#projects" data-i18n="nav.back">← Portfolio</a>
+        <button class="lang-toggle" type="button">TR</button>
+      </nav>
+    </header>
+
+    <aside class="train-panel">
+      <h1>Live Train Map</h1>
+      <p class="eyebrow" data-i18n="panel.eyebrow">Phase 3 · static network</p>
+      <div class="city-switch">
+        <button id="btn-london" class="active" type="button">London</button>
+        <button id="btn-nyc" type="button">New York</button>
+      </div>
+      <p class="phase-note" data-i18n="panel.note">
+        Real line geometry from TfL's Route/Sequence API and the MTA's static GTFS
+        <code>shapes.txt</code> — no trains moving yet, that's next.
+      </p>
+      <div class="legend-lines" id="legend"></div>
+    </aside>
+
+    <script>
+      window.I18N_LANG = "tr";
+      window.I18N = {
+        "brand.name": "Canlı tren haritası",
+        "brand.sub": "Londra Metrosu · NYC Subway",
+        "nav.back": "← Portföy",
+        "panel.eyebrow": "Faz 3 · statik ağ",
+        "panel.note": "Gerçek hat geometrisi TfL'nin Route/Sequence API'sinden ve MTA'nın statik GTFS shapes.txt dosyasından — henüz hareket eden tren yok, sırada o var."
+      };
+    </script>
+
+    <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+    <script>
+      const LONDON = { center: [-0.12, 51.51], zoom: 10.3 };
+      const NYC = { center: [-73.96, 40.73], zoom: 10.2 };
+
+      const map = new maplibregl.Map({
+        container: "map",
+        style: "https://tiles.openfreemap.org/styles/liberty",
+        center: LONDON.center,
+        zoom: LONDON.zoom,
+        attributionControl: { compact: true },
+      });
+      map.addControl(new maplibregl.NavigationControl(), "top-right");
+
+      let currentCity = "london";
+
+      async function loadCity(city) {
+        const linesRes = await fetch(`trains/${city === "london" ? "tfl" : "nyc"}-lines.geojson`);
+        const stationsRes = await fetch(`trains/${city === "london" ? "tfl" : "nyc"}-stations.geojson`);
+        const lines = await linesRes.json();
+        const stations = await stationsRes.json();
+
+        const linesSrcId = city + "-lines";
+        const stationsSrcId = city + "-stations";
+
+        if (!map.getSource(linesSrcId)) {
+          map.addSource(linesSrcId, { type: "geojson", data: lines });
+          map.addLayer({
+            id: linesSrcId,
+            type: "line",
+            source: linesSrcId,
+            layout: { visibility: "none" },
+            paint: {
+              "line-color": ["get", "color"],
+              "line-width": 2.4,
+              "line-opacity": 0.9,
+            },
+          });
+        }
+        if (!map.getSource(stationsSrcId)) {
+          map.addSource(stationsSrcId, { type: "geojson", data: stations });
+          map.addLayer({
+            id: stationsSrcId,
+            type: "circle",
+            source: stationsSrcId,
+            layout: { visibility: "none" },
+            paint: {
+              "circle-radius": 3,
+              "circle-color": "#ffffff",
+              "circle-stroke-width": 1.4,
+              "circle-stroke-color": "#2b2732",
+            },
+          });
+        }
+
+        // build legend from distinct line colors
+        const colorProp = city === "london" ? "lineId" : "routeId";
+        const seen = new Map();
+        for (const f of lines.features) {
+          if (!seen.has(f.properties[colorProp])) seen.set(f.properties[colorProp], f.properties.color);
+        }
+        document.getElementById("legend").innerHTML = [...seen.entries()]
+          .map(([id, color]) => `<span><i style="background:${color}"></i>${id}</span>`)
+          .join("");
+      }
+
+      async function switchCity(city) {
+        if (city === currentCity) return;
+        currentCity = city;
+        document.getElementById("btn-london").classList.toggle("active", city === "london");
+        document.getElementById("btn-nyc").classList.toggle("active", city === "nyc");
+        const target = city === "london" ? LONDON : NYC;
+        map.flyTo({ center: target.center, zoom: target.zoom, duration: 900 });
+
+        await loadCity(city); // creates the layer (hidden) on first visit to this city
+        ["london", "nyc"].forEach((c) => {
+          const vis = c === city ? "visible" : "none";
+          if (map.getLayer(c + "-lines")) map.setLayoutProperty(c + "-lines", "visibility", vis);
+          if (map.getLayer(c + "-stations")) map.setLayoutProperty(c + "-stations", "visibility", vis);
+        });
+      }
+
+      map.on("load", async () => {
+        await loadCity("london");
+        map.setLayoutProperty("london-lines", "visibility", "visible");
+        map.setLayoutProperty("london-stations", "visibility", "visible");
+      });
+
+      document.getElementById("btn-london").addEventListener("click", () => switchCity("london"));
+      document.getElementById("btn-nyc").addEventListener("click", () => switchCity("nyc"));
+    </script>
+  </body>
+</html>
