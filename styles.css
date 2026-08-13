@@ -684,6 +684,10 @@ textarea:focus-visible,
   line-height: 1.7;
 }
 
+.card ul + p {
+  margin-top: 14px;
+}
+
 .card-link {
   display: inline-block;
   margin-top: 18px;
