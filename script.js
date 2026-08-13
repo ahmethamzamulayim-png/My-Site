@@ -30,23 +30,39 @@ if (contactForm) {
   const resultFrame = document.querySelector('iframe[name="contact-frame"]');
   const t = window.t || ((en) => en);
   const maxAttachBytes = 10 * 1024 * 1024;
+  const SEND_TIMEOUT_MS = 20000;
+  const FALLBACK_MSG = t(
+    "Something went wrong — email me directly: ahmet.mulayim@marun.edu.tr",
+    "Bir şeyler ters gitti — doğrudan e-posta at: ahmet.mulayim@marun.edu.tr"
+  );
   let submitted = false;
+  let giveUpTimer = null;
 
-  // File uploads only work via a real multipart POST (FormSubmit's AJAX/JSON
-  // endpoint rejects them), so this submits natively into a hidden iframe
-  // instead of using fetch. That means the response body can't be read back —
-  // "load" fires the same for a FormSubmit success page as an error page, so
-  // the confirmation below is optimistic, not a verified delivery receipt.
+  function showSent() {
+    submitted = false;
+    clearTimeout(giveUpTimer);
+    submitBtn.disabled = false;
+    status.className = "form-status ok";
+    status.textContent = t("Sent — I'll get back to you soon.", "Gönderildi — en kısa sürede dönüş yapacağım.");
+    contactForm.reset();
+  }
+
+  function showFailed(message) {
+    submitted = false;
+    clearTimeout(giveUpTimer);
+    submitBtn.disabled = false;
+    status.className = "form-status err";
+    status.textContent = message;
+  }
+
   contactForm.addEventListener("submit", (event) => {
     if (contactForm.elements._honey.value) {
       event.preventDefault();
       return;
     }
 
-    const attachBytes = Array.from(contactForm.elements.attachment.files).reduce(
-      (sum, file) => sum + file.size,
-      0
-    );
+    const files = Array.from(contactForm.elements.attachment.files);
+    const attachBytes = files.reduce((sum, file) => sum + file.size, 0);
     if (attachBytes > maxAttachBytes) {
       event.preventDefault();
       status.className = "form-status err";
@@ -58,15 +74,42 @@ if (contactForm) {
     submitBtn.disabled = true;
     status.className = "form-status";
     status.textContent = t("Sending…", "Gönderiliyor…");
+
+    // Attachments only work via a real multipart POST (FormSubmit's AJAX/JSON
+    // endpoint rejects files), submitted into a hidden iframe. That means the
+    // response body can't be read back - "load" fires the same for a success
+    // page, an error page, and even the browser's own connection-failed page,
+    // so this path can't tell success from failure, only "didn't hang forever".
+    if (files.length) {
+      clearTimeout(giveUpTimer);
+      giveUpTimer = setTimeout(() => {
+        if (submitted) showFailed(t(
+          "Taking too long — it may not have gone through. Email me directly: ahmet.mulayim@marun.edu.tr",
+          "Çok uzun sürüyor — mesaj gitmemiş olabilir. Doğrudan e-posta at: ahmet.mulayim@marun.edu.tr"
+        ));
+      }, SEND_TIMEOUT_MS);
+      return; // let the native form submission proceed into the iframe
+    }
+
+    // No attachment: use FormSubmit's AJAX endpoint instead, which returns a
+    // real JSON response - a genuine success/failure signal, not a guess.
+    event.preventDefault();
+    const data = Object.fromEntries(new FormData(contactForm).entries());
+    fetch("https://formsubmit.co/ajax/ahmet.mulayim@marun.edu.tr", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json().then((body) => ({ ok: res.ok, body })))
+      .then(({ ok, body }) => {
+        if (ok && body && body.success === "true") showSent();
+        else showFailed(FALLBACK_MSG);
+      })
+      .catch(() => showFailed(FALLBACK_MSG));
   });
 
   resultFrame.addEventListener("load", () => {
-    if (!submitted) return;
-    submitted = false;
-    submitBtn.disabled = false;
-    status.className = "form-status ok";
-    status.textContent = t("Sent — I'll get back to you soon.", "Gönderildi — en kısa sürede dönüş yapacağım.");
-    contactForm.reset();
+    if (submitted) showSent();
   });
 }
 
