@@ -1,11 +1,11 @@
 {
- "generated_utc": "2026-08-13T13:53:20+00:00",
+ "generated_utc": "2026-08-13T16:14:04+00:00",
  "days": 104,
  "first_date": "2026-05-01",
  "last_date": "2026-08-13",
  "total_flights": 133703,
  "cargo_flights": 6582,
- "movements_tracked": 103709,
+ "movements_tracked": 103791,
  "cross_validated": 46058,
  "delay_known": 64392,
  "median_delay": 0.0,
@@ -1558,7 +1558,7 @@
   },
   {
    "date": "2026-08-12",
-   "movements": 1797,
+   "movements": 1798,
    "flights": 15,
    "flew": 10,
    "delayed": 0,
@@ -1573,7 +1573,7 @@
   },
   {
    "date": "2026-08-13",
-   "movements": 356,
+   "movements": 437,
    "flights": 10,
    "flew": 8,
    "delayed": 0,
@@ -1582,11 +1582,11 @@
    "median_delay": 0.0,
    "median_when_delayed": null,
    "avg_dep_delay": null,
-   "metars": 27,
+   "metars": 32,
    "conversion": 0.125,
    "scored": 8
   }
  ],
- "latest_metar": "METAR LTFM 131320Z 04026KT 9999 SCT017 BKN025 26/19 Q1019 NOSIG",
- "match_rate": 0.022
+ "latest_metar": "METAR LTFM 131550Z 05026KT 9999 BKN025 25/17 Q1019 NOSIG",
+ "match_rate": 0.018
 }
