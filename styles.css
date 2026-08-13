@@ -892,6 +892,11 @@ textarea:focus-visible,
   font-size: 0.92rem;
 }
 
+.footer-links {
+  display: flex;
+  gap: 16px;
+}
+
 [data-reveal] {
   opacity: 0;
   transform: translateY(18px);
