@@ -237,10 +237,7 @@
       </section>
 
       <section class="section" data-reveal>
-        <div class="offline" id="offline">
-          Veri kaynağı henüz yayında değil — toplama başladığında bu sayfa
-          kendiliğinden dolacak.
-        </div>
+        <div class="offline" id="offline">Az önce en güncel veri yüklenemedi — büyük ihtimalle geçici. Birazdan yeniden dene.</div>
         <div id="charts">
           <div class="chart-panel">
             <h3>Toplanan uçuş sayısı (kümülatif)</h3>
@@ -381,13 +378,20 @@
       function renderFail() {
         const badge = document.getElementById("badge");
         badge.removeAttribute("data-i18n");
-        badge.textContent = t("not live yet", "henüz yayında değil");
+        badge.textContent = t("couldn't load", "yüklenemedi");
         badge.className = "dash-badge stale";
         document.getElementById("charts").style.display = "none";
-        document.getElementById("offline").style.display = "block";
+        const off = document.getElementById("offline");
+        off.textContent = t(
+          "Couldn't load the latest data just now — likely temporary. Try refreshing in a moment.",
+          "Az önce en güncel veri yüklenemedi — büyük ihtimalle geçici. Birazdan yeniden dene."
+        );
+        off.style.display = "block";
       }
 
-      fetch(DATA_URL, { cache: "no-store" })
+      const dataTimeout = new AbortController();
+      setTimeout(() => dataTimeout.abort(), 10000);
+      fetch(DATA_URL, { cache: "no-store", signal: dataTimeout.signal })
         .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
         .then((s) => {
           S = s;

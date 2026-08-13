@@ -151,6 +151,7 @@
       .status-row.ok .dot { background: #3e8e4e; box-shadow: 0 0 12px rgba(62, 142, 78, 0.6); }
       .status-row.load .dot { background: var(--accent-2); box-shadow: 0 0 12px rgba(255, 125, 142, 0.6); }
       .status-row.err .dot { background: #e81932; box-shadow: 0 0 12px rgba(232, 25, 50, 0.7); }
+      .status-row.stale .dot { background: var(--gold); box-shadow: 0 0 12px rgba(201, 138, 26, 0.6); }
       .hint {
         margin-top: 12px;
         font-size: 0.78rem;
@@ -495,10 +496,18 @@
       }
       $("search").addEventListener("input", render);
 
+      // Data older than this (OpenSky's own `time` field, not our fetch time)
+      // is shown as stale even though the request itself succeeded - a slow
+      // upstream is a different problem than a dead one, and shouldn't claim "live".
+      const STALE_AFTER_S = 90;
+
       async function poll() {
         setStatus("load", "updating…", "güncelleniyor…");
+        const controller = new AbortController();
+        const giveUp = setTimeout(() => controller.abort(), 10000);
         try {
-          const res = await fetch(API_BASE + "/api/states");
+          const res = await fetch(API_BASE + "/api/states", { signal: controller.signal });
+          clearTimeout(giveUp);
           if (res.status === 429) { setStatus("err", "rate limited — retrying", "hız sınırı — yeniden denenecek"); return; }
           if (!res.ok) { setStatus("err", `API error ${res.status}`, `API hatası ${res.status}`); return; }
           const data = await res.json();
@@ -510,19 +519,31 @@
               cargo: isCargo(s[1]),
             }));
           render();
-          lastUpd = new Date();
+          // data.time is OpenSky's own timestamp for these positions, not
+          // "when we fetched" - use it so a lagging upstream shows as stale
+          // even when our request to the proxy succeeded.
+          lastUpd = data.time ? new Date(data.time * 1000) : new Date();
+          const ageS = data.time ? Date.now() / 1000 - data.time : 0;
           const upd = $("updated");
           upd.removeAttribute("data-i18n");
           upd.textContent = t("updated ", "güncellendi: ") +
             lastUpd.toLocaleTimeString(getLang() === "tr" ? "tr-TR" : "en-US");
-          setStatus("ok", "live · OpenSky Network", "canlı · OpenSky Network");
+          if (ageS > STALE_AFTER_S) {
+            setStatus("stale",
+              `data ${Math.round(ageS)}s old — feed may be delayed`,
+              `veri ${Math.round(ageS)} sn eski — kaynak gecikmiş olabilir`);
+          } else {
+            setStatus("ok", "live · OpenSky Network", "canlı · OpenSky Network");
+          }
           const sel = planes.find(p => p.callsign === selected);
           if (sel) updStats(sel);
           // fill in airframe types a few at a time so icon sizes converge
           const unknown = planes.filter(p => AC[p.hex] === undefined).slice(0, 4);
           if (unknown.length) Promise.all(unknown.map(p => getAircraft(p.hex))).then(render);
-        } catch {
-          setStatus("err", "network error — retrying", "ağ hatası — yeniden denenecek");
+        } catch (e) {
+          clearTimeout(giveUp);
+          if (e.name === "AbortError") setStatus("err", "request timed out — retrying", "istek zaman aşımına uğradı — yeniden denenecek");
+          else setStatus("err", "network error — retrying", "ağ hatası — yeniden denenecek");
         }
       }
       poll();
