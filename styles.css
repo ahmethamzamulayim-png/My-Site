@@ -601,29 +601,6 @@ textarea:focus-visible,
   color: var(--muted);
 }
 
-/* homepage metrics strip: same restrained tile as hero-metrics, sized for a
-   standalone full-width row */
-.metrics-strip {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 18px;
-}
-
-.metrics-strip strong {
-  display: block;
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 2.1rem;
-  letter-spacing: -0.02em;
-  color: var(--text);
-}
-
-.metrics-strip span {
-  display: block;
-  margin-top: 4px;
-  font-size: 0.82rem;
-  color: var(--muted);
-}
-
 /* BiggerBrother card: on hover it recolors into the app's own dark/scanner-green
    palette (pulled from its repo logo) instead of the site's çini set, with a
    momentary glitch — fits a security tool, and it's the only project whose
