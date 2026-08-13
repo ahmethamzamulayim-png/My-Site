@@ -1,35 +1,35 @@
 {
- "generated_utc": "2026-08-13T16:14:04+00:00",
+ "generated_utc": "2026-08-13T18:46:00+00:00",
  "days": 104,
  "first_date": "2026-05-01",
  "last_date": "2026-08-13",
- "total_flights": 133703,
+ "total_flights": 133783,
  "cargo_flights": 6582,
- "movements_tracked": 103791,
- "cross_validated": 46058,
- "delay_known": 64392,
+ "movements_tracked": 104005,
+ "cross_validated": 46093,
+ "delay_known": 64472,
  "median_delay": 0.0,
  "median_when_delayed": 31.0,
  "delay_hist": [
   {
    "bin": "<15",
-   "count": 56904
+   "count": 56973
   },
   {
    "bin": "15–30",
-   "count": 3674
+   "count": 3678
   },
   {
    "bin": "30–60",
-   "count": 2367
+   "count": 2370
   },
   {
    "bin": "60+",
-   "count": 1447
+   "count": 1451
   }
  ],
- "delayed_15": 7488,
- "ontime": 56904,
+ "delayed_15": 7499,
+ "ontime": 56973,
  "pct_delayed": 11.6,
  "pct_ontime": 88.4,
  "recent": {
@@ -1543,7 +1543,7 @@
   },
   {
    "date": "2026-08-11",
-   "movements": 1845,
+   "movements": 1964,
    "flights": 91,
    "flew": 85,
    "delayed": 13,
@@ -1559,21 +1559,21 @@
   {
    "date": "2026-08-12",
    "movements": 1798,
-   "flights": 15,
-   "flew": 10,
-   "delayed": 0,
-   "ontime": 10,
+   "flights": 95,
+   "flew": 90,
+   "delayed": 11,
+   "ontime": 79,
    "cancelled": 2,
    "median_delay": 0.0,
-   "median_when_delayed": null,
-   "avg_dep_delay": null,
+   "median_when_delayed": 35.0,
+   "avg_dep_delay": 22.6,
    "metars": 48,
-   "conversion": 0.536,
-   "scored": 10
+   "conversion": 0.888,
+   "scored": 90
   },
   {
    "date": "2026-08-13",
-   "movements": 437,
+   "movements": 532,
    "flights": 10,
    "flew": 8,
    "delayed": 0,
@@ -1582,11 +1582,11 @@
    "median_delay": 0.0,
    "median_when_delayed": null,
    "avg_dep_delay": null,
-   "metars": 32,
+   "metars": 37,
    "conversion": 0.125,
    "scored": 8
   }
  ],
- "latest_metar": "METAR LTFM 131550Z 05026KT 9999 BKN025 25/17 Q1019 NOSIG",
- "match_rate": 0.018
+ "latest_metar": "METAR LTFM 131820Z 04021KT 9999 BKN028 24/16 Q1020 NOSIG",
+ "match_rate": 0.015
 }
