@@ -44,7 +44,7 @@
       .quest.main { border-left: 4px solid var(--accent); }
       .quest.link { cursor: pointer; text-decoration: none; display: block; color: inherit; }
       .quest.link:hover { filter: brightness(0.97); }
-      .quest h3 {
+      .quest h2 {
         font-family: "Space Grotesk", sans-serif;
         letter-spacing: -0.02em;
         margin: 8px 0;
@@ -149,24 +149,24 @@
       <section class="section" data-reveal>
         <a class="quest main link" href="/model">
           <span class="quest-tag">Priority · main quest · ready →</span>
-          <h3>Delay prediction model</h3>
+          <h2>Delay prediction model</h2>
           <p>Predict the chance a flight leaves 15+ min late — from departure hour, airline, route, weather and the aircraft's previous leg. Trained on May–June, tested blind on July: lookup baseline 0.711, model <strong>0.742</strong> AUC, with 3.44x the delay rate in the riskiest 10%. The difference comes from the aircraft itself — 56.6% of flights whose aircraft had under 60 minutes on the ground leave late, where the lookup table says 20.7%. How it was built, two real cases, and where it fails →</p>
         </a>
 
         <div class="quest-grid">
           <a class="quest link" href="#sidequest1">
             <span class="quest-tag done">Side quest · first results ready ↓</span>
-            <h3>The airport's pulse</h3>
+            <h2>The airport's pulse</h2>
             <p>IST's rhythm: hourly departure/arrival banks, traffic by day of week and by month, a 3-airport comparison. Quota-free and complete, from ADS-B movements alone.</p>
           </a>
           <a class="quest link" href="/route-delay-globe">
             <span class="quest-tag done">Side quest · ready →</span>
-            <h3>Route delay globe</h3>
+            <h2>Route delay globe</h2>
             <p>The 20 highest delay-risk routes out of Istanbul, on a 3D globe — each colored by its real share of delayed flights. The data-driven, historical cousin of the THY globe.</p>
           </a>
           <div class="quest">
             <span class="quest-tag alt">Side quest</span>
-            <h3>Fleet & aircraft rotation</h3>
+            <h2>Fleet & aircraft rotation</h2>
             <p>Track aircraft by tail number (icao24): which types fly, how many rotations a single plane makes per day, how tight the turnarounds are. Both concrete knowledge and the prediction model's strongest feature.</p>
           </div>
         </div>

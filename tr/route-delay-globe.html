@@ -156,7 +156,7 @@
         box-shadow: var(--shadow);
         backdrop-filter: blur(14px);
       }
-      .detail h3 { margin: 4px 0 2px; font-family: "Space Grotesk", sans-serif; font-size: 1.4rem; letter-spacing: -0.02em; }
+      .detail h2 { margin: 4px 0 2px; font-family: "Space Grotesk", sans-serif; font-size: 1.4rem; letter-spacing: -0.02em; }
       .detail .dmodel { margin: 0 0 12px; font-size: 0.85rem; color: var(--muted); }
       .rbadge {
         display: inline-block;
@@ -209,8 +209,6 @@
   </head>
   <body data-cursor="plane">
     <div class="noise"></div>
-    <div id="globe"></div>
-    <div id="tip"></div>
 
     <header class="site-header">
       <a class="brand" href="/tr/">
@@ -226,27 +224,32 @@
       </nav>
     </header>
 
-    <aside class="globe-panel">
-      <h1 class="sr-only">Rota Rötar Küresi</h1>
-      <p class="eyebrow">En yüksek rötar riski · IST çıkışlı · Temmuz 2026</p>
-      <div class="big-count"><span id="count">20</span><small>rota (≥20 yolcu uçuşu, kargo hariç)</small></div>
-      <div class="ramp"></div>
-      <div class="ramp-labels"><span>daha az riskli</span><span>daha riskli</span></div>
-      <div class="catlegend" id="catlegend"></div>
-      <div class="routelist" id="routelist"></div>
-      <p class="hint">Bir rotaya tıkla veya küre üzerindeki hatta tıkla, detayları gör.</p>
-    </aside>
+    <main>
+      <div id="globe" role="group" aria-label="IST çıkışlı en yüksek rötar riskli rotaları gösteren 3B küre - aynı veriler için metin listesine bak"></div>
+      <div id="tip"></div>
 
-    <aside class="detail" id="detail" hidden>
-      <button id="dclose" aria-label="Kapat">×</button>
-      <p class="eyebrow" id="dtag">Rota</p>
-      <h3 id="dcity"></h3>
-      <p class="dmodel" id="dairport"></p>
-      <span class="rbadge" id="dcat"></span>
-      <p class="dreason" id="dreason"></p>
-      <div class="droute" id="droute"></div>
-      <div class="dstats" id="dstats"></div>
-    </aside>
+      <aside class="globe-panel">
+        <h1 class="sr-only">Rota Rötar Küresi</h1>
+        <p class="eyebrow">En yüksek rötar riski · IST çıkışlı · Temmuz 2026</p>
+        <div class="big-count"><span id="count">20</span><small>rota (≥20 yolcu uçuşu, kargo hariç)</small></div>
+        <div class="ramp"></div>
+        <div class="ramp-labels"><span>daha az riskli</span><span>daha riskli</span></div>
+        <div class="catlegend" id="catlegend"></div>
+        <div class="routelist" id="routelist"></div>
+        <p class="hint">Bir rotaya tıkla veya küre üzerindeki hatta tıkla, detayları gör.</p>
+      </aside>
+
+      <aside class="detail" id="detail" hidden>
+        <button id="dclose" aria-label="Kapat">×</button>
+        <p class="eyebrow" id="dtag">Rota</p>
+        <h2 id="dcity"></h2>
+        <p class="dmodel" id="dairport"></p>
+        <span class="rbadge" id="dcat"></span>
+        <p class="dreason" id="dreason"></p>
+        <div class="droute" id="droute"></div>
+        <div class="dstats" id="dstats"></div>
+      </aside>
+    </main>
 
     <script>
       // ------------------------------------------------------------------

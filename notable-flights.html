@@ -289,8 +289,6 @@
   </head>
   <body data-cursor="concorde">
     <div class="noise"></div>
-    <div id="globe"></div>
-    <div id="tip"></div>
     <p id="modelCredit" hidden></p>
 
     <header class="site-header">
@@ -307,36 +305,41 @@
       </nav>
     </header>
 
-    <button class="button secondary roster-toggle" id="rosterToggle" type="button">Missions</button>
+    <main>
+      <div id="globe" role="group" aria-label="3D globe for flying Concorde's notable routes - see the mission list for the same flights as text"></div>
+      <div id="tip"></div>
 
-    <aside class="roster" id="roster">
-      <div class="roster-head">
-        <p class="eyebrow"><span class="tulip" aria-hidden="true"></span> Mission select · Jul 2026</p>
-        <h1>The famous flights</h1>
+      <button class="button secondary roster-toggle" id="rosterToggle" type="button" aria-expanded="false" aria-controls="roster">Missions</button>
+
+      <aside class="roster" id="roster">
+        <div class="roster-head">
+          <p class="eyebrow"><span class="tulip" aria-hidden="true"></span> Mission select · Jul 2026</p>
+          <h1>The famous flights</h1>
+        </div>
+        <div class="roster-list" id="rosterList" role="list"></div>
+      </aside>
+
+      <aside class="briefing" id="briefing" hidden aria-live="polite">
+        <button id="bclose" aria-label="Close briefing">×</button>
+        <p class="eyebrow" id="btag"></p>
+        <h2 id="btitle"></h2>
+        <p class="bdate" id="bdate"></p>
+        <div class="bcraft" id="bcraft"></div>
+        <div class="chips" id="bchips"></div>
+        <p class="bdesc" id="bdesc"></p>
+        <button class="button primary fly-btn" id="flyBtn" type="button">Fly it →</button>
+        <p class="memorial-note" id="bmemorial" hidden></p>
+      </aside>
+
+      <div class="flighthud" id="hud" hidden>
+        <div class="hud-cap" id="hudCap"></div>
+        <div class="hud-controls">
+          <button class="hud-icon" id="playBtn" type="button" aria-label="Play or pause">❚❚</button>
+          <input id="scrub" type="range" min="0" max="1000" value="0" step="1" aria-label="Scrub the flight" />
+          <button class="button secondary hud-icon hud-exit" id="exitBtn" type="button" aria-label="Exit fly-through">✕</button>
+        </div>
       </div>
-      <div class="roster-list" id="rosterList" role="list"></div>
-    </aside>
-
-    <aside class="briefing" id="briefing" hidden aria-live="polite">
-      <button id="bclose" aria-label="Close briefing">×</button>
-      <p class="eyebrow" id="btag"></p>
-      <h2 id="btitle"></h2>
-      <p class="bdate" id="bdate"></p>
-      <div class="bcraft" id="bcraft"></div>
-      <div class="chips" id="bchips"></div>
-      <p class="bdesc" id="bdesc"></p>
-      <button class="button primary fly-btn" id="flyBtn" type="button">Fly it →</button>
-      <p class="memorial-note" id="bmemorial" hidden></p>
-    </aside>
-
-    <div class="flighthud" id="hud" hidden>
-      <div class="hud-cap" id="hudCap"></div>
-      <div class="hud-controls">
-        <button class="hud-icon" id="playBtn" type="button" aria-label="Play or pause">❚❚</button>
-        <input id="scrub" type="range" min="0" max="1000" value="0" step="1" aria-label="Scrub the flight" />
-        <button class="button secondary hud-icon hud-exit" id="exitBtn" type="button" aria-label="Exit fly-through">✕</button>
-      </div>
-    </div>
+    </main>
 
     <script>
       // ============================================================
@@ -971,6 +974,7 @@
         refreshBubbles(); // update the active pin highlight
 
         $("roster").classList.add("collapsed");
+        $("rosterToggle").setAttribute("aria-expanded", "false");
       }
 
       function endpointLabels(f) {
@@ -1186,7 +1190,10 @@
       }
 
       // roster toggle (mobile)
-      $("rosterToggle").onclick = () => $("roster").classList.toggle("collapsed");
+      $("rosterToggle").onclick = () => {
+        const expanded = !$("roster").classList.toggle("collapsed");
+        $("rosterToggle").setAttribute("aria-expanded", expanded);
+      };
 
       // re-render text on language switch
       document.addEventListener("langchange", () => {

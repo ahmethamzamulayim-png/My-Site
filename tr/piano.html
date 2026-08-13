@@ -170,18 +170,18 @@
           </label>
           <button id="playBtn" class="button primary" type="button" disabled>▶ Play</button>
           <button id="stopBtn" class="button secondary" type="button" disabled>■ Stop</button>
-          <input id="seek" type="range" min="0" max="0" step="0.01" value="0" disabled aria-label="Seek" />
+          <input id="seek" type="range" min="0" max="0" step="0.01" value="0" disabled aria-label="Sar" />
           <span id="timeLabel">0:00 / 0:00</span>
           <label class="speed-control">
             <span>Hız</span>
-            <input id="speed" type="range" min="0.4" max="3" step="0.05" value="1" aria-label="Playback speed" />
+            <input id="speed" type="range" min="0.4" max="3" step="0.05" value="1" aria-label="Oynatma hızı" />
             <span id="speedLabel">1.00×</span>
           </label>
         </div>
         <p id="songInfo" class="song-info"></p>
         <p id="trackLegend" class="tracklegend"></p>
 
-        <div class="stage-scroll" id="stageScroll">
+        <div class="stage-scroll" id="stageScroll" tabindex="0" role="region" aria-label="Piyano klavyesi ve düşen notalar, daha fazla tuş için kaydır">
           <div class="stage-inner" id="stageInner">
             <canvas id="fall"></canvas>
             <div id="keys" class="keys"></div>

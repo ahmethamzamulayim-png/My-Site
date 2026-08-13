@@ -171,7 +171,7 @@
         box-shadow: var(--shadow);
         backdrop-filter: blur(14px);
       }
-      .detail h3 {
+      .detail h2 {
         margin: 4px 0 2px;
         font-family: "Space Grotesk", sans-serif;
         font-size: 1.5rem;
@@ -246,8 +246,6 @@
   </head>
   <body data-cursor="plane">
     <div class="noise"></div>
-    <div id="globe"></div>
-    <div id="tip"></div>
 
     <header class="site-header">
       <a class="brand" href="/tr/">
@@ -263,28 +261,38 @@
       </nav>
     </header>
 
-    <aside class="globe-panel">
-      <h1 class="sr-only">Live Turkish Airlines Flight Globe</h1>
-      <p class="eyebrow"><span class="tulip" aria-hidden="true"></span> Türk Hava Yolları · canlı · Temmuz 2026</p>
-      <div class="big-count"><span id="count">–</span><small id="countlabel">uçak havada</small></div>
-      <p class="updated" id="updated">ilk veri bekleniyor…</p>
-      <div class="legend">
-        <span><i style="background: #e81932"></i><span>Yolcu</span></span>
-        <span><i style="background: #24439b"></i><span>Kargo</span></span>
-      </div>
-      <input class="flight-search" id="search" type="search" placeholder="Filter flight, e.g. 1951" aria-label="Filter by flight number" />
-      <div class="status-row" id="statusrow"><span class="dot"></span><span id="statustext">bağlanıyor…</span></div>
-      <p class="hint">Döndürmek için sürükle · yakınlaşmak için kaydır · rota ve model için uçağa tıkla</p>
-    </aside>
+    <main>
+      <div id="globe" role="group" aria-label="Her izlenen Türk Hava Yolları uçuşunun canlı konumunu gösteren 3B küre - aynı veriler için aşağıdaki metin listesine bak"></div>
+      <div id="tip"></div>
 
-    <aside class="detail" id="detail" hidden>
-      <button id="dclose" aria-label="Close">×</button>
-      <p class="eyebrow" id="dtag">Passenger</p>
-      <h3 id="dcallsign"></h3>
-      <p class="dmodel" id="dmodel"></p>
-      <div class="droute" id="droute"></div>
-      <div class="dstats" id="dstats"></div>
-    </aside>
+      <aside class="globe-panel">
+        <h1 class="sr-only">Live Turkish Airlines Flight Globe</h1>
+        <p class="eyebrow"><span class="tulip" aria-hidden="true"></span> Türk Hava Yolları · canlı · Temmuz 2026</p>
+        <div class="big-count"><span id="count">–</span><small id="countlabel">uçak havada</small></div>
+        <p class="updated" id="updated">ilk veri bekleniyor…</p>
+        <div class="legend">
+          <span><i style="background: #e81932"></i><span>Yolcu</span></span>
+          <span><i style="background: #24439b"></i><span>Kargo</span></span>
+        </div>
+        <input class="flight-search" id="search" type="search" placeholder="Uçuş filtrele, örn. 1951" aria-label="Uçuş numarasına göre filtrele" />
+        <div class="status-row" id="statusrow"><span class="dot"></span><span id="statustext">bağlanıyor…</span></div>
+        <p class="hint">Döndürmek için sürükle · yakınlaşmak için kaydır · rota ve model için uçağa tıkla</p>
+      </aside>
+
+      <aside class="detail" id="detail" hidden>
+        <button id="dclose" aria-label="Kapat">×</button>
+        <p class="eyebrow" id="dtag">Passenger</p>
+        <h2 id="dcallsign"></h2>
+        <p class="dmodel" id="dmodel"></p>
+        <div class="droute" id="droute"></div>
+        <div class="dstats" id="dstats"></div>
+      </aside>
+
+      <section class="sr-only" aria-label="Küreye metin alternatifi: şu anda izlenen her uçuş">
+        <h2>İzlenen uçuşlar (metin listesi)</h2>
+        <ul id="flightlist"></ul>
+      </section>
+    </main>
 
     <script>
       // Deno Deploy proxy (thy-globe-proxy-deno.ts). For local dev against

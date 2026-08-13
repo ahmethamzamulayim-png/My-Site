@@ -171,7 +171,7 @@
         box-shadow: var(--shadow);
         backdrop-filter: blur(14px);
       }
-      .detail h3 {
+      .detail h2 {
         margin: 4px 0 2px;
         font-family: "Space Grotesk", sans-serif;
         font-size: 1.5rem;
@@ -246,8 +246,6 @@
   </head>
   <body data-cursor="plane">
     <div class="noise"></div>
-    <div id="globe"></div>
-    <div id="tip"></div>
 
     <header class="site-header">
       <a class="brand" href="/">
@@ -263,28 +261,38 @@
       </nav>
     </header>
 
-    <aside class="globe-panel">
-      <h1 class="sr-only">Live Turkish Airlines Flight Globe</h1>
-      <p class="eyebrow"><span class="tulip" aria-hidden="true"></span> Turkish Airlines · live · Jul 2026</p>
-      <div class="big-count"><span id="count">–</span><small id="countlabel">aircraft airborne</small></div>
-      <p class="updated" id="updated">waiting for first data…</p>
-      <div class="legend">
-        <span><i style="background: #e81932"></i><span>Passenger</span></span>
-        <span><i style="background: #24439b"></i><span>Cargo</span></span>
-      </div>
-      <input class="flight-search" id="search" type="search" placeholder="Filter flight, e.g. 1951" aria-label="Filter by flight number" />
-      <div class="status-row" id="statusrow"><span class="dot"></span><span id="statustext">connecting…</span></div>
-      <p class="hint">Drag to rotate · scroll to zoom · click a plane for its route &amp; model</p>
-    </aside>
+    <main>
+      <div id="globe" role="group" aria-label="3D globe showing the live position of every tracked Turkish Airlines flight - see the text list below for the same data"></div>
+      <div id="tip"></div>
 
-    <aside class="detail" id="detail" hidden>
-      <button id="dclose" aria-label="Close">×</button>
-      <p class="eyebrow" id="dtag">Passenger</p>
-      <h3 id="dcallsign"></h3>
-      <p class="dmodel" id="dmodel"></p>
-      <div class="droute" id="droute"></div>
-      <div class="dstats" id="dstats"></div>
-    </aside>
+      <aside class="globe-panel">
+        <h1 class="sr-only">Live Turkish Airlines Flight Globe</h1>
+        <p class="eyebrow"><span class="tulip" aria-hidden="true"></span> Turkish Airlines · live · Jul 2026</p>
+        <div class="big-count"><span id="count">–</span><small id="countlabel">aircraft airborne</small></div>
+        <p class="updated" id="updated">waiting for first data…</p>
+        <div class="legend">
+          <span><i style="background: #e81932"></i><span>Passenger</span></span>
+          <span><i style="background: #24439b"></i><span>Cargo</span></span>
+        </div>
+        <input class="flight-search" id="search" type="search" placeholder="Filter flight, e.g. 1951" aria-label="Filter by flight number" />
+        <div class="status-row" id="statusrow"><span class="dot"></span><span id="statustext">connecting…</span></div>
+        <p class="hint">Drag to rotate · scroll to zoom · click a plane for its route &amp; model</p>
+      </aside>
+
+      <aside class="detail" id="detail" hidden>
+        <button id="dclose" aria-label="Close">×</button>
+        <p class="eyebrow" id="dtag">Passenger</p>
+        <h2 id="dcallsign"></h2>
+        <p class="dmodel" id="dmodel"></p>
+        <div class="droute" id="droute"></div>
+        <div class="dstats" id="dstats"></div>
+      </aside>
+
+      <section class="sr-only" aria-label="Text alternative to the globe: every currently tracked flight">
+        <h2>Tracked flights (text list)</h2>
+        <ul id="flightlist"></ul>
+      </section>
+    </main>
 
     <script>
       // Deno Deploy proxy (thy-globe-proxy-deno.ts). For local dev against
@@ -493,6 +501,15 @@
         cl.textContent = q
           ? t(`airborne · ${shown.length} match filter`, `havada · ${shown.length} filtreyle eşleşiyor`)
           : t("aircraft airborne", "uçak havada");
+
+        // text alternative to the canvas globe - same flights, as a list
+        const list = $("flightlist");
+        list.innerHTML = shown.map(p => {
+          const ac = AC[p.hex];
+          const kind = p.cargo ? t("cargo", "kargo") : t("passenger", "yolcu");
+          const model = ac && ac.model ? `, ${ac.model}` : "";
+          return `<li>${p.callsign} (${kind}${model})</li>`;
+        }).join("");
       }
       $("search").addEventListener("input", render);
 

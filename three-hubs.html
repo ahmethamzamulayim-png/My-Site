@@ -41,7 +41,7 @@
         padding: 22px;
         margin-top: 22px;
       }
-      .chart-panel h3 {
+      .chart-panel h2 {
         font-family: "Space Grotesk", sans-serif;
         letter-spacing: -0.03em;
         margin: 0 0 6px;
@@ -158,7 +158,7 @@
 
       <section class="section" data-reveal>
         <div class="chart-panel">
-          <h3>How delay builds through the day (local time)</h3>
+          <h2>How delay builds through the day (local time)</h2>
           <p class="note">Share of departures leaving 15+ min late, by each airport's own local hour. Hover the lines to compare all three at once.</p>
           <div class="chart-wrap"><canvas id="c-hourly" height="112"></canvas></div>
           <div class="callout"><b>This is where the real difference is.</b> Frankfurt climbs from 3.4% in the early morning to <b>27.9%</b> by midday — the day's delay accumulates and never drops below 21% again until late evening. Heathrow does the same, peaking at 26.3% at 18:00. Istanbul stays flat at <b>5–16%</b> all day: it doesn't carry morning lateness into the evening. That matters as much as the headline rate — IST absorbs the day instead of compounding it.</div>
@@ -166,20 +166,20 @@
         </div>
 
         <div class="chart-panel">
-          <h3>Is the gap persistent, or just a bad week?</h3>
+          <h2>Is the gap persistent, or just a bad week?</h2>
           <p class="note">7-day rolling average, 3 May – 27 July 2026. The ordering never changes across the whole three months.</p>
           <div class="chart-wrap"><canvas id="c-roll" height="112"></canvas></div>
         </div>
 
         <div class="chart-panel">
-          <h3>When it is late, how bad is it?</h3>
+          <h2>When it is late, how bad is it?</h2>
           <p class="note">The full bar is the share of all departures running late; the segments split that by how late. Darker means longer.</p>
           <div class="chart-wrap"><canvas id="c-sev" height="88"></canvas></div>
           <div class="callout"><b>Frankfurt is often late but briefly; Heathrow is late less often but harder.</b> 10.3% of FRA departures slip 15–30 min — the highest of the three — yet its share of delays over an hour (2.4%) is nearly identical to Istanbul's (2.2%). Heathrow delays less often but pays more when it does: <b>3.4%</b> run over an hour, half again as many as IST.</div>
         </div>
 
         <div class="chart-panel">
-          <h3>The numbers</h3>
+          <h2>The numbers</h2>
           <p class="note">The data behind the charts. "Departures in sample / day" is how many flights this dataset captured per day — not the airport's true total traffic.</p>
           <div class="table-scroll">
             <table class="data-table" id="datatable"></table>
@@ -187,7 +187,7 @@
         </div>
 
         <div class="chart-panel">
-          <h3>Method and limits</h3>
+          <h2>Method and limits</h2>
           <p class="note">Delay = aviationstack's gate departure delay; the "late" threshold is 15+ min. Departures only; cargo flights and cancellations excluded. All three airports cover the same window (3 May – 27 July 2026) and run through the same code; partially-collected days were dropped, leaving 83 days for IST and 82 for the other two. This is a snapshot, not live. IST is still collected daily; LHR and FRA were a one-off historical pull.</p>
         </div>
       </section>
