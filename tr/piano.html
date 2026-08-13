@@ -1,23 +1,23 @@
 <!doctype html>
-<html lang="en">
+<html lang="tr">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Web Piano — falling notes & real MIDI files | Ahmet Hamza Mülayim</title>
-    <meta name="description" content="A browser piano you can play by hand, with a real MIDI keyboard, or by loading a .mid file — keys light up as they're struck and a falling-notes display previews what's coming next." />
+    <title>Web Piyano — düşen notalar ve gerçek MIDI dosyaları | Ahmet Hamza Mülayim</title>
+    <meta name="description" content="Elinle, gerçek bir MIDI klavyeyle ya da bir .mid dosyası yükleyerek çalabileceğin bir tarayıcı piyanosu — tuşlar vurulduğunda ışıyor, düşen nota gösterimi sırada ne olduğunu önizliyor." />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e81932'/%3E%3Ctext x='32' y='45' font-size='38' font-family='sans-serif' font-weight='700' text-anchor='middle' fill='%23fff'%3EA%3C/text%3E%3C/svg%3E" />
-    <link rel="canonical" href="https://ahmethmzamlym.engineer/piano" />
+    <link rel="canonical" href="https://ahmethmzamlym.engineer/tr/piano" />
     <link rel="alternate" hreflang="en" href="https://ahmethmzamlym.engineer/piano" />
     <link rel="alternate" hreflang="tr" href="https://ahmethmzamlym.engineer/tr/piano" />
     <link rel="alternate" hreflang="x-default" href="https://ahmethmzamlym.engineer/piano" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Web Piano — falling notes & real MIDI files | Ahmet Hamza Mülayim" />
-    <meta property="og:description" content="A browser piano you can play by hand, with a real MIDI keyboard, or by loading a .mid file — keys light up as they're struck and a falling-notes display previews what's coming next." />
-    <meta property="og:url" content="https://ahmethmzamlym.engineer/piano" />
+    <meta property="og:title" content="Web Piyano — düşen notalar ve gerçek MIDI dosyaları | Ahmet Hamza Mülayim" />
+    <meta property="og:description" content="Elinle, gerçek bir MIDI klavyeyle ya da bir .mid dosyası yükleyerek çalabileceğin bir tarayıcı piyanosu — tuşlar vurulduğunda ışıyor, düşen nota gösterimi sırada ne olduğunu önizliyor." />
+    <meta property="og:url" content="https://ahmethmzamlym.engineer/tr/piano" />
     <meta property="og:image" content="https://ahmethmzamlym.engineer/assets/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Web Piano — falling notes & real MIDI files | Ahmet Hamza Mülayim" />
+    <meta property="og:image:alt" content="Web Piyano — düşen notalar ve gerçek MIDI dosyaları | Ahmet Hamza Mülayim" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content="https://ahmethmzamlym.engineer/assets/og-image.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -115,9 +115,9 @@
       {
         "@context": "https://schema.org",
         "@type": "CreativeWork",
-        "headline": "Web Piano — falling notes & real MIDI files",
-        "description": "A browser piano you can play by hand, with a real MIDI keyboard, or by loading a .mid file — keys light up as they're struck and a falling-notes display previews what's coming next.",
-        "url": "https://ahmethmzamlym.engineer/piano",
+        "headline": "Web Piyano — düşen notalar ve gerçek MIDI dosyaları",
+        "description": "Elinle, gerçek bir MIDI klavyeyle ya da bir .mid dosyası yükleyerek çalabileceğin bir tarayıcı piyanosu — tuşlar vurulduğunda ışıyor, düşen nota gösterimi sırada ne olduğunu önizliyor.",
+        "url": "https://ahmethmzamlym.engineer/tr/piano",
         "image": "https://ahmethmzamlym.engineer/assets/og-image.png",
         "datePublished": "2026-08-04",
         "author": {
@@ -125,44 +125,39 @@
           "name": "Ahmet Hamza Mülayim",
           "url": "https://ahmethmzamlym.engineer/"
         },
-        "inLanguage": "en"
+        "inLanguage": "tr"
       }
     </script>
   </head>
   <body>
     <div class="noise"></div>
     <header class="site-header">
-      <a class="brand" href="/">
+      <a class="brand" href="/tr/">
         <span class="brand-mark">A</span>
         <span>
-          <strong>Web Piano</strong>
-          <small>Manual play, real MIDI keyboards, and .mid files</small>
+          <strong>Web Piyano</strong>
+          <small>Elle çal, gerçek MIDI klavyeler ve .mid dosyaları</small>
         </span>
       </a>
       <nav class="site-nav">
-        <a href="/#offclock">← Portfolio</a>
-        <a class="lang-toggle" href="/tr/piano">TR</a>
+        <a href="/tr/#offclock">← Portföy</a>
+        <a class="lang-toggle" href="/piano">EN</a>
       </nav>
     </header>
 
     <main>
       <section class="section" data-reveal>
         <div class="section-heading">
-          <p class="eyebrow">Web / Interactive · off the clock · Aug 2026</p>
-          <h1>A piano you can play — or feed a MIDI file and watch it play itself.</h1>
+          <p class="eyebrow">Web / Etkileşimli · mesai dışı · Ağustos 2026</p>
+          <h1>Elinle çalabileceğin — ya da bir MIDI dosyası verip kendi kendine çalmasını izleyebileceğin bir piyano.</h1>
         </div>
-        <p class="hero-text">
-          Click the keys, type on your computer keyboard, or plug in a real MIDI
-          keyboard — every note lights up as it's struck, with real sampled piano
-          sound. Load a .mid file and it plays itself while colored bars fall from
-          the top so you can see what's coming, the same way piano-practice games do.
-        </p>
+        <p class="hero-text">Tuşlara tıkla, bilgisayar klavyeni kullan ya da gerçek bir MIDI klavye tak — her nota gerçek örneklenmiş piyano sesiyle, vurulduğu anda ışıyor. Bir .mid dosyası yükle, kendi kendine çalsın; üstten düşen renkli çubuklar, piyano pratik oyunlarındaki gibi sırada ne olduğunu gösteriyor.</p>
       </section>
 
       <section class="section" data-reveal>
         <div class="section-heading">
-          <p class="eyebrow">Six pieces, six stories</p>
-          <h2>Everything here has some lore behind it — click one and it plays itself.</h2>
+          <p class="eyebrow">Altı eser, altı hikâye</p>
+          <h2>Buradaki her şeyin bir hikâyesi var — birine tıkla, kendi kendine çalsın.</h2>
         </div>
         <div class="piece-grid" id="pieceGrid"></div>
       </section>
@@ -171,14 +166,14 @@
         <div class="stage-toolbar">
           <label class="button secondary file-btn">
             <input type="file" id="midiFile" accept=".mid,.midi" hidden />
-            <span>Load a MIDI file</span>
+            <span>MIDI dosyası yükle</span>
           </label>
           <button id="playBtn" class="button primary" type="button" disabled>▶ Play</button>
           <button id="stopBtn" class="button secondary" type="button" disabled>■ Stop</button>
           <input id="seek" type="range" min="0" max="0" step="0.01" value="0" disabled aria-label="Seek" />
           <span id="timeLabel">0:00 / 0:00</span>
           <label class="speed-control">
-            <span>Speed</span>
+            <span>Hız</span>
             <input id="speed" type="range" min="0.4" max="3" step="0.05" value="1" aria-label="Playback speed" />
             <span id="speedLabel">1.00×</span>
           </label>
@@ -194,28 +189,19 @@
         </div>
 
         <div class="stage-footer">
-          <p id="audioStatus" class="hint">Loading piano samples…</p>
+          <p id="audioStatus" class="hint">Piyano örnekleri yükleniyor…</p>
           <p id="midiStatus" class="hint"></p>
           <details class="kb-help">
-            <summary>Computer-keyboard mapping</summary>
-            <p>
-              Z X C V B N M and , . / play one octave of white keys; S D · G H J · L ;
-              are the black keys between them. Q W E R T Y U I O P repeats the same
-              pattern an octave higher, with 2 3 5 6 7 9 0 as its black keys.
-            </p>
+            <summary>Bilgisayar klavyesi eşlemesi</summary>
+            <p>Z X C V B N M ve , . / bir oktavın beyaz tuşlarını çalar; S D · G H J · L ; aralarındaki siyah tuşlardır. Q W E R T Y U I O P aynı düzeni bir oktav yukarıda tekrarlar, siyah tuşları 2 3 5 6 7 9 0'dır.</p>
           </details>
-          <p class="credit">
-            Piano samples: VSCO2 community edition via
-            <a href="https://github.com/nbrosowsky/tonejs-instruments" target="_blank" rel="noreferrer">tonejs-instruments</a>
-            (CC BY 3.0) · Audio engine: <a href="https://tonejs.github.io/" target="_blank" rel="noreferrer">Tone.js</a>
-            · MIDI parsing: <a href="https://github.com/Tonejs/Midi" target="_blank" rel="noreferrer">@tonejs/midi</a>
-          </p>
+          <p class="credit">Piyano örnekleri: <a href="https://github.com/nbrosowsky/tonejs-instruments" target="_blank" rel="noreferrer">tonejs-instruments</a> üzerinden VSCO2 topluluk sürümü (CC BY 3.0) · Ses motoru: <a href="https://tonejs.github.io/" target="_blank" rel="noreferrer">Tone.js</a> · MIDI ayrıştırma: <a href="https://github.com/Tonejs/Midi" target="_blank" rel="noreferrer">@tonejs/midi</a></p>
         </div>
       </section>
     </main>
 
     <footer class="footer">
-      <p>A browser piano, built for the love of the instrument.</p>
+      <p>Enstrümanı sevdiği için yapılmış bir tarayıcı piyanosu.</p>
       <p id="year"></p>
     </footer>
 

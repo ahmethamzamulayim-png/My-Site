@@ -4,20 +4,20 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Ahmet Hamza Mülayim | Mechanical Engineering Portfolio</title>
-    <meta
-      name="description"
-      content="Ahmet Hamza Mülayim's mechanical engineering portfolio — bearing prognostics, condition monitoring, robotics, and data-driven flight-delay analysis."
-    />
+    <meta name="description" content="Ahmet Hamza Mülayim's mechanical engineering portfolio — bearing prognostics, condition monitoring, robotics, and data-driven flight-delay analysis." />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e81932'/%3E%3Ctext x='32' y='45' font-size='38' font-family='sans-serif' font-weight='700' text-anchor='middle' fill='%23fff'%3EA%3C/text%3E%3C/svg%3E" />
     <link rel="canonical" href="https://ahmethmzamlym.engineer/" />
+    <link rel="alternate" hreflang="en" href="https://ahmethmzamlym.engineer/" />
+    <link rel="alternate" hreflang="tr" href="https://ahmethmzamlym.engineer/tr/" />
+    <link rel="alternate" hreflang="x-default" href="https://ahmethmzamlym.engineer/" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Ahmet Hamza Mülayim | Mechanical Engineering Portfolio" />
-    <meta property="og:description" content="Mechanical engineering student at Marmara University — CAD, robotics, and a live Turkish Airlines flight globe." />
+    <meta property="og:description" content="Ahmet Hamza Mülayim's mechanical engineering portfolio — bearing prognostics, condition monitoring, robotics, and data-driven flight-delay analysis." />
     <meta property="og:url" content="https://ahmethmzamlym.engineer/" />
     <meta property="og:image" content="https://ahmethmzamlym.engineer/assets/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Ahmet Hamza Mülayim — Mechanical Engineering Portfolio" />
+    <meta property="og:image:alt" content="Ahmet Hamza Mülayim | Mechanical Engineering Portfolio" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content="https://ahmethmzamlym.engineer/assets/og-image.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -26,9 +26,9 @@
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css" />
-    <script src="i18n.js"></script>
-    <script defer src="script.js"></script>
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/i18n.js"></script>
+    <script defer src="/script.js"></script>
     <script defer src="https://cloud.umami.is/script.js" data-website-id="53acc321-a620-42d2-abf8-92a0c2813e8b"></script>
     <script type="application/ld+json">
       {
@@ -67,20 +67,20 @@
         </span>
       </a>
       <nav class="site-nav">
-        <a href="#projects" data-i18n="nav.projects">Projects</a>
-        <a href="about" data-i18n="nav.about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="/about">About</a>
         <a href="https://github.com/ahmethamzamulayim-png" target="_blank" rel="noreferrer">GitHub</a>
         <a href="https://www.linkedin.com/in/ahmet-hamza-m%C3%BClayim-b74707390/" target="_blank" rel="noreferrer">LinkedIn</a>
-        <a href="#contact" data-i18n="nav.contact">Contact</a>
-        <button class="lang-toggle" type="button">TR</button>
+        <a href="#contact">Contact</a>
+        <a class="lang-toggle" href="/tr/">TR</a>
       </nav>
     </header>
 
     <main id="top">
       <section class="hero">
         <div class="hero-copy" data-reveal>
-          <h1 data-i18n="hero.h1">Mechanical engineering, built around design, analysis, and proof.</h1>
-          <p class="hero-text" data-i18n="hero.text">
+          <h1>Mechanical engineering, built around design, analysis, and proof.</h1>
+          <p class="hero-text">
             I’m Ahmet Hamza Mülayim, a mechanical engineering student at Marmara
             University. I build physical systems, analyze how they behave, and
             increasingly lean on data — vibration signals, flight records — to
@@ -88,8 +88,8 @@
             that, not a résumé.
           </p>
           <div class="hero-actions">
-            <a class="button primary" href="#projects" data-i18n="hero.see">View projects</a>
-            <a class="button secondary" href="about" data-i18n="hero.about">About me</a>
+            <a class="button primary" href="#projects">View projects</a>
+            <a class="button secondary" href="/about">About me</a>
           </div>
         </div>
 
@@ -97,41 +97,41 @@
           <div class="panel-shell">
             <div class="panel-top">
               <span class="status-dot"></span>
-              <span data-i18n="panel.top">Projects, sized by scope</span>
+              <span>Projects, sized by scope</span>
             </div>
             <div class="treemap">
-              <a class="tile t-xds" href="bearing-universal">
-                <span class="tile-tag" data-i18n="tile.xds.tag">Condition Monitoring · Flagship ⚓</span>
-                <strong data-i18n="tile.xds.name">Universal bearing RUL</strong>
-                <span class="tile-note" data-i18n="tile.xds.note">3 rigs · 36 bearings</span>
+              <a class="tile t-xds" href="/bearing-universal">
+                <span class="tile-tag">Condition Monitoring · Flagship ⚓</span>
+                <strong>Universal bearing RUL</strong>
+                <span class="tile-note">3 rigs · 36 bearings</span>
               </a>
-              <a class="tile t-globe" href="thy-globe">
-                <span class="tile-tag" data-i18n="tile.globe.tag">Web · live now</span>
-                <strong data-i18n="tile.globe.name">THY flight globe</strong>
-                <span class="tile-note" id="live-globe-note" data-i18n="tile.globe.note">130+ flights on a 3D globe</span>
+              <a class="tile t-globe" href="/thy-globe">
+                <span class="tile-tag">Web · live now</span>
+                <strong>THY flight globe</strong>
+                <span class="tile-note" id="live-globe-note">130+ flights on a 3D globe</span>
               </a>
-              <a class="tile t-ml" href="bearing">
-                <span class="tile-tag" data-i18n="tile.ml.tag">Condition Monitoring</span>
-                <strong data-i18n="tile.ml.name">Bearing failure prediction</strong>
+              <a class="tile t-ml" href="/bearing">
+                <span class="tile-tag">Condition Monitoring</span>
+                <strong>Bearing failure prediction</strong>
               </a>
               <a class="tile t-ugv" href="#ugv">
-                <span class="tile-tag" data-i18n="tile.ugv.tag">Robotics</span>
-                <strong data-i18n="tile.ugv.name">UGV competition</strong>
+                <span class="tile-tag">Robotics</span>
+                <strong>UGV competition</strong>
               </a>
-              <a class="tile t-rig" href="ist-rotar">
-                <span class="tile-tag" data-i18n="tile.ist.tag">Data · daily pipeline</span>
-                <strong data-i18n="tile.ist.name">IST delay dataset</strong>
-                <span class="tile-note" id="live-ist-note" data-i18n="tile.ist.note">Collecting daily</span>
+              <a class="tile t-rig" href="/ist-rotar">
+                <span class="tile-tag">Data · daily pipeline</span>
+                <strong>IST delay dataset</strong>
+                <span class="tile-note" id="live-ist-note">Collecting daily</span>
               </a>
-              <a class="tile t-phase2" href="phase2">
-                <span class="tile-tag" data-i18n="tile.phase2.tag">Data / ML · roadmap</span>
-                <strong data-i18n="tile.phase2.name">Phase 2: delay prediction</strong>
-                <span class="tile-note" data-i18n="tile.phase2.note">Hourly, weekly, monthly — 3 airports compared</span>
+              <a class="tile t-phase2" href="/phase2">
+                <span class="tile-tag">Data / ML · roadmap</span>
+                <strong>Phase 2: delay prediction</strong>
+                <span class="tile-note">Hourly, weekly, monthly — 3 airports compared</span>
               </a>
-              <a class="tile t-hubs" href="three-hubs">
-                <span class="tile-tag" data-i18n="tile.hubs.tag">Data · new</span>
-                <strong data-i18n="tile.hubs.name">Three hubs</strong>
-                <span class="tile-note" data-i18n="tile.hubs.note">IST beats LHR &amp; FRA</span>
+              <a class="tile t-hubs" href="/three-hubs">
+                <span class="tile-tag">Data · new</span>
+                <strong>Three hubs</strong>
+                <span class="tile-note">IST beats LHR &amp; FRA</span>
               </a>
             </div>
           </div>
@@ -140,123 +140,123 @@
 
       <section class="section" id="projects">
         <div class="section-heading" data-reveal>
-          <p class="eyebrow" data-i18n="projects.eyebrow">Selected work</p>
-          <h2 data-i18n="projects.h2">Projects that show engineering judgment, not just buzzwords.</h2>
+          <p class="eyebrow">Selected work</p>
+          <h2>Projects that show engineering judgment, not just buzzwords.</h2>
         </div>
         <div class="project-grid">
-          <p class="group-heading" data-reveal data-i18n="group.flagship">Featured Engineering Work</p>
-          <p class="group-note" data-reveal data-i18n="group.flagship.note">Full case studies — real numbers, honest limitations included.</p>
+          <p class="group-heading" data-reveal>Featured Engineering Work</p>
+          <p class="group-note" data-reveal>Full case studies — real numbers, honest limitations included.</p>
 
           <article class="card card-plum card-hero" data-reveal>
-            <p class="card-tag" data-i18n="xds.tag">Condition Monitoring · Part 2 · Flagship · Jul 2026</p>
-            <h3 data-i18n="xds.h3">Universal bearing RUL — cross-dataset study</h3>
-            <p data-i18n="xds.p">Does a prognostics model trained on one rig transfer to a rig it has never seen?</p>
+            <p class="card-tag">Condition Monitoring · Part 2 · Flagship · Jul 2026</p>
+            <h3>Universal bearing RUL — cross-dataset study</h3>
+            <p>Does a prognostics model trained on one rig transfer to a rig it has never seen?</p>
             <div class="card-metrics">
-              <div><strong>36</strong><span data-i18n="xds.m1">Bearings analyzed</span></div>
-              <div><strong>3</strong><span data-i18n="xds.m2">Rigs — IMS, XJTU-SY, FEMTO</span></div>
-              <div><strong data-i18n="xds.m3v">LOBO / LODO</strong><span data-i18n="xds.m3">Cross-dataset validation</span></div>
+              <div><strong>36</strong><span>Bearings analyzed</span></div>
+              <div><strong>3</strong><span>Rigs — IMS, XJTU-SY, FEMTO</span></div>
+              <div><strong>LOBO / LODO</strong><span>Cross-dataset validation</span></div>
             </div>
-            <a class="card-link" href="bearing-universal" data-i18n="xds.link">Open the study →</a>
+            <a class="card-link" href="/bearing-universal">Open the study →</a>
           </article>
 
           <article class="card card-cobalt" data-reveal>
-            <p class="card-tag" data-i18n="ml.tag">Condition Monitoring · Part 1 · Jul 2026</p>
-            <h3 data-i18n="ml.h3">IMS bearing failure prediction</h3>
-            <p data-i18n="ml.p">Can vibration alone forecast a rolling-element bearing's remaining life before it fails?</p>
+            <p class="card-tag">Condition Monitoring · Part 1 · Jul 2026</p>
+            <h3>IMS bearing failure prediction</h3>
+            <p>Can vibration alone forecast a rolling-element bearing's remaining life before it fails?</p>
             <div class="card-metrics">
-              <div><strong>3</strong><span data-i18n="ml.m1">Run-to-failure tests</span></div>
-              <div><strong>20 kHz</strong><span data-i18n="ml.m2">Vibration sampling rate</span></div>
-              <div><strong data-i18n="ml.m3v">20,480</strong><span data-i18n="ml.m3">Points per snapshot</span></div>
+              <div><strong>3</strong><span>Run-to-failure tests</span></div>
+              <div><strong>20 kHz</strong><span>Vibration sampling rate</span></div>
+              <div><strong>20,480</strong><span>Points per snapshot</span></div>
             </div>
-            <a class="card-link" href="bearing" data-i18n="ml.link">Open the case study →</a>
+            <a class="card-link" href="/bearing">Open the case study →</a>
           </article>
 
           <article class="card" id="ugv" data-reveal>
-            <p class="card-tag" data-i18n="ugv.tag">University Project · Robotics</p>
-            <h3 data-i18n="ugv.h3">UGV Competition Project</h3>
-            <p data-i18n="ugv.p">
+            <p class="card-tag">University Project · Robotics</p>
+            <h3>UGV Competition Project</h3>
+            <p>
               A university UGV competition project exploring mechanical design,
               system integration, and engineering trade-offs. The team reached
               the report stage; we did not advance to the later rounds.
             </p>
-            <ul data-i18n="ugv.ul">
+            <ul>
               <li>Collaborative mechanical design and technical documentation</li>
               <li>Mechatronic system integration across a small team</li>
               <li>Worked within real design and schedule constraints</li>
             </ul>
           </article>
 
-          <p class="group-heading" data-reveal data-i18n="group.aviation">Aviation Data &amp; Systems</p>
-          <p class="group-note" data-reveal data-i18n="group.aviation.note">Live flight tracking, a delay dataset I built myself, and the model and comparisons built on top of it.</p>
+          <p class="group-heading" data-reveal>Aviation Data &amp; Systems</p>
+          <p class="group-note" data-reveal>Live flight tracking, a delay dataset I built myself, and the model and comparisons built on top of it.</p>
 
           <article class="card card-red" data-reveal>
-            <p class="card-tag" data-i18n="globe.tag">Aviation Data · Live · Jul 2026</p>
-            <h3 data-i18n="globe.h3">Live Turkish Airlines flight globe</h3>
-            <p data-i18n="globe.p">Where is every Turkish Airlines aircraft right now, and what is it flying?</p>
+            <p class="card-tag">Aviation Data · Live · Jul 2026</p>
+            <h3>Live Turkish Airlines flight globe</h3>
+            <p>Where is every Turkish Airlines aircraft right now, and what is it flying?</p>
             <div class="card-metrics">
-              <div><strong>130+</strong><span data-i18n="globe.m1">Flights tracked live</span></div>
-              <div><strong>15s</strong><span data-i18n="globe.m2">Refresh interval</span></div>
-              <div><strong>ADS-B</strong><span data-i18n="globe.m3">Live transponder data</span></div>
+              <div><strong>130+</strong><span>Flights tracked live</span></div>
+              <div><strong>15s</strong><span>Refresh interval</span></div>
+              <div><strong>ADS-B</strong><span>Live transponder data</span></div>
             </div>
-            <a class="card-link" href="thy-globe" data-i18n="globe.link">Open the live globe →</a>
+            <a class="card-link" href="/thy-globe">Open the live globe →</a>
           </article>
 
           <article class="card card-leaf" data-reveal>
-            <p class="card-tag" data-i18n="ist.tag">Aviation Data · Pipeline · Jul 2026</p>
-            <h3 data-i18n="ist.h3">IST flight delay dataset</h3>
-            <p data-i18n="ist.p">Istanbul Airport has no public historical delay dataset — so what does one look like once you build it?</p>
-            <ul data-i18n="ist.ul">
+            <p class="card-tag">Aviation Data · Pipeline · Jul 2026</p>
+            <h3>IST flight delay dataset</h3>
+            <p>Istanbul Airport has no public historical delay dataset — so what does one look like once you build it?</p>
+            <ul>
               <li>OpenSky + aviationstack joined on callsign</li>
               <li>Append-only CSVs with quality flags</li>
               <li>Collected daily by a zero-maintenance GitHub Actions pipeline</li>
             </ul>
-            <a class="card-link" href="ist-rotar" data-i18n="ist.link">Open the status dashboard →</a>
+            <a class="card-link" href="/ist-rotar">Open the status dashboard →</a>
           </article>
 
           <article class="card card-gold" data-reveal>
-            <p class="card-tag" data-i18n="p2.tag">Aviation Data · Prediction · Jul–Aug 2026</p>
-            <h3 data-i18n="p2.h3">Delay prediction: Phase 2</h3>
-            <p data-i18n="p2.p">Can a model beat a simple delay lookup table — and if so, why?</p>
+            <p class="card-tag">Aviation Data · Prediction · Jul–Aug 2026</p>
+            <h3>Delay prediction: Phase 2</h3>
+            <p>Can a model beat a simple delay lookup table — and if so, why?</p>
             <div class="card-metrics">
-              <div><strong data-i18n="p2.m1v">0.742</strong><span data-i18n="p2.m1">Model AUC</span></div>
-              <div><strong data-i18n="p2.m2v">0.711</strong><span data-i18n="p2.m2">Lookup baseline</span></div>
-              <div><strong data-i18n="p2.m3v">Blind</strong><span data-i18n="p2.m3">Tested on July hold-out</span></div>
+              <div><strong>0.742</strong><span>Model AUC</span></div>
+              <div><strong>0.711</strong><span>Lookup baseline</span></div>
+              <div><strong>Blind</strong><span>Tested on July hold-out</span></div>
             </div>
-            <a class="card-link" href="model" data-i18n="p2.link2">Open the model →</a>
-            <a class="card-link" href="phase2" data-i18n="p2.link">All of Phase 2 →</a>
+            <a class="card-link" href="/model">Open the model →</a>
+            <a class="card-link" href="/phase2">All of Phase 2 →</a>
           </article>
 
           <article class="card card-teal" data-reveal>
-            <p class="card-tag" data-i18n="th.tag">Aviation Data · Comparison · Jul 2026</p>
-            <h3 data-i18n="th.h3">Three hubs: who is actually on time?</h3>
-            <p data-i18n="th.p">Is Istanbul's busiest-in-Europe traffic actually less punctual than Heathrow or Frankfurt?</p>
+            <p class="card-tag">Aviation Data · Comparison · Jul 2026</p>
+            <h3>Three hubs: who is actually on time?</h3>
+            <p>Is Istanbul's busiest-in-Europe traffic actually less punctual than Heathrow or Frankfurt?</p>
             <div class="card-metrics">
-              <div><strong>172K+</strong><span data-i18n="th.m1">Departures compared</span></div>
-              <div><strong>3</strong><span data-i18n="th.m2">Airports, same window</span></div>
-              <div><strong>86</strong><span data-i18n="th.m3">Days, same source</span></div>
+              <div><strong>172K+</strong><span>Departures compared</span></div>
+              <div><strong>3</strong><span>Airports, same window</span></div>
+              <div><strong>86</strong><span>Days, same source</span></div>
             </div>
-            <a class="card-link" href="three-hubs" data-i18n="th.link">See the comparison →</a>
+            <a class="card-link" href="/three-hubs">See the comparison →</a>
           </article>
 
-          <a class="offclock-card" href="ist-history" data-reveal>
+          <a class="offclock-card" href="/ist-history" data-reveal>
             <div class="offclock-media">
-              <img src="assets/img/ist-hero.jpg" alt="Istanbul Airport terminal from the air" loading="lazy" />
+              <img src="/assets/img/ist-hero.jpg" alt="Istanbul Airport terminal from the air" loading="lazy" />
             </div>
             <div class="offclock-body">
-              <p class="card-tag" data-i18n="ih.tag">Data story · aviation logistics · Aug 2026</p>
-              <h3 data-i18n="ih.h3">Logistics of IST — the world's 8th busiest airport</h3>
-              <p data-i18n="ih.p">
+              <p class="card-tag">Data story · aviation logistics · Aug 2026</p>
+              <h3>Logistics of IST — the world's 8th busiest airport</h3>
+              <p>
                 84.5 million passengers, 327 destinations, and a terminal laid
                 over abandoned coal pits. How Istanbul built the world's 8th
                 busiest airport — the tender, the ground, the 29-hour move, the
                 metro — with a satellite timelapse of the site from 2017 to 2025.
               </p>
-              <ul data-i18n="ih.ul">
+              <ul>
                 <li>84.5m passengers in 2025 — 8th busiest in the world</li>
                 <li>327 destinations and 82,733 connections — the most connected airport on earth</li>
                 <li>7,600 hectares of former lignite mines and 70 quarry lakes</li>
               </ul>
-              <span class="card-link" data-i18n="ih.link">Read the story →</span>
+              <span class="card-link">Read the story →</span>
             </div>
           </a>
         </div>
@@ -264,31 +264,31 @@
 
       <section class="section" id="offclock">
         <div class="section-heading" data-reveal>
-          <p class="eyebrow" data-i18n="off.eyebrow">Experiments &amp; side projects</p>
-          <h2 data-i18n="off.h2">Built out of curiosity, not part of the mechanical engineering thread above.</h2>
+          <p class="eyebrow">Experiments &amp; side projects</p>
+          <h2>Built out of curiosity, not part of the mechanical engineering thread above.</h2>
         </div>
-        <a class="offclock-card" href="concorde" data-reveal>
+        <a class="offclock-card" href="/concorde" data-reveal>
           <div class="offclock-media">
-            <img src="assets/img/hero-schiphol.jpg" alt="A Concorde airliner on the ground" loading="lazy" />
+            <img src="/assets/img/hero-schiphol.jpg" alt="A Concorde airliner on the ground" loading="lazy" />
           </div>
           <div class="offclock-body">
-            <p class="card-tag" data-i18n="cc.tag">Web / Interactive · tribute · Jul 2026</p>
-            <h3 data-i18n="cc.h3">Mach 2 — a homage to Concorde</h3>
-            <p data-i18n="cc.p">
+            <p class="card-tag">Web / Interactive · tribute · Jul 2026</p>
+            <h3>Mach 2 — a homage to Concorde</h3>
+            <p>
               A non-commercial fan tribute: the life story of the supersonic
               airliner, an honest look at whether it will ever have a successor,
               and an interactive 3D globe of its most famous flights.
             </p>
-            <ul data-i18n="cc.ul">
+            <ul>
               <li>Biography timeline, 1962 treaty to 2003 retirement</li>
               <li>Interactive globe — pick a flight, fly the great-circle route</li>
               <li>Balanced take on Boom's Overture and the XB-1</li>
             </ul>
-            <span class="card-link" data-i18n="cc.link">Open the homage →</span>
+            <span class="card-link">Open the homage →</span>
           </div>
         </a>
 
-        <a class="offclock-card" href="piano" data-reveal>
+        <a class="offclock-card" href="/piano" data-reveal>
           <div class="offclock-media piano-media">
             <svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" role="img" aria-hidden="true">
               <rect width="400" height="260" fill="#20232b" />
@@ -318,20 +318,20 @@
             </svg>
           </div>
           <div class="offclock-body">
-            <p class="card-tag" data-i18n="pn.tag">Web / Interactive · built for the love of it · Aug 2026</p>
-            <h3 data-i18n="pn.h3">Web Piano — falling notes, real MIDI files</h3>
-            <p data-i18n="pn.p">
+            <p class="card-tag">Web / Interactive · built for the love of it · Aug 2026</p>
+            <h3>Web Piano — falling notes, real MIDI files</h3>
+            <p>
               A browser piano you can play by hand, with a real MIDI keyboard, or
               by loading a .mid file straight from your computer — keys light up
               as they're struck, and colored bars fall from the top to preview
               what's coming next, the way piano-practice games do.
             </p>
-            <ul data-i18n="pn.ul">
+            <ul>
               <li>Full 88 keys, sampled piano sound, not synth beeps</li>
               <li>Mouse, computer keyboard, or a plugged-in MIDI controller</li>
               <li>Six pieces with real backstory built in, one click to play — or load your own .mid</li>
             </ul>
-            <span class="card-link" data-i18n="pn.link">Open the piano →</span>
+            <span class="card-link">Open the piano →</span>
           </div>
         </a>
 
@@ -363,29 +363,29 @@
             </svg>
           </div>
           <div class="offclock-body">
-            <p class="card-tag" data-i18n="bb.tag">Systems / Windows · own repo · Aug 2026</p>
-            <h3 data-i18n="bb.h3">BiggerBrother — a traffic observatory for your own machine</h3>
-            <p data-i18n="bb.p">
+            <p class="card-tag">Systems / Windows · own repo · Aug 2026</p>
+            <h3>BiggerBrother — a traffic observatory for your own machine</h3>
+            <p>
               Ties every DNS query and socket on Windows to the process that made
               it, via ETW — plus an in-browser request recorder that shows exactly
               which cookies your browser handed to which trackers. Local-only: no
               cloud, no TLS interception, nothing leaves the machine.
             </p>
-            <ul data-i18n="bb.ul">
+            <ul>
               <li>Per-process attribution: who talked to whom, and who owns the far end</li>
               <li>In-page cookie/tracker capture without touching TLS</li>
               <li>Per-process kill switch — drops an app's live TCP connections with Cut or Choke</li>
             </ul>
-            <span class="card-link" data-i18n="bb.link">View the repo on GitHub →</span>
+            <span class="card-link">View the repo on GitHub →</span>
           </div>
         </a>
       </section>
 
       <section class="section contact" id="contact" data-reveal>
         <div>
-          <p class="eyebrow" data-i18n="contact.eyebrow">Contact</p>
-          <h2 data-i18n="contact.h2">Want to talk engineering?</h2>
-          <p data-i18n="contact.p">
+          <p class="eyebrow">Contact</p>
+          <h2>Want to talk engineering?</h2>
+          <p>
             Projects, research ideas, technical collaboration, or an
             opportunity — reach out by email, GitHub, or the form.
           </p>
@@ -408,22 +408,22 @@
           <input type="hidden" name="_template" value="table" />
           <input type="hidden" name="_captcha" value="false" />
           <label>
-            <span data-i18n="contact.name">Name</span>
+            <span>Name</span>
             <input type="text" name="name" required />
           </label>
           <label>
-            <span data-i18n="contact.email">Email</span>
+            <span>Email</span>
             <input type="email" name="email" required />
           </label>
           <label>
-            <span data-i18n="contact.message">Message</span>
+            <span>Message</span>
             <textarea name="message" rows="4" required></textarea>
           </label>
           <label>
-            <span data-i18n="contact.attach">Attachment (optional)</span>
+            <span>Attachment (optional)</span>
             <input type="file" name="attachment" multiple />
           </label>
-          <button type="submit" class="button primary" data-i18n="contact.send">Send message</button>
+          <button type="submit" class="button primary">Send message</button>
           <p class="form-status" role="status" aria-live="polite"></p>
         </form>
         <iframe name="contact-frame" class="hp-field" title="form submission target"></iframe>
@@ -438,126 +438,5 @@
       </div>
     </footer>
 
-    <script>
-      window.I18N_LANG = "tr";
-      window.I18N = {
-        "nav.about": "Hakkımda",
-        "nav.projects": "Projeler",
-        "nav.contact": "İletişim",
-        "hero.h1": "Tasarım, analiz ve kanıt üzerine kurulu makine mühendisliği.",
-        "hero.text": "Ben Ahmet Hamza Mülayim, Marmara Üniversitesi'nde makine mühendisliği öğrencisiyim. Fiziksel sistemler kuruyorum, nasıl davrandıklarını analiz ediyorum ve onları daha iyi anlamak için giderek daha çok veriye — titreşim sinyallerine, uçuş kayıtlarına — dayanıyorum. Bu portföy, bunun arkasındaki gerçek projeler; bir özgeçmiş değil.",
-        "hero.see": "Projelere bak",
-        "hero.about": "Hakkımda",
-        "panel.top": "Projeler, kapsama göre boyutlu",
-        "tile.globe.tag": "Web · şu an canlı",
-        "tile.globe.name": "THY uçuş küresi",
-        "tile.globe.note": "3B kürede 130+ uçuş",
-        "tile.xds.tag": "Durum İzleme · Öne çıkan",
-        "tile.xds.name": "Evrensel rulman RUL",
-        "tile.xds.note": "3 düzenek · 36 rulman",
-        "tile.ml.tag": "Durum İzleme",
-        "tile.ml.name": "Rulman arızası tahmini",
-        "tile.ugv.tag": "Robotik",
-        "tile.ugv.name": "İKA yarışması",
-        "tile.ist.tag": "Veri · günlük toplama",
-        "tile.ist.name": "IST rötar veri seti",
-        "tile.ist.note": "Her gün toplanıyor",
-        "tile.phase2.tag": "Veri / ML · yol haritası",
-        "tile.phase2.name": "Aşama 2: rötar tahmini",
-        "tile.phase2.note": "Saatlik, haftalık, aylık — 3 havalimanı karşılaştırması",
-        "tile.hubs.tag": "Veri · yeni",
-        "tile.hubs.name": "3 havalimanı",
-        "tile.hubs.note": "IST, LHR ve FRA'yı geçiyor",
-        "projects.eyebrow": "Seçilmiş işler",
-        "projects.h2": "İçi boş kelimeler değil, mühendislik muhakemesi gösteren projeler.",
-        "group.flagship": "Öne Çıkan Mühendislik İşleri",
-        "group.flagship.note": "Tam vaka çalışmaları — gerçek sayılar, sınırlamalar dahil.",
-        "group.aviation": "Havacılık Verisi ve Sistemleri",
-        "group.aviation.note": "Canlı uçuş takibi, kendi kurduğum bir rötar veri seti, ve üzerine inşa ettiğim model ve karşılaştırmalar.",
-        "xds.tag": "Durum İzleme · Bölüm 2 · Öne çıkan · Temmuz 2026",
-        "xds.h3": "Evrensel rulman RUL — veri setleri arası çalışma",
-        "xds.p": "Bir düzenekte eğitilen bir prognostik model, hiç görmediği bir düzeneğe taşınır mı?",
-        "xds.m1": "İncelenen rulman",
-        "xds.m2": "Düzenek — IMS, XJTU-SY, FEMTO",
-        "xds.m3v": "LOBO / LODO",
-        "xds.m3": "Veri setleri arası doğrulama",
-        "xds.link": "Çalışmayı aç →",
-        "ml.tag": "Durum İzleme · Bölüm 1 · Temmuz 2026",
-        "ml.h3": "IMS rulman arızası tahmini",
-        "ml.p": "Titreşim tek başına bir rulmanın arızadan önce kalan ömrünü öngörebilir mi?",
-        "ml.m1": "Bozulana-kadar-çalıştırma testi",
-        "ml.m2": "Titreşim örnekleme hızı",
-        "ml.m3v": "20.480",
-        "ml.m3": "Kesit başına örnek",
-        "ml.link": "Vaka çalışmasını aç →",
-        "globe.tag": "Havacılık Verisi · Canlı · Temmuz 2026",
-        "globe.h3": "Canlı Türk Hava Yolları uçuş küresi",
-        "globe.p": "Şu anda her Türk Hava Yolları uçağı nerede ve ne uçuruyor?",
-        "globe.m1": "Canlı izlenen uçuş",
-        "globe.m2": "Güncelleme aralığı",
-        "globe.m3": "Canlı transponder verisi",
-        "globe.link": "Canlı küreyi aç →",
-        "ist.tag": "Havacılık Verisi · Boru Hattı · Temmuz 2026",
-        "ist.h3": "IST uçuş rötarı veri seti",
-        "ist.p": "İstanbul Havalimanı için herkese açık tarihsel bir rötar veri seti yok — peki kendin kursan nasıl görünür?",
-        "ist.ul": "<li>Çağrı koduyla birleştirilen OpenSky + aviationstack</li><li>Kalite bayraklı, yalnızca eklenen CSV'ler</li><li>Bakım gerektirmeyen bir GitHub Actions hattıyla her gün toplanıyor</li>",
-        "ist.link": "Durum panosunu aç →",
-        "p2.tag": "Havacılık Verisi · Tahmin · Temmuz–Ağustos 2026",
-        "p2.h3": "Aşama 2: rötar tahmini",
-        "p2.p": "Bir model basit bir rötar referans tablosunu geçebilir mi — geçerse neden?",
-        "p2.m1": "Model AUC",
-        "p2.m1v": "0,742",
-        "p2.m2": "Referans tablo",
-        "p2.m2v": "0,711",
-        "p2.m3v": "Körlemesine",
-        "p2.m3": "Temmuz verisiyle test edildi",
-        "p2.link2": "Modeli aç →",
-        "p2.link": "Aşama 2'nin tamamı →",
-        "th.tag": "Havacılık Verisi · Karşılaştırma · Temmuz 2026",
-        "th.h3": "3 havalimanı: kim gerçekten dakik?",
-        "th.p": "İstanbul'un Avrupa'nın en yoğun trafiği, Heathrow ya da Frankfurt'tan gerçekten daha mı az dakik?",
-        "th.m1": "Karşılaştırılan kalkış",
-        "th.m2": "Aynı pencerede havalimanı",
-        "th.m3": "Aynı kaynaktan gün",
-        "th.link": "Karşılaştırmayı gör →",
-        "ugv.tag": "Üniversite Projesi · Robotik",
-        "ugv.h3": "İKA Yarışma Projesi",
-        "ugv.p": "Mekanik tasarım, sistem entegrasyonu ve mühendislik ödünleşimlerini konu alan bir üniversite İKA yarışma projesi. Takım rapor aşamasına kadar ilerledi; sonraki turlara geçemedik.",
-        "ugv.ul": "<li>Ortak mekanik tasarım ve teknik dokümantasyon</li><li>Küçük bir takımda mekatronik sistem entegrasyonu</li><li>Gerçek tasarım ve takvim kısıtları altında çalışıldı</li>",
-        "bb.tag": "Sistem / Windows · kendi reposu · Ağustos 2026",
-        "bb.h3": "BiggerBrother — kendi makinen için bir trafik gözlemevi",
-        "bb.p": "Windows'ta her DNS sorgusunu ve soketi, ETW üzerinden onu oluşturan uygulamaya bağlar — üstüne tarayıcının hangi çerezleri hangi izleyicilere verdiğini gösteren bir tarayıcı-içi istek kaydedici. Yalnızca yerel: bulut yok, TLS araya girme yok, hiçbir şey makineden çıkmıyor.",
-        "bb.ul": "<li>Süreç bazlı ilişkilendirme: hangi uygulama kiminle konuştu, karşı taraf kime ait</li><li>TLS'e dokunmadan sayfa içi çerez/izleyici yakalama</li><li>Süreç bazlı kapatma anahtarı — Cut veya Choke ile bir uygulamanın canlı TCP bağlantılarını düşürür</li>",
-        "bb.link": "GitHub'daki repoyu gör →",
-        "off.eyebrow": "Deneyler ve yan projeler",
-        "off.h2": "Merak için yapıldı — yukarıdaki makine mühendisliği hattının parçası değil.",
-        "ih.tag": "Veri hikâyesi · havacılık lojistiği · Ağustos 2026",
-        "ih.h3": "IST'in lojistiği — dünyanın 8. en yoğun havalimanı",
-        "ih.p": "84,5 milyon yolcu, 327 destinasyon ve terk edilmiş kömür ocaklarının üstüne serilmiş bir terminal. İstanbul dünyanın 8. en yoğun havalimanını nasıl kurdu — ihale, arazi, 29 saatlik taşınma, metro — ve sahanın 2017'den 2025'e uydu zaman atlaması.",
-        "ih.ul": "<li>2025'te 84,5 milyon yolcu — dünyanın 8. en yoğun havalimanı</li><li>327 destinasyon, 82.733 bağlantı — bağlantıda dünya birincisi</li><li>7.600 hektar eski linyit ocağı ve 70 taş ocağı gölü</li>",
-        "ih.link": "Hikâyeyi oku →",
-        "cc.tag": "Web / Etkileşimli · saygı · Temmuz 2026",
-        "cc.h3": "Mach 2 — Concorde'a saygı",
-        "cc.p": "Ticari olmayan bir hayran çalışması: süpersonik yolcu uçağının yaşam öyküsü, bir gün bir halefi olup olmayacağına dürüst bir bakış ve en ünlü uçuşlarının etkileşimli bir 3B küresi.",
-        "cc.ul": "<li>1962'deki antlaşmadan 2003'teki emekliliğe uzanan zaman çizelgesi</li><li>Etkileşimli küre — bir uçuş seç, büyük daire rotasını kendin uç</li><li>Boom Overture ve XB-1 üzerine dengeli bir değerlendirme</li>",
-        "cc.link": "Anma sayfasını aç →",
-        "pn.tag": "Web / Etkileşimli · sırf sevdiğim için · Ağustos 2026",
-        "pn.h3": "Web Piyano — düşen notalar, gerçek MIDI dosyaları",
-        "pn.p": "Elinle, gerçek bir MIDI klavyeyle ya da bilgisayarından yüklediğin bir .mid dosyasıyla çalabileceğin bir tarayıcı piyanosu — tuşlar vurulduğunda ışıyor, üstten düşen renkli çubuklar da piyano pratik oyunlarındaki gibi sırada ne olduğunu gösteriyor.",
-        "pn.ul": "<li>Tam 88 tuş, sentetik bip değil örneklenmiş piyano sesi</li><li>Fare, bilgisayar klavyesi ya da takılı bir MIDI kontrolcü</li><li>Gerçek hikâyeleriyle altı eser, tek tıkla çal — ya da kendi .mid dosyanı yükle</li>",
-        "pn.link": "Piyanoyu aç →",
-        "contact.eyebrow": "İletişim",
-        "contact.h2": "Mühendislik konuşmak ister misin?",
-        "contact.p": "Projeler, araştırma fikirleri, teknik iş birliği ya da bir fırsat — e-posta, GitHub ya da formla ulaş.",
-        "contact.name": "İsim",
-        "contact.email": "E-posta",
-        "contact.message": "Mesaj",
-        "contact.attach": "Ek (isteğe bağlı)",
-        "contact.send": "Mesaj gönder",
-        "contact.sending": "Gönderiliyor…",
-        "contact.success": "Gönderildi — en kısa sürede dönüş yapacağım.",
-        "contact.error": "Bir şeyler ters gitti — bunun yerine doğrudan e-posta gönder."
-      };
-    </script>
   </body>
 </html>

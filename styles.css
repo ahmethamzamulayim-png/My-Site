@@ -957,6 +957,8 @@ textarea:focus-visible,
 }
 
 .lang-toggle {
+  display: inline-flex;
+  align-items: center;
   min-height: 34px;
   padding: 4px 14px;
   border-radius: 999px;
@@ -967,6 +969,7 @@ textarea:focus-visible,
   font-size: 0.85rem;
   font-weight: 700;
   letter-spacing: 0.04em;
+  text-decoration: none;
   cursor: pointer;
 }
 

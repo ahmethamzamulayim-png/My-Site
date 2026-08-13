@@ -70,15 +70,11 @@ if (contactForm) {
   });
 }
 
-// Homepage hero tiles: swap the static blurb for a live number once it
-// arrives. Feeds through the existing i18n dict/apply so language toggling
-// still works after the live text lands, instead of just setting textContent.
-function setLiveTileText(id, i18nKey, en, tr) {
+// Homepage hero tiles: swap the static blurb for a live number once it arrives.
+function setLiveTileText(id, en, tr) {
   const el = document.getElementById(id);
   if (!el) return;
-  el.dataset.orig = en;
-  (window.I18N || (window.I18N = {}))[i18nKey] = tr;
-  if (window.setLang && window.getLang) window.setLang(window.getLang());
+  el.textContent = window.t ? window.t(en, tr) : en;
 }
 
 const globeNote = document.getElementById("live-globe-note");
@@ -93,7 +89,6 @@ if (globeNote) {
       if (count > 0) {
         setLiveTileText(
           "live-globe-note",
-          "tile.globe.note",
           `${count} flights on a 3D globe, live`,
           `3B kürede ${count} uçuş, canlı`
         );
@@ -104,13 +99,13 @@ if (globeNote) {
 
 const istNote = document.getElementById("live-ist-note");
 if (istNote) {
-  fetch("summary.json", { cache: "no-store" })
+  fetch("/summary.json", { cache: "no-store" })
     .then((res) => (res.ok ? res.json() : null))
     .then((data) => {
       if (!data || !data.delay_known) return;
       const nEN = data.delay_known.toLocaleString("en-US");
       const nTR = data.delay_known.toLocaleString("tr-TR");
-      setLiveTileText("live-ist-note", "tile.ist.note", `${nEN} flown departures`, `${nTR} uçan kalkış`);
+      setLiveTileText("live-ist-note", `${nEN} flown departures`, `${nTR} uçan kalkış`);
     })
     .catch(() => {});
 }

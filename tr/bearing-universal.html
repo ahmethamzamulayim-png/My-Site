@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Evrensel Rulman RUL | Ahmet Hamza Mülayim</title>
+    <meta name="description" content="Bir rulman prognostik modeli hiç görmediği bir düzeneğe taşınır mı? IMS, XJTU-SY ve FEMTO üzerinde veri setleri arası bir kalan-faydalı-ömür çalışması — 36 bozulana-kadar-çalıştırılmış rulman, dürüst sayılar." />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e81932'/%3E%3Ctext x='32' y='45' font-size='38' font-family='sans-serif' font-weight='700' text-anchor='middle' fill='%23fff'%3EA%3C/text%3E%3C/svg%3E" />
+    <link rel="canonical" href="https://ahmethmzamlym.engineer/tr/bearing-universal" />
+    <link rel="alternate" hreflang="en" href="https://ahmethmzamlym.engineer/bearing-universal" />
+    <link rel="alternate" hreflang="tr" href="https://ahmethmzamlym.engineer/tr/bearing-universal" />
+    <link rel="alternate" hreflang="x-default" href="https://ahmethmzamlym.engineer/bearing-universal" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Evrensel Rulman RUL | Ahmet Hamza Mülayim" />
+    <meta property="og:description" content="Bir rulman prognostik modeli hiç görmediği bir düzeneğe taşınır mı? IMS, XJTU-SY ve FEMTO üzerinde veri setleri arası bir kalan-faydalı-ömür çalışması — 36 bozulana-kadar-çalıştırılmış rulman, dürüst sayılar." />
+    <meta property="og:url" content="https://ahmethmzamlym.engineer/tr/bearing-universal" />
+    <meta property="og:image" content="https://ahmethmzamlym.engineer/assets/img/og/bearing-universal.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Evrensel Rulman RUL | Ahmet Hamza Mülayim" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://ahmethmzamlym.engineer/assets/img/og/bearing-universal.jpg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/i18n.js"></script>
+    <script defer src="/script.js"></script>
+    <style>
+      /* page-local additions on top of the site tokens — plum is this project's color */
+      .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+        margin-top: 26px;
+      }
+      .stat {
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 20px 22px;
+      }
+      .stat strong {
+        display: block;
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.9rem;
+        letter-spacing: -0.03em;
+        color: var(--plum);
+      }
+      .stat span { color: var(--muted); font-size: 0.88rem; }
+      .step-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 16px;
+        margin-top: 26px;
+      }
+      .step {
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 22px;
+      }
+      .step h3 {
+        font-family: "Space Grotesk", sans-serif;
+        letter-spacing: -0.03em;
+        margin: 0 0 10px;
+      }
+      .step h3 small {
+        display: block;
+        color: var(--plum);
+        font-size: 0.8rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+      }
+      .step p { margin: 0; color: var(--muted); font-size: 0.95rem; line-height: 1.6; }
+      .fig {
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 22px;
+        margin-top: 22px;
+      }
+      .fig h3 {
+        font-family: "Space Grotesk", sans-serif;
+        letter-spacing: -0.03em;
+        margin: 0 0 14px;
+      }
+      .fig img {
+        width: 100%;
+        height: auto;
+        border-radius: 12px;
+        border: 1px solid var(--line);
+      }
+      .fig p { color: var(--muted); font-size: 0.92rem; line-height: 1.6; margin: 14px 0 0; }
+      .rtable {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 14px;
+        font-size: 0.92rem;
+      }
+      .rtable th, .rtable td {
+        text-align: left;
+        padding: 8px 10px;
+        border-bottom: 1px solid var(--line);
+      }
+      .rtable th { color: var(--plum); font-family: "Space Grotesk", sans-serif; font-weight: 600; }
+      .rtable td { color: var(--muted); }
+      .limits {
+        margin: 26px 0 0;
+        padding-left: 20px;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+    </style>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="53acc321-a620-42d2-abf8-92a0c2813e8b"></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Evrensel Rulman RUL",
+        "description": "Bir rulman prognostik modeli hiç görmediği bir düzeneğe taşınır mı? IMS, XJTU-SY ve FEMTO üzerinde veri setleri arası bir kalan-faydalı-ömür çalışması — 36 bozulana-kadar-çalıştırılmış rulman, dürüst sayılar.",
+        "url": "https://ahmethmzamlym.engineer/tr/bearing-universal",
+        "image": "https://ahmethmzamlym.engineer/assets/img/og/bearing-universal.jpg",
+        "datePublished": "2026-07-20",
+        "dateModified": "2026-07-31",
+        "author": {
+          "@type": "Person",
+          "name": "Ahmet Hamza Mülayim",
+          "url": "https://ahmethmzamlym.engineer/"
+        },
+        "inLanguage": "tr"
+      }
+    </script>
+  </head>
+  <body data-cursor="bearing">
+    <div class="noise"></div>
+    <header class="site-header">
+      <a class="brand" href="/tr/">
+        <span class="brand-mark">A</span>
+        <span>
+          <strong>Ahmet Hamza Mülayim</strong>
+          <small>Marmara University</small>
+        </span>
+      </a>
+      <nav class="site-nav">
+        <a href="/tr/#projects">← Portföy</a>
+        <a href="/tr/bearing">Bölüm 1: IMS çalışması</a>
+        <a class="lang-toggle" href="/bearing-universal">EN</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Veri / ML projesi · Bölüm 2 · Temmuz 2026</p>
+          <h1>Bir rulman modeli hiç görmediği bir düzeneğe taşınır mı?</h1>
+          <p class="hero-text">Bölüm 1, tek bir test düzeneğinde arıza tahmin etmeyi öğretti. Sıradaki soru: bunların ne kadarı hiç görmediği bir makineyle karşılaşınca ayakta kalır? Bu, kendi arabanın tuhaf ses çıkarmaya başladığını hemen fark etmekle bir yabancının arabasına teşhis koymak arasındaki fark. Her düzenek titreşimi farklı renklendirir ve ömürler 100 kat saçılır — 37 dakikadan 45 güne. Bu çalışma üç herkese açık bozulana-kadar-çalıştırma veri setini (NASA IMS makaralı, XJTU-SY ve FEMTO bilyeli rulmanlar, 36 ömür) birleştiriyor, kalan ömrü yakıt göstergesi tarzı bir ömür oranına çeviriyor ve genelleme açığını doğrudan ölçüyor: yalnızca rulman değil, düzeneğin tamamı eğitimden saklanınca model ne kadar kötüleşiyor?</p>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat"><strong>36</strong><span>bozulana kadar çalıştırılan rulman; 3 düzenek, makaralı + bilyeli, ömürler 37 dk – 45 gün</span></div>
+          <div class="stat"><strong>≈ 0</strong><span>genelleme açığı: medyan ömür-oranı hatası 0,188 (rulman görülmemiş) vs 0,169 (düzeneğin tamamı görülmemiş), eşit ön işleme</span></div>
+          <div class="stat"><strong>21.7×</strong><span>fizik testi geçildi: belgelenmiş dış bilezik arızasında BPFO zarf bandı parlıyor</span></div>
+          <div class="stat"><strong>−52%</strong><span>en zor düzeneğin geç evre hatası, sebep doğru teşhis edildikten sonra: 0,318 → 0,153</span></div>
+          <div class="stat"><strong>0.35</strong><span>en kötü tek rulman hatası — medyanın sakladığı sayı</span></div>
+        </div>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Yöntem</p>
+          <h2>Üç düzeneğe aynı dili konuştur, sonra birini sakla.</h2>
+        </div>
+        <div class="step-grid">
+          <article class="step">
+            <h3><small>Adım 1 · Tek tablo</small>Saat değil, ömür oranı</h3>
+            <p>"X saat kaldı" düzenekler arasında taşınmaz — bir rulman 45 gün, diğeri 37 dakika yaşar; mutlak saatler çoğunlukla hangi veri setinde olduğunu ele verir. Bunun yerine hedef bir yakıt göstergesi: kalan faydalı ömür (RUL), toplam ömrün oranı olarak, 1 → 0. Ayrıca her öznitelik o rulmanın kendi sağlıklı taban çizgisine bölünüyor; böylece 2,0 her makinede "sağlıklı uğultusunun iki katı" demek. Üç veri seti tek ortak tabloda buluşuyor; ileride dördüncü bir düzenek tak-çalıştır bir yükleyici.</p>
+          </article>
+          <article class="step">
+            <h3><small>Adım 2 · Fizik öznitelikleri</small>Geometriden zarf spektrumu</h3>
+            <p>Kusur davul çalar. Bilye çatlağın üzerinden her geçtiğinde küçük bir darbe üretir ve bu davulun temposu (BPFO, BPFI, BSF) doğrudan teknik resimden hesaplanır — dış bilezik, iç bilezik ve makara hasarının hangi ritmi tutturacağını geometri söyler. Zarf spektrumu öznitelikleri tam da bu ritimleri dinler. Geometriden geldikleri, herhangi bir düzeneğe ait olmadıkları için taşınma ihtimali en yüksek öznitelikler bunlar — ve güvenilmeden önce bilinen bir arızada kanıtlandılar.</p>
+          </article>
+          <article class="step">
+            <h3><small>Adım 3 · Dürüst etiketler</small>Yalnızca başlangıçtan sonra eğit</h3>
+            <p>Sağlıklı bir rulmanın uğultusu ne zaman arızalanacağı hakkında hiçbir şey söylemez — arızaya yol açacak çatlak henüz ortada yok. Bu yüzden model bir falcı değil, onkolog: Bölüm 1'in 6σ alarmı (titreşimin rulmanın kendi sağlıklı bandından çıkması) dosyanın ne zaman açılacağına karar veriyor; rastgele orman yalnızca bu başlangıçtan sonra eğitiliyor ve tahmin ediyor.</p>
+          </article>
+          <article class="step">
+            <h3><small>Adım 4 · Sınav</small>LOBO vs LODO</h3>
+            <p>İki sınav. Bir-rulmanı-dışarıda-bırak (LOBO): model bu düzeneğin kardeşlerini görmüş, yalnızca bu rulmanı görmemiş — tanıdık bir modelin yeni bir arabasına teşhis koymak gibi. Bir-veri-setini-dışarıda-bırak (LODO): düzeneğin tamamı bir yabancının arabası. İki notun farkı genelleme açığı — bu çalışmanın ölçmek için var olduğu sayı.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Sonuçlar</p>
+          <h2>Açık küçük. Nedenleri ilginç.</h2>
+          <p class="hero-text">Bu çalışmanın ortaya koyduğu altı şey, baştan ve açıkça. Her biri aşağıda anlatılan düzeltmelerden sağ çıktı; iki bulgu revize edildi ve burada alıntılanan, revize edilmiş olanı.</p>
+        </div>
+
+        <ul class="limits"><li><strong>Hiç görmediği bir düzenek neredeyse hiçbir şeye mal olmuyor.</strong> Tek bir rulmanı değil, düzeneğin tamamını saklamak medyan hatayı 0,188'den 0,169'a taşıyor. Modelin hasar hakkında öğrendiği şey, düzeneğe özgü bir defter tutma değil.</li><li><strong>Makaralı-bilyeli duvarı diye bir şey yok.</strong> Yalnızca bilyeli rulmanlarla eğitilen modeller makaralı rulmanları 0,168 ile evreledi — orta halli, en kötü değil. Ayırıcı çizgi rulman tipi değil, kayıt kalitesiydi.</li><li><strong>Aykırı duran düzenek aslında yardım ediyormuş.</strong> Makaralı veriyi çıkarmak bilyeli tahminleri <em>kötüleştiriyor</em> (0,190 → 0,200). Benzemeyen donanımı bir araya koymak işe yaradı; bu varsayılan sonuç değildir — ters durumun adı var, negatif transfer, ve yaşanmadı.</li><li><strong>Fizik, güvenilmeden önce doğrulandı.</strong> Dış bilezik kusurundan öldüğü belgelenmiş bir rulmanda, hesaplanan dış bilezik bandı test boyunca 21,7 kat yükseliyor; iç bilezik ve makara bantları sessiz kalıyor. Bu geçilene kadar modele hiçbir zarf özniteliği girmedi.</li><li><strong>Sinsice kopya çekmiyor.</strong> Burada zeki görünmenin en kolay yolu kesitin hangi düzenekten geldiğini tanımaktır ve en bariz ipucu, düzenekler arasında 100 kat farklı olan duvar-saati bozulma hızıdır. O öznitelikler modelin ilgisinin %0,3'ünü taşıyor.</li><li><strong>En zor düzenek, sebep bulununca iki kat iyileşti.</strong> FEMTO'nun geç evre hatası 0,318 → 0,153 düştü — ve çözüm, bariz olanın tam tersiydi; düzeltme bölümünün konusu da bu.</li></ul>
+
+        <div class="fig">
+          <h3>Önce fizik özniteliğinin çalıştığını kanıtla</h3>
+          <img src="/bearing-universal/envelope_validation_ims_test2.png" alt="Envelope spectrum of IMS test 2 bearing 1 near failure showing sharp peaks at exactly BPFO ×1, ×2, ×3, and the BPFO band energy trend rising 21.7× over the test" loading="lazy" />
+          <p>Bir birim testi, ama fizik için. IMS test 2 rulman 1, belgelenmiş bir dış bilezik kusuruyla arızalandı; öyleyse zarf spektrumu hesaplanan dış bilezik temposunda (BPFO, 236 Hz) ve harmoniklerinde davul çalmalı — ve çalıyor, hem de keskin biçimde; iç bilezik ve makara ritimleri sessiz kalıyor. Davulun enerjisi test boyunca 21,7 kat büyüyor. Zarf öznitelikleri modele ancak bu kontrolden sonra girdi.</p>
+        </div>
+
+        <div class="fig">
+          <h3>Ana sonuç: rulman görülmemiş vs düzeneğin tamamı görülmemiş</h3>
+          <img src="/bearing-universal/fig3_lobo_vs_lodo.png" alt="Bar chart comparing LOBO and LODO median life-fraction error per dataset; FEMTO is hardest in both, IMS shows only a modest gap" loading="lazy" />
+          <p>Ana sonuç: düzeneğin tamamını saklamak medyan hatayı neredeyse kımıldatmıyor (0,188 → 0,169). İki sürpriz. Beklediğimiz makaralı-bilyeli duvarı hiç çıkmadı — yalnızca bilyeli rulmanlarla eğitilen modeller makaralı düzeneği gayet idare etti (0,168). Ve iki yönde de en zor veri seti FEMTO; sebebi sıradan: kesitleri 0,1 saniye sürüyor, yani her teşhis parmak şıklatması kadar bir sesten konuyor. Baskın zorluk olarak kayıt kalitesi, rulman tipi fiziğini yendi.</p>
+          <table class="rtable">
+            <thead><tr><th>Protokol</th><th>Medyan hata</th><th>Geç evre (Q4)</th><th>En kötü rulman</th></tr></thead>
+            <tbody>
+              <tr><td>LOBO — rulman görülmemiş</td><td>0.188</td><td>0.121</td><td>0.347</td></tr>
+              <tr><td>LODO — IMS (makaralı) dışarıda</td><td>0.168</td><td>0.160</td><td>0.212</td></tr>
+              <tr><td>LODO — XJTU dışarıda</td><td>0.106</td><td>0.054</td><td>0.370</td></tr>
+              <tr><td>LODO — FEMTO dışarıda</td><td>0.249</td><td>0.318</td><td>0.434</td></tr>
+            </tbody>
+          </table>
+          <p>Buradaki iki satır bilerek aynı ön işlemeyi paylaşıyor. Yardım almış bir modeli almamış bir modelle kıyaslamak genellemeyi değil, o yardımı ölçerdi; bu yüzden açık eşit koşullarda veriliyor. O yardım var ve FEMTO satırını hatırı sayılır biçimde iyileştiriyor: geç evre hatası 0,318 → 0,153. Bu tablodan dışarıda tutulup, sayfanın FEMTO'nun neden en zor olduğuna dair ilk verdiği ve yalnızca yarısı doğru çıkan açıklamayla birlikte aşağıdaki <a href="#correction">Düzeltme ve inceleme</a> bölümünde ele alınıyor.</p>
+        </div>
+
+        <div class="fig">
+          <h3>En iyi, medyan — ve bilerek gösterilen en kötü</h3>
+          <img src="/bearing-universal/fig2_trajectories.png" alt="Three predicted-versus-true life fraction trajectories with 5th to 95th percentile uncertainty bands: an accurate best case, a noisy FEMTO median case, and a failed worst case where the model calls the bearing nearly dead from onset" loading="lazy" />
+          <p>Tahmin vs gerçek ömür oranı; gölgeli bant, ormanın 300 ağacının %90'ının nereye düştüğünü gösteriyor. Gördüklerini iki şey açıklıyor. Birincisi, modelin hafızası yok — her kesit taze bir teşhis alıyor; aralarda hafızası silinen, tek bir kan tahlilinden çalışan bir doktor gibi. Titreme bundan. İkincisi, ömrün ortası gerçekten belirsizdir ("biraz hasta", ömrün %30'unda da %50'sinde de %70'inde de aynı görünür); sonu ise şaşmaz — bu yüzden bant ortada geniş, sonda kapanıyor. En iyi durum kısmen kolay bir sınav: alarmı ömrün %93'ünde çaldı, geriye izlenecek yalnızca son, apaçık bölüm kaldı. En kötü durum ise dürüst olan ve tehlikeli yönde hata yapıyor: alarm geç, ömrün %88'inde çalıyor ve model, geriye ancak onda biri kalmışken rulmanı ömrünün %40–70'i duruyormuş gibi okuyor. Gerçeğe ancak son dakikalarda oturuyor. Canını yakan, <em>iyimser</em> kaçırmadır — kötümser bir model sizi sağlam bir rulmanı boşuna kontrol etmeye yollar, bu model ise çalışmaya devam edin derdi. Yine de fazla anlam yüklememeli: ikinci en kötü rulman tam <em>tersi</em> yönde hata yapıyor; ömrünün büyük kısmı dururken sıfıra yapışık gidiyor ve ikisi arasında 0,004 var. Modelin sistematik bir hata yönü yok — iki türlü şaşırma biçimi var ve hangisinin tabloda başa güreçeceği neredeyse yazı tura. Medyanlar böyle rulmanları saklar; bu rapor saklamıyor.</p>
+        </div>
+
+        <div class="fig">
+          <h3>Eğri ekstrapolasyonu yalnızca kolay sorulara cevap veriyor</h3>
+          <img src="/bearing-universal/fig4_error_vs_stage.png" alt="Error versus post-onset life stage for the random forest, exponential extrapolation, and a fusion; forest error is U-shaped, extrapolation appears flat but only answers on a minority of snapshots" loading="lazy" />
+          <p>Literatür, eğri ekstrapolasyonunun erken dönemde çuvallayıp geç dönemde parladığını söyler; yani popülasyon modeli erken kazanmalı, sonra bayrağı devretmeli. Verimiz bu temiz hikâyeyi reddetti — çünkü ekstrapolatör yalnızca emin olduğu sorulara cevap veren bir öğrenci: sadece hasar gerçekten üstel büyürken tahmin üretiyor (erken kesitlerin %17–33'ü), dolayısıyla gösterişli erken notu kendi seçtiği kolay bir alt kümede veriliyor. Orman her soruya cevap veriyor; hatası U şeklinde (en kötüsü başlangıçtan hemen sonra). 36 ömürle, kesişme ilan etmek yerine eğrileri ve kapsama oranını raporluyoruz.</p>
+        </div>
+
+        <div class="fig">
+          <h3>Sızıntı kontrolü: veri seti kimliği toplam önemin %0,3'ü</h3>
+          <img src="/bearing-universal/fig6_feature_importance.png" alt="Top 20 feature importances led by smoothed RMS and kurtosis with envelope band features spread throughout; absolute-time rate features carry 0.3 percent" loading="lazy" />
+          <p>Kopya kontrolü. Burada zeki görünmenin en kolay yolu, kesitin hangi veri setinden geldiğini tanımak — sınav kâğıtlarını el yazısından tanıyarak notlamak gibi — ve en bariz parmak izi, düzenekler arasında 100 kat farklı olan duvar-saati bozulma hızı. O hız öznitelikleri toplam önemin %0,3'ünü taşıyor: orman yumuşatılmış RMS'e (%27), yumuşatılmış basıklığa ve geometriden türetilen zarf bantlarının geniş bir yelpazesine yaslanıyor. Veri seti kimliği değil, hasar sinyali. İki ablasyon denetimi tamamlıyor: makaralı rulman verisini çıkarmak bilyeli tahminleri <em>kötüleştiriyor</em> (0,190 → 0,200 — aykırı düzenek aslında yardım ediyormuş) ve kafes arızalı rulmanları dışlamak hiçbir şeyi değiştirmiyor (0,190'lık temele karşı 0,188).</p>
+        </div>
+      </section>
+
+      <section class="section" id="correction" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Düzeltme ve inceleme</p>
+          <h2>İkinci bir bakış en zor düzeneğin geç dönem hatasını yarıya indirdi — ve nedenine dair açıklamamı çürüttü.</h2>
+          <p class="hero-text">Yukarıdaki sonuçlar yayımlandıktan sonra yeniden incelendi. İki şey çıktı. FEMTO rulmanının ölçüleriyle ilgili bir çekince kapandı ve zararsız olduğu görüldü. Bir de bu sayfanın FEMTO'yu en zor düzenek yapan şey için verdiği açıklama — "kayıtları çok kısa" — yalnızca yarı doğruydu ve bu yarım doğru, düzeltilebilir bir kusuru gizliyordu. İkisi de yukarıdaki tablolara sessizce işlenmek yerine burada kayda geçiriliyor; çünkü bir sayının nasıl kımıldadığı, çoğu zaman nereye oturduğundan daha öğreticidir.</p>
+        </div>
+
+        <div class="step-grid">
+          <article class="step">
+            <h3><small>Tanım</small>Ömür-oranı hatası</h3>
+            <p>Model saat tahmin etmiyor; rulmanın toplam ömrünün ne kadarlık bir <em>oranının</em> önünde durduğunu tahmin ediyor. 0,318'lik bir hata, tahminin o rulmanın tüm ömrünün yaklaşık üçte biri kadar şaştığı anlamına gelir — üç saat yaşayan bir rulmanda kabaca bir saat. Küçük olması iyidir; 0 kusursuz olurdu.</p>
+          </article>
+          <article class="step">
+            <h3><small>Tanım</small>Geç evre (Q4)</h3>
+            <p>Rulmanın çöküşünün son çeyreği — hasarın fark edildiği andan arızalandığı ana kadarki sürecin son bölümü. Asıl önemli sayı budur; çünkü rulman hâlâ neredeyse sağlıklıyken yapılan tahmin her yöntem için tahminden ibarettir, oysa arızadan kısa süre önce yapılan tahmin gerçekten bakım planlayacağınız şeydir.</p>
+          </article>
+          <article class="step">
+            <h3><small>Tanım</small>Eğitim verisi</h3>
+            <p>Modelin öğrendiği çözülmüş örnekler: cevapları yanına iliştirilmiş, çoktan ölmüş başka rulmanlar. Bir asistanın hasta görmeden önce çalıştığı ders kitabı vakaları gibi düşünün.</p>
+          </article>
+          <article class="step">
+            <h3><small>Tanım</small>Test verisi</h3>
+            <p>Değerlendirilen rulmandan gelen ölçümler — eğitimden tamamen dışarıda tutulmuş bir düzeneğe ait, yani modelin ne kendisini ne de kardeşlerini gördüğü bir rulman. Ders kitabı değil, hastanın kendisi.</p>
+          </article>
+        </div>
+
+        <div class="fig">
+          <h3>Güvenerek aldığımız ölçü — kontrol edildi, zararsız çıktı</h3>
+          <p>Bu çalışmanın dinlediği arıza ritimleri rulmanın iç ölçülerinden hesaplanıyor; dolayısıyla yanlış bir ölçü, yanlış frekansı dinlemek demek. FEMTO'nun NSK 6804 değeri üreticiden değil, ikincil literatürden gelmişti. Gerçek veri sayfasını çekmek meseleyi kapattı: 13 bilya ve 3,5 mm bilya çapı doğruymuş, ama bilya merkezleri varsayılan 25,6 mm'lik değil, 26,0 mm'lik bir daire üzerinde duruyor.</p>
+          <table class="rtable">
+            <thead><tr><th>Büyüklük</th><th>Yayımlanan</th><th>Veri sayfası</th><th>Sonucu</th></tr></thead>
+            <tbody>
+              <tr><td>Bilya merkez daire çapı</td><td>25.6 mm</td><td>26.0 mm</td><td>varsayım → doğrulandı</td></tr>
+              <tr><td>Bilya dönme frekansı</td><td>%1,6 düşük</td><td>düzeltildi</td><td>27 banttan 6'sı bir adım kayıyor</td></tr>
+              <tr><td>Bu sayfadaki her sonuç</td><td>—</td><td>—</td><td>değişmedi</td></tr>
+            </tbody>
+          </table>
+          <p>Tüm FEMTO veri setini ham sinyalden yeniden hesaplamak yalnızca bilya dönme özniteliklerini oynattı, IMS ve XJTU'yu bit düzeyinde aynı bıraktı ve hiçbir sonucu değiştirmedi. Bu sıkıcı bir sonuç ve yine de yayımlanmayı hak ediyor: "kontrol ettik, fark etmedi" ile "hiç kontrol etmedik" aynı cümle değil.</p>
+        </div>
+
+        <div class="fig">
+          <h3>Yanlış nedeni kovalamak — ve doğrusunu bulunca gelen yarılanma</h3>
+          <img src="/bearing-universal/fig7_smoothing.png" alt="Two bar charts. Left: late-stage error per held-out rig, as published versus after correction — FEMTO falls from 0.318 to 0.153 while IMS and XJTU rise slightly. Right: FEMTO late-stage error under four conditions — steadying neither 0.318, test rows only 0.332, training rows only 0.095, both 0.094." loading="lazy" />
+          <p>Bu sayfa FEMTO'nun zorluğunu parmak şıklatması kadar süren kayıtlarına bağlamıştı. Bundan çıkan bariz çare şu: gelen ölçümleri değerlendirmeden önce sabitle — her birine tepki vermek yerine son beşinin ortancasını al. Bu doğrudan test edildi; aynı işlem bir de ders kitabı vakalarına uygulandı. Sonuç sezgiyi tersine çeviriyor.</p>
+          <table class="rtable">
+            <thead><tr><th>Neye sabitleme uygulandı</th><th>Geç evre hatası</th><th>Hüküm</th></tr></thead>
+            <tbody>
+              <tr><td>Hiçbir şeye — ilk yayımlandığı hali</td><td>0.318</td><td>temel</td></tr>
+              <tr><td>Gelen FEMTO ölçümlerine</td><td>0.332</td><td>biraz <em>daha kötü</em></td></tr>
+              <tr><td>Eğitim örneklerine</td><td>0.095</td><td>%70 daha iyi</td></tr>
+              <tr><td>İkisine birden</td><td>0.094</td><td>tek başına eğitimden iyi değil</td></tr>
+            </tbody>
+          </table>
+          <p>Hastanın dosyasını temizlemek hiçbir işe yaramıyor. Ders kitabını temizlemek neredeyse her şeyi düzeltiyor. Mekanizma şu: çözülmüş örnekler zıplıyorsa model asıl çöküşü değil, o zıplamayı öğreniyor — o düzeneklere özgü ölçüm saçılmasına uyum sağlıyor. Örnekleri sabitleyin, arızanın gerçek şeklini öğreniyor; öğrendikten sonra da yeni ve gürültülü bir sinyali hiçbir temizlik olmadan gayet iyi okuyor. Birine bulanık ders kitabı fotoğraflarıyla eğitim verirseniz bulanıklığı öğrenir; sonradan hastanın röntgenini netleştirmek bunu geri almaz.</p>
+          <p>En çok FEMTO'yu vurmasının gösterişsiz bir sebebi var. FEMTO'yu dışarıda bırakmak, öğrenilecek en küçük örnek yığınını geriye bırakıyor — 4.610 satır; diğer iki dönüşümde 14.220 ve 15.536. Örneğin az olduğu durum, tam da modelin gürültüyü ezberlediği durumdur; dolayısıyla örnekleri temizlemek en çok orada işe yarıyor. Bu, gürültü giderme değil düzenlileştirme — ve şu anlama geliyor: ilk teşhis olan "FEMTO zor, çünkü kayıtları kötü" bir belirtiyi tarif ediyormuş. Kayıtlar gerçekten daha kötü. Ama cezanın büyük kısmı mikrofondan değil, modelden geliyormuş.</p>
+          <p>Bir itiraf daha; çünkü bu, özete hangi sayının gireceğini değiştiriyor. O 0,095, her seçeneğin dışarıda bırakılan düzeneğe karşı nasıl not aldığını <em>gördükten sonra</em> seçilen bir sabitleme miktarıyla elde edildi — yani gizlice bakarak. Bu, tartıyı birazdan tartacağınız cismin kendisiyle kalibre etmenin okumayı güzelleştirmesi gibi sonucu güzelleştirir. Kurallara uygun biçimde yeniden yapıldığında — miktar yalnızca modelin eğitildiği düzeneklere bakılarak seçilip, dışarıdaki düzeneğe en sonda bir kez dokunulduğunda — geç evre hatası <strong>0,153</strong>'e oturuyor. 0,318'e karşı yine %52'lik bir azalma ve alıntılanmayı hak eden sayı bu. 0,153 ile 0,095 arasındaki farkın da söylenmeye değer bir sebebi var: ayar, görebildiğiniz düzeneklerden seçilmek zorunda ve onlar da tam olarak bu ayara ihtiyacı olmayanlar. Hiç tanışmadığınız bir makine için gürültü ayarı yapamazsınız.</p>
+        </div>
+
+        <div class="fig">
+          <h3>Neyi iyileştirdi</h3>
+          <img src="/bearing-universal/fig9_fix_visible.png" alt="Three panels of FEMTO bearings judged by a model that never saw their rig. A grey dashed line taught from jittery examples sits near 0.6 across the middle and right panels while true life falls to zero; a blue line taught from steadied examples tracks the truth far more closely." loading="lazy" />
+          <p>Aynı düzeltme, gerçekten işlediği yerde gösteriliyor. Buradaki her eğri, düzeneğini hiç görmemiş bir model tarafından değerlendirilen bir FEMTO rulmanı. Test sinyali iki çizgide de <em>aynı</em> — ham, dokunulmamış — dolayısıyla aralarındaki tek fark, modelin neyden öğrendiği. Gri, zıplayan örneklerden öğrendi; mavi, sabitlenmiş örneklerden. Ortadaki ve sağdaki panellerde gri çizgiye bakın: 0,6 civarına park edip orada kalıyor; altında rulman ölürken sakin sakin ömrün büyük kısmının durduğunu bildiriyor. Mavi ise gerçeği aşağı doğru takip ediyor. On yedi FEMTO rulmanının tamamında medyan hata 0,249 → 0,214 düşüyor, geç evre hatası yarıya iniyor: 0,318 → 0,153; tek başına en çok kazanan 0,409 → 0,107.</p>
+          <p>Sağdaki panel bilerek orada; çünkü medyan çok şey saklar: <strong>17 rulmanın 7'si kötüleşti</strong>, biri fena halde (0,103 → 0,307). Gösterilen en kötü durum, kötüleşenlerden biri — 0,266 → 0,338 — ve ona ne olduğu görülüyor: mavi artık tüm koşu boyunca sıfıra yapışıyor, yani rulmanı daha baştan ölmüş sayıyor. Dolayısıyla dürüst tarif şu değil: “model iyileşti”; şu: “model bir hatayı başka bir hatayla takas etti”. Eskiden balıklama iyimserdi; şimdi zaman zaman fazla kötümser. Gerçekten aksiyon alacağınız bir makinede bu, bariz biçimde daha küçük bir hata değil, farklı bir hatadır. Medyan iyileşti, hataların karakteri değişti ve özete ikisi de girmeli.</p>
+        </div>
+
+        <div class="fig">
+          <h3>Ne düzelmedi</h3>
+          <img src="/bearing-universal/fig8_before_after.png" alt="Six trajectory panels in two rows: best, median and worst bearing as published on top, after correction below. Best and median are the same bearing in both rows with visually identical curves; only the worst slot changes hands." loading="lazy" />
+          <p>Hiçbir şeyi değiştirmemiş bir düzeltmenin en net resmi. En iyi ve medyan, iki satırda da <em>aynı rulman</em> ve eğrileri birbirinden ayırt edemiyorsunuz — ki bu tam da olması gereken: bunlar rulman-görülmemiş eğrileri ve o protokol bilerek yumuşatılmadan bırakılıyor. Yalnızca en kötü slotu el değiştiriyor, o da iki rulman dört binde bir fark ile sıra değiştirdiği için. FEMTO'nun geç evre hatasını yarıya indiren düzeltme, düzeneğin-tamamı-görülmemiş protokolünde yaşıyor ve burada görünmüyor; onu yukarıdaki grafikte görüyorsunuz.</p>
+          <p>Tüm bunlardan etkilenmeyen dört şey var ve aksini ima etmek bu işin amacını ortadan kaldırırdı. <strong>Aynı düzenekten kardeş bir rulman varken örnekleri sabitlemek hiçbir şey yapmıyor</strong> — doğrudan test edildiğinde rulman-görülmemiş sınavı 0,002 kadar oynadı, yani değişmedi; fayda yalnızca düzeneğin tamamı yabancıyken ortaya çıkıyor, ki asıl önemli durum da o. <strong>IMS az da olsa kötüleşti</strong> (0,160 → 0,187). <strong>FEMTO'nun frekans çözünürlüğü kalıcı</strong>: 0,1 saniyelik bir kaydın hiç yakalamadığı ayrıntıyı hiçbir işlem geri getirmez. Ve <strong>"arıza zamanı" hâlâ seçilmiş bir tanım</strong>, FEMTO'nun arıza tipleri hâlâ belgesiz, 36 ömür hâlâ küçük bir sayı. Dürüst özet şu: büyük hatalardan biri kabaca üçte iki oranında azaldı, bu sayfadaki diğer her şey olduğu gibi duruyor.</p>
+        </div>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Dürüst sınırlar</p>
+          <h2>Sayıları alıntılamadan önce bunları oku.</h2>
+        </div>
+        <ul class="limits"><li>"Arıza zamanı" doğanın bir gerçeği değil, bir tercih: IMS düzenek kendini durdurduğunda bitiyor; XJTU ve FEMTO ilk 20&nbsp;g tepede (XJTU'nun kendi kriteri, FEMTO'ya da uygulandı — ki FEMTO'nun arıza tanımı literatürde hakikaten tartışmalı). Her etiket bu tercihe koşullu.</li><li>Ömür <em>oranı</em> ancak rulman arızalandıktan sonra bilinir. Hataları saate çevirmek gerçek toplam ömrü kullanıyor — canlı hiçbir sistemin sahip olmadığı geriye bakış. Saat rakamları söz değil, sezgi için.</li><li>6σ alarmı kapı bekçisi: erken çaldığı yerde (XJTU rulmanları ısınırken kayıyor) neredeyse sağlıklı veri eğitime sızıyor; ömrün %95'inde çaldığı yerde ise model minicik, kolay bir sınava giriyor. Modelin yetki alanını orman değil dedektör çiziyor.</li><li><strong>Frekans çözünürlüğü, hiçbir yazılımın düzeltemediği tek şey.</strong> FEMTO'nun parmak şıklatması kadar süren 0,1&nbsp;s kesitleri frekansı ancak 10&nbsp;Hz'e kadar ayırt edebiliyor; oysa arıza ritimleri 100–170&nbsp;Hz. Pratikte arıza bantları %14–33 genişliğinde çıkıyor ve 8 komşu bandın 3–5'i fiziksel olarak üst üste biniyor — yani "farklı" sayılan birkaç öznitelik spektrumun aynı diliminden okuyor. IMS'in bir saniyelik kesitleri %2 genişlikte, hiç binişme olmayan bantlar veriyor. Ortalama almak gürültüyü iyileştirir; ama hiç kaydedilmemiş ayrıntıyı hiçbir şey geri getirmez. (Burada duran NSK&nbsp;6804 geometri çekincesi kaldırıldı — yukarıdaki düzeltmeye bakın.)</li><li>36 ömür azdır. Bu yüzden burada bilerek derin öğrenme yok (fiziği değil düzenekleri ezberlerdi — bir kapsam kararı, bir eksik değil) ve bu yüzden tek ortalamalar yerine medyanlar, IQR'ler ve en kötü durumlar raporlanıyor.</li><li>Üç düzenek de sabit, hızlandırılmış yük altında çalışıyor. Gerçek makineler hız ve yükü değiştirir; bu, sıfır hasarla bile her özniteliği oynatır. Burada bunu test eden hiçbir şey yok.</li></ul>
+      </section>
+
+      <section class="section contact" data-reveal>
+        <div>
+          <p class="eyebrow">Sırada ne var</p>
+          <h2>4. veri seti kendi düzeneğim olacak.</h2>
+          <p>Boru hattı, yeni bir veri seti tak-çalıştır bir yükleyici olsun diye kuruldu. Plan: SKF 6204 rulmanı etrafında masaüstü bir düzenek, hızlandırılmış yük altında doğal arızaya kadar çalıştırılacak. <strong>Ekilmiş kusurlardan vazgeçildi</strong> — eğeyle veya erozyonla açılan çentik imal edilmiş bir şekildir; gerçek çukurlaşma ise yüzeyin altındaki yorulma çatlağından büyür, dolayısıyla kusur ekilmiş bir rulman daha ilk turunda hasarlıdır. Bu da onu ayrılacak sağlıklı bir taban çizgisinden yoksun bırakır — oysa bu boru hattının tamamı, rulmanın kendi sağlıklı halinden ayrılmasını ölçmek üzerine kurulu. Ekilmiş kusurlar hâlâ <em>teşhis</em> yarısını kanıtlayabilir (dış bilezik davulu, geometrinin söylediği yerde beliriyor mu?), ama kalan ömür verisi ancak sağlıklı bir rulmanın gerçekten ölüşünü izlemekten çıkar.</p>
+          <p>Kayıt şartnamesi doğrudan FEMTO incelemesinin bulgusundan geliyor: <strong>20 kHz ve üzeri örnekleme ile 1–2 saniyelik kesitler</strong> — gürültüyü azaltmak için değil (o, yazılımda çözülebilir çıktı), frekans çözünürlüğü için; o çözülemiyor. Her koşunun başında sabit süreli bir sağlıklı taban kaydı alınıp işaretlenecek ve durdurma kriteri düzenek çalıştırılmadan önce yazılacak; böylece bu, dört veri seti içinde arıza zamanı bir yorum değil bir ölçüm olan tek set olacak. Önemli olan iddiayı sınamak için üç-dört doğal arıza yeter: diğer üç düzenekte eğitilmiş bir model, hiç görmediği bir düzenekteki rulmanın evresini belirleyebiliyor mu?</p>
+        </div>
+        <div class="contact-actions">
+          <a class="button primary" href="/tr/bearing">Bölüm 1'i oku: IMS çalışması</a>
+          <a class="button secondary" href="/tr/#projects">Projelere dön</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Veri: NASA IMS · XJTU-SY · FEMTO (PHM 2012) bozulana-kadar-çalıştırma veri setleri · Python, NumPy, SciPy, scikit-learn</p>
+      <p id="year"></p>
+    </footer>
+
+  </body>
+</html>

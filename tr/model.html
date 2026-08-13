@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Rötar Tahmin Modeli | Ahmet Hamza Mülayim</title>
+    <meta name="description" content="İstanbul Havalimanı için rötar tahmin modeli — kendi topladığım 63.481 uçuşluk veri seti üzerinde, referans tabloya karşı dürüstçe ölçülmüş." />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e81932'/%3E%3Ctext x='32' y='45' font-size='38' font-family='sans-serif' font-weight='700' text-anchor='middle' fill='%23fff'%3EA%3C/text%3E%3C/svg%3E" />
+    <link rel="canonical" href="https://ahmethmzamlym.engineer/tr/model" />
+    <link rel="alternate" hreflang="en" href="https://ahmethmzamlym.engineer/model" />
+    <link rel="alternate" hreflang="tr" href="https://ahmethmzamlym.engineer/tr/model" />
+    <link rel="alternate" hreflang="x-default" href="https://ahmethmzamlym.engineer/model" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Rötar Tahmin Modeli | Ahmet Hamza Mülayim" />
+    <meta property="og:description" content="İstanbul Havalimanı için rötar tahmin modeli — kendi topladığım 63.481 uçuşluk veri seti üzerinde, referans tabloya karşı dürüstçe ölçülmüş." />
+    <meta property="og:url" content="https://ahmethmzamlym.engineer/tr/model" />
+    <meta property="og:image" content="https://ahmethmzamlym.engineer/assets/img/og/model.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Rötar Tahmin Modeli | Ahmet Hamza Mülayim" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://ahmethmzamlym.engineer/assets/img/og/model.jpg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/i18n.js"></script>
+    <script defer src="/script.js"></script>
+    <style>
+      /* page-local additions on top of the site tokens — cobalt is the ML colour */
+      .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+        margin-top: 26px;
+      }
+      .stat {
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 20px 22px;
+      }
+      .stat strong {
+        display: block;
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.9rem;
+        letter-spacing: -0.03em;
+        color: var(--cobalt);
+      }
+      .stat span { color: var(--muted); font-size: 0.88rem; }
+      .step-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 16px;
+        margin-top: 26px;
+      }
+      .step {
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 22px;
+      }
+      .step h3 {
+        font-family: "Space Grotesk", sans-serif;
+        letter-spacing: -0.03em;
+        margin: 0 0 10px;
+      }
+      .step h3 small {
+        display: block;
+        color: var(--cobalt);
+        font-size: 0.8rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+      }
+      .step p { margin: 0; color: var(--muted); font-size: 0.95rem; line-height: 1.6; }
+      .fig {
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 22px;
+        margin-top: 22px;
+      }
+      .fig h3 {
+        font-family: "Space Grotesk", sans-serif;
+        letter-spacing: -0.03em;
+        margin: 0 0 6px;
+      }
+      .fig > p { color: var(--muted); font-size: 0.92rem; line-height: 1.6; margin: 10px 0 0; }
+      /* wide tables scroll inside their own box; the page never scrolls sideways */
+      .tbl-wrap { overflow-x: auto; margin-top: 16px; }
+      table.tbl {
+        border-collapse: collapse;
+        width: 100%;
+        min-width: 460px;
+        font-size: 0.92rem;
+      }
+      table.tbl th,
+      table.tbl td {
+        text-align: right;
+        padding: 9px 12px;
+        border-bottom: 1px solid var(--line);
+        font-variant-numeric: tabular-nums;
+      }
+      table.tbl th:first-child,
+      table.tbl td:first-child { text-align: left; }
+      table.tbl thead th {
+        color: var(--muted);
+        font-weight: 600;
+        font-size: 0.82rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+      table.tbl tr.best td { background: color-mix(in srgb, var(--cobalt) 8%, transparent); }
+      table.tbl tr.best td:first-child { font-weight: 700; }
+      table.tbl td.hi { color: var(--cobalt); font-weight: 700; }
+      table.tbl td.bad { color: var(--thy-red, #e81932); font-weight: 700; }
+      .case {
+        border-left: 3px solid var(--cobalt);
+        padding: 4px 0 4px 18px;
+        margin-top: 22px;
+      }
+      .case h4 {
+        font-family: "Space Grotesk", sans-serif;
+        letter-spacing: -0.02em;
+        margin: 0 0 8px;
+        font-size: 1.02rem;
+      }
+      .case p { margin: 0; color: var(--muted); line-height: 1.65; font-size: 0.94rem; }
+      .case .verdict { margin-top: 8px; color: var(--ink, inherit); }
+      .limits {
+        margin: 26px 0 0;
+        padding-left: 20px;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+      .limits li { margin-bottom: 10px; }
+      .limits-next { margin: 22px 0 0; }
+    </style>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="53acc321-a620-42d2-abf8-92a0c2813e8b"></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Rötar Tahmin Modeli",
+        "description": "İstanbul Havalimanı için rötar tahmin modeli — kendi topladığım 63.481 uçuşluk veri seti üzerinde, referans tabloya karşı dürüstçe ölçülmüş.",
+        "url": "https://ahmethmzamlym.engineer/tr/model",
+        "image": "https://ahmethmzamlym.engineer/assets/img/og/model.jpg",
+        "datePublished": "2026-08-03",
+        "author": {
+          "@type": "Person",
+          "name": "Ahmet Hamza Mülayim",
+          "url": "https://ahmethmzamlym.engineer/"
+        },
+        "inLanguage": "tr"
+      }
+    </script>
+  </head>
+  <body data-cursor="plane">
+    <div class="noise"></div>
+    <header class="site-header">
+      <a class="brand" href="/tr/">
+        <span class="brand-mark">A</span>
+        <span>
+          <strong>Ahmet Hamza Mülayim</strong>
+          <small>Marmara University</small>
+        </span>
+      </a>
+      <nav class="site-nav">
+        <a href="/tr/phase2">← Aşama 2</a>
+        <a href="/tr/board">Canlı pano →</a>
+        <a class="lang-toggle" href="/model">EN</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Ana görev · rötar tahmin modeli · Ağustos 2026</p>
+          <h1>Bir uçuşun geç kalkacağını, kalkışa saatler kala bilmek.</h1>
+          <p class="hero-text">
+            ABD havalimanlarının aksine İstanbul Havalimanı geçmiş rötar verisini
+            yayımlamıyor. Bu yüzden veri setini kendim topladım: Mayıs 2026'dan
+            beri her gün, uçuş tarifesi + ADS-B hareketleri + METAR. Bu sayfa o
+            veri üzerine kurulan modeli anlatıyor — nasıl kurulduğunu, neden bu
+            şekilde kurulduğunu ve nerede durduğunu.
+          </p>
+        </div>
+        <div class="stat-grid">
+          <div class="stat"><strong>0,742</strong><span>AUC — kendi referans tablomun 0,711'ine karşı</span></div>
+          <div class="stat"><strong>3,44 kat</strong><span>en riskli %10'da, günün geneline göre rötar oranı</span></div>
+          <div class="stat"><strong>63.481</strong><span>uçuş, 92 gün — hepsi kendi topladığım</span></div>
+          <div class="stat"><strong>%56,6</strong><span>60 dakikadan kısa aktarmalarda gerçek rötar oranı; referans tablo %20,7 diyor</span></div>
+        </div>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Neden</p>
+          <h2>Model, yenilmesi gereken bir rakiple başlar.</h2>
+          <p class="hero-text">
+            "Makine öğrenmesi kullandım" bir sonuç değildir. Bir uçuşun geçmişte
+            ne sıklıkla geciktiğine bakan basit bir tablo zaten şaşırtıcı derecede
+            iyidir — ve çoğu proje modelini hiçbir zaman ona karşı ölçmez. Bu
+            yüzden önce o tabloyu kurdum, sonra modelin onu geçmesini istedim.
+            Geçmeseydi, yayımlanacak bulgu bu olurdu.
+          </p>
+        </div>
+        <div class="step-grid">
+          <div class="step">
+            <h3><small>Adım 1 · Referans</small>Kademeli arama tablosu</h3>
+            <p>
+              Havalimanı ortalamasından başlayıp varış noktası → havayolu+varış →
+              +saat → uçuş numarası şeklinde daralan bir merdiven. Her kademe kendi
+              üstüne doğru büzülüyor, böylece üç kez uçulmuş bir rota %0 ya da %100
+              demek yerine makul bir sayı veriyor. Yenilecek çıta bu: 0,711 AUC.
+            </p>
+          </div>
+          <div class="step">
+            <h3><small>Adım 2 · Hibrit</small>Tablonun cevabı bir öznitelik</h3>
+            <p>
+              Gradyan artırmalı ağaç (HistGradientBoosting), tablonun tahminini tek
+              bir öznitelik olarak alıyor ve ne zaman ona katılmayacağını öğreniyor.
+              Kritik tuzak: tablo eğitim satırlarının cevabını zaten görmüştür.
+              Bu yüzden eğitim satırları kat-dışı puanlanıyor — günlere göre beş
+              gruba bölünüp her grup diğer dördüyle kurulan bir tabloyla ölçülüyor.
+            </p>
+          </div>
+          <div class="step">
+            <h3><small>Adım 3 · Uçağın önceki bacağı</small>Asıl fark burada</h3>
+            <p>
+              Her uçağı gövde numarasıyla (icao24) izleyip iki şey hesaplıyorum:
+              uçağın yerde ne kadar kaldığı (aktarma süresi) ve geldiği uçuşun ne
+              kadar geciktiği. Avrupa'daki rötar dakikalarının %46'sı bu zincirden
+              geliyor. Sadece tarifeye bakan bir model bunu yapısal olarak göremez.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Dürüst ölçüm</p>
+          <h2>Mayıs–Haziran'da eğit, Temmuz'da körlemesine test et.</h2>
+          <p class="hero-text">
+            Bölme rastgele değil, tarihe göre. Rastgele bölme aynı günün iki
+            uçuşunu eğitim ve teste dağıtır; o günün havası ve tıkanıklığı
+            birinden diğerine sızar ve sonuç olduğundan iyi görünür. Aşağıdaki
+            sayıların hepsi, modelin hiç görmediği 22.675 uçuşluk Temmuz'dan.
+          </p>
+        </div>
+
+        <div class="fig">
+          <h3>Her öznitelik neyi ekledi</h3>
+          <div class="tbl-wrap">
+            <table class="tbl">
+              <thead>
+                <tr>
+                  <th>Model</th>
+                  <th>AUC</th>
+                  <th>Brier</th>
+                  <th>Kat</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Arama tablosu (çıta)</td><td>0,711</td><td>0,1060</td><td>2,98</td></tr>
+                <tr><td>Hibrit ağaç</td><td>0,716</td><td>0,1054</td><td>3,03</td></tr>
+                <tr><td>+ aktarma süresi</td><td>0,739</td><td>0,1003</td><td>3,44</td></tr>
+                <tr class="best"><td>+ gelen uçuşun rötarı</td><td>0,742</td><td>0,0996</td><td>3,43</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>
+            Ağacın tek başına kazancı küçük: 0,711 → 0,716. Asıl sıçrama uçağın
+            önceki bacağını eklediğinde geliyor. Yani kazanç "makine öğrenmesi"nden
+            değil, doğru mekanizmayı ölçmekten çıkıyor.
+          </p>
+        </div>
+
+        <div class="fig">
+          <h3>Modelin gerçekten ne gördüğü</h3>
+          <div class="tbl-wrap">
+            <table class="tbl">
+              <thead>
+                <tr>
+                  <th>Aktarma süresi</th>
+                  <th>Uçuş</th>
+                  <th>Gerçek rötar</th>
+                  <th>Tablo diyor</th>
+                  <th>Model diyor</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>60 dk'dan kısa</td><td>579</td><td class="bad">%56,6</td><td>%20,7</td><td class="hi">%48,8</td></tr>
+                <tr><td>60–90 dk</td><td>1.557</td><td>%14,5</td><td>%12,3</td><td>%11,9</td></tr>
+                <tr><td>90 dk ve üzeri</td><td>6.841</td><td>%9,7</td><td>%8,3</td><td>%6,9</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>
+            Tek tablo bütün hikâyeyi anlatıyor. Uçağın yerde 60 dakikadan az
+            kaldığı uçuşların %56,6'sı gerçekten geç kalkıyor — arama tablosu ise
+            %20,7 diyor, çünkü o uçuşun geçmişine bakıyor, o günkü uçağına değil.
+            Model %48,8'e çıkıyor. Hâlâ eksik tahmin ediyor, ama doğru yöne
+            bakıyor.
+          </p>
+        </div>
+
+        <div class="fig">
+          <h3>İki gerçek uçuş</h3>
+          <div class="case">
+            <h4>TK1045 → Bükreş · 25 Temmuz, 18:00</h4>
+            <p>
+              Arama tablosu bu uçuşu güvenli buldu: <strong>%5,3</strong>. Bu uçuş
+              numarası geçmişte neredeyse hiç gecikmemişti. Ama o gün uçağı
+              Bükreş'e götürecek gövde, İstanbul'a <strong>57 dakika geç</strong>
+              inmişti ve tarifede yerde sadece <strong>24 dakikası</strong> vardı.
+            </p>
+            <p class="verdict">
+              Model <strong>%84,6</strong> dedi. Uçuş <strong>56 dakika</strong>
+              rötarla kalktı.
+            </p>
+          </div>
+          <div class="case">
+            <h4>A46070 → Mineralnye Vody · 19 Temmuz, 21:00</h4>
+            <p>
+              Ters yön. Bu rotanın geçmişi kötü olduğu için arama tablosu
+              <strong>%43,8</strong> ile alarm verdi. Oysa o akşamki uçak
+              zamanında inmişti ve yerde <strong>92 dakikası</strong> vardı.
+            </p>
+            <p class="verdict">
+              Model <strong>%9,6</strong> dedi. Uçuş zamanında kalktı.
+            </p>
+          </div>
+          <p>
+            İkisi de aynı şeyi gösteriyor: arama tablosu bir uçuşun <em>itibarını</em>
+            bilir, modelse o günkü <em>uçağını</em>. Rötarın büyük kısmı itibardan
+            değil, o sabah bozulan zincirden geliyor.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Dürüst sınırlar</p>
+          <h2>Modelin nerede işe yaramadığı.</h2>
+        </div>
+        <ul class="limits">
+          <li>
+            <strong>Bir gün önceden bu model işe yaramaz.</strong> Ölçtüm:
+            aktarma süresi, kalkıştan ortalama 2,3 saat önce belli oluyor ve
+            <strong>24 saat önceden %0'ı</strong> bilinebiliyor. Modelin bütün
+            üstünlüğü bu iki öznitelikten geldiği için, yarının panosunu
+            puanlarken elde 0,716 kalıyor — çıtanın 0,711'inin hemen üstü. Bu
+            yüzden canlı pano hâlâ arama tablosunu kullanıyor. Doğru çözüm modeli
+            panoya koymak değil, panoyu gün içinde yeniden puanlamak.
+          </li>
+          <li>
+            <strong>Gelen uçuşun rötarı gürültü sınırında.</strong> Tek çalıştırmada
+            +0,003 görünüyor; dört farklı rastgele tohumla ölçtüğümde ortalama
+            <strong>+0,002</strong> ve dördün birinde negatif. Referansın kendi
+            tohum sapması (0,0027) etkiden büyük. Özniteliği tuttum çünkü doğru
+            mekanizma o — ama kazanç olarak sunulamaz.
+          </li>
+          <li>
+            <strong>Uçakların sadece %34'ünü tanıyabiliyorum.</strong> Aktarma
+            süresi ancak ADS-B'de gövde numarasını yakalayabildiğim uçuşlarda
+            hesaplanıyor. OpenSky günde ~554 kalkış hareketi görüyor ama tarifede
+            ~877 kalkış var; mükemmel bir eşleştirme bile %63'te duruyor.
+          </li>
+          <li>
+            <strong>Hava durumu henüz öğrenilebilir değil.</strong> Eğitim
+            aylarında toplam beş saatlik gök gürültülü fırtına var ve o saatlerde
+            rötar oranı normal seyretmiş. Model, örneğinde bulunmayan bir etkiyi
+            öğrenemez. IST'de kışın sis 10 kat, görüş 3 km altı 10 kat artıyor —
+            en kötü ay Şubat, Aralık değil. Bu yüzden hava durumu terimleri kışa
+            kadar beklemede.
+          </li>
+          <li>
+            <strong>Kaç dakika gecikeceğini değil, gecikip gecikmeyeceğini
+            söylüyor.</strong> Rötar süresi satırların yalnızca %28'inde var.
+            Geç/zamanında etiketi tam, ama "45 dakika mı 3 saat mi" sorusunun
+            cevabı çoğu satırda yok.
+          </li>
+        </ul>
+        <p class="limits-next">
+          Bunların hepsi ölçülmüş sınırlar, tahmin değil. Bir modelin nerede
+          çalışmadığını bilmek, çalıştığı yeri bilmek kadar sonuçtur.
+        </p>
+      </section>
+
+      <section class="section contact" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Çalışan yarısı</p>
+          <h2>Kalkış rötar panosu.</h2>
+          <p class="hero-text">
+            Modelin bugün canlı çalışan hâli: yarın planlanan her kalkış, kendi
+            geçmişine göre puanlanıyor ve gün sonunda gerçekte ne olduğuyla
+            karşılaştırılıyor. Yukarıdaki sınır gereği pano şimdilik arama
+            tablosunu kullanıyor — kendi skor tablosunu da açıkça gösteriyor.
+          </p>
+        </div>
+        <div class="contact-actions">
+          <a class="button primary" href="/tr/board">Canlı panoyu aç →</a>
+          <a class="button secondary" href="/tr/ist-rotar">Veri hattı nasıl çalışıyor</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Veri: kendi topladığım IST veri seti (aviationstack + OpenSky + METAR) · Python, pandas, scikit-learn</p>
+      <p id="year"></p>
+    </footer>
+
+  </body>
+</html>

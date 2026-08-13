@@ -1,23 +1,23 @@
 <!doctype html>
-<html lang="en">
+<html lang="tr">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Departure Delay Board | Ahmet Hamza Mülayim</title>
-    <meta name="description" content="Scheduled departures from IST, each scored for delay risk against its own history — statistical predictions from a 62,000+ flight dataset." />
+    <title>Kalkış Rötar Panosu | Ahmet Hamza Mülayim</title>
+    <meta name="description" content="IST'ten planlanan kalkışlar, her biri kendi geçmişine göre puanlanmış rötar riskiyle — 62.000+ uçuşluk veri setinden üretilen istatistiksel tahmin." />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e81932'/%3E%3Ctext x='32' y='45' font-size='38' font-family='sans-serif' font-weight='700' text-anchor='middle' fill='%23fff'%3EA%3C/text%3E%3C/svg%3E" />
-    <link rel="canonical" href="https://ahmethmzamlym.engineer/board" />
+    <link rel="canonical" href="https://ahmethmzamlym.engineer/tr/board" />
     <link rel="alternate" hreflang="en" href="https://ahmethmzamlym.engineer/board" />
     <link rel="alternate" hreflang="tr" href="https://ahmethmzamlym.engineer/tr/board" />
     <link rel="alternate" hreflang="x-default" href="https://ahmethmzamlym.engineer/board" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Departure Delay Board | Ahmet Hamza Mülayim" />
-    <meta property="og:description" content="Scheduled departures from IST, each scored for delay risk against its own history — statistical predictions from a 62,000+ flight dataset." />
-    <meta property="og:url" content="https://ahmethmzamlym.engineer/board" />
+    <meta property="og:title" content="Kalkış Rötar Panosu | Ahmet Hamza Mülayim" />
+    <meta property="og:description" content="IST'ten planlanan kalkışlar, her biri kendi geçmişine göre puanlanmış rötar riskiyle — 62.000+ uçuşluk veri setinden üretilen istatistiksel tahmin." />
+    <meta property="og:url" content="https://ahmethmzamlym.engineer/tr/board" />
     <meta property="og:image" content="https://ahmethmzamlym.engineer/assets/img/og/board.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Departure Delay Board | Ahmet Hamza Mülayim" />
+    <meta property="og:image:alt" content="Kalkış Rötar Panosu | Ahmet Hamza Mülayim" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content="https://ahmethmzamlym.engineer/assets/img/og/board.jpg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -228,9 +228,9 @@
       {
         "@context": "https://schema.org",
         "@type": "CreativeWork",
-        "headline": "Departure Delay Board",
-        "description": "Scheduled departures from IST, each scored for delay risk against its own history — statistical predictions from a 62,000+ flight dataset.",
-        "url": "https://ahmethmzamlym.engineer/board",
+        "headline": "Kalkış Rötar Panosu",
+        "description": "IST'ten planlanan kalkışlar, her biri kendi geçmişine göre puanlanmış rötar riskiyle — 62.000+ uçuşluk veri setinden üretilen istatistiksel tahmin.",
+        "url": "https://ahmethmzamlym.engineer/tr/board",
         "image": "https://ahmethmzamlym.engineer/assets/img/og/board.jpg",
         "datePublished": "2026-07-31",
         "dateModified": "2026-08-05",
@@ -239,14 +239,14 @@
           "name": "Ahmet Hamza Mülayim",
           "url": "https://ahmethmzamlym.engineer/"
         },
-        "inLanguage": "en"
+        "inLanguage": "tr"
       }
     </script>
   </head>
   <body data-cursor="plane">
     <div class="noise"></div>
     <header class="site-header">
-      <a class="brand" href="/">
+      <a class="brand" href="/tr/">
         <span class="brand-mark">A</span>
         <span>
           <strong>Ahmet Hamza Mülayim</strong>
@@ -254,48 +254,82 @@
         </span>
       </a>
       <nav class="site-nav">
-        <a href="/#projects">← Portfolio</a>
-        <a href="/model">← Model</a>
-        <a class="lang-toggle" href="/tr/board">TR</a>
+        <a href="/tr/#projects">← Portföy</a>
+        <a href="/tr/model">← Model</a>
+        <a class="lang-toggle" href="/board">EN</a>
       </nav>
     </header>
 
     <main>
       <section class="section" data-reveal>
         <div class="section-heading">
-          <p class="eyebrow">Demo · the statistical half · Jul–Aug 2026</p>
-          <h1>Departure delay board</h1>
-          <p class="hero-text">Every scheduled departure from IST, scored against its own history: how often has this flight number, this route and this hour run late before? Like an airport board — except the numbers are a prediction, not an announcement.</p>
+          <p class="eyebrow">Demo · istatistiksel yarı · Temmuz–Ağustos 2026</p>
+          <h1>Kalkış rötar panosu</h1>
+          <p class="hero-text">
+            IST'ten planlanan her kalkış, kendi geçmişine göre puanlanıyor: bu
+            uçuş numarası, bu rota ve bu saat daha önce ne kadar rötar yaptı?
+            Havalimanı panosu gibi — ama sayılar tahmin, ilan değil.
+          </p>
         </div>
         <p class="statline" id="meta"></p>
       </section>
 
       <section class="section" data-reveal>
         <div class="chart-panel">
-          <h3>Flights on the board</h3>
-          <p class="note">Click a row to see where its number came from.</p>
+          <h3>Panodaki uçuşlar</h3>
+          <p class="note">
+            Bir satıra tıkla — sayının nereden geldiğini gör.
+          </p>
           <div class="flapboard" id="board"></div>
           <div class="pager" id="pager"></div>
           <div class="detail" id="detail" hidden></div>
-          <div class="callout alt"><b>Why does the board stop at 04:00?</b> The free plan returns 100 rows per request, and that page starts at the very <b>beginning</b> of tomorrow's schedule — roughly the first four hours after midnight. It cuts off there because the page ran out, not because these flights were chosen. A whole day (~1,700 departures) would take 17 requests; the free quota is 100 requests a month — and it is currently exhausted.</div>
+          <div class="callout alt">
+            <b>Pano neden 04:00'te bitiyor?</b> Ücretsiz plan istek başına 100
+            satır veriyor ve o sayfa yarının tarifesinin <b>en başından</b>
+            başlıyor — yani gece yarısından itibaren yaklaşık dört saat. Panonun
+            orada kesilmesinin sebebi uçuş seçimi değil, sayfanın bitmesi. Günün
+            tamamı (~1.700 kalkış) 17 istek eder; ücretsiz kota ise ayda 100
+            istek — ve şu an tükenmiş durumda.
+          </div>
         </div>
 
         <div class="chart-panel">
-          <h3>Does it work?</h3>
-          <p class="note">The same method applied to a day it had never seen: built from everything before that day, then asked to score it, then checked against what actually happened.</p>
+          <h3>Çalışıyor mu?</h3>
+          <p class="note">
+            Aynı yöntem, hiç görmediği bir güne uygulandı: model o günden önceki
+            verilerle kuruldu, sonra o günün uçuşları puanlandı ve gerçekte ne
+            olduğuyla karşılaştırıldı.
+          </p>
           <div class="dgrid" id="val"></div>
-          <div class="callout"><b>The honest part:</b> the model <b>ranks</b> flights well — far more of the ones it called risky really did run late, and where it says 40% it is almost exactly right. Where it misses is the flights it calls safe: tested blind on a busier month it had never seen, the flights it scored at 2% ran late 6% of the time. Chronically late routes stay late; a bad month lands on the ordinarily punctual ones, and nothing in their history warns of it. The missing term is day-level — weather and live airport state.</div>
+          <div class="callout">
+            <b>Dürüst olan taraf:</b> model uçuşları <b>sıralamada</b> iyi —
+            riskli dediklerinin çok daha fazlası gerçekten rötar yaptı ve %40
+            dediği yerde neredeyse tam isabet. Hata, güvenli dediklerinde:
+            hiç görmediği daha yoğun bir ayda test edildiğinde, %2 dediği
+            uçuşlar %6 oranında rötar yaptı. Kronik geciken rotalar zaten
+            gecikiyor; kötü bir ayın yükü normalde dakik olan uçuşlara biniyor
+            ve geçmişte bunu haber veren hiçbir şey yok. Eksik olan gün
+            seviyesindeki terim: hava durumu ve canlı havalimanı durumu.
+          </div>
         </div>
 
         <div class="chart-panel">
-          <h3>Method and limits</h3>
-          <p class="note">Delay = aviationstack's gate departure delay, threshold 15+ min. Departures only; cargo and cancellations excluded. Each flight is scored by walking down these rungs: flight number → airline+destination+hour → airline+destination → destination → airport average. Cells with thin history are smoothed toward the rung above, so a route flown three times doesn't shout "0%" or "100%". This is a prediction, not an airline's official estimate.</p>
+          <h3>Yöntem ve sınırlar</h3>
+          <p class="note">
+            Rötar = aviationstack'in kapı kalkış gecikmesi, eşik 15+ dk. Yalnızca
+            kalkışlar; kargo ve iptaller hariç. Her uçuş, sırasıyla şu basamaklara
+            bakılarak puanlanıyor: uçuş numarası → havayolu+varış+saat →
+            havayolu+varış → varış → havalimanı ortalaması. İnce veriye dayanan
+            hücreler bir üst basamağa doğru yumuşatılıyor, böylece üç uçuşluk bir
+            rota "%0" ya da "%100" diye bağırmıyor. Bu bir tahmin — havayolunun
+            resmi bildirimi değil.
+          </p>
         </div>
       </section>
     </main>
 
     <footer class="footer">
-      <p>Data: IST · aviationstack + OpenSky Network · retrained nightly</p>
+      <p>Veri: IST · aviationstack + OpenSky Network · her gece yeniden eğitilir</p>
       <p id="year"></p>
     </footer>
 

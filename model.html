@@ -1,23 +1,23 @@
 <!doctype html>
-<html lang="tr">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Rötar Tahmin Modeli | Ahmet Hamza Mülayim</title>
-    <meta
-      name="description"
-      content="İstanbul Havalimanı için rötar tahmin modeli — kendi topladığım 63.481 uçuşluk veri seti üzerinde, referans tabloya karşı dürüstçe ölçülmüş."
-    />
+    <title>Delay Prediction Model | Ahmet Hamza Mülayim</title>
+    <meta name="description" content="A delay prediction model for Istanbul Airport — trained on my own 63,481-flight dataset, honestly measured against a lookup-table baseline." />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e81932'/%3E%3Ctext x='32' y='45' font-size='38' font-family='sans-serif' font-weight='700' text-anchor='middle' fill='%23fff'%3EA%3C/text%3E%3C/svg%3E" />
     <link rel="canonical" href="https://ahmethmzamlym.engineer/model" />
+    <link rel="alternate" hreflang="en" href="https://ahmethmzamlym.engineer/model" />
+    <link rel="alternate" hreflang="tr" href="https://ahmethmzamlym.engineer/tr/model" />
+    <link rel="alternate" hreflang="x-default" href="https://ahmethmzamlym.engineer/model" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Rötar Tahmin Modeli | Ahmet Hamza Mülayim" />
-    <meta property="og:description" content="İstanbul Havalimanı için rötar tahmin modeli — kendi topladığım veri seti üzerinde, referans tabloya karşı dürüstçe ölçülmüş." />
+    <meta property="og:title" content="Delay Prediction Model | Ahmet Hamza Mülayim" />
+    <meta property="og:description" content="A delay prediction model for Istanbul Airport — trained on my own 63,481-flight dataset, honestly measured against a lookup-table baseline." />
     <meta property="og:url" content="https://ahmethmzamlym.engineer/model" />
     <meta property="og:image" content="https://ahmethmzamlym.engineer/assets/img/og/model.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Rötar Tahmin Modeli | Ahmet Hamza Mülayim" />
+    <meta property="og:image:alt" content="Delay Prediction Model | Ahmet Hamza Mülayim" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content="https://ahmethmzamlym.engineer/assets/img/og/model.jpg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -26,9 +26,9 @@
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css" />
-    <script src="i18n.js"></script>
-    <script defer src="script.js"></script>
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/i18n.js"></script>
+    <script defer src="/script.js"></script>
     <style>
       /* page-local additions on top of the site tokens — cobalt is the ML colour */
       .stat-grid {
@@ -148,12 +148,17 @@
       {
         "@context": "https://schema.org",
         "@type": "Article",
-        "headline": "Rötar Tahmin Modeli",
-        "description": "İstanbul Havalimanı için rötar tahmin modeli — kendi topladığım 63.481 uçuşluk veri seti üzerinde, referans tabloya karşı dürüstçe ölçülmüş.",
+        "headline": "Delay Prediction Model",
+        "description": "A delay prediction model for Istanbul Airport — trained on my own 63,481-flight dataset, honestly measured against a lookup-table baseline.",
         "url": "https://ahmethmzamlym.engineer/model",
         "image": "https://ahmethmzamlym.engineer/assets/img/og/model.jpg",
         "datePublished": "2026-08-03",
-        "author": { "@type": "Person", "name": "Ahmet Hamza Mülayim", "url": "https://ahmethmzamlym.engineer/" }
+        "author": {
+          "@type": "Person",
+          "name": "Ahmet Hamza Mülayim",
+          "url": "https://ahmethmzamlym.engineer/"
+        },
+        "inLanguage": "en"
       }
     </script>
   </head>
@@ -168,318 +173,150 @@
         </span>
       </a>
       <nav class="site-nav">
-        <a href="phase2" data-i18n="nav.back">← Aşama 2</a>
-        <a href="board" data-i18n="nav.board">Canlı pano →</a>
-        <button class="lang-toggle" type="button">EN</button>
+        <a href="/phase2">← Phase 2</a>
+        <a href="/board">Live board →</a>
+        <a class="lang-toggle" href="/tr/model">TR</a>
       </nav>
     </header>
 
     <main>
       <section class="section" data-reveal>
         <div class="section-heading">
-          <p class="eyebrow" data-i18n="hero.eyebrow">Ana görev · rötar tahmin modeli · Ağustos 2026</p>
-          <h1 data-i18n="hero.h2">Bir uçuşun geç kalkacağını, kalkışa saatler kala bilmek.</h1>
-          <p class="hero-text" data-i18n="hero.text">
-            ABD havalimanlarının aksine İstanbul Havalimanı geçmiş rötar verisini
-            yayımlamıyor. Bu yüzden veri setini kendim topladım: Mayıs 2026'dan
-            beri her gün, uçuş tarifesi + ADS-B hareketleri + METAR. Bu sayfa o
-            veri üzerine kurulan modeli anlatıyor — nasıl kurulduğunu, neden bu
-            şekilde kurulduğunu ve nerede durduğunu.
-          </p>
+          <p class="eyebrow">Main quest · delay prediction model · Aug 2026</p>
+          <h1>Knowing a flight will leave late, hours before it does.</h1>
+          <p class="hero-text">Unlike US airports, Istanbul Airport publishes no historical delay data. So I collected the dataset myself: every day since May 2026 — schedules, ADS-B movements and METARs. This page is about the model built on it: how it was built, why it was built that way, and where it stops.</p>
         </div>
         <div class="stat-grid">
-          <div class="stat"><strong>0,742</strong><span data-i18n="stat.1">AUC — kendi referans tablomun 0,711'ine karşı</span></div>
-          <div class="stat"><strong data-i18n="stat.2n">3,44 kat</strong><span data-i18n="stat.2">en riskli %10'da, günün geneline göre rötar oranı</span></div>
-          <div class="stat"><strong data-i18n="stat.3n">63.481</strong><span data-i18n="stat.3">uçuş, 92 gün — hepsi kendi topladığım</span></div>
-          <div class="stat"><strong data-i18n="stat.4n">%56,6</strong><span data-i18n="stat.4">60 dakikadan kısa aktarmalarda gerçek rötar oranı; referans tablo %20,7 diyor</span></div>
+          <div class="stat"><strong>0,742</strong><span>AUC — against my own lookup table's 0.711</span></div>
+          <div class="stat"><strong>3.44x</strong><span>lift in the riskiest 10%, against the day's own delay rate</span></div>
+          <div class="stat"><strong>63,481</strong><span>flights across 92 days — all of it collected by me</span></div>
+          <div class="stat"><strong>56.6%</strong><span>real delay rate on turnarounds under 60 min; the lookup table says 20.7%</span></div>
         </div>
       </section>
 
       <section class="section" data-reveal>
         <div class="section-heading">
-          <p class="eyebrow" data-i18n="why.eyebrow">Neden</p>
-          <h2 data-i18n="why.h2">Model, yenilmesi gereken bir rakiple başlar.</h2>
-          <p class="hero-text" data-i18n="why.text">
-            "Makine öğrenmesi kullandım" bir sonuç değildir. Bir uçuşun geçmişte
-            ne sıklıkla geciktiğine bakan basit bir tablo zaten şaşırtıcı derecede
-            iyidir — ve çoğu proje modelini hiçbir zaman ona karşı ölçmez. Bu
-            yüzden önce o tabloyu kurdum, sonra modelin onu geçmesini istedim.
-            Geçmeseydi, yayımlanacak bulgu bu olurdu.
-          </p>
+          <p class="eyebrow">Why</p>
+          <h2>A model starts with an opponent worth beating.</h2>
+          <p class="hero-text">"I used machine learning" is not a result. A simple table of how often a flight has been late in the past is already surprisingly good — and most projects never measure their model against one. So I built that table first, then required the model to beat it. If it hadn't, that would have been the finding worth publishing.</p>
         </div>
         <div class="step-grid">
           <div class="step">
-            <h3 data-i18n="step1.h3"><small>Adım 1 · Referans</small>Kademeli arama tablosu</h3>
-            <p data-i18n="step1.p">
-              Havalimanı ortalamasından başlayıp varış noktası → havayolu+varış →
-              +saat → uçuş numarası şeklinde daralan bir merdiven. Her kademe kendi
-              üstüne doğru büzülüyor, böylece üç kez uçulmuş bir rota %0 ya da %100
-              demek yerine makul bir sayı veriyor. Yenilecek çıta bu: 0,711 AUC.
-            </p>
+            <h3><small>Step 1 · The bar</small>A shrunken lookup ladder</h3>
+            <p>Starts at the airport average and narrows: destination → airline+destination → +hour → flight number. Each rung shrinks toward its parent, so a route flown three times reports something sane instead of 0% or 100%. That is the bar to beat: 0.711 AUC.</p>
           </div>
           <div class="step">
-            <h3 data-i18n="step2.h3"><small>Adım 2 · Hibrit</small>Tablonun cevabı bir öznitelik</h3>
-            <p data-i18n="step2.p">
-              Gradyan artırmalı ağaç (HistGradientBoosting), tablonun tahminini tek
-              bir öznitelik olarak alıyor ve ne zaman ona katılmayacağını öğreniyor.
-              Kritik tuzak: tablo eğitim satırlarının cevabını zaten görmüştür.
-              Bu yüzden eğitim satırları kat-dışı puanlanıyor — günlere göre beş
-              gruba bölünüp her grup diğer dördüyle kurulan bir tabloyla ölçülüyor.
-            </p>
+            <h3><small>Step 2 · The hybrid</small>The table's answer as one feature</h3>
+            <p>A gradient-boosted tree (HistGradientBoosting) takes the table's estimate as a single feature and learns when to disagree with it. The trap this avoids: the table has already seen the training rows' answers. So training rows are scored out of fold — split into five day-groups, each scored by a table fitted on the other four.</p>
           </div>
           <div class="step">
-            <h3 data-i18n="step3.h3"><small>Adım 3 · Uçağın önceki bacağı</small>Asıl fark burada</h3>
-            <p data-i18n="step3.p">
-              Her uçağı gövde numarasıyla (icao24) izleyip iki şey hesaplıyorum:
-              uçağın yerde ne kadar kaldığı (aktarma süresi) ve geldiği uçuşun ne
-              kadar geciktiği. Avrupa'daki rötar dakikalarının %46'sı bu zincirden
-              geliyor. Sadece tarifeye bakan bir model bunu yapısal olarak göremez.
-            </p>
+            <h3><small>Step 3 · The previous leg</small>Where the difference actually is</h3>
+            <p>Every aircraft is tracked by its airframe hex (icao24) to compute two things: how long it sat on the ground, and how late the flight that brought it in was. 46% of European delay minutes come from that chain. A schedule-only model is structurally blind to it.</p>
           </div>
         </div>
       </section>
 
       <section class="section" data-reveal>
         <div class="section-heading">
-          <p class="eyebrow" data-i18n="how.eyebrow">Dürüst ölçüm</p>
-          <h2 data-i18n="how.h2">Mayıs–Haziran'da eğit, Temmuz'da körlemesine test et.</h2>
-          <p class="hero-text" data-i18n="how.text">
-            Bölme rastgele değil, tarihe göre. Rastgele bölme aynı günün iki
-            uçuşunu eğitim ve teste dağıtır; o günün havası ve tıkanıklığı
-            birinden diğerine sızar ve sonuç olduğundan iyi görünür. Aşağıdaki
-            sayıların hepsi, modelin hiç görmediği 22.675 uçuşluk Temmuz'dan.
-          </p>
+          <p class="eyebrow">Honest measurement</p>
+          <h2>Train on May–June, test blind on July.</h2>
+          <p class="hero-text">The split is by date, not random. A random split scatters two flights from the same day across train and test; that day's weather and congestion leak from one to the other and the result looks better than it is. Every number below is from 22,675 July flights the model never saw.</p>
         </div>
 
         <div class="fig">
-          <h3 data-i18n="fig1.h3">Her öznitelik neyi ekledi</h3>
+          <h3>What each feature added</h3>
           <div class="tbl-wrap">
             <table class="tbl">
               <thead>
                 <tr>
-                  <th data-i18n="t1.c0">Model</th>
+                  <th>Model</th>
                   <th>AUC</th>
                   <th>Brier</th>
-                  <th data-i18n="t1.c3">Kat</th>
+                  <th>Lift</th>
                 </tr>
               </thead>
               <tbody>
-                <tr><td data-i18n="t1.r1">Arama tablosu (çıta)</td><td>0,711</td><td>0,1060</td><td>2,98</td></tr>
-                <tr><td data-i18n="t1.r2">Hibrit ağaç</td><td>0,716</td><td>0,1054</td><td>3,03</td></tr>
-                <tr><td data-i18n="t1.r3">+ aktarma süresi</td><td>0,739</td><td>0,1003</td><td>3,44</td></tr>
-                <tr class="best"><td data-i18n="t1.r4">+ gelen uçuşun rötarı</td><td>0,742</td><td>0,0996</td><td>3,43</td></tr>
+                <tr><td>Lookup table (the bar)</td><td>0,711</td><td>0,1060</td><td>2,98</td></tr>
+                <tr><td>Hybrid tree</td><td>0,716</td><td>0,1054</td><td>3,03</td></tr>
+                <tr><td>+ turnaround time</td><td>0,739</td><td>0,1003</td><td>3,44</td></tr>
+                <tr class="best"><td>+ inbound flight's delay</td><td>0,742</td><td>0,0996</td><td>3,43</td></tr>
               </tbody>
             </table>
           </div>
-          <p data-i18n="fig1.p">
-            Ağacın tek başına kazancı küçük: 0,711 → 0,716. Asıl sıçrama uçağın
-            önceki bacağını eklediğinde geliyor. Yani kazanç "makine öğrenmesi"nden
-            değil, doğru mekanizmayı ölçmekten çıkıyor.
-          </p>
+          <p>The tree on its own gains little: 0.711 → 0.716. The real jump arrives with the aircraft's previous leg. The gain comes from measuring the right mechanism, not from "machine learning".</p>
         </div>
 
         <div class="fig">
-          <h3 data-i18n="fig2.h3">Modelin gerçekten ne gördüğü</h3>
+          <h3>What the model actually sees</h3>
           <div class="tbl-wrap">
             <table class="tbl">
               <thead>
                 <tr>
-                  <th data-i18n="t2.c0">Aktarma süresi</th>
-                  <th data-i18n="t2.c1">Uçuş</th>
-                  <th data-i18n="t2.c2">Gerçek rötar</th>
-                  <th data-i18n="t2.c3">Tablo diyor</th>
-                  <th data-i18n="t2.c4">Model diyor</th>
+                  <th>Turnaround</th>
+                  <th>Flights</th>
+                  <th>Really late</th>
+                  <th>Table says</th>
+                  <th>Model says</th>
                 </tr>
               </thead>
               <tbody>
-                <tr><td data-i18n="t2.r1">60 dk'dan kısa</td><td>579</td><td class="bad">%56,6</td><td>%20,7</td><td class="hi">%48,8</td></tr>
+                <tr><td>under 60 min</td><td>579</td><td class="bad">%56,6</td><td>%20,7</td><td class="hi">%48,8</td></tr>
                 <tr><td>60–90 dk</td><td>1.557</td><td>%14,5</td><td>%12,3</td><td>%11,9</td></tr>
-                <tr><td data-i18n="t2.r3">90 dk ve üzeri</td><td>6.841</td><td>%9,7</td><td>%8,3</td><td>%6,9</td></tr>
+                <tr><td>90 min and over</td><td>6.841</td><td>%9,7</td><td>%8,3</td><td>%6,9</td></tr>
               </tbody>
             </table>
           </div>
-          <p data-i18n="fig2.p">
-            Tek tablo bütün hikâyeyi anlatıyor. Uçağın yerde 60 dakikadan az
-            kaldığı uçuşların %56,6'sı gerçekten geç kalkıyor — arama tablosu ise
-            %20,7 diyor, çünkü o uçuşun geçmişine bakıyor, o günkü uçağına değil.
-            Model %48,8'e çıkıyor. Hâlâ eksik tahmin ediyor, ama doğru yöne
-            bakıyor.
-          </p>
+          <p>One table tells the whole story. 56.6% of flights whose aircraft had under 60 minutes on the ground really do leave late — the lookup table says 20.7%, because it looks at that flight's history, not at that day's aircraft. The model reaches 48.8%. Still under-calling it, but pointed the right way.</p>
         </div>
 
         <div class="fig">
-          <h3 data-i18n="fig3.h3">İki gerçek uçuş</h3>
+          <h3>Two real flights</h3>
           <div class="case">
-            <h4 data-i18n="c1.h">TK1045 → Bükreş · 25 Temmuz, 18:00</h4>
-            <p data-i18n="c1.p">
-              Arama tablosu bu uçuşu güvenli buldu: <strong>%5,3</strong>. Bu uçuş
-              numarası geçmişte neredeyse hiç gecikmemişti. Ama o gün uçağı
-              Bükreş'e götürecek gövde, İstanbul'a <strong>57 dakika geç</strong>
-              inmişti ve tarifede yerde sadece <strong>24 dakikası</strong> vardı.
-            </p>
-            <p class="verdict" data-i18n="c1.v">
-              Model <strong>%84,6</strong> dedi. Uçuş <strong>56 dakika</strong>
-              rötarla kalktı.
-            </p>
+            <h4>TK1045 → Bucharest · 25 July, 18:00</h4>
+            <p>The lookup table called this one safe: <strong>5.3%</strong>. That flight number had almost never been late. But the airframe due to fly it landed in Istanbul <strong>57 minutes late</strong>, with only <strong>24 minutes</strong> scheduled on the ground.</p>
+            <p class="verdict">The model said <strong>84.6%</strong>. It left <strong>56 minutes</strong> late.</p>
           </div>
           <div class="case">
-            <h4 data-i18n="c2.h">A46070 → Mineralnye Vody · 19 Temmuz, 21:00</h4>
-            <p data-i18n="c2.p">
-              Ters yön. Bu rotanın geçmişi kötü olduğu için arama tablosu
-              <strong>%43,8</strong> ile alarm verdi. Oysa o akşamki uçak
-              zamanında inmişti ve yerde <strong>92 dakikası</strong> vardı.
-            </p>
-            <p class="verdict" data-i18n="c2.v">
-              Model <strong>%9,6</strong> dedi. Uçuş zamanında kalktı.
-            </p>
+            <h4>A46070 → Mineralnye Vody · 19 July, 21:00</h4>
+            <p>The other direction. This route's history is bad, so the lookup table raised the alarm at <strong>43.8%</strong>. But that evening's aircraft had landed on time and had <strong>92 minutes</strong> on the ground.</p>
+            <p class="verdict">The model said <strong>9.6%</strong>. It left on time.</p>
           </div>
-          <p data-i18n="fig3.p">
-            İkisi de aynı şeyi gösteriyor: arama tablosu bir uçuşun <em>itibarını</em>
-            bilir, modelse o günkü <em>uçağını</em>. Rötarın büyük kısmı itibardan
-            değil, o sabah bozulan zincirden geliyor.
-          </p>
+          <p>Both show the same thing: the lookup table knows a flight's <em>reputation</em>, the model knows that day's <em>aircraft</em>. Most delay comes not from reputation but from a chain that broke that morning.</p>
         </div>
       </section>
 
       <section class="section" data-reveal>
         <div class="section-heading">
-          <p class="eyebrow" data-i18n="limits.eyebrow">Dürüst sınırlar</p>
-          <h2 data-i18n="limits.h2">Modelin nerede işe yaramadığı.</h2>
+          <p class="eyebrow">Honest limitations</p>
+          <h2>Where the model does not work.</h2>
         </div>
         <ul class="limits">
-          <li data-i18n="lim.1">
-            <strong>Bir gün önceden bu model işe yaramaz.</strong> Ölçtüm:
-            aktarma süresi, kalkıştan ortalama 2,3 saat önce belli oluyor ve
-            <strong>24 saat önceden %0'ı</strong> bilinebiliyor. Modelin bütün
-            üstünlüğü bu iki öznitelikten geldiği için, yarının panosunu
-            puanlarken elde 0,716 kalıyor — çıtanın 0,711'inin hemen üstü. Bu
-            yüzden canlı pano hâlâ arama tablosunu kullanıyor. Doğru çözüm modeli
-            panoya koymak değil, panoyu gün içinde yeniden puanlamak.
-          </li>
-          <li data-i18n="lim.2">
-            <strong>Gelen uçuşun rötarı gürültü sınırında.</strong> Tek çalıştırmada
-            +0,003 görünüyor; dört farklı rastgele tohumla ölçtüğümde ortalama
-            <strong>+0,002</strong> ve dördün birinde negatif. Referansın kendi
-            tohum sapması (0,0027) etkiden büyük. Özniteliği tuttum çünkü doğru
-            mekanizma o — ama kazanç olarak sunulamaz.
-          </li>
-          <li data-i18n="lim.3">
-            <strong>Uçakların sadece %34'ünü tanıyabiliyorum.</strong> Aktarma
-            süresi ancak ADS-B'de gövde numarasını yakalayabildiğim uçuşlarda
-            hesaplanıyor. OpenSky günde ~554 kalkış hareketi görüyor ama tarifede
-            ~877 kalkış var; mükemmel bir eşleştirme bile %63'te duruyor.
-          </li>
-          <li data-i18n="lim.4">
-            <strong>Hava durumu henüz öğrenilebilir değil.</strong> Eğitim
-            aylarında toplam beş saatlik gök gürültülü fırtına var ve o saatlerde
-            rötar oranı normal seyretmiş. Model, örneğinde bulunmayan bir etkiyi
-            öğrenemez. IST'de kışın sis 10 kat, görüş 3 km altı 10 kat artıyor —
-            en kötü ay Şubat, Aralık değil. Bu yüzden hava durumu terimleri kışa
-            kadar beklemede.
-          </li>
-          <li data-i18n="lim.5">
-            <strong>Kaç dakika gecikeceğini değil, gecikip gecikmeyeceğini
-            söylüyor.</strong> Rötar süresi satırların yalnızca %28'inde var.
-            Geç/zamanında etiketi tam, ama "45 dakika mı 3 saat mi" sorusunun
-            cevabı çoğu satırda yok.
-          </li>
+          <li><strong>A day ahead, this model is no better.</strong> Measured: a turnaround becomes known a median of 2.3 hours before departure, and <strong>0% of them 24 hours ahead</strong>. Since the model's entire advantage comes from those two features, scoring tomorrow's board leaves 0.716 — barely above the bar's 0.711. That is why the live board still uses the lookup table. The fix is not to put the model on the board, but to re-score the board through the day.</li>
+          <li><strong>The inbound delay sits at the noise floor.</strong> A single run shows +0.003; measured across four random seeds it averages <strong>+0.002</strong> and goes negative on one of the four. The baseline's own seed spread (0.0027) is larger than the effect. I kept the feature because it is the right mechanism — but it cannot be presented as a gain.</li>
+          <li><strong>I can only identify 34% of the aircraft.</strong> Turnaround exists only for flights whose airframe I catch on ADS-B. OpenSky sees ~554 departure movements a day against ~877 scheduled departures, so even perfect matching stops at 63%.</li>
+          <li><strong>Weather is not learnable yet.</strong> The training months contain five thunderstorm hours in total, and in those the delay rate ran normal. A model cannot learn an effect its sample does not contain. At IST winter brings 10x the fog and 10x the sub-3km visibility — February is the worst month, not December. So the weather terms wait for winter.</li>
+          <li><strong>It says whether, not how long.</strong> Delay in minutes exists on only 28% of rows. The late/on-time label is complete, but "45 minutes or 3 hours" is unanswerable on most of them.</li>
         </ul>
-        <p class="limits-next" data-i18n="lim.next">
-          Bunların hepsi ölçülmüş sınırlar, tahmin değil. Bir modelin nerede
-          çalışmadığını bilmek, çalıştığı yeri bilmek kadar sonuçtur.
-        </p>
+        <p class="limits-next">These are measured limits, not guesses. Knowing where a model fails is as much a result as knowing where it works.</p>
       </section>
 
       <section class="section contact" data-reveal>
         <div class="section-heading">
-          <p class="eyebrow" data-i18n="cta.eyebrow">Çalışan yarısı</p>
-          <h2 data-i18n="cta.h2">Kalkış rötar panosu.</h2>
-          <p class="hero-text" data-i18n="cta.text">
-            Modelin bugün canlı çalışan hâli: yarın planlanan her kalkış, kendi
-            geçmişine göre puanlanıyor ve gün sonunda gerçekte ne olduğuyla
-            karşılaştırılıyor. Yukarıdaki sınır gereği pano şimdilik arama
-            tablosunu kullanıyor — kendi skor tablosunu da açıkça gösteriyor.
-          </p>
+          <p class="eyebrow">The working half</p>
+          <h2>The departure delay board.</h2>
+          <p class="hero-text">The part running live today: every scheduled departure for tomorrow, scored against its own history, then compared with what actually happened by the end of the day. Because of the limitation above, the board uses the lookup table for now — and shows its own scoreboard openly.</p>
         </div>
         <div class="contact-actions">
-          <a class="button primary" href="board" data-i18n="cta.btn">Canlı panoyu aç →</a>
-          <a class="button secondary" href="ist-rotar" data-i18n="cta.btn2">Veri hattı nasıl çalışıyor</a>
+          <a class="button primary" href="/board">Open the live board →</a>
+          <a class="button secondary" href="/ist-rotar">How the pipeline works</a>
         </div>
       </section>
     </main>
 
     <footer class="footer">
-      <p data-i18n="footer.p">Veri: kendi topladığım IST veri seti (aviationstack + OpenSky + METAR) · Python, pandas, scikit-learn</p>
+      <p>Data: my own IST dataset (aviationstack + OpenSky + METAR) · Python, pandas, scikit-learn</p>
       <p id="year"></p>
     </footer>
 
-    <script>
-      window.I18N_LANG = "en";
-      window.I18N = {
-        "nav.back": "← Phase 2",
-        "nav.board": "Live board →",
-        "hero.eyebrow": "Main quest · delay prediction model · Aug 2026",
-        "hero.h2": "Knowing a flight will leave late, hours before it does.",
-        "hero.text": "Unlike US airports, Istanbul Airport publishes no historical delay data. So I collected the dataset myself: every day since May 2026 — schedules, ADS-B movements and METARs. This page is about the model built on it: how it was built, why it was built that way, and where it stops.",
-        "stat.1": "AUC — against my own lookup table's 0.711",
-        "stat.2n": "3.44x",
-        "stat.2": "lift in the riskiest 10%, against the day's own delay rate",
-        "stat.3n": "63,481",
-        "stat.3": "flights across 92 days — all of it collected by me",
-        "stat.4n": "56.6%",
-        "stat.4": "real delay rate on turnarounds under 60 min; the lookup table says 20.7%",
-        "why.eyebrow": "Why",
-        "why.h2": "A model starts with an opponent worth beating.",
-        "why.text": "\"I used machine learning\" is not a result. A simple table of how often a flight has been late in the past is already surprisingly good — and most projects never measure their model against one. So I built that table first, then required the model to beat it. If it hadn't, that would have been the finding worth publishing.",
-        "step1.h3": "<small>Step 1 · The bar</small>A shrunken lookup ladder",
-        "step1.p": "Starts at the airport average and narrows: destination → airline+destination → +hour → flight number. Each rung shrinks toward its parent, so a route flown three times reports something sane instead of 0% or 100%. That is the bar to beat: 0.711 AUC.",
-        "step2.h3": "<small>Step 2 · The hybrid</small>The table's answer as one feature",
-        "step2.p": "A gradient-boosted tree (HistGradientBoosting) takes the table's estimate as a single feature and learns when to disagree with it. The trap this avoids: the table has already seen the training rows' answers. So training rows are scored out of fold — split into five day-groups, each scored by a table fitted on the other four.",
-        "step3.h3": "<small>Step 3 · The previous leg</small>Where the difference actually is",
-        "step3.p": "Every aircraft is tracked by its airframe hex (icao24) to compute two things: how long it sat on the ground, and how late the flight that brought it in was. 46% of European delay minutes come from that chain. A schedule-only model is structurally blind to it.",
-        "how.eyebrow": "Honest measurement",
-        "how.h2": "Train on May–June, test blind on July.",
-        "how.text": "The split is by date, not random. A random split scatters two flights from the same day across train and test; that day's weather and congestion leak from one to the other and the result looks better than it is. Every number below is from 22,675 July flights the model never saw.",
-        "fig1.h3": "What each feature added",
-        "t1.c0": "Model",
-        "t1.c3": "Lift",
-        "t1.r1": "Lookup table (the bar)",
-        "t1.r2": "Hybrid tree",
-        "t1.r3": "+ turnaround time",
-        "t1.r4": "+ inbound flight's delay",
-        "fig1.p": "The tree on its own gains little: 0.711 → 0.716. The real jump arrives with the aircraft's previous leg. The gain comes from measuring the right mechanism, not from \"machine learning\".",
-        "fig2.h3": "What the model actually sees",
-        "t2.c0": "Turnaround",
-        "t2.c1": "Flights",
-        "t2.c2": "Really late",
-        "t2.c3": "Table says",
-        "t2.c4": "Model says",
-        "t2.r1": "under 60 min",
-        "t2.r3": "90 min and over",
-        "fig2.p": "One table tells the whole story. 56.6% of flights whose aircraft had under 60 minutes on the ground really do leave late — the lookup table says 20.7%, because it looks at that flight's history, not at that day's aircraft. The model reaches 48.8%. Still under-calling it, but pointed the right way.",
-        "fig3.h3": "Two real flights",
-        "c1.h": "TK1045 → Bucharest · 25 July, 18:00",
-        "c1.p": "The lookup table called this one safe: <strong>5.3%</strong>. That flight number had almost never been late. But the airframe due to fly it landed in Istanbul <strong>57 minutes late</strong>, with only <strong>24 minutes</strong> scheduled on the ground.",
-        "c1.v": "The model said <strong>84.6%</strong>. It left <strong>56 minutes</strong> late.",
-        "c2.h": "A46070 → Mineralnye Vody · 19 July, 21:00",
-        "c2.p": "The other direction. This route's history is bad, so the lookup table raised the alarm at <strong>43.8%</strong>. But that evening's aircraft had landed on time and had <strong>92 minutes</strong> on the ground.",
-        "c2.v": "The model said <strong>9.6%</strong>. It left on time.",
-        "fig3.p": "Both show the same thing: the lookup table knows a flight's <em>reputation</em>, the model knows that day's <em>aircraft</em>. Most delay comes not from reputation but from a chain that broke that morning.",
-        "limits.eyebrow": "Honest limitations",
-        "limits.h2": "Where the model does not work.",
-        "lim.1": "<strong>A day ahead, this model is no better.</strong> Measured: a turnaround becomes known a median of 2.3 hours before departure, and <strong>0% of them 24 hours ahead</strong>. Since the model's entire advantage comes from those two features, scoring tomorrow's board leaves 0.716 — barely above the bar's 0.711. That is why the live board still uses the lookup table. The fix is not to put the model on the board, but to re-score the board through the day.",
-        "lim.2": "<strong>The inbound delay sits at the noise floor.</strong> A single run shows +0.003; measured across four random seeds it averages <strong>+0.002</strong> and goes negative on one of the four. The baseline's own seed spread (0.0027) is larger than the effect. I kept the feature because it is the right mechanism — but it cannot be presented as a gain.",
-        "lim.3": "<strong>I can only identify 34% of the aircraft.</strong> Turnaround exists only for flights whose airframe I catch on ADS-B. OpenSky sees ~554 departure movements a day against ~877 scheduled departures, so even perfect matching stops at 63%.",
-        "lim.4": "<strong>Weather is not learnable yet.</strong> The training months contain five thunderstorm hours in total, and in those the delay rate ran normal. A model cannot learn an effect its sample does not contain. At IST winter brings 10x the fog and 10x the sub-3km visibility — February is the worst month, not December. So the weather terms wait for winter.",
-        "lim.5": "<strong>It says whether, not how long.</strong> Delay in minutes exists on only 28% of rows. The late/on-time label is complete, but \"45 minutes or 3 hours\" is unanswerable on most of them.",
-        "lim.next": "These are measured limits, not guesses. Knowing where a model fails is as much a result as knowing where it works.",
-        "cta.eyebrow": "The working half",
-        "cta.h2": "The departure delay board.",
-        "cta.text": "The part running live today: every scheduled departure for tomorrow, scored against its own history, then compared with what actually happened by the end of the day. Because of the limitation above, the board uses the lookup table for now — and shows its own scoreboard openly.",
-        "cta.btn": "Open the live board →",
-        "cta.btn2": "How the pipeline works",
-        "footer.p": "Data: my own IST dataset (aviationstack + OpenSky + METAR) · Python, pandas, scikit-learn",
-      };
-    </script>
   </body>
 </html>

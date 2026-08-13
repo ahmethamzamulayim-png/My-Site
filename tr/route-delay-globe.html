@@ -1,23 +1,23 @@
 <!doctype html>
-<html lang="en">
+<html lang="tr">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Route Delay Globe | Ahmet Hamza Mülayim</title>
-    <meta name="description" content="The 20 highest delay-risk routes out of Istanbul, plotted on a 3D globe — from the real IST dataset." />
+    <title>Rota Rötar Küresi | Ahmet Hamza Mülayim</title>
+    <meta name="description" content="İstanbul'dan en yüksek rötar riskiyle uçan 20 rota, 3B küre üzerinde — gerçek IST veri setinden." />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e81932'/%3E%3Ctext x='32' y='45' font-size='38' font-family='sans-serif' font-weight='700' text-anchor='middle' fill='%23fff'%3EA%3C/text%3E%3C/svg%3E" />
-    <link rel="canonical" href="https://ahmethmzamlym.engineer/route-delay-globe" />
+    <link rel="canonical" href="https://ahmethmzamlym.engineer/tr/route-delay-globe" />
     <link rel="alternate" hreflang="en" href="https://ahmethmzamlym.engineer/route-delay-globe" />
     <link rel="alternate" hreflang="tr" href="https://ahmethmzamlym.engineer/tr/route-delay-globe" />
     <link rel="alternate" hreflang="x-default" href="https://ahmethmzamlym.engineer/route-delay-globe" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Route Delay Globe | Ahmet Hamza Mülayim" />
-    <meta property="og:description" content="The 20 highest delay-risk routes out of Istanbul, plotted on a 3D globe — from the real IST dataset." />
-    <meta property="og:url" content="https://ahmethmzamlym.engineer/route-delay-globe" />
+    <meta property="og:title" content="Rota Rötar Küresi | Ahmet Hamza Mülayim" />
+    <meta property="og:description" content="İstanbul'dan en yüksek rötar riskiyle uçan 20 rota, 3B küre üzerinde — gerçek IST veri setinden." />
+    <meta property="og:url" content="https://ahmethmzamlym.engineer/tr/route-delay-globe" />
     <meta property="og:image" content="https://ahmethmzamlym.engineer/assets/img/og/route-delay-globe.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Route Delay Globe | Ahmet Hamza Mülayim" />
+    <meta property="og:image:alt" content="Rota Rötar Küresi | Ahmet Hamza Mülayim" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content="https://ahmethmzamlym.engineer/assets/img/og/route-delay-globe.jpg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -193,9 +193,9 @@
       {
         "@context": "https://schema.org",
         "@type": "CreativeWork",
-        "headline": "Route Delay Globe",
-        "description": "The 20 highest delay-risk routes out of Istanbul, plotted on a 3D globe — from the real IST dataset.",
-        "url": "https://ahmethmzamlym.engineer/route-delay-globe",
+        "headline": "Rota Rötar Küresi",
+        "description": "İstanbul'dan en yüksek rötar riskiyle uçan 20 rota, 3B küre üzerinde — gerçek IST veri setinden.",
+        "url": "https://ahmethmzamlym.engineer/tr/route-delay-globe",
         "image": "https://ahmethmzamlym.engineer/assets/img/og/route-delay-globe.jpg",
         "datePublished": "2026-07-28",
         "author": {
@@ -203,7 +203,7 @@
           "name": "Ahmet Hamza Mülayim",
           "url": "https://ahmethmzamlym.engineer/"
         },
-        "inLanguage": "en"
+        "inLanguage": "tr"
       }
     </script>
   </head>
@@ -213,28 +213,28 @@
     <div id="tip"></div>
 
     <header class="site-header">
-      <a class="brand" href="/">
+      <a class="brand" href="/tr/">
         <span class="brand-mark">A</span>
         <span>
-          <strong>Route delay globe</strong>
-          <small>from the IST dataset · 2026-05-01–07-28</small>
+          <strong>Rota rötar küresi</strong>
+          <small>IST veri setinden · 2026-05-01–07-28</small>
         </span>
       </a>
       <nav class="site-nav">
-        <a href="/phase2">← Phase 2</a>
-        <a class="lang-toggle" href="/tr/route-delay-globe">TR</a>
+        <a href="/tr/phase2">← Aşama 2</a>
+        <a class="lang-toggle" href="/route-delay-globe">EN</a>
       </nav>
     </header>
 
     <aside class="globe-panel">
       <h1 class="sr-only">Rota Rötar Küresi</h1>
-      <p class="eyebrow">Highest delay risk · departing IST · Jul 2026</p>
-      <div class="big-count"><span id="count">20</span><small>routes (≥20 passenger flights, cargo excluded)</small></div>
+      <p class="eyebrow">En yüksek rötar riski · IST çıkışlı · Temmuz 2026</p>
+      <div class="big-count"><span id="count">20</span><small>rota (≥20 yolcu uçuşu, kargo hariç)</small></div>
       <div class="ramp"></div>
-      <div class="ramp-labels"><span>lower risk</span><span>higher risk</span></div>
+      <div class="ramp-labels"><span>daha az riskli</span><span>daha riskli</span></div>
       <div class="catlegend" id="catlegend"></div>
       <div class="routelist" id="routelist"></div>
-      <p class="hint">Click a route in the list, or click a line on the globe, for details.</p>
+      <p class="hint">Bir rotaya tıkla veya küre üzerindeki hatta tıkla, detayları gör.</p>
     </aside>
 
     <aside class="detail" id="detail" hidden>
