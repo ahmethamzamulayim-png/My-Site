@@ -1,35 +1,35 @@
 {
- "generated_utc": "2026-08-14T16:09:55+00:00",
+ "generated_utc": "2026-08-14T18:46:01+00:00",
  "days": 105,
  "first_date": "2026-05-01",
  "last_date": "2026-08-14",
- "total_flights": 133793,
- "cargo_flights": 6583,
- "movements_tracked": 105851,
- "cross_validated": 46101,
- "delay_known": 64479,
+ "total_flights": 133866,
+ "cargo_flights": 6586,
+ "movements_tracked": 106067,
+ "cross_validated": 46142,
+ "delay_known": 64549,
  "median_delay": 0.0,
  "median_when_delayed": 31.0,
  "delay_hist": [
   {
    "bin": "<15",
-   "count": 56980
+   "count": 57045
   },
   {
    "bin": "15–30",
-   "count": 3678
+   "count": 3680
   },
   {
    "bin": "30–60",
-   "count": 2370
+   "count": 2372
   },
   {
    "bin": "60+",
-   "count": 1451
+   "count": 1452
   }
  ],
- "delayed_15": 7499,
- "ontime": 56980,
+ "delayed_15": 7504,
+ "ontime": 57045,
  "pct_delayed": 11.6,
  "pct_ontime": 88.4,
  "recent": {
@@ -1558,7 +1558,7 @@
   },
   {
    "date": "2026-08-12",
-   "movements": 1798,
+   "movements": 1919,
    "flights": 95,
    "flew": 90,
    "delayed": 11,
@@ -1574,21 +1574,21 @@
   {
    "date": "2026-08-13",
    "movements": 1955,
-   "flights": 13,
-   "flew": 11,
-   "delayed": 0,
-   "ontime": 11,
+   "flights": 86,
+   "flew": 81,
+   "delayed": 5,
+   "ontime": 76,
    "cancelled": 2,
    "median_delay": 0.0,
-   "median_when_delayed": null,
-   "avg_dep_delay": null,
+   "median_when_delayed": 56.0,
+   "avg_dep_delay": 14.3,
    "metars": 48,
-   "conversion": 0.163,
-   "scored": 11
+   "conversion": 0.593,
+   "scored": 81
   },
   {
    "date": "2026-08-14",
-   "movements": 423,
+   "movements": 518,
    "flights": 7,
    "flew": 4,
    "delayed": 0,
@@ -1597,11 +1597,11 @@
    "median_delay": 0.0,
    "median_when_delayed": null,
    "avg_dep_delay": null,
-   "metars": 32,
+   "metars": 37,
    "conversion": 0.095,
    "scored": 4
   }
  ],
- "latest_metar": "METAR LTFM 141550Z 06024KT 9999 SCT032 25/14 Q1017 NOSIG",
- "match_rate": 0.012
+ "latest_metar": "METAR LTFM 141820Z 05022KT 9999 SCT032 23/12 Q1017 NOSIG",
+ "match_rate": 0.01
 }
