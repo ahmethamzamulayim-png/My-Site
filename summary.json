@@ -1,19 +1,19 @@
 {
- "generated_utc": "2026-08-14T13:49:24+00:00",
+ "generated_utc": "2026-08-14T16:09:55+00:00",
  "days": 105,
  "first_date": "2026-05-01",
  "last_date": "2026-08-14",
- "total_flights": 133790,
+ "total_flights": 133793,
  "cargo_flights": 6583,
- "movements_tracked": 104491,
- "cross_validated": 46098,
- "delay_known": 64476,
+ "movements_tracked": 105851,
+ "cross_validated": 46101,
+ "delay_known": 64479,
  "median_delay": 0.0,
  "median_when_delayed": 31.0,
  "delay_hist": [
   {
    "bin": "<15",
-   "count": 56977
+   "count": 56980
   },
   {
    "bin": "15–30",
@@ -29,7 +29,7 @@
   }
  ],
  "delayed_15": 7499,
- "ontime": 56977,
+ "ontime": 56980,
  "pct_delayed": 11.6,
  "pct_ontime": 88.4,
  "recent": {
@@ -1573,22 +1573,22 @@
   },
   {
    "date": "2026-08-13",
-   "movements": 662,
-   "flights": 10,
-   "flew": 8,
+   "movements": 1955,
+   "flights": 13,
+   "flew": 11,
    "delayed": 0,
-   "ontime": 8,
+   "ontime": 11,
    "cancelled": 2,
    "median_delay": 0.0,
    "median_when_delayed": null,
    "avg_dep_delay": null,
    "metars": 48,
-   "conversion": 0.125,
-   "scored": 8
+   "conversion": 0.163,
+   "scored": 11
   },
   {
    "date": "2026-08-14",
-   "movements": 356,
+   "movements": 423,
    "flights": 7,
    "flew": 4,
    "delayed": 0,
@@ -1597,11 +1597,11 @@
    "median_delay": 0.0,
    "median_when_delayed": null,
    "avg_dep_delay": null,
-   "metars": 21,
+   "metars": 32,
    "conversion": 0.095,
    "scored": 4
   }
  ],
- "latest_metar": "METAR LTFM 141020Z 08018KT 9999 BKN032 26/15 Q1017 NOSIG",
- "match_rate": 0.014
+ "latest_metar": "METAR LTFM 141550Z 06024KT 9999 SCT032 25/14 Q1017 NOSIG",
+ "match_rate": 0.012
 }
