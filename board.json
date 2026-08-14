@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-08-14T05:10:41+00:00",
+ "generated_utc": "2026-08-14T07:55:06+00:00",
  "airport": "IST",
  "board_date": "2026-08-14",
  "window_start_utc": "2026-08-13T13:00:00+00:00",
@@ -22,16 +22,16 @@
   "model": 0.742
  },
  "model_trained": {
-  "trained_rows": 64474,
+  "trained_rows": 64475,
   "trained_through": "2026-08-14"
  },
  "scoreboard": {
-  "resolved": 253,
+  "resolved": 254,
   "total": 514,
   "late": 28,
-  "ontime": 225,
-  "mean_predicted": 0.106,
-  "actual_rate": 0.1107,
+  "ontime": 226,
+  "mean_predicted": 0.1056,
+  "actual_rate": 0.1102,
   "window_days": 14
  },
  "hourly": [
@@ -1281,7 +1281,7 @@
    "median_late": 30,
    "median_from": "route",
    "hour_rate": 0.1079,
-   "actual": null,
+   "actual": "ontime",
    "actual_delay": null,
    "tier": "lookup",
    "turnaround_min": null,
