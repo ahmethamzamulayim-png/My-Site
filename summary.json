@@ -1,11 +1,11 @@
 {
- "generated_utc": "2026-08-15T03:58:09+00:00",
+ "generated_utc": "2026-08-15T07:02:34+00:00",
  "days": 106,
  "first_date": "2026-05-01",
  "last_date": "2026-08-15",
  "total_flights": 133876,
  "cargo_flights": 6587,
- "movements_tracked": 106209,
+ "movements_tracked": 106310,
  "cross_validated": 46149,
  "delay_known": 64555,
  "median_delay": 0.0,
@@ -1588,7 +1588,7 @@
   },
   {
    "date": "2026-08-14",
-   "movements": 626,
+   "movements": 649,
    "flights": 7,
    "flew": 4,
    "delayed": 0,
@@ -1603,7 +1603,7 @@
   },
   {
    "date": "2026-08-15",
-   "movements": 34,
+   "movements": 112,
    "flights": 10,
    "flew": 6,
    "delayed": 0,
@@ -1612,11 +1612,11 @@
    "median_delay": 0.0,
    "median_when_delayed": null,
    "avg_dep_delay": null,
-   "metars": 8,
+   "metars": 14,
    "conversion": 0.175,
    "scored": 6
   }
  ],
- "latest_metar": "METAR LTFM 150350Z 07016KT 9999 BKN032 23/13 Q1015 RESHRA NOSIG",
- "match_rate": 0.206
+ "latest_metar": "METAR LTFM 150650Z 07017KT 9999 BKN032 23/16 Q1015 RESHRA NOSIG",
+ "match_rate": 0.062
 }
