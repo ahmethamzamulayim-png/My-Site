@@ -1,11 +1,11 @@
 {
- "generated_utc": "2026-08-16T18:45:52+00:00",
+ "generated_utc": "2026-08-16T18:51:06+00:00",
  "days": 107,
  "first_date": "2026-05-01",
  "last_date": "2026-08-16",
  "total_flights": 134074,
  "cargo_flights": 6601,
- "movements_tracked": 110278,
+ "movements_tracked": 110279,
  "cross_validated": 46269,
  "delay_known": 64737,
  "median_delay": 0.0,
@@ -1618,7 +1618,7 @@
   },
   {
    "date": "2026-08-16",
-   "movements": 523,
+   "movements": 524,
    "flights": 10,
    "flew": 7,
    "delayed": 0,
