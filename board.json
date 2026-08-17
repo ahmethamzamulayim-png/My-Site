@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-08-17T04:07:58+00:00",
+ "generated_utc": "2026-08-17T07:27:53+00:00",
  "airport": "IST",
  "board_date": "2026-08-17",
  "window_start_utc": "2026-08-16T13:05:00+00:00",
@@ -9,12 +9,13 @@
  "late_threshold_min": 15,
  "baseline": 0.1164,
  "trained_on": {
-  "flights": 64737,
+  "flights": 64739,
   "days": 105,
   "through": "2026-08-16"
  },
  "tiers": {
-  "lookup": 66
+  "model": 1,
+  "lookup": 65
  },
  "tier_auc": {
   "lookup": 0.711,
@@ -22,16 +23,16 @@
   "model": 0.742
  },
  "model_trained": {
-  "trained_rows": 64738,
+  "trained_rows": 64740,
   "trained_through": "2026-08-17"
  },
  "scoreboard": {
-  "resolved": 335,
+  "resolved": 337,
   "total": 702,
   "late": 32,
-  "ontime": 303,
-  "mean_predicted": 0.1038,
-  "actual_rate": 0.0955,
+  "ontime": 305,
+  "mean_predicted": 0.1036,
+  "actual_rate": 0.095,
   "window_days": 14
  },
  "hourly": [
@@ -52,13 +53,13 @@
   },
   {
    "h": 3,
-   "pct": 0.1238,
-   "n": 622
+   "pct": 0.1236,
+   "n": 623
   },
   {
    "h": 4,
-   "pct": 0.1101,
-   "n": 563
+   "pct": 0.1099,
+   "n": 564
   },
   {
    "h": 5,
@@ -175,7 +176,7 @@
    "flight": "A46070",
    "dest": "URMM",
    "airline": "Azimuth",
-   "risk": 0.3126,
+   "risk": 0.2511,
    "basis": "flight",
    "n": 60,
    "median_late": 55,
@@ -183,8 +184,9 @@
    "hour_rate": 0.1512,
    "actual": null,
    "actual_delay": null,
-   "tier": "lookup",
-   "turnaround_min": null,
+   "lookup_risk": 0.3126,
+   "tier": "model",
+   "turnaround_min": 1109,
    "inbound_delay_min": null
   },
   {
@@ -1340,7 +1342,7 @@
    "n": 20,
    "median_late": 84,
    "median_from": "route",
-   "hour_rate": 0.1238,
+   "hour_rate": 0.1236,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
@@ -1360,7 +1362,7 @@
    "n": 85,
    "median_late": 44,
    "median_from": "flight",
-   "hour_rate": 0.1238,
+   "hour_rate": 0.1236,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
@@ -1380,7 +1382,7 @@
    "n": 38,
    "median_late": 45,
    "median_from": "destination",
-   "hour_rate": 0.1238,
+   "hour_rate": 0.1236,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
@@ -1400,7 +1402,7 @@
    "n": 37,
    "median_late": 26,
    "median_from": "route",
-   "hour_rate": 0.1238,
+   "hour_rate": 0.1236,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
@@ -1420,7 +1422,7 @@
    "n": 102,
    "median_late": 24,
    "median_from": "destination",
-   "hour_rate": 0.1238,
+   "hour_rate": 0.1236,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
@@ -1440,7 +1442,7 @@
    "n": 92,
    "median_late": 30,
    "median_from": "route",
-   "hour_rate": 0.1238,
+   "hour_rate": 0.1236,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
@@ -1460,7 +1462,7 @@
    "n": 96,
    "median_late": 37,
    "median_from": "flight",
-   "hour_rate": 0.1101,
+   "hour_rate": 0.1099,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
@@ -1475,12 +1477,12 @@
    "flight": "TO3411",
    "dest": "LFPO",
    "airline": "Transavia France",
-   "risk": 0.0032,
+   "risk": 0.003,
    "basis": "flight+hour",
    "n": 13,
    "median_late": 32,
    "median_from": "destination",
-   "hour_rate": 0.1101,
+   "hour_rate": 0.1099,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
