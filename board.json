@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-08-17T01:58:38+00:00",
+ "generated_utc": "2026-08-17T04:07:58+00:00",
  "airport": "IST",
  "board_date": "2026-08-17",
  "window_start_utc": "2026-08-16T13:05:00+00:00",
@@ -14,8 +14,7 @@
   "through": "2026-08-16"
  },
  "tiers": {
-  "lookup": 63,
-  "hybrid": 3
+  "lookup": 66
  },
  "tier_auc": {
   "lookup": 0.711,
@@ -1436,7 +1435,7 @@
    "flight": "MS746",
    "dest": "HECA",
    "airline": "Egyptair",
-   "risk": 0.0134,
+   "risk": 0.0331,
    "basis": "flight+hour",
    "n": 92,
    "median_late": 30,
@@ -1444,8 +1443,7 @@
    "hour_rate": 0.1238,
    "actual": null,
    "actual_delay": null,
-   "lookup_risk": 0.0331,
-   "tier": "hybrid",
+   "tier": "lookup",
    "turnaround_min": null,
    "inbound_delay_min": null
   },
@@ -1457,7 +1455,7 @@
    "flight": "SU2133",
    "dest": "UUEE",
    "airline": "Aeroflot",
-   "risk": 0.3265,
+   "risk": 0.3125,
    "basis": "flight+hour",
    "n": 96,
    "median_late": 37,
@@ -1465,8 +1463,7 @@
    "hour_rate": 0.1101,
    "actual": null,
    "actual_delay": null,
-   "lookup_risk": 0.3125,
-   "tier": "hybrid",
+   "tier": "lookup",
    "turnaround_min": null,
    "inbound_delay_min": null
   },
@@ -1478,7 +1475,7 @@
    "flight": "TO3411",
    "dest": "LFPO",
    "airline": "Transavia France",
-   "risk": 0.0029,
+   "risk": 0.0032,
    "basis": "flight+hour",
    "n": 13,
    "median_late": 32,
@@ -1486,8 +1483,7 @@
    "hour_rate": 0.1101,
    "actual": null,
    "actual_delay": null,
-   "lookup_risk": 0.0032,
-   "tier": "hybrid",
+   "tier": "lookup",
    "turnaround_min": null,
    "inbound_delay_min": null
   }
