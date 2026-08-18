@@ -1,11 +1,11 @@
 {
- "generated_utc": "2026-08-18T19:03:09+00:00",
+ "generated_utc": "2026-08-18T21:42:52+00:00",
  "days": 109,
  "first_date": "2026-05-01",
  "last_date": "2026-08-18",
  "total_flights": 134284,
  "cargo_flights": 6609,
- "movements_tracked": 111753,
+ "movements_tracked": 111760,
  "cross_validated": 46322,
  "delay_known": 64937,
  "median_delay": 0.0,
@@ -1648,7 +1648,7 @@
   },
   {
    "date": "2026-08-18",
-   "movements": 20,
+   "movements": 27,
    "flights": 2,
    "flew": 2,
    "delayed": 0,
@@ -1657,11 +1657,11 @@
    "median_delay": 0.0,
    "median_when_delayed": null,
    "avg_dep_delay": null,
-   "metars": 37,
+   "metars": 43,
    "conversion": 0.026,
    "scored": 2
   }
  ],
- "latest_metar": "METAR LTFM 181820Z 19006KT CAVOK 26/06 Q1008 NOSIG",
- "match_rate": 0.1
+ "latest_metar": "METAR LTFM 182120Z 19007KT CAVOK 23/08 Q1009 NOSIG",
+ "match_rate": 0.074
 }
