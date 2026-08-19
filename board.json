@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-08-19T01:57:07+00:00",
+ "generated_utc": "2026-08-19T04:04:53+00:00",
  "airport": "IST",
  "board_date": "2026-08-19",
  "window_start_utc": "2026-08-18T13:05:00+00:00",
@@ -14,8 +14,7 @@
   "through": "2026-08-18"
  },
  "tiers": {
-  "lookup": 67,
-  "hybrid": 6
+  "lookup": 73
  },
  "tier_auc": {
   "lookup": 0.711,
@@ -1516,7 +1515,7 @@
    "flight": "TU217",
    "dest": "DTTA",
    "airline": "Tunisair",
-   "risk": 0.3634,
+   "risk": 0.284,
    "basis": "flight+hour",
    "n": 31,
    "median_late": 82,
@@ -1524,8 +1523,7 @@
    "hour_rate": 0.126,
    "actual": null,
    "actual_delay": null,
-   "lookup_risk": 0.284,
-   "tier": "hybrid",
+   "tier": "lookup",
    "turnaround_min": null,
    "inbound_delay_min": null
   },
@@ -1537,7 +1535,7 @@
    "flight": "TO3415",
    "dest": "LFPO",
    "airline": "Transavia France",
-   "risk": 0.0061,
+   "risk": 0.0055,
    "basis": "flight+hour",
    "n": 7,
    "median_late": 32,
@@ -1545,8 +1543,7 @@
    "hour_rate": 0.126,
    "actual": null,
    "actual_delay": null,
-   "lookup_risk": 0.0055,
-   "tier": "hybrid",
+   "tier": "lookup",
    "turnaround_min": null,
    "inbound_delay_min": null
   },
@@ -1558,7 +1555,7 @@
    "flight": "MS746",
    "dest": "HECA",
    "airline": "Egyptair",
-   "risk": 0.0261,
+   "risk": 0.0324,
    "basis": "flight+hour",
    "n": 94,
    "median_late": 30,
@@ -1566,8 +1563,7 @@
    "hour_rate": 0.126,
    "actual": null,
    "actual_delay": null,
-   "lookup_risk": 0.0324,
-   "tier": "hybrid",
+   "tier": "lookup",
    "turnaround_min": null,
    "inbound_delay_min": null
   },
@@ -1579,7 +1575,7 @@
    "flight": "MB600",
    "dest": "EDDK",
    "airline": "Chrono Jet",
-   "risk": 0.0062,
+   "risk": 0.0434,
    "basis": "flight+hour",
    "n": 10,
    "median_late": 24,
@@ -1587,8 +1583,7 @@
    "hour_rate": 0.1103,
    "actual": null,
    "actual_delay": null,
-   "lookup_risk": 0.0434,
-   "tier": "hybrid",
+   "tier": "lookup",
    "turnaround_min": null,
    "inbound_delay_min": null
   },
@@ -1600,7 +1595,7 @@
    "flight": "SU2133",
    "dest": "UUEE",
    "airline": "Aeroflot",
-   "risk": 0.3234,
+   "risk": 0.3163,
    "basis": "flight+hour",
    "n": 98,
    "median_late": 38,
@@ -1608,8 +1603,7 @@
    "hour_rate": 0.1103,
    "actual": null,
    "actual_delay": null,
-   "lookup_risk": 0.3163,
-   "tier": "hybrid",
+   "tier": "lookup",
    "turnaround_min": null,
    "inbound_delay_min": null
   },
@@ -1621,7 +1615,7 @@
    "flight": "TO3411",
    "dest": "LFPO",
    "airline": "Transavia France",
-   "risk": 0.0061,
+   "risk": 0.003,
    "basis": "flight+hour",
    "n": 14,
    "median_late": 32,
@@ -1629,8 +1623,7 @@
    "hour_rate": 0.1103,
    "actual": null,
    "actual_delay": null,
-   "lookup_risk": 0.003,
-   "tier": "hybrid",
+   "tier": "lookup",
    "turnaround_min": null,
    "inbound_delay_min": null
   }
