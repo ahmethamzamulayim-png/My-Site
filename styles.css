@@ -22,6 +22,7 @@
   --leaf: #3e8e4e;
   --plum: #7a3e9e;
   --gold: #c98a1a;
+  --rust: #b5502e;
   --shadow: 0 24px 60px rgba(58, 40, 28, 0.12);
   --radius: 24px;
   /* the text rail: every panel is a card with 28px padding inside a 1px
@@ -547,6 +548,7 @@ textarea:focus-visible,
 .card-red { border-top-color: var(--accent); }
 .card-leaf { border-top-color: var(--leaf); }
 .card-gold { border-top-color: var(--gold); }
+.card-rust { border-top-color: var(--rust); }
 
 .card-teal .card-tag { color: var(--turquoise); }
 .card-cobalt .card-tag { color: var(--cobalt); }
@@ -554,6 +556,7 @@ textarea:focus-visible,
 .card-red .card-tag { color: var(--accent); }
 .card-leaf .card-tag { color: var(--leaf); }
 .card-gold .card-tag { color: var(--gold); }
+.card-rust .card-tag { color: var(--rust); }
 
 /* project-group sub-headings inside the Projects section (Flagship / Aviation
    Data / University project) */

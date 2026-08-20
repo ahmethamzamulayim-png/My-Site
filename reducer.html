@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pipe Reducer Generator | Ahmet Hamza Mülayim</title>
+    <meta name="description" content="A parametric CadQuery generator for ASME B16.9 pipe reducers — real B-rep STEP solids, sourced dimensions, validated against manufacturer parts." />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23b5502e'/%3E%3Ctext x='32' y='45' font-size='38' font-family='sans-serif' font-weight='700' text-anchor='middle' fill='%23fff'%3EA%3C/text%3E%3C/svg%3E" />
+    <link rel="canonical" href="https://ahmethmzamlym.engineer/reducer" />
+    <link rel="alternate" hreflang="en" href="https://ahmethmzamlym.engineer/reducer" />
+    <link rel="alternate" hreflang="tr" href="https://ahmethmzamlym.engineer/tr/reducer" />
+    <link rel="alternate" hreflang="x-default" href="https://ahmethmzamlym.engineer/reducer" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Pipe Reducer Generator | Ahmet Hamza Mülayim" />
+    <meta property="og:description" content="A parametric CadQuery generator for ASME B16.9 pipe reducers — real B-rep STEP solids, sourced dimensions, validated against manufacturer parts." />
+    <meta property="og:url" content="https://ahmethmzamlym.engineer/reducer" />
+    <meta property="og:image" content="https://ahmethmzamlym.engineer/reducer/flow-concentric.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://ahmethmzamlym.engineer/reducer/flow-concentric.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/i18n.js"></script>
+    <script defer src="/script.js"></script>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <script defer src="/reducer/configurator.js"></script>
+    <style>
+      /* page-local additions on top of the site tokens — rust/steel is this project's color */
+      .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+        margin-top: 26px;
+      }
+      .stat {
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 20px 22px;
+      }
+      .stat strong {
+        display: block;
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.9rem;
+        letter-spacing: -0.03em;
+        color: var(--rust);
+      }
+      .stat span { color: var(--muted); font-size: 0.88rem; }
+      .step-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 16px;
+        margin-top: 26px;
+      }
+      .step {
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 22px;
+      }
+      .step h3 {
+        font-family: "Space Grotesk", sans-serif;
+        letter-spacing: -0.03em;
+        margin: 0 0 10px;
+      }
+      .step h3 small {
+        display: block;
+        color: var(--rust);
+        font-size: 0.8rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+      }
+      .step p { margin: 0; color: var(--muted); font-size: 0.95rem; line-height: 1.6; }
+      .fig {
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 22px;
+        margin-top: 22px;
+      }
+      .fig h3 {
+        font-family: "Space Grotesk", sans-serif;
+        letter-spacing: -0.03em;
+        margin: 0 0 14px;
+      }
+      .fig img {
+        width: 100%;
+        height: auto;
+        border-radius: 12px;
+        border: 1px solid var(--line);
+      }
+      .fig p { color: var(--muted); font-size: 0.92rem; line-height: 1.6; margin: 14px 0 0; }
+      .limits {
+        margin: 26px 0 0;
+        padding-left: 20px;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+      .limits-next { margin: 22px 0 0; }
+
+      .configurator { margin-top: 26px; }
+      #rv-viewer {
+        width: 100%;
+        height: 420px;
+        background: #7d818a;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+      }
+      .wheel-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin-top: 20px;
+      }
+      .wheel-col label {
+        display: block;
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 8px;
+      }
+      .wheel {
+        position: relative;
+        height: 132px;
+        overflow-y: scroll;
+        scroll-snap-type: y mandatory;
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        scrollbar-width: none;
+      }
+      .wheel::-webkit-scrollbar { display: none; }
+      .wheel::before {
+        content: "";
+        position: absolute;
+        top: 44px;
+        left: 0;
+        right: 0;
+        height: 44px;
+        border-top: 1px solid var(--rust);
+        border-bottom: 1px solid var(--rust);
+        pointer-events: none;
+        z-index: 2;
+      }
+      .wheel-item {
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        scroll-snap-align: center;
+        color: var(--muted);
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1rem;
+        opacity: 0.5;
+        transition: opacity 120ms ease, color 120ms ease;
+      }
+      .wheel-item.is-selected {
+        color: var(--text);
+        opacity: 1;
+        font-weight: 700;
+      }
+      .configurator-readout {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 16px;
+        margin-top: 20px;
+      }
+      .configurator-readout div {
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 14px 16px;
+      }
+      .configurator-readout strong {
+        display: block;
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.3rem;
+        color: var(--rust);
+      }
+      .configurator-readout span { color: var(--muted); font-size: 0.8rem; }
+      .configurator .button { margin-top: 20px; }
+    </style>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Pipe Reducer Generator",
+        "description": "A parametric CadQuery generator for ASME B16.9 pipe reducers — real B-rep STEP solids, sourced dimensions, validated against manufacturer parts.",
+        "url": "https://ahmethmzamlym.engineer/reducer",
+        "datePublished": "2026-08-19",
+        "dateModified": "2026-08-19",
+        "author": {
+          "@type": "Person",
+          "name": "Ahmet Hamza Mülayim",
+          "url": "https://ahmethmzamlym.engineer/"
+        },
+        "inLanguage": "en"
+      }
+    </script>
+  </head>
+  <body>
+    <div class="noise"></div>
+    <header class="site-header">
+      <a class="brand" href="/">
+        <span class="brand-mark">A</span>
+        <span>
+          <strong>Ahmet Hamza Mülayim</strong>
+          <small>Marmara University</small>
+        </span>
+      </a>
+      <nav class="site-nav">
+        <a href="/#projects">← Portfolio</a>
+        <a href="https://github.com/ahmethamzamulayim-png/pipe-reducer-generator">GitHub →</a>
+        <a class="lang-toggle" href="/tr/reducer">TR</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">CAD Automation · Aug 2026</p>
+          <h1>A generator for pipe reducers that outputs real, weldable geometry.</h1>
+          <p class="hero-text">
+            I needed eccentric reducer models for a project and couldn't find a
+            decent free source — most of what's out there is a handful of
+            sizes, the wrong wall thickness, or a mesh pretending to be a
+            solid. So I built the thing I couldn't find: a script that takes
+            an inlet size, an outlet size, a schedule, and a type — concentric
+            or eccentric — and produces a genuine B-rep solid, exported as
+            STEP. Every dimension is sourced and cited, not guessed, and the
+            output has been checked against real manufacturer parts, not just
+            trusted on faith.
+          </p>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat"><strong>128</strong><span>parts generated across concentric + eccentric, 0 geometry failures</span></div>
+          <div class="stat"><strong>3</strong><span>real McMaster-Carr STEP files checked against — matched within the agreed tolerance</span></div>
+          <div class="stat"><strong>10–34&nbsp;mm</strong><span>straight-hub length measured on real parts — no single value holds across sizes, and that's stated, not hidden</span></div>
+          <div class="stat"><strong>±12%</strong><span>pressure-rating tolerance, driven by ASME's mill-tolerance allowance, not measurement slop</span></div>
+        </div>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Method</p>
+          <h2>Two shapes, two different ways to build a solid.</h2>
+        </div>
+        <div class="step-grid">
+          <article class="step">
+            <h3><small>Concentric</small>One revolve</h3>
+            <p>
+              A concentric reducer is a body of revolution, so it's built as a
+              single revolve of a profile around the centerline. That's not
+              just simpler — it's exact: the cone and cylinder surfaces come
+              out as genuine analytic geometry (CONE, CYLINDER in the STEP
+              file), not an approximation.
+            </p>
+          </article>
+          <article class="step">
+            <h3><small>Eccentric</small>Loft, then cut</h3>
+            <p>
+              An eccentric reducer isn't axisymmetric — there's no single axis
+              to revolve around. It's built as a loft between offset circles,
+              cut from a matching hollow loft. The transition surface comes
+              out as a NURBS patch, not a cone — there's no single apex point
+              the ruling lines share.
+            </p>
+          </article>
+          <article class="step">
+            <h3><small>Sourcing</small>Every dimension cited</h3>
+            <p>
+              Pipe OD/wall (ASME B36.10M/19M) and reducer length (ASME B16.9)
+              live in separate, cross-checked tables, joined by size and
+              schedule. Nothing is typed in from memory — every row carries
+              its source, down to the exact page or dataset it came from.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">How it got built</p>
+          <h2>Co-built, one phase at a time — bugs included.</h2>
+        </div>
+        <p class="hero-text">
+          This wasn't written in one pass. It went through gated phases —
+          prove the toolchain, one hardcoded part, real dimension data, the
+          generator, validation against real parts, a pressure rating,
+          geometry sanity checks — each one checked before moving to the
+          next. A few of the real mistakes caught along the way, because they
+          say more about how the kernel actually works than the finished code
+          does:
+        </p>
+        <ul class="limits">
+          <li><strong>Local vs. world coordinates.</strong> CadQuery's <code>revolve()</code> takes its axis in the workplane's local frame, not global coordinates. The first attempt silently revolved around the wrong axis — caught by checking the bounding box against what it should have been, not by trusting the code compiled.</li>
+          <li><strong>Booleans don't hand back what you'd expect.</strong> <code>fuse()</code> and <code>cut()</code> return a <code>Compound</code> wrapper even for a single solid, unlike <code>revolve()</code>'s bare <code>Solid</code>. A validity check written for one didn't work for the other until it unwrapped and checked what was actually inside.</li>
+          <li><strong>The flush side of an eccentric reducer isn't flat.</strong> It's tangent along one line and curves away immediately on either side — confirmed by probing the actual solid, not assumed from the construction. Real fittings work the same way; it's not a modeling shortcut.</li>
+          <li><strong>Hub length isn't one number.</strong> Three real manufacturer parts measured 7.6&nbsp;mm, 10.2&nbsp;mm, and 33.9&nbsp;mm of straight land before the taper starts — for the same nominal size range. No pattern found, so none is claimed.</li>
+        </ul>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">What's inside</p>
+          <h2>Flow through the taper, visualized.</h2>
+        </div>
+
+        <div class="fig">
+          <h3>Concentric: velocity climbs as the bore narrows</h3>
+          <img src="/reducer/flow-concentric.png" alt="SolidWorks Flow Simulation cut plot showing velocity increasing smoothly from the large end to the small end of a concentric reducer, blue to red" loading="lazy" />
+          <p>
+            Continuity says it has to: as the flow area shrinks, velocity
+            rises to match. This is exactly that — a clean, smooth gradient
+            from ~1&nbsp;m/s at the large end to ~11&nbsp;m/s at the small
+            end, no surprises.
+          </p>
+        </div>
+
+        <div class="fig">
+          <h3>Eccentric: the flush side changes the picture</h3>
+          <img src="/reducer/flow-eccentric.png" alt="SolidWorks Flow Simulation cut plot of an eccentric reducer showing velocity concentrated near the flush-side corner rather than distributed evenly" loading="lazy" />
+          <p>
+            Same idea, different shape. The eccentric offset that makes one
+            side "flush" (see the limitations below) also means the flow
+            doesn't accelerate evenly across the cross-section — velocity
+            concentrates toward one corner instead of the smooth, centered
+            gradient the concentric part shows.
+          </p>
+        </div>
+
+        <p class="hero-text" style="margin-top:22px;">
+          Worth being honest about what these are: default-mesh, first-pass
+          runs meant to show the shape of the physics, not a validated CFD
+          study. Good for the picture, not for citing a specific number.
+        </p>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Try it</p>
+          <h2>Pick a size, see it, download it.</h2>
+        </div>
+        <p class="hero-text">
+          Every combination here is one of the 128 real parts from the
+          library above — not a live, unchecked computation. The viewer mesh
+          is for looking; the actual CAD deliverable is the STEP file the
+          download button gets you.
+        </p>
+
+        <div class="configurator">
+          <model-viewer id="rv-viewer" camera-controls auto-rotate shadow-intensity="1"></model-viewer>
+
+          <div class="wheel-row">
+            <div class="wheel-col">
+              <label>Type</label>
+              <div class="wheel" id="wheel-type"></div>
+            </div>
+            <div class="wheel-col">
+              <label>Large end (DN)</label>
+              <div class="wheel" id="wheel-large"></div>
+            </div>
+            <div class="wheel-col">
+              <label>Small end (DN)</label>
+              <div class="wheel" id="wheel-small"></div>
+            </div>
+          </div>
+
+          <div class="configurator-readout">
+            <div><strong id="rv-od1">—</strong><span>Large OD (mm)</span></div>
+            <div><strong id="rv-od2">—</strong><span>Small OD (mm)</span></div>
+            <div><strong id="rv-len">—</strong><span>Length (mm)</span></div>
+            <div><strong id="rv-p">—</strong><span>Rated pressure (MPa)</span></div>
+          </div>
+
+          <a id="rv-download" class="button primary" href="#" download>Download STEP</a>
+        </div>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Disclaimer</p>
+          <h2>What this doesn't cover — on purpose, not by accident.</h2>
+        </div>
+        <p class="hero-text">
+          Worth being precise about what this section is and isn't. Within
+          what the generator actually models, nothing here has been found
+          wrong — every OD, wall, and offset checked against a real
+          manufacturer part matched, and volume/mass landed inside the
+          tolerance agreed before looking. What follows is scope: things
+          deliberately left out because no reliable source exists for them
+          yet, and a statement about fabrication-readiness — not a list of
+          mistakes.
+        </p>
+        <p class="hero-text">
+          These models are for layout and reference only. Verify against the
+          governing standard (ASME B16.9, B31.3, and the applicable material
+          spec) before using any of this for fabrication or pressure service.
+          This is student work, not a certified engineering deliverable.
+        </p>
+        <ul class="limits">
+          <li>Hub (straight-land) length isn't reliably sourced across the size range. Three real parts measured 7.6&nbsp;mm, 10.2&nbsp;mm, and 33.9&nbsp;mm — no size or type pattern found. One shared default is used everywhere; treat hub-sensitive numbers (volume, mass, center of mass) as approximate.</li>
+          <li>No weld bevel or transition fillet modeling. Real parts have both — confirmed by inspecting the manufacturer STEP files directly — but neither is sourced precisely enough to model without guessing a number.</li>
+          <li>The pressure rating (ASME B31.3, ASTM A106 Grade B) is a straight-pipe-equivalent value per end, inherited via the code's acceptance of B16.9 fittings — not a derived stress analysis of the cone itself. Single material only.</li>
+          <li>No standard, drawing, or datasheet found anywhere treats the transition's cone angle as a controlled dimension. Real manufactured parts span roughly 3° to the upper 30s° with no documented ceiling — flagged for review where a generated part sits well outside that range, not auto-rejected against an invented number.</li>
+          <li>As of this writing: the dimensioned/toleranced drawing for one size hasn't been completed, and the generator hasn't been used on an actual design yet. Both are in progress, not done.</li>
+        </ul>
+      </section>
+
+      <section class="section contact" data-reveal>
+        <div>
+          <p class="eyebrow">Get it</p>
+          <h2>Code, library, and the full audit trail.</h2>
+          <p>
+            128 STEP files, a manifest with sourced inputs and a SHA256 per
+            file, and everything needed to regenerate the library yourself.
+          </p>
+        </div>
+        <div class="contact-actions">
+          <a class="button primary" href="https://github.com/ahmethamzamulayim-png/pipe-reducer-generator">Open the repository</a>
+          <a class="button secondary" href="/#projects">Back to projects</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Python, CadQuery / OpenCascade · ASME B16.9, B36.10M/19M, B31.3</p>
+      <p id="year"></p>
+    </footer>
+
+  </body>
+</html>

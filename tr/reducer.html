@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Boru Redüksiyon Üretici | Ahmet Hamza Mülayim</title>
+    <meta name="description" content="ASME B16.9 boru redüksiyonları için parametrik bir CadQuery üretici — gerçek B-rep STEP katıları, kaynaklı boyutlar, üretici parçalarına karşı doğrulanmış." />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23b5502e'/%3E%3Ctext x='32' y='45' font-size='38' font-family='sans-serif' font-weight='700' text-anchor='middle' fill='%23fff'%3EA%3C/text%3E%3C/svg%3E" />
+    <link rel="canonical" href="https://ahmethmzamlym.engineer/tr/reducer" />
+    <link rel="alternate" hreflang="en" href="https://ahmethmzamlym.engineer/reducer" />
+    <link rel="alternate" hreflang="tr" href="https://ahmethmzamlym.engineer/tr/reducer" />
+    <link rel="alternate" hreflang="x-default" href="https://ahmethmzamlym.engineer/reducer" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Boru Redüksiyon Üretici | Ahmet Hamza Mülayim" />
+    <meta property="og:description" content="ASME B16.9 boru redüksiyonları için parametrik bir CadQuery üretici — gerçek B-rep STEP katıları, kaynaklı boyutlar, üretici parçalarına karşı doğrulanmış." />
+    <meta property="og:url" content="https://ahmethmzamlym.engineer/tr/reducer" />
+    <meta property="og:image" content="https://ahmethmzamlym.engineer/reducer/flow-concentric.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://ahmethmzamlym.engineer/reducer/flow-concentric.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/i18n.js"></script>
+    <script defer src="/script.js"></script>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <script defer src="/reducer/configurator.js"></script>
+    <style>
+      /* page-local additions on top of the site tokens — rust/steel is this project's color */
+      .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+        margin-top: 26px;
+      }
+      .stat {
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 20px 22px;
+      }
+      .stat strong {
+        display: block;
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.9rem;
+        letter-spacing: -0.03em;
+        color: var(--rust);
+      }
+      .stat span { color: var(--muted); font-size: 0.88rem; }
+      .step-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 16px;
+        margin-top: 26px;
+      }
+      .step {
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 22px;
+      }
+      .step h3 {
+        font-family: "Space Grotesk", sans-serif;
+        letter-spacing: -0.03em;
+        margin: 0 0 10px;
+      }
+      .step h3 small {
+        display: block;
+        color: var(--rust);
+        font-size: 0.8rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+      }
+      .step p { margin: 0; color: var(--muted); font-size: 0.95rem; line-height: 1.6; }
+      .fig {
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 22px;
+        margin-top: 22px;
+      }
+      .fig h3 {
+        font-family: "Space Grotesk", sans-serif;
+        letter-spacing: -0.03em;
+        margin: 0 0 14px;
+      }
+      .fig img {
+        width: 100%;
+        height: auto;
+        border-radius: 12px;
+        border: 1px solid var(--line);
+      }
+      .fig p { color: var(--muted); font-size: 0.92rem; line-height: 1.6; margin: 14px 0 0; }
+      .limits {
+        margin: 26px 0 0;
+        padding-left: 20px;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+      .limits-next { margin: 22px 0 0; }
+
+      .configurator { margin-top: 26px; }
+      #rv-viewer {
+        width: 100%;
+        height: 420px;
+        background: #7d818a;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+      }
+      .wheel-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin-top: 20px;
+      }
+      .wheel-col label {
+        display: block;
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 8px;
+      }
+      .wheel {
+        position: relative;
+        height: 132px;
+        overflow-y: scroll;
+        scroll-snap-type: y mandatory;
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        scrollbar-width: none;
+      }
+      .wheel::-webkit-scrollbar { display: none; }
+      .wheel::before {
+        content: "";
+        position: absolute;
+        top: 44px;
+        left: 0;
+        right: 0;
+        height: 44px;
+        border-top: 1px solid var(--rust);
+        border-bottom: 1px solid var(--rust);
+        pointer-events: none;
+        z-index: 2;
+      }
+      .wheel-item {
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        scroll-snap-align: center;
+        color: var(--muted);
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1rem;
+        opacity: 0.5;
+        transition: opacity 120ms ease, color 120ms ease;
+      }
+      .wheel-item.is-selected {
+        color: var(--text);
+        opacity: 1;
+        font-weight: 700;
+      }
+      .configurator-readout {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 16px;
+        margin-top: 20px;
+      }
+      .configurator-readout div {
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 14px 16px;
+      }
+      .configurator-readout strong {
+        display: block;
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.3rem;
+        color: var(--rust);
+      }
+      .configurator-readout span { color: var(--muted); font-size: 0.8rem; }
+      .configurator .button { margin-top: 20px; }
+    </style>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Boru Redüksiyon Üretici",
+        "description": "ASME B16.9 boru redüksiyonları için parametrik bir CadQuery üretici — gerçek B-rep STEP katıları, kaynaklı boyutlar, üretici parçalarına karşı doğrulanmış.",
+        "url": "https://ahmethmzamlym.engineer/tr/reducer",
+        "datePublished": "2026-08-19",
+        "dateModified": "2026-08-19",
+        "author": {
+          "@type": "Person",
+          "name": "Ahmet Hamza Mülayim",
+          "url": "https://ahmethmzamlym.engineer/"
+        },
+        "inLanguage": "tr"
+      }
+    </script>
+  </head>
+  <body>
+    <div class="noise"></div>
+    <header class="site-header">
+      <a class="brand" href="/">
+        <span class="brand-mark">A</span>
+        <span>
+          <strong>Ahmet Hamza Mülayim</strong>
+          <small>Marmara Üniversitesi</small>
+        </span>
+      </a>
+      <nav class="site-nav">
+        <a href="/#projects">← Portfolyo</a>
+        <a href="https://github.com/ahmethamzamulayim-png/pipe-reducer-generator">GitHub →</a>
+        <a class="lang-toggle" href="/reducer">EN</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">CAD Otomasyonu · Ağu 2026</p>
+          <h1>Gerçek, kaynaklanabilir geometri üreten bir boru redüksiyon üretici.</h1>
+          <p class="hero-text">
+            Bir proje için eksantrik redüksiyon modellerine ihtiyacım vardı ve
+            düzgün, ücretsiz bir kaynak bulamadım — piyasada olanların çoğu
+            birkaç ölçüyle sınırlı, yanlış et kalınlığına sahip ya da katı
+            görünen ama aslında mesh olan dosyalardı. Ben de bulamadığım şeyi
+            yaptım: bir giriş ölçüsü, bir çıkış ölçüsü, bir şedül ve bir tip —
+            konsantrik ya da eksantrik — alıp gerçek bir B-rep katı üreten ve
+            STEP olarak dışa aktaran bir script. Her boyut kaynaklı ve
+            referanslı, tahmin edilmiş değil; ve çıktı sadece güvenilerek değil,
+            gerçek üretici parçalarına karşı kontrol edilerek doğrulandı.
+          </p>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat"><strong>128</strong><span>konsantrik + eksantrik toplamında üretilen parça, 0 geometri hatası</span></div>
+          <div class="stat"><strong>3</strong><span>karşılaştırılan gerçek McMaster-Carr STEP dosyası — üzerinde anlaşılan tolerans içinde eşleşti</span></div>
+          <div class="stat"><strong>10–34&nbsp;mm</strong><span>gerçek parçalarda ölçülen düz boyun uzunluğu — tüm ölçülerde geçerli tek bir değer yok, ve bu gizlenmiyor</span></div>
+          <div class="stat"><strong>±%12</strong><span>basınç değeri toleransı — ölçüm hatasından değil, ASME'nin fabrikasyon toleransından kaynaklanıyor</span></div>
+        </div>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Yöntem</p>
+          <h2>İki şekil, bir katı oluşturmanın iki farklı yolu.</h2>
+        </div>
+        <div class="step-grid">
+          <article class="step">
+            <h3><small>Konsantrik</small>Tek bir revolve</h3>
+            <p>
+              Konsantrik bir redüksiyon bir dönel cisimdir, bu yüzden merkez
+              eksen etrafında tek bir profil döndürülerek (revolve) oluşturulur.
+              Bu sadece daha basit değil — aynı zamanda kesindir: koni ve
+              silindir yüzeyleri STEP dosyasında gerçek analitik geometri
+              (CONE, CYLINDER) olarak çıkar, bir yaklaşıklık olarak değil.
+            </p>
+          </article>
+          <article class="step">
+            <h3><small>Eksantrik</small>Loft, sonra kes</h3>
+            <p>
+              Eksantrik bir redüksiyon eksenel simetrik değildir — etrafında
+              döndürülecek tek bir eksen yoktur. Ofsetli daireler arasında bir
+              loft olarak, eşleşen boş bir loft'tan kesilerek oluşturulur.
+              Geçiş yüzeyi bir koni değil, bir NURBS yaması olarak çıkar —
+              kılavuz çizgilerin paylaştığı tek bir tepe noktası yoktur.
+            </p>
+          </article>
+          <article class="step">
+            <h3><small>Kaynak</small>Her boyut referanslı</h3>
+            <p>
+              Boru dış çapı/et kalınlığı (ASME B36.10M/19M) ve redüksiyon
+              uzunluğu (ASME B16.9) ayrı, çapraz kontrolü yapılmış tablolarda
+              yaşar; ölçü ve şedüle göre birleştirilir. Hiçbir şey hafızadan
+              yazılmadı — her satır, geldiği kaynağı tam sayfasına ya da veri
+              setine kadar taşır.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Nasıl inşa edildi</p>
+          <h2>Birlikte, faz faz inşa edildi — hatalar dahil.</h2>
+        </div>
+        <p class="hero-text">
+          Bu tek seferde yazılmadı. Kapılı fazlardan geçti — araç zincirini
+          kanıtla, sabit kodlanmış tek bir parça, gerçek boyut verisi, üretici,
+          gerçek parçalara karşı doğrulama, bir basınç değeri, geometri sağlık
+          kontrolleri — her biri bir sonrakine geçmeden önce kontrol edildi.
+          Yol boyunca yakalanan birkaç gerçek hata, çünkü bunlar bitmiş koddan
+          çok, kernel'in gerçekte nasıl çalıştığı hakkında bir şeyler söylüyor:
+        </p>
+        <ul class="limits">
+          <li><strong>Yerel ve global koordinatlar.</strong> CadQuery'nin <code>revolve()</code> fonksiyonu eksenini çalışma düzleminin yerel çerçevesinde alır, global koordinatlarda değil. İlk deneme sessizce yanlış eksen etrafında döndü — bu, kodun derlendiğine güvenilerek değil, sınırlayıcı kutunun olması gerekenle karşılaştırılmasıyla yakalandı.</li>
+          <li><strong>Boole işlemleri beklediğinizi geri vermez.</strong> <code>fuse()</code> ve <code>cut()</code>, <code>revolve()</code>'un çıplak bir <code>Solid</code> döndürmesinin aksine, tek bir katı için bile bir <code>Compound</code> sarmalayıcısı döndürür. Biri için yazılan bir geçerlilik kontrolü, açılıp içinde gerçekte ne olduğu kontrol edilene kadar diğeri için çalışmadı.</li>
+          <li><strong>Eksantrik bir redüksiyonun düz görünen yüzü aslında düz değil.</strong> Tek bir çizgi boyunca teğettir ve her iki yanında hemen kavis yapar — bu, yapıdan varsayılarak değil, gerçek katı problanarak doğrulandı. Gerçek parçalar da aynı şekilde çalışır; bu bir modelleme kestirmesi değil.</li>
+          <li><strong>Boyun uzunluğu tek bir sayı değil.</strong> Üç gerçek üretici parçası, koninin başlamasından önce 7.6&nbsp;mm, 10.2&nbsp;mm ve 33.9&nbsp;mm düz boyun ölçtü — aynı nominal ölçü aralığı için. Bir örüntü bulunamadı, bu yüzden hiçbiri iddia edilmiyor.</li>
+        </ul>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">İçeride ne var</p>
+          <h2>Koni boyunca akış, görselleştirildi.</h2>
+        </div>
+
+        <div class="fig">
+          <h3>Konsantrik: gövde daraldıkça hız artıyor</h3>
+          <img src="/reducer/flow-concentric.png" alt="Konsantrik bir redüksiyonda büyük uçtan küçük uca hızın mavi'den kırmızıya düzgünce arttığını gösteren SolidWorks Flow Simulation kesit grafiği" loading="lazy" />
+          <p>
+            Süreklilik denklemi bunu zorunlu kılar: akış alanı daraldıkça hız
+            buna uyum sağlamak için artar. Burada tam olarak bu var — büyük
+            uçta ~1&nbsp;m/s'den küçük uçta ~11&nbsp;m/s'e temiz, düzgün bir
+            gradyan, hiçbir sürpriz yok.
+          </p>
+        </div>
+
+        <div class="fig">
+          <h3>Eksantrik: düz kenar tabloyu değiştiriyor</h3>
+          <img src="/reducer/flow-eccentric.png" alt="Bir eksantrik redüksiyonun SolidWorks Flow Simulation kesit grafiği; hızın eşit dağılmak yerine düz kenar köşesinde yoğunlaştığını gösteriyor" loading="lazy" />
+          <p>
+            Aynı fikir, farklı şekil. Bir tarafı "düz" yapan eksantrik ofset
+            (aşağıdaki sınırlamalara bakın) aynı zamanda akışın kesit boyunca
+            eşit hızlanmadığı anlamına da geliyor — hız, konsantrik parçanın
+            gösterdiği düzgün, merkezli gradyan yerine bir köşeye doğru
+            yoğunlaşıyor.
+          </p>
+        </div>
+
+        <p class="hero-text" style="margin-top:22px;">
+          Bunların ne olduğu konusunda dürüst olmakta fayda var: fiziğin
+          şeklini göstermeyi amaçlayan, varsayılan mesh ile yapılmış ilk
+          denemeler, doğrulanmış bir CFD çalışması değil. Görsel için iyi,
+          belirli bir sayıyı referans göstermek için değil.
+        </p>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Deneyin</p>
+          <h2>Bir ölçü seçin, görün, indirin.</h2>
+        </div>
+        <p class="hero-text">
+          Buradaki her kombinasyon, yukarıdaki kütüphaneden gerçek, doğrulanmış
+          128 parçadan biri — canlı, kontrolsüz bir hesaplama değil. Görüntüleyicideki
+          mesh sadece bakmak için; gerçek CAD çıktısı indirme düğmesinin
+          getirdiği STEP dosyasıdır.
+        </p>
+
+        <div class="configurator">
+          <model-viewer id="rv-viewer" camera-controls auto-rotate shadow-intensity="1"></model-viewer>
+
+          <div class="wheel-row">
+            <div class="wheel-col">
+              <label>Tip</label>
+              <div class="wheel" id="wheel-type"></div>
+            </div>
+            <div class="wheel-col">
+              <label>Büyük uç (DN)</label>
+              <div class="wheel" id="wheel-large"></div>
+            </div>
+            <div class="wheel-col">
+              <label>Küçük uç (DN)</label>
+              <div class="wheel" id="wheel-small"></div>
+            </div>
+          </div>
+
+          <div class="configurator-readout">
+            <div><strong id="rv-od1">—</strong><span>Büyük dış çap (mm)</span></div>
+            <div><strong id="rv-od2">—</strong><span>Küçük dış çap (mm)</span></div>
+            <div><strong id="rv-len">—</strong><span>Uzunluk (mm)</span></div>
+            <div><strong id="rv-p">—</strong><span>Anma basıncı (MPa)</span></div>
+          </div>
+
+          <a id="rv-download" class="button primary" href="#" download>STEP İndir</a>
+        </div>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Sorumluluk Reddi</p>
+          <h2>Bunun kapsamadığı şeyler — kazara değil, kasıtlı olarak.</h2>
+        </div>
+        <p class="hero-text">
+          Bu bölümün ne olduğu ve ne olmadığı konusunda net olmakta fayda var.
+          Üreticinin gerçekten modellediği şeyler içinde, hiçbir şeyin yanlış
+          olduğu tespit edilmedi — gerçek bir üretici parçasına karşı
+          kontrol edilen her dış çap, et kalınlığı ve ofset eşleşti, ve
+          hacim/kütle bakmadan önce üzerinde anlaşılan tolerans içinde kaldı.
+          Aşağıdakiler kapsamla ilgili: henüz güvenilir bir kaynağı olmadığı
+          için kasıtlı olarak dışarıda bırakılan şeyler, ve fabrikasyona
+          hazır olma durumu hakkında bir ifade — hata listesi değil.
+        </p>
+        <p class="hero-text">
+          Bu modeller yalnızca yerleşim ve referans amaçlıdır. Fabrikasyon
+          veya basınçlı servis için kullanmadan önce ilgili standarda (ASME
+          B16.9, B31.3 ve uygulanabilir malzeme spesifikasyonu) karşı
+          doğrulayın. Bu öğrenci çalışmasıdır, sertifikalı bir mühendislik
+          çıktısı değildir.
+        </p>
+        <ul class="limits">
+          <li>Boyun (düz bölge) uzunluğu, ölçü aralığı boyunca güvenilir şekilde kaynaklanmamıştır. Üç gerçek parça 7.6&nbsp;mm, 10.2&nbsp;mm ve 33.9&nbsp;mm ölçtü — ölçü ya da tipe bağlı bir örüntü bulunamadı. Her yerde tek, paylaşılan bir varsayılan değer kullanılıyor; boyuna duyarlı sayıları (hacim, kütle, kütle merkezi) yaklaşık olarak değerlendirin.</li>
+          <li>Kaynak pahı ya da geçiş dolgusu (fillet) modellenmemiştir. Gerçek parçalarda ikisi de var — üretici STEP dosyaları doğrudan incelenerek doğrulandı — ama ikisi de bir sayı tahmin etmeden modellenecek kadar hassas kaynaklanmamış.</li>
+          <li>Basınç değeri (ASME B31.3, ASTM A106 Grade B), kodun B16.9 bağlantı parçalarını kabul etmesi yoluyla miras alınan, her uç için düz-boru-eşdeğeri bir değerdir — koninin kendisinin türetilmiş bir gerilme analizi değildir. Yalnızca tek malzeme.</li>
+          <li>Hiçbir standart, çizim ya da veri sayfasında geçiş konisinin açısının kontrollü bir boyut olarak ele alındığı bulunamadı. Gerçek üretilmiş parçalar, belgelenmiş bir tavan olmadan kabaca 3°'den 30'lu derecelerin üstüne kadar uzanıyor — üretilen bir parça bu aralığın oldukça dışında kaldığında, uydurulmuş bir sayıya karşı otomatik reddedilmek yerine incelenmek üzere işaretlenir.</li>
+          <li>Bu yazının yazıldığı tarih itibarıyla: tek bir ölçü için boyutlandırılmış/toleranslı çizim henüz tamamlanmadı, ve üretici henüz gerçek bir tasarımda kullanılmadı. İkisi de devam ediyor, bitmiş değil.</li>
+        </ul>
+      </section>
+
+      <section class="section contact" data-reveal>
+        <div>
+          <p class="eyebrow">Edinin</p>
+          <h2>Kod, kütüphane ve tam denetim izi.</h2>
+          <p>
+            128 STEP dosyası, kaynaklı girdileri ve her dosya için bir SHA256
+            değeri olan bir manifest, ve kütüphaneyi kendiniz yeniden
+            üretmek için gereken her şey.
+          </p>
+        </div>
+        <div class="contact-actions">
+          <a class="button primary" href="https://github.com/ahmethamzamulayim-png/pipe-reducer-generator">Depoyu aç</a>
+          <a class="button secondary" href="/#projects">Projelere dön</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Python, CadQuery / OpenCascade · ASME B16.9, B36.10M/19M, B31.3</p>
+      <p id="year"></p>
+    </footer>
+
+  </body>
+</html>
