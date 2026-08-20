@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-08-20T01:55:51+00:00",
+ "generated_utc": "2026-08-20T04:04:01+00:00",
  "airport": "IST",
  "board_date": "2026-08-20",
  "window_start_utc": "2026-08-19T13:05:00+00:00",
@@ -14,8 +14,7 @@
   "through": "2026-08-18"
  },
  "tiers": {
-  "lookup": 54,
-  "hybrid": 5
+  "lookup": 59
  },
  "tier_auc": {
   "lookup": 0.711,
@@ -1256,7 +1255,7 @@
    "flight": "TU217",
    "dest": "DTTA",
    "airline": "Tunisair",
-   "risk": 0.3638,
+   "risk": 0.284,
    "basis": "flight+hour",
    "n": 31,
    "median_late": 82,
@@ -1264,8 +1263,7 @@
    "hour_rate": 0.1254,
    "actual": null,
    "actual_delay": null,
-   "lookup_risk": 0.284,
-   "tier": "hybrid",
+   "tier": "lookup",
    "turnaround_min": null,
    "inbound_delay_min": null
   },
@@ -1277,7 +1275,7 @@
    "flight": "TO3415",
    "dest": "LFPO",
    "airline": "Transavia",
-   "risk": 0.0153,
+   "risk": 0.0055,
    "basis": "flight+hour",
    "n": 7,
    "median_late": 32,
@@ -1285,8 +1283,7 @@
    "hour_rate": 0.1254,
    "actual": null,
    "actual_delay": null,
-   "lookup_risk": 0.0055,
-   "tier": "hybrid",
+   "tier": "lookup",
    "turnaround_min": null,
    "inbound_delay_min": null
   },
@@ -1298,7 +1295,7 @@
    "flight": "MS746",
    "dest": "HECA",
    "airline": "Egyptair",
-   "risk": 0.0259,
+   "risk": 0.0324,
    "basis": "flight+hour",
    "n": 94,
    "median_late": 30,
@@ -1306,8 +1303,7 @@
    "hour_rate": 0.1254,
    "actual": null,
    "actual_delay": null,
-   "lookup_risk": 0.0324,
-   "tier": "hybrid",
+   "tier": "lookup",
    "turnaround_min": null,
    "inbound_delay_min": null
   },
@@ -1319,7 +1315,7 @@
    "flight": "SU2133",
    "dest": "UUEE",
    "airline": "Aeroflot",
-   "risk": 0.359,
+   "risk": 0.3131,
    "basis": "flight+hour",
    "n": 99,
    "median_late": 38,
@@ -1327,8 +1323,7 @@
    "hour_rate": 0.1094,
    "actual": null,
    "actual_delay": null,
-   "lookup_risk": 0.3131,
-   "tier": "hybrid",
+   "tier": "lookup",
    "turnaround_min": null,
    "inbound_delay_min": null
   },
@@ -1340,7 +1335,7 @@
    "flight": "TO3411",
    "dest": "LFPO",
    "airline": "Transavia",
-   "risk": 0.0153,
+   "risk": 0.003,
    "basis": "flight+hour",
    "n": 14,
    "median_late": 32,
@@ -1348,8 +1343,7 @@
    "hour_rate": 0.1094,
    "actual": null,
    "actual_delay": null,
-   "lookup_risk": 0.003,
-   "tier": "hybrid",
+   "tier": "lookup",
    "turnaround_min": null,
    "inbound_delay_min": null
   }
