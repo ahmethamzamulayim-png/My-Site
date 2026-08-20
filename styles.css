@@ -468,9 +468,9 @@ textarea:focus-visible,
   background: rgba(232, 25, 50, 0.14);
 }
 
-.t-ugv {
+.t-reducer {
   grid-area: 3 / 1 / 4 / 2;
-  background: rgba(31, 158, 147, 0.14);
+  background: rgba(181, 80, 46, 0.15);
 }
 
 .t-rig {
@@ -536,8 +536,7 @@ textarea:focus-visible,
 }
 
 /* one çini color per project, assigned by identity (not grid position) so
-   cards can be regrouped by hierarchy without their color jumping around.
-   UGV keeps the default neutral border — deliberately, it's not a flagship. */
+   cards can be regrouped by hierarchy without their color jumping around. */
 .project-grid .card {
   border-top: 3px solid var(--line);
 }
