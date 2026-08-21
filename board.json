@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-08-21T13:16:59+00:00",
+ "generated_utc": "2026-08-21T15:53:08+00:00",
  "airport": "IST",
  "board_date": "2026-08-21",
  "window_start_utc": "2026-08-20T13:00:00+00:00",
@@ -26,12 +26,12 @@
   "trained_through": "2026-08-19"
  },
  "scoreboard": {
-  "resolved": 416,
-  "total": 860,
+  "resolved": 398,
+  "total": 821,
   "late": 48,
-  "ontime": 368,
-  "mean_predicted": 0.0981,
-  "actual_rate": 0.1154,
+  "ontime": 350,
+  "mean_predicted": 0.0968,
+  "actual_rate": 0.1206,
   "window_days": 14
  },
  "hourly": [
