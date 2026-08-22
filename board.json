@@ -1,11 +1,11 @@
 {
- "generated_utc": "2026-08-21T21:45:24+00:00",
+ "generated_utc": "2026-08-22T01:55:25+00:00",
  "airport": "IST",
  "board_date": "2026-08-22",
- "window_start_utc": "2026-08-21T21:45:13+00:00",
- "window_end_utc": "2026-08-22T09:45:13+00:00",
+ "window_start_utc": "2026-08-21T13:05:00+00:00",
+ "window_end_utc": "2026-08-22T01:05:00+00:00",
  "window_hours": 12,
- "window_mode": "upcoming",
+ "window_mode": "recent",
  "late_threshold_min": 15,
  "baseline": 0.1166,
  "trained_on": {
@@ -26,12 +26,12 @@
   "trained_through": "2026-08-20"
  },
  "scoreboard": {
-  "resolved": 447,
-  "total": 889,
+  "resolved": 436,
+  "total": 864,
   "late": 57,
-  "ontime": 390,
-  "mean_predicted": 0.0966,
-  "actual_rate": 0.1275,
+  "ontime": 379,
+  "mean_predicted": 0.0953,
+  "actual_rate": 0.1307,
   "window_days": 14
  },
  "hourly": [
