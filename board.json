@@ -1,11 +1,11 @@
 {
- "generated_utc": "2026-08-25T21:49:46+00:00",
+ "generated_utc": "2026-08-26T02:03:43+00:00",
  "airport": "IST",
  "board_date": "2026-08-26",
- "window_start_utc": "2026-08-25T21:49:34+00:00",
- "window_end_utc": "2026-08-26T09:49:34+00:00",
+ "window_start_utc": "2026-08-25T13:05:00+00:00",
+ "window_end_utc": "2026-08-26T01:05:00+00:00",
  "window_hours": 12,
- "window_mode": "upcoming",
+ "window_mode": "recent",
  "late_threshold_min": 15,
  "baseline": 0.1166,
  "trained_on": {
@@ -14,7 +14,7 @@
   "through": "2026-08-20"
  },
  "tiers": {
-  "lookup": 21
+  "lookup": 22
  },
  "tier_auc": {
   "lookup": 0.711,
@@ -26,12 +26,12 @@
   "trained_through": "2026-08-20"
  },
  "scoreboard": {
-  "resolved": 324,
-  "total": 869,
-  "late": 38,
-  "ontime": 286,
-  "mean_predicted": 0.0948,
-  "actual_rate": 0.1173,
+  "resolved": 308,
+  "total": 847,
+  "late": 35,
+  "ontime": 273,
+  "mean_predicted": 0.094,
+  "actual_rate": 0.1136,
   "window_days": 14
  },
  "hourly": [
@@ -167,6 +167,26 @@
   "lift": 3.0
  },
  "departures": [
+  {
+   "time": "00:30",
+   "hour": 0,
+   "date": "2026-08-26",
+   "scheduled_utc": "2026-08-25T21:30:00+00:00",
+   "flight": "SZ",
+   "dest": "UTDD",
+   "airline": "Somon Air",
+   "risk": 0.1587,
+   "basis": "flight",
+   "n": 14,
+   "median_late": 37,
+   "median_from": "route",
+   "hour_rate": 0.1508,
+   "actual": null,
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
+  },
   {
    "time": "02:10",
    "hour": 2,
