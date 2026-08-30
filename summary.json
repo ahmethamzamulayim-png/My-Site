@@ -1,11 +1,11 @@
 {
- "generated_utc": "2026-08-30T08:18:49+00:00",
+ "generated_utc": "2026-08-30T12:01:58+00:00",
  "days": 121,
  "first_date": "2026-05-01",
  "last_date": "2026-08-30",
  "total_flights": 135318,
  "cargo_flights": 6634,
- "movements_tracked": 111962,
+ "movements_tracked": 111965,
  "cross_validated": 46335,
  "delay_known": 65936,
  "median_delay": 0.0,
@@ -1827,6 +1827,6 @@
    "scored": 2
   }
  ],
- "latest_metar": "METAR LTFM 300750Z 36012KT 330V030 9999 SCT017 25/19 Q1017 NOSIG",
+ "latest_metar": "METAR LTFM 301150Z 34015G25KT 300V360 9999 BKN017 25/20 Q1016 NOSIG",
  "match_rate": 0.0
 }
