@@ -1,44 +1,44 @@
 {
- "generated_utc": "2026-09-01T18:38:42+00:00",
+ "generated_utc": "2026-09-01T18:45:55+00:00",
  "days": 123,
  "first_date": "2026-05-01",
  "last_date": "2026-09-01",
- "total_flights": 135511,
- "cargo_flights": 6642,
+ "total_flights": 135596,
+ "cargo_flights": 6649,
  "movements_tracked": 112028,
- "cross_validated": 46336,
- "delay_known": 66120,
+ "cross_validated": 46340,
+ "delay_known": 66197,
  "median_delay": 0.0,
  "median_when_delayed": 31.0,
  "delay_hist": [
   {
    "bin": "<15",
-   "count": 58335
+   "count": 58406
   },
   {
    "bin": "15–30",
-   "count": 3810
+   "count": 3814
   },
   {
    "bin": "30–60",
-   "count": 2450
+   "count": 2452
   },
   {
    "bin": "60+",
    "count": 1525
   }
  ],
- "delayed_15": 7785,
- "ontime": 58335,
+ "delayed_15": 7791,
+ "ontime": 58406,
  "pct_delayed": 11.8,
  "pct_ontime": 88.2,
  "recent": {
   "days": 14,
-  "first_date": "2026-08-14",
-  "last_date": "2026-08-28",
-  "flights": 1389,
-  "delayed_15": 242,
-  "pct_delayed": 17.4
+  "first_date": "2026-08-15",
+  "last_date": "2026-08-29",
+  "flights": 1397,
+  "delayed_15": 254,
+  "pct_delayed": 18.2
  },
  "daily": [
   {
@@ -1840,6 +1840,21 @@
    "metars": 48,
    "conversion": 0.728,
    "scored": 102
+  },
+  {
+   "date": "2026-08-31",
+   "movements": 27,
+   "flights": 85,
+   "flew": 77,
+   "delayed": 6,
+   "ontime": 71,
+   "cancelled": 1,
+   "median_delay": 0.0,
+   "median_when_delayed": 27.0,
+   "avg_dep_delay": 9.4,
+   "metars": 48,
+   "conversion": 0.574,
+   "scored": 77
   }
  ],
  "latest_metar": "METAR LTFM 011820Z 08008KT CAVOK 24/18 Q1017 NOSIG",
