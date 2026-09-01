@@ -1,11 +1,11 @@
 {
- "generated_utc": "2026-09-01T18:45:55+00:00",
+ "generated_utc": "2026-09-01T23:23:38+00:00",
  "days": 123,
  "first_date": "2026-05-01",
  "last_date": "2026-09-01",
  "total_flights": 135596,
  "cargo_flights": 6649,
- "movements_tracked": 112028,
+ "movements_tracked": 112031,
  "cross_validated": 46340,
  "delay_known": 66197,
  "median_delay": 0.0,
@@ -1857,6 +1857,6 @@
    "scored": 77
   }
  ],
- "latest_metar": "METAR LTFM 011820Z 08008KT CAVOK 24/18 Q1017 NOSIG",
+ "latest_metar": "METAR LTFM 012250Z 10004KT 060V130 CAVOK 22/18 Q1017 NOSIG",
  "match_rate": 0.0
 }
