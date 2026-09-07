@@ -1,35 +1,35 @@
 {
- "generated_utc": "2026-09-07T12:46:13+00:00",
+ "generated_utc": "2026-09-07T18:45:42+00:00",
  "days": 129,
  "first_date": "2026-05-01",
  "last_date": "2026-09-07",
- "total_flights": 135780,
- "cargo_flights": 6661,
- "movements_tracked": 115652,
- "cross_validated": 46406,
- "delay_known": 66360,
+ "total_flights": 135849,
+ "cargo_flights": 6665,
+ "movements_tracked": 115794,
+ "cross_validated": 46432,
+ "delay_known": 66425,
  "median_delay": 0.0,
  "median_when_delayed": 31.0,
  "delay_hist": [
   {
    "bin": "<15",
-   "count": 58547
+   "count": 58598
   },
   {
    "bin": "15–30",
-   "count": 3826
+   "count": 3833
   },
   {
    "bin": "30–60",
-   "count": 2457
+   "count": 2464
   },
   {
    "bin": "60+",
    "count": 1530
   }
  ],
- "delayed_15": 7813,
- "ontime": 58547,
+ "delayed_15": 7827,
+ "ontime": 58598,
  "pct_delayed": 11.8,
  "pct_ontime": 88.2,
  "recent": {
@@ -1903,7 +1903,7 @@
   },
   {
    "date": "2026-09-05",
-   "movements": 438,
+   "movements": 453,
    "flights": 87,
    "flew": 79,
    "delayed": 11,
@@ -1919,21 +1919,21 @@
   {
    "date": "2026-09-06",
    "movements": 1339,
-   "flights": 9,
-   "flew": 7,
-   "delayed": 0,
-   "ontime": 7,
+   "flights": 78,
+   "flew": 72,
+   "delayed": 14,
+   "ontime": 58,
    "cancelled": 1,
    "median_delay": 0.0,
-   "median_when_delayed": null,
-   "avg_dep_delay": null,
+   "median_when_delayed": 25.0,
+   "avg_dep_delay": 16.0,
    "metars": 48,
-   "conversion": 0.12,
-   "scored": 7
+   "conversion": 0.538,
+   "scored": 72
   },
   {
    "date": "2026-09-07",
-   "movements": 186,
+   "movements": 313,
    "flights": 5,
    "flew": 3,
    "delayed": 0,
@@ -1942,11 +1942,11 @@
    "median_delay": 0.0,
    "median_when_delayed": null,
    "avg_dep_delay": null,
-   "metars": 25,
+   "metars": 37,
    "conversion": 0.086,
    "scored": 3
   }
  ],
- "latest_metar": "METAR LTFM 071220Z 06020KT 9999 SCT033 25/15 Q1024 NOSIG",
- "match_rate": 0.016
+ "latest_metar": "METAR LTFM 071820Z 08012KT CAVOK 22/13 Q1024 NOSIG",
+ "match_rate": 0.01
 }
