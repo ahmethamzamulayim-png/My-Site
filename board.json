@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-09-07T04:55:16+00:00",
+ "generated_utc": "2026-09-07T12:46:25+00:00",
  "airport": "IST",
  "board_date": "2026-09-07",
  "window_start_utc": "2026-09-06T13:05:00+00:00",
@@ -9,12 +9,13 @@
  "late_threshold_min": 15,
  "baseline": 0.1177,
  "trained_on": {
-  "flights": 66354,
+  "flights": 66357,
   "days": 122,
   "through": "2026-09-06"
  },
  "tiers": {
-  "lookup": 54
+  "lookup": 53,
+  "model": 1
  },
  "tier_auc": {
   "lookup": 0.711,
@@ -22,16 +23,16 @@
   "model": 0.742
  },
  "model_trained": {
-  "trained_rows": 66355,
+  "trained_rows": 66360,
   "trained_through": "2026-09-07"
  },
  "scoreboard": {
-  "resolved": 205,
+  "resolved": 210,
   "total": 689,
   "late": 24,
-  "ontime": 181,
-  "mean_predicted": 0.1028,
-  "actual_rate": 0.1171,
+  "ontime": 186,
+  "mean_predicted": 0.1039,
+  "actual_rate": 0.1143,
   "window_days": 14
  },
  "hourly": [
@@ -52,8 +53,8 @@
   },
   {
    "h": 3,
-   "pct": 0.1222,
-   "n": 671
+   "pct": 0.1217,
+   "n": 674
   },
   {
    "h": 4,
@@ -335,16 +336,17 @@
    "flight": "C6304",
    "dest": "UZTT",
    "airline": "My Freighter",
-   "risk": 0.3318,
+   "risk": 0.7211,
    "basis": "flight+hour",
    "n": 9,
    "median_late": 46,
    "median_from": "flight",
    "hour_rate": 0.0985,
-   "actual": null,
+   "actual": "ontime",
    "actual_delay": null,
-   "tier": "lookup",
-   "turnaround_min": null,
+   "lookup_risk": 0.3318,
+   "tier": "model",
+   "turnaround_min": 30,
    "inbound_delay_min": null
   },
   {
@@ -1121,7 +1123,7 @@
    "median_late": 30,
    "median_from": "route",
    "hour_rate": 0.1138,
-   "actual": null,
+   "actual": "ontime",
    "actual_delay": null,
    "tier": "lookup",
    "turnaround_min": null,
@@ -1135,12 +1137,12 @@
    "flight": "FQ753",
    "dest": "HLLM",
    "airline": "Crown Airlines",
-   "risk": 0.0117,
+   "risk": 0.0116,
    "basis": "flight+hour",
    "n": 20,
    "median_late": 84,
    "median_from": "route",
-   "hour_rate": 0.1222,
+   "hour_rate": 0.1217,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
@@ -1160,7 +1162,7 @@
    "n": 38,
    "median_late": 45,
    "median_from": "destination",
-   "hour_rate": 0.1222,
+   "hour_rate": 0.1217,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
@@ -1177,10 +1179,10 @@
    "airline": "Lufthansa",
    "risk": 0.0087,
    "basis": "flight+hour",
-   "n": 115,
+   "n": 116,
    "median_late": 24,
    "median_from": "destination",
-   "hour_rate": 0.1222,
+   "hour_rate": 0.1217,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
@@ -1195,12 +1197,12 @@
    "flight": "MS746",
    "dest": "HECA",
    "airline": "Egyptair",
-   "risk": 0.0295,
+   "risk": 0.0292,
    "basis": "flight+hour",
-   "n": 103,
+   "n": 104,
    "median_late": 30,
    "median_from": "route",
-   "hour_rate": 0.1222,
+   "hour_rate": 0.1217,
    "actual": "ontime",
    "actual_delay": null,
    "tier": "lookup",

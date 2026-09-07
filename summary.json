@@ -1,19 +1,19 @@
 {
- "generated_utc": "2026-09-07T04:55:04+00:00",
+ "generated_utc": "2026-09-07T12:46:13+00:00",
  "days": 129,
  "first_date": "2026-05-01",
  "last_date": "2026-09-07",
- "total_flights": 135775,
+ "total_flights": 135780,
  "cargo_flights": 6661,
- "movements_tracked": 114597,
- "cross_validated": 46401,
- "delay_known": 66355,
+ "movements_tracked": 115652,
+ "cross_validated": 46406,
+ "delay_known": 66360,
  "median_delay": 0.0,
  "median_when_delayed": 31.0,
  "delay_hist": [
   {
    "bin": "<15",
-   "count": 58542
+   "count": 58547
   },
   {
    "bin": "15–30",
@@ -29,7 +29,7 @@
   }
  ],
  "delayed_15": 7813,
- "ontime": 58542,
+ "ontime": 58547,
  "pct_delayed": 11.8,
  "pct_ontime": 88.2,
  "recent": {
@@ -1918,35 +1918,35 @@
   },
   {
    "date": "2026-09-06",
-   "movements": 408,
-   "flights": 6,
-   "flew": 4,
+   "movements": 1339,
+   "flights": 9,
+   "flew": 7,
    "delayed": 0,
-   "ontime": 4,
+   "ontime": 7,
    "cancelled": 1,
    "median_delay": 0.0,
    "median_when_delayed": null,
    "avg_dep_delay": null,
    "metars": 48,
-   "conversion": 0.08,
-   "scored": 4
+   "conversion": 0.12,
+   "scored": 7
   },
   {
    "date": "2026-09-07",
-   "movements": 62,
-   "flights": 3,
-   "flew": 1,
+   "movements": 186,
+   "flights": 5,
+   "flew": 3,
    "delayed": 0,
-   "ontime": 1,
+   "ontime": 3,
    "cancelled": 2,
    "median_delay": 0.0,
    "median_when_delayed": null,
    "avg_dep_delay": null,
-   "metars": 9,
-   "conversion": 0.052,
-   "scored": 1
+   "metars": 25,
+   "conversion": 0.086,
+   "scored": 3
   }
  ],
- "latest_metar": "METAR LTFM 070420Z 10009KT 9999 SCT025 22/17 Q1023 RESHRA NOSIG",
+ "latest_metar": "METAR LTFM 071220Z 06020KT 9999 SCT033 25/15 Q1024 NOSIG",
  "match_rate": 0.016
 }
