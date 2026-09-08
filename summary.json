@@ -1,11 +1,11 @@
 {
- "generated_utc": "2026-09-07T23:35:30+00:00",
- "days": 129,
+ "generated_utc": "2026-09-08T04:50:37+00:00",
+ "days": 130,
  "first_date": "2026-05-01",
- "last_date": "2026-09-07",
+ "last_date": "2026-09-08",
  "total_flights": 135849,
  "cargo_flights": 6665,
- "movements_tracked": 115881,
+ "movements_tracked": 115961,
  "cross_validated": 46432,
  "delay_known": 66425,
  "median_delay": 0.0,
@@ -1933,7 +1933,7 @@
   },
   {
    "date": "2026-09-07",
-   "movements": 399,
+   "movements": 418,
    "flights": 5,
    "flew": 3,
    "delayed": 0,
@@ -1942,11 +1942,11 @@
    "median_delay": 0.0,
    "median_when_delayed": null,
    "avg_dep_delay": null,
-   "metars": 47,
+   "metars": 48,
    "conversion": 0.086,
    "scored": 3
   }
  ],
- "latest_metar": "METAR LTFM 072320Z 05013KT CAVOK 21/11 Q1023 NOSIG",
- "match_rate": 0.008
+ "latest_metar": "METAR LTFM 080420Z 05014KT 9999 SCT032 21/13 Q1022 NOSIG",
+ "match_rate": 0.0
 }
