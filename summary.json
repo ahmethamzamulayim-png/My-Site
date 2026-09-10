@@ -1,35 +1,35 @@
 {
- "generated_utc": "2026-09-10T16:32:00+00:00",
+ "generated_utc": "2026-09-10T18:45:51+00:00",
  "days": 132,
  "first_date": "2026-05-01",
  "last_date": "2026-09-10",
- "total_flights": 136086,
- "cargo_flights": 6671,
- "movements_tracked": 119782,
- "cross_validated": 46487,
- "delay_known": 66651,
+ "total_flights": 136175,
+ "cargo_flights": 6675,
+ "movements_tracked": 119915,
+ "cross_validated": 46504,
+ "delay_known": 66736,
  "median_delay": 0.0,
  "median_when_delayed": 31.0,
  "delay_hist": [
   {
    "bin": "<15",
-   "count": 58800
+   "count": 58877
   },
   {
    "bin": "15–30",
-   "count": 3847
+   "count": 3850
   },
   {
    "bin": "30–60",
-   "count": 2468
+   "count": 2470
   },
   {
    "bin": "60+",
-   "count": 1536
+   "count": 1539
   }
  ],
- "delayed_15": 7851,
- "ontime": 58800,
+ "delayed_15": 7859,
+ "ontime": 58877,
  "pct_delayed": 11.8,
  "pct_ontime": 88.2,
  "recent": {
@@ -1948,7 +1948,7 @@
   },
   {
    "date": "2026-09-08",
-   "movements": 1278,
+   "movements": 1339,
    "flights": 110,
    "flew": 107,
    "delayed": 10,
@@ -1964,21 +1964,21 @@
   {
    "date": "2026-09-09",
    "movements": 1307,
-   "flights": 6,
-   "flew": 3,
-   "delayed": 0,
-   "ontime": 3,
+   "flights": 95,
+   "flew": 88,
+   "delayed": 8,
+   "ontime": 80,
    "cancelled": 2,
    "median_delay": 0.0,
-   "median_when_delayed": null,
-   "avg_dep_delay": null,
+   "median_when_delayed": 60.0,
+   "avg_dep_delay": 24.8,
    "metars": 48,
-   "conversion": 0.075,
-   "scored": 3
+   "conversion": 0.683,
+   "scored": 88
   },
   {
    "date": "2026-09-10",
-   "movements": 246,
+   "movements": 318,
    "flights": 7,
    "flew": 5,
    "delayed": 0,
@@ -1987,11 +1987,11 @@
    "median_delay": 0.0,
    "median_when_delayed": null,
    "avg_dep_delay": null,
-   "metars": 33,
+   "metars": 37,
    "conversion": 0.093,
    "scored": 5
   }
  ],
- "latest_metar": "METAR LTFM 101620Z 04015KT 9999 SCT023 23/17 Q1016 NOSIG",
- "match_rate": 0.02
+ "latest_metar": "METAR LTFM 101820Z 06013KT 9999 SCT023 23/17 Q1017 NOSIG",
+ "match_rate": 0.016
 }
