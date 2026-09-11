@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-09-11T04:51:14+00:00",
+ "generated_utc": "2026-09-11T11:33:00+00:00",
  "airport": "IST",
  "board_date": "2026-09-11",
  "window_start_utc": "2026-09-10T13:00:00+00:00",
@@ -9,7 +9,7 @@
  "late_threshold_min": 15,
  "baseline": 0.1178,
  "trained_on": {
-  "flights": 66736,
+  "flights": 66739,
   "days": 126,
   "through": "2026-09-10"
  },
@@ -22,16 +22,16 @@
   "model": 0.742
  },
  "model_trained": {
-  "trained_rows": 66736,
-  "trained_through": "2026-09-10"
+  "trained_rows": 66741,
+  "trained_through": "2026-09-11"
  },
  "scoreboard": {
-  "resolved": 174,
+  "resolved": 179,
   "total": 745,
   "late": 20,
-  "ontime": 154,
-  "mean_predicted": 0.1042,
-  "actual_rate": 0.1149,
+  "ontime": 159,
+  "mean_predicted": 0.1109,
+  "actual_rate": 0.1117,
   "window_days": 14
  },
  "hourly": [
@@ -52,8 +52,8 @@
   },
   {
    "h": 3,
-   "pct": 0.1219,
-   "n": 681
+   "pct": 0.1213,
+   "n": 684
   },
   {
    "h": 4,
@@ -801,7 +801,7 @@
    "median_late": 71,
    "median_from": "flight",
    "hour_rate": 0.0982,
-   "actual": null,
+   "actual": "ontime",
    "actual_delay": null,
    "tier": "lookup",
    "turnaround_min": null,
@@ -1421,7 +1421,7 @@
    "median_late": 36,
    "median_from": "flight",
    "hour_rate": 0.1131,
-   "actual": null,
+   "actual": "ontime",
    "actual_delay": null,
    "tier": "lookup",
    "turnaround_min": null,
@@ -1460,7 +1460,7 @@
    "n": 20,
    "median_late": 84,
    "median_from": "route",
-   "hour_rate": 0.1219,
+   "hour_rate": 0.1213,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
@@ -1480,7 +1480,7 @@
    "n": 38,
    "median_late": 45,
    "median_from": "destination",
-   "hour_rate": 0.1219,
+   "hour_rate": 0.1213,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
@@ -1495,12 +1495,12 @@
    "flight": "YL101",
    "dest": "HLLM",
    "airline": "Libyan Wings",
-   "risk": 0.3972,
+   "risk": 0.393,
    "basis": "flight+hour",
-   "n": 93,
+   "n": 94,
    "median_late": 44,
    "median_from": "flight",
-   "hour_rate": 0.1219,
+   "hour_rate": 0.1213,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
@@ -1515,12 +1515,12 @@
    "flight": "LH1743",
    "dest": "EDDM",
    "airline": "Lufthansa",
-   "risk": 0.0085,
+   "risk": 0.0084,
    "basis": "flight+hour",
-   "n": 118,
+   "n": 119,
    "median_late": 24,
    "median_from": "destination",
-   "hour_rate": 0.1219,
+   "hour_rate": 0.1213,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
@@ -1540,7 +1540,7 @@
    "n": 107,
    "median_late": 30,
    "median_from": "route",
-   "hour_rate": 0.1219,
+   "hour_rate": 0.1213,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
