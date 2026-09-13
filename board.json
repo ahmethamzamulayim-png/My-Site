@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-09-13T04:58:29+00:00",
+ "generated_utc": "2026-09-13T12:04:09+00:00",
  "airport": "IST",
  "board_date": "2026-09-13",
  "window_start_utc": "2026-09-12T13:00:00+00:00",
@@ -9,7 +9,7 @@
  "late_threshold_min": 15,
  "baseline": 0.1178,
  "trained_on": {
-  "flights": 66909,
+  "flights": 66910,
   "days": 128,
   "through": "2026-09-12"
  },
@@ -22,16 +22,16 @@
   "model": 0.742
  },
  "model_trained": {
-  "trained_rows": 66909,
+  "trained_rows": 66910,
   "trained_through": "2026-09-12"
  },
  "scoreboard": {
-  "resolved": 174,
+  "resolved": 175,
   "total": 705,
   "late": 20,
-  "ontime": 154,
-  "mean_predicted": 0.1189,
-  "actual_rate": 0.1149,
+  "ontime": 155,
+  "mean_predicted": 0.1183,
+  "actual_rate": 0.1143,
   "window_days": 14
  },
  "hourly": [
@@ -52,8 +52,8 @@
   },
   {
    "h": 3,
-   "pct": 0.1219,
-   "n": 689
+   "pct": 0.1217,
+   "n": 690
   },
   {
    "h": 4,
@@ -920,7 +920,7 @@
    "n": 38,
    "median_late": 45,
    "median_from": "destination",
-   "hour_rate": 0.1219,
+   "hour_rate": 0.1217,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
@@ -940,7 +940,7 @@
    "n": 95,
    "median_late": 44,
    "median_from": "flight",
-   "hour_rate": 0.1219,
+   "hour_rate": 0.1217,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
@@ -955,12 +955,12 @@
    "flight": "LH1743",
    "dest": "EDDM",
    "airline": "Lufthansa",
-   "risk": 0.0084,
+   "risk": 0.0083,
    "basis": "flight+hour",
-   "n": 120,
+   "n": 121,
    "median_late": 24,
    "median_from": "destination",
-   "hour_rate": 0.1219,
+   "hour_rate": 0.1217,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
@@ -980,7 +980,7 @@
    "n": 109,
    "median_late": 30,
    "median_from": "route",
-   "hour_rate": 0.1219,
+   "hour_rate": 0.1217,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
