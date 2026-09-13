@@ -1,35 +1,35 @@
 {
- "generated_utc": "2026-09-13T16:27:41+00:00",
+ "generated_utc": "2026-09-13T18:45:47+00:00",
  "days": 135,
  "first_date": "2026-05-01",
  "last_date": "2026-09-13",
- "total_flights": 136367,
- "cargo_flights": 6686,
- "movements_tracked": 123211,
- "cross_validated": 46546,
- "delay_known": 66910,
+ "total_flights": 136461,
+ "cargo_flights": 6687,
+ "movements_tracked": 123365,
+ "cross_validated": 46554,
+ "delay_known": 67003,
  "median_delay": 0.0,
  "median_when_delayed": 31.0,
  "delay_hist": [
   {
    "bin": "<15",
-   "count": 59031
+   "count": 59115
   },
   {
    "bin": "15–30",
-   "count": 3860
+   "count": 3863
   },
   {
    "bin": "30–60",
-   "count": 2477
+   "count": 2479
   },
   {
    "bin": "60+",
-   "count": 1542
+   "count": 1546
   }
  ],
- "delayed_15": 7879,
- "ontime": 59031,
+ "delayed_15": 7888,
+ "ontime": 59115,
  "pct_delayed": 11.8,
  "pct_ontime": 88.2,
  "recent": {
@@ -1993,7 +1993,7 @@
   },
   {
    "date": "2026-09-11",
-   "movements": 943,
+   "movements": 999,
    "flights": 81,
    "flew": 74,
    "delayed": 6,
@@ -2009,21 +2009,21 @@
   {
    "date": "2026-09-12",
    "movements": 1025,
-   "flights": 7,
-   "flew": 3,
-   "delayed": 0,
-   "ontime": 3,
+   "flights": 101,
+   "flew": 96,
+   "delayed": 9,
+   "ontime": 87,
    "cancelled": 3,
    "median_delay": 0.0,
-   "median_when_delayed": null,
-   "avg_dep_delay": null,
+   "median_when_delayed": 40.0,
+   "avg_dep_delay": 30.1,
    "metars": 48,
-   "conversion": 0.125,
-   "scored": 3
+   "conversion": 0.871,
+   "scored": 96
   },
   {
    "date": "2026-09-13",
-   "movements": 320,
+   "movements": 418,
    "flights": 2,
    "flew": 0,
    "delayed": 0,
@@ -2032,11 +2032,11 @@
    "median_delay": null,
    "median_when_delayed": null,
    "avg_dep_delay": null,
-   "metars": 33,
+   "metars": 37,
    "conversion": 0.039,
    "scored": 0
   }
  ],
- "latest_metar": "METAR LTFM 131620Z 34011KT 9999 -SHRA VCTS SCT006 FEW018CB BKN022 18/17 Q1017 NOSIG",
- "match_rate": 0.003
+ "latest_metar": "METAR LTFM 131820Z 35014KT 9999 BKN012 BKN022 19/16 Q1017 NOSIG",
+ "match_rate": 0.002
 }
