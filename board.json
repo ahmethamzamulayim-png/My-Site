@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-09-14T05:07:53+00:00",
+ "generated_utc": "2026-09-14T13:02:05+00:00",
  "airport": "IST",
  "board_date": "2026-09-14",
  "window_start_utc": "2026-09-13T13:00:00+00:00",
@@ -9,12 +9,13 @@
  "late_threshold_min": 15,
  "baseline": 0.1177,
  "trained_on": {
-  "flights": 67003,
-  "days": 128,
-  "through": "2026-09-12"
+  "flights": 67005,
+  "days": 129,
+  "through": "2026-09-13"
  },
  "tiers": {
-  "lookup": 70
+  "lookup": 69,
+  "model": 1
  },
  "tier_auc": {
   "lookup": 0.711,
@@ -22,16 +23,16 @@
   "model": 0.742
  },
  "model_trained": {
-  "trained_rows": 67004,
+  "trained_rows": 67007,
   "trained_through": "2026-09-14"
  },
  "scoreboard": {
-  "resolved": 204,
+  "resolved": 207,
   "total": 710,
   "late": 24,
-  "ontime": 180,
-  "mean_predicted": 0.1087,
-  "actual_rate": 0.1176,
+  "ontime": 183,
+  "mean_predicted": 0.1092,
+  "actual_rate": 0.1159,
   "window_days": 14
  },
  "hourly": [
@@ -52,8 +53,8 @@
   },
   {
    "h": 3,
-   "pct": 0.1217,
-   "n": 690
+   "pct": 0.1214,
+   "n": 692
   },
   {
    "h": 4,
@@ -515,7 +516,7 @@
    "flight": "BM505",
    "dest": "HLLM",
    "airline": "Medsky Airways",
-   "risk": 0.4292,
+   "risk": 0.2441,
    "basis": "flight+hour",
    "n": 3,
    "median_late": 62,
@@ -523,8 +524,9 @@
    "hour_rate": 0.0985,
    "actual": null,
    "actual_delay": null,
-   "tier": "lookup",
-   "turnaround_min": null,
+   "lookup_risk": 0.4292,
+   "tier": "model",
+   "turnaround_min": 86,
    "inbound_delay_min": null
   },
   {
@@ -1461,7 +1463,7 @@
    "median_late": 30,
    "median_from": "route",
    "hour_rate": 0.1137,
-   "actual": null,
+   "actual": "ontime",
    "actual_delay": null,
    "tier": "lookup",
    "turnaround_min": null,
@@ -1480,7 +1482,7 @@
    "n": 20,
    "median_late": 84,
    "median_from": "route",
-   "hour_rate": 0.1217,
+   "hour_rate": 0.1214,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
@@ -1500,7 +1502,7 @@
    "n": 38,
    "median_late": 45,
    "median_from": "destination",
-   "hour_rate": 0.1217,
+   "hour_rate": 0.1214,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
@@ -1515,12 +1517,12 @@
    "flight": "LH1743",
    "dest": "EDDM",
    "airline": "Lufthansa",
-   "risk": 0.0083,
+   "risk": 0.0082,
    "basis": "flight+hour",
-   "n": 121,
+   "n": 122,
    "median_late": 24,
    "median_from": "destination",
-   "hour_rate": 0.1217,
+   "hour_rate": 0.1214,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
@@ -1540,7 +1542,7 @@
    "n": 109,
    "median_late": 30,
    "median_from": "route",
-   "hour_rate": 0.1217,
+   "hour_rate": 0.1214,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
