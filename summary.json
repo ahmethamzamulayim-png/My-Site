@@ -1,19 +1,19 @@
 {
- "generated_utc": "2026-09-15T21:29:53+00:00",
- "days": 137,
+ "generated_utc": "2026-09-16T04:58:32+00:00",
+ "days": 138,
  "first_date": "2026-05-01",
- "last_date": "2026-09-15",
- "total_flights": 136673,
- "cargo_flights": 6699,
- "movements_tracked": 126459,
- "cross_validated": 46611,
- "delay_known": 67201,
+ "last_date": "2026-09-16",
+ "total_flights": 136677,
+ "cargo_flights": 6701,
+ "movements_tracked": 127470,
+ "cross_validated": 46614,
+ "delay_known": 67202,
  "median_delay": 0.0,
  "median_when_delayed": 31.0,
  "delay_hist": [
   {
    "bin": "<15",
-   "count": 59204
+   "count": 59205
   },
   {
    "bin": "15–30",
@@ -29,16 +29,16 @@
   }
  ],
  "delayed_15": 7997,
- "ontime": 59204,
+ "ontime": 59205,
  "pct_delayed": 11.9,
  "pct_ontime": 88.1,
  "recent": {
   "days": 14,
-  "first_date": "2026-08-28",
-  "last_date": "2026-09-13",
-  "flights": 1263,
-  "delayed_15": 212,
-  "pct_delayed": 16.8
+  "first_date": "2026-08-29",
+  "last_date": "2026-09-14",
+  "flights": 1265,
+  "delayed_15": 251,
+  "pct_delayed": 19.8
  },
  "daily": [
   {
@@ -2053,20 +2053,35 @@
   },
   {
    "date": "2026-09-15",
-   "movements": 399,
-   "flights": 2,
-   "flew": 2,
+   "movements": 1342,
+   "flights": 4,
+   "flew": 3,
    "delayed": 0,
-   "ontime": 2,
+   "ontime": 3,
    "cancelled": 0,
    "median_delay": 0.0,
    "median_when_delayed": null,
    "avg_dep_delay": null,
-   "metars": 42,
-   "conversion": 0.028,
-   "scored": 2
+   "metars": 47,
+   "conversion": 0.056,
+   "scored": 3
+  },
+  {
+   "date": "2026-09-16",
+   "movements": 68,
+   "flights": 2,
+   "flew": 0,
+   "delayed": 0,
+   "ontime": 0,
+   "cancelled": 1,
+   "median_delay": null,
+   "median_when_delayed": null,
+   "avg_dep_delay": null,
+   "metars": 10,
+   "conversion": 0.029,
+   "scored": 0
   }
  ],
- "latest_metar": "METAR LTFM 152120Z 06013KT 9999 FEW030 SCT080 21/13 Q1017 NOSIG",
- "match_rate": 0.005
+ "latest_metar": "METAR LTFM 160450Z 05017KT 9999 SCT036 BKN090 21/11 Q1016 NOSIG",
+ "match_rate": 0.015
 }
