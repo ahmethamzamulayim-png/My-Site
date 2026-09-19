@@ -1,19 +1,19 @@
 {
- "generated_utc": "2026-09-19T04:45:56+00:00",
+ "generated_utc": "2026-09-19T11:11:32+00:00",
  "days": 141,
  "first_date": "2026-05-01",
  "last_date": "2026-09-19",
- "total_flights": 136950,
- "cargo_flights": 6715,
- "movements_tracked": 131678,
- "cross_validated": 46735,
- "delay_known": 67460,
+ "total_flights": 136956,
+ "cargo_flights": 6718,
+ "movements_tracked": 133079,
+ "cross_validated": 46741,
+ "delay_known": 67463,
  "median_delay": 0.0,
  "median_when_delayed": 31.0,
  "delay_hist": [
   {
    "bin": "<15",
-   "count": 59302
+   "count": 59305
   },
   {
    "bin": "15–30",
@@ -29,16 +29,16 @@
   }
  ],
  "delayed_15": 8158,
- "ontime": 59302,
+ "ontime": 59305,
  "pct_delayed": 12.1,
  "pct_ontime": 87.9,
  "recent": {
   "days": 14,
-  "first_date": "2026-08-31",
-  "last_date": "2026-09-16",
-  "flights": 1266,
-  "delayed_15": 326,
-  "pct_delayed": 25.8
+  "first_date": "2026-09-04",
+  "last_date": "2026-09-17",
+  "flights": 1258,
+  "delayed_15": 366,
+  "pct_delayed": 29.1
  },
  "daily": [
   {
@@ -2098,20 +2098,35 @@
   },
   {
    "date": "2026-09-18",
-   "movements": 577,
-   "flights": 6,
-   "flew": 5,
+   "movements": 1845,
+   "flights": 8,
+   "flew": 6,
    "delayed": 1,
-   "ontime": 4,
+   "ontime": 5,
    "cancelled": 0,
    "median_delay": 0.0,
-   "median_when_delayed": 20.0,
-   "avg_dep_delay": 5.0,
+   "median_when_delayed": 40.0,
+   "avg_dep_delay": 4.0,
    "metars": 48,
-   "conversion": 0.097,
-   "scored": 5
+   "conversion": 0.129,
+   "scored": 6
+  },
+  {
+   "date": "2026-09-19",
+   "movements": 184,
+   "flights": 4,
+   "flew": 2,
+   "delayed": 0,
+   "ontime": 2,
+   "cancelled": 0,
+   "median_delay": 0.0,
+   "median_when_delayed": null,
+   "avg_dep_delay": null,
+   "metars": 22,
+   "conversion": 0.053,
+   "scored": 2
   }
  ],
- "latest_metar": "METAR LTFM 190420Z 26003KT 220V320 9999 SCT030 16/13 Q1020 NOSIG",
- "match_rate": 0.0
+ "latest_metar": "METAR LTFM 191050Z 04012KT 350V070 9999 SCT035 23/14 Q1021 NOSIG",
+ "match_rate": 0.022
 }

@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-09-19T04:46:09+00:00",
+ "generated_utc": "2026-09-19T11:11:46+00:00",
  "airport": "IST",
  "board_date": "2026-09-19",
  "window_start_utc": "2026-09-18T13:00:00+00:00",
@@ -9,12 +9,13 @@
  "late_threshold_min": 15,
  "baseline": 0.1209,
  "trained_on": {
-  "flights": 67460,
+  "flights": 67461,
   "days": 134,
   "through": "2026-09-18"
  },
  "tiers": {
-  "lookup": 68
+  "lookup": 67,
+  "model": 1
  },
  "tier_auc": {
   "lookup": 0.711,
@@ -22,16 +23,16 @@
   "model": 0.742
  },
  "model_trained": {
-  "trained_rows": 67460,
-  "trained_through": "2026-09-18"
+  "trained_rows": 67463,
+  "trained_through": "2026-09-19"
  },
  "scoreboard": {
-  "resolved": 374,
+  "resolved": 377,
   "total": 851,
   "late": 110,
-  "ontime": 264,
-  "mean_predicted": 0.113,
-  "actual_rate": 0.2941,
+  "ontime": 267,
+  "mean_predicted": 0.1139,
+  "actual_rate": 0.2918,
   "window_days": 14
  },
  "hourly": [
@@ -52,8 +53,8 @@
   },
   {
    "h": 3,
-   "pct": 0.1245,
-   "n": 707
+   "pct": 0.1243,
+   "n": 708
   },
   {
    "h": 4,
@@ -1381,7 +1382,7 @@
    "median_late": 36,
    "median_from": "flight",
    "hour_rate": 0.123,
-   "actual": null,
+   "actual": "ontime",
    "actual_delay": null,
    "tier": "lookup",
    "turnaround_min": null,
@@ -1420,7 +1421,7 @@
    "n": 1,
    "median_late": 88,
    "median_from": "route",
-   "hour_rate": 0.1245,
+   "hour_rate": 0.1243,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
@@ -1440,7 +1441,7 @@
    "n": 38,
    "median_late": 45,
    "median_from": "destination",
-   "hour_rate": 0.1245,
+   "hour_rate": 0.1243,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
@@ -1455,12 +1456,12 @@
    "flight": "LH1743",
    "dest": "EDDM",
    "airline": "Lufthansa",
-   "risk": 0.008,
+   "risk": 0.0079,
    "basis": "flight+hour",
-   "n": 126,
+   "n": 127,
    "median_late": 24,
    "median_from": "destination",
-   "hour_rate": 0.1245,
+   "hour_rate": 0.1243,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
@@ -1475,16 +1476,17 @@
    "flight": "TU217",
    "dest": "DTTA",
    "airline": "Tunisair",
-   "risk": 0.2801,
+   "risk": 0.2175,
    "basis": "flight+hour",
    "n": 39,
    "median_late": 80,
    "median_from": "flight",
-   "hour_rate": 0.1245,
-   "actual": null,
+   "hour_rate": 0.1243,
+   "actual": "ontime",
    "actual_delay": null,
-   "tier": "lookup",
-   "turnaround_min": null,
+   "lookup_risk": 0.2801,
+   "tier": "model",
+   "turnaround_min": 95,
    "inbound_delay_min": null
   },
   {
@@ -1500,7 +1502,7 @@
    "n": 115,
    "median_late": 28,
    "median_from": "route",
-   "hour_rate": 0.1245,
+   "hour_rate": 0.1243,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
