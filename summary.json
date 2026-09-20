@@ -1,35 +1,35 @@
 {
- "generated_utc": "2026-09-20T16:16:12+00:00",
+ "generated_utc": "2026-09-20T18:45:50+00:00",
  "days": 142,
  "first_date": "2026-05-01",
  "last_date": "2026-09-20",
- "total_flights": 137049,
- "cargo_flights": 6724,
- "movements_tracked": 135178,
- "cross_validated": 46789,
- "delay_known": 67550,
+ "total_flights": 137115,
+ "cargo_flights": 6726,
+ "movements_tracked": 135448,
+ "cross_validated": 46824,
+ "delay_known": 67614,
  "median_delay": 0.0,
  "median_when_delayed": 31.0,
  "delay_hist": [
   {
    "bin": "<15",
-   "count": 59338
+   "count": 59357
   },
   {
    "bin": "15–30",
-   "count": 4091
+   "count": 4120
   },
   {
    "bin": "30–60",
-   "count": 2551
+   "count": 2562
   },
   {
    "bin": "60+",
-   "count": 1570
+   "count": 1575
   }
  ],
- "delayed_15": 8212,
- "ontime": 59338,
+ "delayed_15": 8257,
+ "ontime": 59357,
  "pct_delayed": 12.2,
  "pct_ontime": 87.8,
  "recent": {
@@ -2098,7 +2098,7 @@
   },
   {
    "date": "2026-09-18",
-   "movements": 1845,
+   "movements": 2006,
    "flights": 88,
    "flew": 83,
    "delayed": 51,
@@ -2113,22 +2113,22 @@
   },
   {
    "date": "2026-09-19",
-   "movements": 1765,
-   "flights": 9,
-   "flew": 6,
-   "delayed": 0,
-   "ontime": 6,
+   "movements": 1766,
+   "flights": 75,
+   "flew": 70,
+   "delayed": 45,
+   "ontime": 25,
    "cancelled": 0,
-   "median_delay": 0.0,
-   "median_when_delayed": null,
-   "avg_dep_delay": null,
+   "median_delay": 17.5,
+   "median_when_delayed": 24.5,
+   "avg_dep_delay": 23.9,
    "metars": 48,
-   "conversion": 0.118,
-   "scored": 6
+   "conversion": 0.49,
+   "scored": 70
   },
   {
    "date": "2026-09-20",
-   "movements": 352,
+   "movements": 460,
    "flights": 5,
    "flew": 3,
    "delayed": 1,
@@ -2137,11 +2137,11 @@
    "median_delay": 0.0,
    "median_when_delayed": 25.0,
    "avg_dep_delay": 25.0,
-   "metars": 32,
+   "metars": 37,
    "conversion": 0.068,
    "scored": 3
   }
  ],
- "latest_metar": "METAR LTFM 201550Z 05013KT 9999 SCT025 22/15 Q1021 NOSIG",
- "match_rate": 0.014
+ "latest_metar": "METAR LTFM 201820Z 06011KT 9999 SCT025 22/15 Q1021 NOSIG",
+ "match_rate": 0.011
 }
