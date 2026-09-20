@@ -1,19 +1,19 @@
 {
- "generated_utc": "2026-09-19T23:14:34+00:00",
- "days": 141,
+ "generated_utc": "2026-09-20T05:02:00+00:00",
+ "days": 142,
  "first_date": "2026-05-01",
- "last_date": "2026-09-19",
- "total_flights": 137041,
- "cargo_flights": 6721,
- "movements_tracked": 133580,
- "cross_validated": 46781,
- "delay_known": 67545,
+ "last_date": "2026-09-20",
+ "total_flights": 137046,
+ "cargo_flights": 6723,
+ "movements_tracked": 134909,
+ "cross_validated": 46786,
+ "delay_known": 67548,
  "median_delay": 0.0,
  "median_when_delayed": 31.0,
  "delay_hist": [
   {
    "bin": "<15",
-   "count": 59334
+   "count": 59337
   },
   {
    "bin": "15–30",
@@ -29,16 +29,16 @@
   }
  ],
  "delayed_15": 8211,
- "ontime": 59334,
+ "ontime": 59337,
  "pct_delayed": 12.2,
  "pct_ontime": 87.8,
  "recent": {
   "days": 14,
-  "first_date": "2026-09-04",
-  "last_date": "2026-09-17",
-  "flights": 1261,
-  "delayed_15": 369,
-  "pct_delayed": 29.3
+  "first_date": "2026-09-05",
+  "last_date": "2026-09-18",
+  "flights": 1270,
+  "delayed_15": 409,
+  "pct_delayed": 32.2
  },
  "daily": [
   {
@@ -2113,20 +2113,35 @@
   },
   {
    "date": "2026-09-19",
-   "movements": 519,
-   "flights": 6,
-   "flew": 4,
+   "movements": 1765,
+   "flights": 9,
+   "flew": 6,
    "delayed": 0,
-   "ontime": 4,
+   "ontime": 6,
    "cancelled": 0,
    "median_delay": 0.0,
    "median_when_delayed": null,
    "avg_dep_delay": null,
-   "metars": 46,
-   "conversion": 0.079,
-   "scored": 4
+   "metars": 48,
+   "conversion": 0.118,
+   "scored": 6
+  },
+  {
+   "date": "2026-09-20",
+   "movements": 83,
+   "flights": 2,
+   "flew": 1,
+   "delayed": 0,
+   "ontime": 1,
+   "cancelled": 0,
+   "median_delay": 0.0,
+   "median_when_delayed": null,
+   "avg_dep_delay": null,
+   "metars": 10,
+   "conversion": 0.027,
+   "scored": 1
   }
  ],
- "latest_metar": "METAR LTFM 192250Z 06006KT 9999 BKN022 21/16 Q1022 NOSIG",
- "match_rate": 0.012
+ "latest_metar": "METAR LTFM 200450Z 06012KT 9999 BKN022 22/16 Q1022 NOSIG",
+ "match_rate": 0.024
 }
