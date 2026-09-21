@@ -1,19 +1,19 @@
 {
- "generated_utc": "2026-09-20T23:18:41+00:00",
- "days": 142,
+ "generated_utc": "2026-09-21T05:07:45+00:00",
+ "days": 143,
  "first_date": "2026-05-01",
- "last_date": "2026-09-20",
- "total_flights": 137115,
- "cargo_flights": 6726,
- "movements_tracked": 135557,
- "cross_validated": 46824,
- "delay_known": 67614,
+ "last_date": "2026-09-21",
+ "total_flights": 137118,
+ "cargo_flights": 6727,
+ "movements_tracked": 136907,
+ "cross_validated": 46827,
+ "delay_known": 67616,
  "median_delay": 0.0,
  "median_when_delayed": 31.0,
  "delay_hist": [
   {
    "bin": "<15",
-   "count": 59357
+   "count": 59359
   },
   {
    "bin": "15–30",
@@ -29,16 +29,16 @@
   }
  ],
  "delayed_15": 8257,
- "ontime": 59357,
+ "ontime": 59359,
  "pct_delayed": 12.2,
  "pct_ontime": 87.8,
  "recent": {
   "days": 14,
-  "first_date": "2026-09-05",
-  "last_date": "2026-09-18",
-  "flights": 1270,
-  "delayed_15": 409,
-  "pct_delayed": 32.2
+  "first_date": "2026-09-06",
+  "last_date": "2026-09-19",
+  "flights": 1261,
+  "delayed_15": 443,
+  "pct_delayed": 35.1
  },
  "daily": [
   {
@@ -2128,20 +2128,35 @@
   },
   {
    "date": "2026-09-20",
-   "movements": 569,
-   "flights": 5,
-   "flew": 3,
+   "movements": 1839,
+   "flights": 7,
+   "flew": 4,
    "delayed": 1,
-   "ontime": 2,
+   "ontime": 3,
    "cancelled": 0,
    "median_delay": 0.0,
    "median_when_delayed": 25.0,
    "avg_dep_delay": 25.0,
-   "metars": 46,
-   "conversion": 0.068,
-   "scored": 3
+   "metars": 48,
+   "conversion": 0.095,
+   "scored": 4
+  },
+  {
+   "date": "2026-09-21",
+   "movements": 80,
+   "flights": 1,
+   "flew": 1,
+   "delayed": 0,
+   "ontime": 1,
+   "cancelled": 0,
+   "median_delay": 0.0,
+   "median_when_delayed": null,
+   "avg_dep_delay": null,
+   "metars": 10,
+   "conversion": 0.013,
+   "scored": 1
   }
  ],
- "latest_metar": "METAR LTFM 202250Z 04006KT 330V050 9999 SCT018 21/17 Q1019 NOSIG",
- "match_rate": 0.009
+ "latest_metar": "METAR LTFM 210450Z 33005KT 9999 SCT020 20/17 Q1018 NOSIG",
+ "match_rate": 0.013
 }
