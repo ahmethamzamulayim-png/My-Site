@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-09-21T05:07:58+00:00",
+ "generated_utc": "2026-09-21T13:01:06+00:00",
  "airport": "IST",
  "board_date": "2026-09-21",
  "window_start_utc": "2026-09-20T13:00:00+00:00",
@@ -23,15 +23,15 @@
   "model": 0.742
  },
  "model_trained": {
-  "trained_rows": 67616,
+  "trained_rows": 67619,
   "trained_through": "2026-09-21"
  },
  "scoreboard": {
-  "resolved": 362,
+  "resolved": 365,
   "total": 868,
-  "late": 120,
-  "ontime": 242,
-  "mean_predicted": 0.1166,
+  "late": 121,
+  "ontime": 244,
+  "mean_predicted": 0.1171,
   "actual_rate": 0.3315,
   "window_days": 14
  },
@@ -516,7 +516,7 @@
    "flight": "BM505",
    "dest": "HLLM",
    "airline": "Medsky Airways",
-   "risk": 0.712,
+   "risk": 0.7134,
    "basis": "flight+hour",
    "n": 3,
    "median_late": 62,
@@ -737,7 +737,7 @@
    "flight": "C6304",
    "dest": "UZTT",
    "airline": "My Freighter",
-   "risk": 0.2147,
+   "risk": 0.2587,
    "basis": "flight+hour",
    "n": 11,
    "median_late": 46,
@@ -764,7 +764,7 @@
    "median_late": 76,
    "median_from": "flight",
    "hour_rate": 0.1112,
-   "actual": null,
+   "actual": "ontime",
    "actual_delay": null,
    "tier": "lookup",
    "turnaround_min": null,
@@ -1424,8 +1424,8 @@
    "median_late": 36,
    "median_from": "flight",
    "hour_rate": 0.1231,
-   "actual": null,
-   "actual_delay": null,
+   "actual": "late",
+   "actual_delay": 20,
    "tier": "lookup",
    "turnaround_min": null,
    "inbound_delay_min": null
@@ -1464,8 +1464,8 @@
    "median_late": 30,
    "median_from": "route",
    "hour_rate": 0.1231,
-   "actual": null,
-   "actual_delay": null,
+   "actual": "ontime",
+   "actual_delay": 0,
    "tier": "lookup",
    "turnaround_min": null,
    "inbound_delay_min": null
