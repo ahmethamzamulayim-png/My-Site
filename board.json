@@ -1,9 +1,9 @@
 {
- "generated_utc": "2026-09-21T18:45:57+00:00",
+ "generated_utc": "2026-09-21T20:01:51+00:00",
  "airport": "IST",
  "board_date": "2026-09-22",
- "window_start_utc": "2026-09-21T18:45:50+00:00",
- "window_end_utc": "2026-09-22T06:45:50+00:00",
+ "window_start_utc": "2026-09-21T20:01:40+00:00",
+ "window_end_utc": "2026-09-22T08:01:40+00:00",
  "window_hours": 12,
  "window_mode": "upcoming",
  "late_threshold_min": 15,
@@ -14,8 +14,8 @@
   "through": "2026-09-21"
  },
  "tiers": {
-  "hybrid": 1,
-  "lookup": 32
+  "hybrid": 4,
+  "lookup": 29
  },
  "tier_auc": {
   "lookup": 0.711,
@@ -197,7 +197,7 @@
    "flight": "ES165",
    "dest": "HECA",
    "airline": "DHL Air",
-   "risk": 0.099,
+   "risk": 0.1499,
    "basis": "destination",
    "n": 762,
    "median_late": 30,
@@ -205,7 +205,8 @@
    "hour_rate": 0.1523,
    "actual": null,
    "actual_delay": null,
-   "tier": "lookup",
+   "lookup_risk": 0.099,
+   "tier": "hybrid",
    "turnaround_min": null,
    "inbound_delay_min": null
   },
@@ -217,7 +218,7 @@
    "flight": "TK696",
    "dest": "HEAX",
    "airline": "Turkish Airlines",
-   "risk": 0.0695,
+   "risk": 0.0708,
    "basis": "flight+hour",
    "n": 72,
    "median_late": 27,
@@ -225,7 +226,8 @@
    "hour_rate": 0.1523,
    "actual": null,
    "actual_delay": null,
-   "tier": "lookup",
+   "lookup_risk": 0.0695,
+   "tier": "hybrid",
    "turnaround_min": null,
    "inbound_delay_min": null
   },
@@ -237,7 +239,7 @@
    "flight": "TK2232",
    "dest": "LTAU",
    "airline": "Turkish Airlines",
-   "risk": 0.0536,
+   "risk": 0.0357,
    "basis": "flight+hour",
    "n": 56,
    "median_late": 19,
@@ -245,7 +247,8 @@
    "hour_rate": 0.1111,
    "actual": null,
    "actual_delay": null,
-   "tier": "lookup",
+   "lookup_risk": 0.0536,
+   "tier": "hybrid",
    "turnaround_min": null,
    "inbound_delay_min": null
   },
