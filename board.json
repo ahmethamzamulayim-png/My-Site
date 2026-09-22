@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-09-22T05:09:38+00:00",
+ "generated_utc": "2026-09-22T11:51:13+00:00",
  "airport": "IST",
  "board_date": "2026-09-22",
  "window_start_utc": "2026-09-21T13:00:00+00:00",
@@ -22,16 +22,16 @@
   "model": 0.742
  },
  "model_trained": {
-  "trained_rows": 67713,
-  "trained_through": "2026-09-21"
+  "trained_rows": 67715,
+  "trained_through": "2026-09-22"
  },
  "scoreboard": {
-  "resolved": 362,
+  "resolved": 364,
   "total": 882,
   "late": 120,
-  "ontime": 242,
-  "mean_predicted": 0.1182,
-  "actual_rate": 0.3315,
+  "ontime": 244,
+  "mean_predicted": 0.1177,
+  "actual_rate": 0.3297,
   "window_days": 14
  },
  "hourly": [
@@ -681,8 +681,8 @@
    "median_late": 30,
    "median_from": "route",
    "hour_rate": 0.1238,
-   "actual": null,
-   "actual_delay": null,
+   "actual": "ontime",
+   "actual_delay": 0,
    "tier": "lookup",
    "turnaround_min": null,
    "inbound_delay_min": null
@@ -781,8 +781,8 @@
    "median_late": 28,
    "median_from": "flight",
    "hour_rate": 0.1267,
-   "actual": null,
-   "actual_delay": null,
+   "actual": "ontime",
+   "actual_delay": 0,
    "tier": "lookup",
    "turnaround_min": null,
    "inbound_delay_min": null
