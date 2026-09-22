@@ -1,35 +1,35 @@
 {
- "generated_utc": "2026-09-22T17:04:14+00:00",
+ "generated_utc": "2026-09-22T18:45:53+00:00",
  "days": 144,
  "first_date": "2026-05-01",
  "last_date": "2026-09-22",
- "total_flights": 137221,
- "cargo_flights": 6731,
- "movements_tracked": 138974,
- "cross_validated": 46891,
- "delay_known": 67715,
+ "total_flights": 137291,
+ "cargo_flights": 6735,
+ "movements_tracked": 139192,
+ "cross_validated": 46934,
+ "delay_known": 67779,
  "median_delay": 0.0,
  "median_when_delayed": 31.0,
  "delay_hist": [
   {
    "bin": "<15",
-   "count": 59402
+   "count": 59430
   },
   {
    "bin": "15–30",
-   "count": 4159
+   "count": 4186
   },
   {
    "bin": "30–60",
-   "count": 2575
+   "count": 2583
   },
   {
    "bin": "60+",
-   "count": 1579
+   "count": 1580
   }
  ],
- "delayed_15": 8313,
- "ontime": 59402,
+ "delayed_15": 8349,
+ "ontime": 59430,
  "pct_delayed": 12.3,
  "pct_ontime": 87.7,
  "recent": {
@@ -2128,7 +2128,7 @@
   },
   {
    "date": "2026-09-20",
-   "movements": 1839,
+   "movements": 1972,
    "flights": 102,
    "flew": 95,
    "delayed": 56,
@@ -2143,22 +2143,22 @@
   },
   {
    "date": "2026-09-21",
-   "movements": 1647,
-   "flights": 7,
-   "flew": 7,
-   "delayed": 1,
-   "ontime": 6,
-   "cancelled": 0,
-   "median_delay": 0.0,
-   "median_when_delayed": 20.0,
-   "avg_dep_delay": 6.7,
+   "movements": 1648,
+   "flights": 77,
+   "flew": 71,
+   "delayed": 37,
+   "ontime": 34,
+   "cancelled": 2,
+   "median_delay": 15.0,
+   "median_when_delayed": 23.0,
+   "avg_dep_delay": 18.0,
    "metars": 48,
-   "conversion": 0.093,
-   "scored": 7
+   "conversion": 0.497,
+   "scored": 71
   },
   {
    "date": "2026-09-22",
-   "movements": 353,
+   "movements": 437,
    "flights": 2,
    "flew": 2,
    "delayed": 0,
@@ -2167,11 +2167,11 @@
    "median_delay": 0.0,
    "median_when_delayed": null,
    "avg_dep_delay": 0.0,
-   "metars": 34,
+   "metars": 37,
    "conversion": 0.057,
    "scored": 2
   }
  ],
- "latest_metar": "METAR LTFM 221650Z 01009KT 9999 -SHRA BKN025 BKN080 17/14 Q1013 NOSIG",
- "match_rate": 0.006
+ "latest_metar": "METAR LTFM 221820Z 34008KT 9999 -SHRA FEW022TCU BKN025 BKN080 17/15 Q1013 NOSIG",
+ "match_rate": 0.005
 }
