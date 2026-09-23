@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-09-23T04:54:00+00:00",
+ "generated_utc": "2026-09-23T11:50:33+00:00",
  "airport": "IST",
  "board_date": "2026-09-23",
  "window_start_utc": "2026-09-22T13:00:00+00:00",
@@ -23,16 +23,16 @@
   "model": 0.742
  },
  "model_trained": {
-  "trained_rows": 67782,
-  "trained_through": "2026-09-22"
+  "trained_rows": 67785,
+  "trained_through": "2026-09-23"
  },
  "scoreboard": {
-  "resolved": 332,
+  "resolved": 335,
   "total": 880,
-  "late": 118,
-  "ontime": 214,
-  "mean_predicted": 0.1212,
-  "actual_rate": 0.3554,
+  "late": 119,
+  "ontime": 216,
+  "mean_predicted": 0.1229,
+  "actual_rate": 0.3552,
   "window_days": 14
  },
  "hourly": [
@@ -842,8 +842,8 @@
    "median_late": 76,
    "median_from": "flight",
    "hour_rate": 0.1111,
-   "actual": null,
-   "actual_delay": null,
+   "actual": "late",
+   "actual_delay": 20,
    "tier": "lookup",
    "turnaround_min": null,
    "inbound_delay_min": null
@@ -1402,7 +1402,7 @@
    "median_late": 36,
    "median_from": "flight",
    "hour_rate": 0.1237,
-   "actual": null,
+   "actual": "ontime",
    "actual_delay": null,
    "tier": "lookup",
    "turnaround_min": null,
@@ -1456,7 +1456,7 @@
    "flight": "RJ853",
    "dest": "OJAI",
    "airline": "Royal Jordanian",
-   "risk": 0.0203,
+   "risk": 0.0319,
    "basis": "flight",
    "n": 14,
    "median_late": 83,
@@ -1563,7 +1563,7 @@
    "median_late": 28,
    "median_from": "flight",
    "hour_rate": 0.1264,
-   "actual": null,
+   "actual": "ontime",
    "actual_delay": null,
    "tier": "lookup",
    "turnaround_min": null,
