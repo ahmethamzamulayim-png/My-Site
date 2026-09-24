@@ -1,37 +1,37 @@
 {
- "generated_utc": "2026-09-24T17:20:15+00:00",
+ "generated_utc": "2026-09-24T18:45:52+00:00",
  "days": 146,
  "first_date": "2026-05-01",
  "last_date": "2026-09-24",
- "total_flights": 137418,
- "cargo_flights": 6737,
- "movements_tracked": 142750,
- "cross_validated": 46994,
- "delay_known": 67904,
+ "total_flights": 137511,
+ "cargo_flights": 6743,
+ "movements_tracked": 142991,
+ "cross_validated": 47034,
+ "delay_known": 67988,
  "median_delay": 0.0,
  "median_when_delayed": 31.0,
  "delay_hist": [
   {
    "bin": "<15",
-   "count": 59481
+   "count": 59504
   },
   {
    "bin": "15–30",
-   "count": 4239
+   "count": 4274
   },
   {
    "bin": "30–60",
-   "count": 2599
+   "count": 2616
   },
   {
    "bin": "60+",
-   "count": 1585
+   "count": 1594
   }
  ],
- "delayed_15": 8423,
- "ontime": 59481,
- "pct_delayed": 12.4,
- "pct_ontime": 87.6,
+ "delayed_15": 8484,
+ "ontime": 59504,
+ "pct_delayed": 12.5,
+ "pct_ontime": 87.5,
  "recent": {
   "days": 14,
   "first_date": "2026-09-09",
@@ -2158,7 +2158,7 @@
   },
   {
    "date": "2026-09-22",
-   "movements": 1749,
+   "movements": 1914,
    "flights": 115,
    "flew": 115,
    "delayed": 73,
@@ -2174,21 +2174,21 @@
   {
    "date": "2026-09-23",
    "movements": 1740,
-   "flights": 9,
-   "flew": 8,
-   "delayed": 1,
-   "ontime": 7,
-   "cancelled": 0,
-   "median_delay": 0.0,
-   "median_when_delayed": 20.0,
-   "avg_dep_delay": 20.0,
+   "flights": 102,
+   "flew": 92,
+   "delayed": 62,
+   "ontime": 30,
+   "cancelled": 3,
+   "median_delay": 19.0,
+   "median_when_delayed": 27.0,
+   "avg_dep_delay": 30.1,
    "metars": 48,
-   "conversion": 0.114,
-   "scored": 8
+   "conversion": 0.685,
+   "scored": 92
   },
   {
    "date": "2026-09-24",
-   "movements": 343,
+   "movements": 419,
    "flights": 5,
    "flew": 4,
    "delayed": 0,
@@ -2197,11 +2197,11 @@
    "median_delay": 0.0,
    "median_when_delayed": null,
    "avg_dep_delay": 0.0,
-   "metars": 34,
+   "metars": 37,
    "conversion": 0.085,
    "scored": 4
   }
  ],
- "latest_metar": "METAR LTFM 241650Z 15006KT CAVOK 18/09 Q1022 NOSIG",
- "match_rate": 0.015
+ "latest_metar": "METAR LTFM 241820Z 15006KT CAVOK 17/09 Q1022 NOSIG",
+ "match_rate": 0.012
 }
