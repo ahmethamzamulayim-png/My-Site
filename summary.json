@@ -1,19 +1,19 @@
 {
- "generated_utc": "2026-09-24T21:36:58+00:00",
- "days": 146,
+ "generated_utc": "2026-09-25T05:06:08+00:00",
+ "days": 147,
  "first_date": "2026-05-01",
- "last_date": "2026-09-24",
- "total_flights": 137511,
+ "last_date": "2026-09-25",
+ "total_flights": 137513,
  "cargo_flights": 6743,
- "movements_tracked": 143035,
- "cross_validated": 47034,
- "delay_known": 67988,
+ "movements_tracked": 144330,
+ "cross_validated": 47036,
+ "delay_known": 67990,
  "median_delay": 0.0,
  "median_when_delayed": 31.0,
  "delay_hist": [
   {
    "bin": "<15",
-   "count": 59504
+   "count": 59506
   },
   {
    "bin": "15–30",
@@ -29,7 +29,7 @@
   }
  ],
  "delayed_15": 8484,
- "ontime": 59504,
+ "ontime": 59506,
  "pct_delayed": 12.5,
  "pct_ontime": 87.5,
  "recent": {
@@ -2188,20 +2188,20 @@
   },
   {
    "date": "2026-09-24",
-   "movements": 463,
-   "flights": 5,
-   "flew": 4,
+   "movements": 1711,
+   "flights": 7,
+   "flew": 6,
    "delayed": 0,
-   "ontime": 4,
+   "ontime": 6,
    "cancelled": 0,
    "median_delay": 0.0,
    "median_when_delayed": null,
    "avg_dep_delay": 0.0,
-   "metars": 43,
-   "conversion": 0.085,
-   "scored": 4
+   "metars": 48,
+   "conversion": 0.119,
+   "scored": 6
   }
  ],
- "latest_metar": "METAR LTFM 242120Z 18004KT CAVOK 16/09 Q1021 NOSIG",
- "match_rate": 0.011
+ "latest_metar": "METAR LTFM 250450Z 19003KT 140V220 CAVOK 13/09 Q1020 NOSIG RMK RWY17L 15004KT RWY34L VRB02KT RWY16R 16004KT RWY36 12003KT 060V150 RWY18 14004KT",
+ "match_rate": 0.0
 }
