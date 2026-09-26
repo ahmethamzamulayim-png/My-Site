@@ -1,19 +1,19 @@
 {
- "generated_utc": "2026-09-25T21:41:01+00:00",
- "days": 147,
+ "generated_utc": "2026-09-26T05:09:36+00:00",
+ "days": 148,
  "first_date": "2026-05-01",
- "last_date": "2026-09-25",
- "total_flights": 137609,
- "cargo_flights": 6747,
- "movements_tracked": 144937,
- "cross_validated": 47084,
- "delay_known": 68082,
+ "last_date": "2026-09-26",
+ "total_flights": 137612,
+ "cargo_flights": 6748,
+ "movements_tracked": 146246,
+ "cross_validated": 47087,
+ "delay_known": 68084,
  "median_delay": 0.0,
  "median_when_delayed": 31.0,
  "delay_hist": [
   {
    "bin": "<15",
-   "count": 59529
+   "count": 59530
   },
   {
    "bin": "15–30",
@@ -21,24 +21,24 @@
   },
   {
    "bin": "30–60",
-   "count": 2639
+   "count": 2640
   },
   {
    "bin": "60+",
    "count": 1598
   }
  ],
- "delayed_15": 8553,
- "ontime": 59529,
+ "delayed_15": 8554,
+ "ontime": 59530,
  "pct_delayed": 12.6,
  "pct_ontime": 87.4,
  "recent": {
   "days": 14,
-  "first_date": "2026-09-10",
-  "last_date": "2026-09-23",
-  "flights": 1253,
-  "delayed_15": 625,
-  "pct_delayed": 49.9
+  "first_date": "2026-09-11",
+  "last_date": "2026-09-24",
+  "flights": 1245,
+  "delayed_15": 680,
+  "pct_delayed": 54.6
  },
  "daily": [
   {
@@ -2203,20 +2203,35 @@
   },
   {
    "date": "2026-09-25",
-   "movements": 472,
-   "flights": 5,
-   "flew": 4,
+   "movements": 1693,
+   "flights": 7,
+   "flew": 5,
    "delayed": 0,
-   "ontime": 4,
+   "ontime": 5,
    "cancelled": 0,
    "median_delay": 0.0,
    "median_when_delayed": null,
    "avg_dep_delay": null,
-   "metars": 43,
-   "conversion": 0.064,
-   "scored": 4
+   "metars": 48,
+   "conversion": 0.09,
+   "scored": 5
+  },
+  {
+   "date": "2026-09-26",
+   "movements": 88,
+   "flights": 1,
+   "flew": 1,
+   "delayed": 1,
+   "ontime": 0,
+   "cancelled": 0,
+   "median_delay": 30.0,
+   "median_when_delayed": 30.0,
+   "avg_dep_delay": 30.0,
+   "metars": 10,
+   "conversion": 0.043,
+   "scored": 1
   }
  ],
- "latest_metar": "METAR LTFM 252120Z 08008KT 9999 SCT030 BKN180 19/13 Q1018 NOSIG",
+ "latest_metar": "METAR LTFM 260450Z 06013KT 9999 SCT025 BKN180 20/13 Q1018 NOSIG",
  "match_rate": 0.011
 }
