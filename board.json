@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-09-27T05:27:04+00:00",
+ "generated_utc": "2026-09-27T12:13:08+00:00",
  "airport": "IST",
  "board_date": "2026-09-27",
  "window_start_utc": "2026-09-26T13:00:00+00:00",
@@ -23,16 +23,16 @@
   "model": 0.742
  },
  "model_trained": {
-  "trained_rows": 68155,
-  "trained_through": "2026-09-26"
+  "trained_rows": 68159,
+  "trained_through": "2026-09-27"
  },
  "scoreboard": {
-  "resolved": 303,
+  "resolved": 307,
   "total": 847,
   "late": 162,
-  "ontime": 141,
-  "mean_predicted": 0.1343,
-  "actual_rate": 0.5347,
+  "ontime": 145,
+  "mean_predicted": 0.1359,
+  "actual_rate": 0.5277,
   "window_days": 14
  },
  "hourly": [
@@ -936,7 +936,7 @@
    "flight": "RB444",
    "dest": "OSDI",
    "airline": "Syrian Air",
-   "risk": 0.1776,
+   "risk": 0.1496,
    "basis": "flight+hour",
    "n": 15,
    "median_late": 28,
@@ -1163,7 +1163,7 @@
    "median_late": 35,
    "median_from": "flight",
    "hour_rate": 0.1391,
-   "actual": null,
+   "actual": "ontime",
    "actual_delay": null,
    "tier": "lookup",
    "turnaround_min": null,
@@ -1183,8 +1183,8 @@
    "median_late": 27,
    "median_from": "route",
    "hour_rate": 0.1391,
-   "actual": null,
-   "actual_delay": null,
+   "actual": "ontime",
+   "actual_delay": 0,
    "tier": "lookup",
    "turnaround_min": null,
    "inbound_delay_min": null
@@ -1223,7 +1223,7 @@
    "median_late": 44,
    "median_from": "flight",
    "hour_rate": 0.1291,
-   "actual": null,
+   "actual": "ontime",
    "actual_delay": null,
    "tier": "lookup",
    "turnaround_min": null,
@@ -1257,13 +1257,13 @@
    "flight": "TU217",
    "dest": "DTTA",
    "airline": "Tunisair",
-   "risk": 0.2463,
+   "risk": 0.1854,
    "basis": "flight+hour",
    "n": 42,
    "median_late": 80,
    "median_from": "flight",
    "hour_rate": 0.1291,
-   "actual": null,
+   "actual": "ontime",
    "actual_delay": null,
    "lookup_risk": 0.2629,
    "tier": "model",
