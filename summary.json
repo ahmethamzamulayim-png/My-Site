@@ -1,19 +1,19 @@
 {
- "generated_utc": "2026-09-26T23:41:29+00:00",
- "days": 148,
+ "generated_utc": "2026-09-27T05:26:51+00:00",
+ "days": 149,
  "first_date": "2026-05-01",
- "last_date": "2026-09-26",
- "total_flights": 137687,
- "cargo_flights": 6753,
- "movements_tracked": 146872,
- "cross_validated": 47141,
- "delay_known": 68153,
+ "last_date": "2026-09-27",
+ "total_flights": 137692,
+ "cargo_flights": 6756,
+ "movements_tracked": 148279,
+ "cross_validated": 47146,
+ "delay_known": 68155,
  "median_delay": 0.0,
  "median_when_delayed": 31.0,
  "delay_hist": [
   {
    "bin": "<15",
-   "count": 59554
+   "count": 59556
   },
   {
    "bin": "15–30",
@@ -29,16 +29,16 @@
   }
  ],
  "delayed_15": 8599,
- "ontime": 59554,
+ "ontime": 59556,
  "pct_delayed": 12.6,
  "pct_ontime": 87.4,
  "recent": {
   "days": 14,
-  "first_date": "2026-09-11",
-  "last_date": "2026-09-24",
-  "flights": 1245,
-  "delayed_15": 680,
-  "pct_delayed": 54.6
+  "first_date": "2026-09-12",
+  "last_date": "2026-09-25",
+  "flights": 1242,
+  "delayed_15": 719,
+  "pct_delayed": 57.9
  },
  "daily": [
   {
@@ -2218,20 +2218,35 @@
   },
   {
    "date": "2026-09-26",
-   "movements": 539,
-   "flights": 4,
-   "flew": 4,
+   "movements": 1843,
+   "flights": 8,
+   "flew": 6,
    "delayed": 1,
-   "ontime": 3,
+   "ontime": 5,
    "cancelled": 0,
    "median_delay": 0.0,
-   "median_when_delayed": 30.0,
-   "avg_dep_delay": 7.5,
-   "metars": 47,
-   "conversion": 0.174,
-   "scored": 4
+   "median_when_delayed": 23.5,
+   "avg_dep_delay": 5.0,
+   "metars": 48,
+   "conversion": 0.348,
+   "scored": 6
+  },
+  {
+   "date": "2026-09-27",
+   "movements": 103,
+   "flights": 1,
+   "flew": 0,
+   "delayed": 0,
+   "ontime": 0,
+   "cancelled": 0,
+   "median_delay": null,
+   "median_when_delayed": null,
+   "avg_dep_delay": null,
+   "metars": 11,
+   "conversion": 0.015,
+   "scored": 0
   }
  ],
- "latest_metar": "METAR LTFM 262320Z 05015KT 9999 BKN022 BKN080 19/14 Q1019 NOSIG",
- "match_rate": 0.007
+ "latest_metar": "METAR LTFM 270520Z 05019KT 9999 BKN023 BKN080 21/14 Q1018 NOSIG",
+ "match_rate": 0.01
 }
