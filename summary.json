@@ -1,37 +1,37 @@
 {
- "generated_utc": "2026-09-28T14:10:57+00:00",
+ "generated_utc": "2026-09-28T18:45:46+00:00",
  "days": 150,
  "first_date": "2026-05-01",
  "last_date": "2026-09-28",
- "total_flights": 137794,
- "cargo_flights": 6759,
- "movements_tracked": 150521,
- "cross_validated": 47198,
- "delay_known": 68252,
+ "total_flights": 137894,
+ "cargo_flights": 6761,
+ "movements_tracked": 150841,
+ "cross_validated": 47239,
+ "delay_known": 68349,
  "median_delay": 0.0,
  "median_when_delayed": 31.0,
  "delay_hist": [
   {
    "bin": "<15",
-   "count": 59604
+   "count": 59628
   },
   {
    "bin": "15–30",
-   "count": 4385
+   "count": 4425
   },
   {
    "bin": "30–60",
-   "count": 2657
+   "count": 2684
   },
   {
    "bin": "60+",
-   "count": 1606
+   "count": 1612
   }
  ],
- "delayed_15": 8648,
- "ontime": 59604,
- "pct_delayed": 12.7,
- "pct_ontime": 87.3,
+ "delayed_15": 8721,
+ "ontime": 59628,
+ "pct_delayed": 12.8,
+ "pct_ontime": 87.2,
  "recent": {
   "days": 14,
   "first_date": "2026-09-13",
@@ -2218,7 +2218,7 @@
   },
   {
    "date": "2026-09-26",
-   "movements": 1843,
+   "movements": 2023,
    "flights": 92,
    "flew": 88,
    "delayed": 49,
@@ -2233,35 +2233,35 @@
   },
   {
    "date": "2026-09-27",
-   "movements": 1883,
-   "flights": 11,
-   "flew": 8,
-   "delayed": 0,
-   "ontime": 8,
-   "cancelled": 0,
-   "median_delay": 0.0,
-   "median_when_delayed": null,
-   "avg_dep_delay": 0.0,
+   "movements": 1884,
+   "flights": 110,
+   "flew": 104,
+   "delayed": 73,
+   "ontime": 31,
+   "cancelled": 1,
+   "median_delay": 22.0,
+   "median_when_delayed": 28.0,
+   "avg_dep_delay": 27.9,
    "metars": 48,
-   "conversion": 0.167,
-   "scored": 8
+   "conversion": 0.846,
+   "scored": 104
   },
   {
    "date": "2026-09-28",
-   "movements": 283,
-   "flights": 8,
-   "flew": 7,
+   "movements": 422,
+   "flights": 9,
+   "flew": 8,
    "delayed": 1,
-   "ontime": 6,
+   "ontime": 7,
    "cancelled": 1,
    "median_delay": 0.0,
    "median_when_delayed": 30.0,
-   "avg_dep_delay": 4.3,
-   "metars": 28,
-   "conversion": 0.286,
-   "scored": 7
+   "avg_dep_delay": 3.8,
+   "metars": 37,
+   "conversion": 0.31,
+   "scored": 8
   }
  ],
- "latest_metar": "METAR LTFM 281350Z 35021KT 9999 -SHRA FEW018 BKN022 18/13 Q1016 NOSIG",
- "match_rate": 0.025
+ "latest_metar": "METAR LTFM 281820Z 34024G34KT 4800 -SHRA BKN008 BKN022 17/16 Q1017 RESHRA NOSIG",
+ "match_rate": 0.019
 }
