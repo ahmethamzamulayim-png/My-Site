@@ -1,11 +1,11 @@
 {
- "generated_utc": "2026-09-28T18:45:46+00:00",
+ "generated_utc": "2026-09-28T21:17:05+00:00",
  "days": 150,
  "first_date": "2026-05-01",
  "last_date": "2026-09-28",
  "total_flights": 137894,
  "cargo_flights": 6761,
- "movements_tracked": 150841,
+ "movements_tracked": 150889,
  "cross_validated": 47239,
  "delay_known": 68349,
  "median_delay": 0.0,
@@ -2248,7 +2248,7 @@
   },
   {
    "date": "2026-09-28",
-   "movements": 422,
+   "movements": 470,
    "flights": 9,
    "flew": 8,
    "delayed": 1,
@@ -2257,11 +2257,11 @@
    "median_delay": 0.0,
    "median_when_delayed": 30.0,
    "avg_dep_delay": 3.8,
-   "metars": 37,
+   "metars": 42,
    "conversion": 0.31,
    "scored": 8
   }
  ],
- "latest_metar": "METAR LTFM 281820Z 34024G34KT 4800 -SHRA BKN008 BKN022 17/16 Q1017 RESHRA NOSIG",
- "match_rate": 0.019
+ "latest_metar": "METAR LTFM 282050Z 34022KT 6000 2300N -SHRA BKN008 BKN022 17/16 Q1017 NOSIG",
+ "match_rate": 0.017
 }
