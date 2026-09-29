@@ -1,23 +1,23 @@
 {
- "generated_utc": "2026-09-29T01:04:11+00:00",
+ "generated_utc": "2026-09-29T09:58:30+00:00",
  "days": 151,
  "first_date": "2026-05-01",
  "last_date": "2026-09-29",
- "total_flights": 137897,
- "cargo_flights": 6761,
- "movements_tracked": 150946,
- "cross_validated": 47242,
- "delay_known": 68352,
+ "total_flights": 137904,
+ "cargo_flights": 6763,
+ "movements_tracked": 152326,
+ "cross_validated": 47249,
+ "delay_known": 68357,
  "median_delay": 0.0,
  "median_when_delayed": 31.0,
  "delay_hist": [
   {
    "bin": "<15",
-   "count": 59631
+   "count": 59635
   },
   {
    "bin": "15–30",
-   "count": 4425
+   "count": 4426
   },
   {
    "bin": "30–60",
@@ -28,8 +28,8 @@
    "count": 1612
   }
  ],
- "delayed_15": 8721,
- "ontime": 59631,
+ "delayed_15": 8722,
+ "ontime": 59635,
  "pct_delayed": 12.8,
  "pct_ontime": 87.2,
  "recent": {
@@ -2248,35 +2248,35 @@
   },
   {
    "date": "2026-09-28",
-   "movements": 524,
-   "flights": 9,
-   "flew": 8,
-   "delayed": 1,
-   "ontime": 7,
+   "movements": 1800,
+   "flights": 13,
+   "flew": 10,
+   "delayed": 2,
+   "ontime": 8,
    "cancelled": 1,
    "median_delay": 0.0,
-   "median_when_delayed": 30.0,
-   "avg_dep_delay": 3.8,
+   "median_when_delayed": 25.0,
+   "avg_dep_delay": 5.0,
    "metars": 48,
-   "conversion": 0.31,
-   "scored": 8
+   "conversion": 0.448,
+   "scored": 10
   },
   {
    "date": "2026-09-29",
-   "movements": 3,
-   "flights": 3,
-   "flew": 3,
+   "movements": 107,
+   "flights": 6,
+   "flew": 6,
    "delayed": 0,
-   "ontime": 3,
+   "ontime": 6,
    "cancelled": 0,
    "median_delay": 0.0,
    "median_when_delayed": null,
-   "avg_dep_delay": null,
-   "metars": 2,
-   "conversion": 0.039,
-   "scored": 3
+   "avg_dep_delay": 0.0,
+   "metars": 20,
+   "conversion": 0.079,
+   "scored": 6
   }
  ],
- "latest_metar": "METAR LTFM 290050Z 34021KT 9999 -SHRA BKN012 BKN022 18/16 Q1017 NOSIG",
- "match_rate": 1.0
+ "latest_metar": "METAR LTFM 290950Z 36027KT 9999 -SHRA SCT011 BKN022 BKN070 18/17 Q1020 RESHRA NOSIG",
+ "match_rate": 0.056
 }

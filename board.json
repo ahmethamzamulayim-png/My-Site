@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-09-29T01:04:25+00:00",
+ "generated_utc": "2026-09-29T09:58:43+00:00",
  "airport": "IST",
  "board_date": "2026-09-28",
  "window_start_utc": "2026-09-28T13:00:00+00:00",
@@ -14,8 +14,7 @@
   "through": "2026-09-27"
  },
  "tiers": {
-  "lookup": 68,
-  "hybrid": 7
+  "lookup": 75
  },
  "tier_auc": {
   "lookup": 0.711,
@@ -23,16 +22,16 @@
   "model": 0.742
  },
  "model_trained": {
-  "trained_rows": 68352,
+  "trained_rows": 68357,
   "trained_through": "2026-09-29"
  },
  "scoreboard": {
-  "resolved": 270,
+  "resolved": 275,
   "total": 802,
-  "late": 146,
-  "ontime": 124,
+  "late": 147,
+  "ontime": 128,
   "mean_predicted": 0.152,
-  "actual_rate": 0.5407,
+  "actual_rate": 0.5345,
   "window_days": 14
  },
  "hourly": [
@@ -1462,8 +1461,8 @@
    "median_late": 27,
    "median_from": "flight",
    "hour_rate": 0.1466,
-   "actual": null,
-   "actual_delay": null,
+   "actual": "ontime",
+   "actual_delay": 0,
    "tier": "lookup",
    "turnaround_min": null,
    "inbound_delay_min": null
@@ -1516,7 +1515,7 @@
    "flight": "YL101",
    "dest": "HLLM",
    "airline": "Libyan Wings",
-   "risk": 0.4145,
+   "risk": 0.4072,
    "basis": "flight+hour",
    "n": 103,
    "median_late": 44,
@@ -1524,8 +1523,7 @@
    "hour_rate": 0.1297,
    "actual": null,
    "actual_delay": null,
-   "lookup_risk": 0.4072,
-   "tier": "hybrid",
+   "tier": "lookup",
    "turnaround_min": null,
    "inbound_delay_min": null
   },
@@ -1537,7 +1535,7 @@
    "flight": null,
    "dest": "HLLM",
    "airline": "empty",
-   "risk": 0.0188,
+   "risk": 0.02,
    "basis": "route+hour",
    "n": 38,
    "median_late": 45,
@@ -1545,8 +1543,7 @@
    "hour_rate": 0.1297,
    "actual": null,
    "actual_delay": null,
-   "lookup_risk": 0.02,
-   "tier": "hybrid",
+   "tier": "lookup",
    "turnaround_min": null,
    "inbound_delay_min": null
   },
@@ -1558,16 +1555,15 @@
    "flight": "LH1743",
    "dest": "EDDM",
    "airline": "Lufthansa",
-   "risk": 0.03,
+   "risk": 0.0074,
    "basis": "flight+hour",
    "n": 136,
    "median_late": 24,
    "median_from": "destination",
    "hour_rate": 0.1297,
-   "actual": null,
-   "actual_delay": null,
-   "lookup_risk": 0.0074,
-   "tier": "hybrid",
+   "actual": "late",
+   "actual_delay": 20,
+   "tier": "lookup",
    "turnaround_min": null,
    "inbound_delay_min": null
   },
@@ -1579,7 +1575,7 @@
    "flight": "MS746",
    "dest": "HECA",
    "airline": "Egyptair",
-   "risk": 0.2983,
+   "risk": 0.0647,
    "basis": "flight+hour",
    "n": 124,
    "median_late": 29,
@@ -1587,8 +1583,7 @@
    "hour_rate": 0.1297,
    "actual": "late",
    "actual_delay": 30,
-   "lookup_risk": 0.0647,
-   "tier": "hybrid",
+   "tier": "lookup",
    "turnaround_min": null,
    "inbound_delay_min": null
   },
@@ -1600,7 +1595,7 @@
    "flight": "MB600",
    "dest": "EDDK",
    "airline": "Chrono Jet",
-   "risk": 0.0022,
+   "risk": 0.0446,
    "basis": "flight+hour",
    "n": 10,
    "median_late": 24,
@@ -1608,8 +1603,7 @@
    "hour_rate": 0.1424,
    "actual": null,
    "actual_delay": null,
-   "lookup_risk": 0.0446,
-   "tier": "hybrid",
+   "tier": "lookup",
    "turnaround_min": null,
    "inbound_delay_min": null
   },
@@ -1621,7 +1615,7 @@
    "flight": "TK2244",
    "dest": "LTCS",
    "airline": "Turkish Airlines",
-   "risk": 0.0822,
+   "risk": 0.064,
    "basis": "flight",
    "n": 77,
    "median_late": 33,
@@ -1629,8 +1623,7 @@
    "hour_rate": 0.1424,
    "actual": null,
    "actual_delay": null,
-   "lookup_risk": 0.064,
-   "tier": "hybrid",
+   "tier": "lookup",
    "turnaround_min": null,
    "inbound_delay_min": null
   },
@@ -1642,7 +1635,7 @@
    "flight": "SU2133",
    "dest": "UUEE",
    "airline": "Aeroflot",
-   "risk": 0.4661,
+   "risk": 0.3593,
    "basis": "flight+hour",
    "n": 128,
    "median_late": 36,
@@ -1650,8 +1643,7 @@
    "hour_rate": 0.1424,
    "actual": "ontime",
    "actual_delay": 0,
-   "lookup_risk": 0.3593,
-   "tier": "hybrid",
+   "tier": "lookup",
    "turnaround_min": null,
    "inbound_delay_min": null
   },
