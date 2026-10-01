@@ -1,37 +1,37 @@
 {
- "generated_utc": "2026-10-01T18:28:33+00:00",
+ "generated_utc": "2026-10-01T18:45:51+00:00",
  "days": 153,
  "first_date": "2026-05-01",
  "last_date": "2026-10-01",
- "total_flights": 138072,
- "cargo_flights": 6772,
- "movements_tracked": 156117,
- "cross_validated": 47329,
- "delay_known": 68512,
+ "total_flights": 138187,
+ "cargo_flights": 6775,
+ "movements_tracked": 156284,
+ "cross_validated": 47365,
+ "delay_known": 68619,
  "median_delay": 0.0,
  "median_when_delayed": 31.0,
  "delay_hist": [
   {
    "bin": "<15",
-   "count": 59662
+   "count": 59690
   },
   {
    "bin": "15–30",
-   "count": 4486
+   "count": 4533
   },
   {
    "bin": "30–60",
-   "count": 2740
+   "count": 2765
   },
   {
    "bin": "60+",
-   "count": 1624
+   "count": 1631
   }
  ],
- "delayed_15": 8850,
- "ontime": 59662,
- "pct_delayed": 12.9,
- "pct_ontime": 87.1,
+ "delayed_15": 8929,
+ "ontime": 59690,
+ "pct_delayed": 13.0,
+ "pct_ontime": 87.0,
  "recent": {
   "days": 14,
   "first_date": "2026-09-16",
@@ -2263,7 +2263,7 @@
   },
   {
    "date": "2026-09-29",
-   "movements": 1513,
+   "movements": 1658,
    "flights": 90,
    "flew": 84,
    "delayed": 65,
@@ -2279,21 +2279,21 @@
   {
    "date": "2026-09-30",
    "movements": 1766,
-   "flights": 9,
-   "flew": 7,
-   "delayed": 0,
-   "ontime": 7,
-   "cancelled": 0,
-   "median_delay": 0.0,
-   "median_when_delayed": null,
-   "avg_dep_delay": 0.0,
+   "flights": 124,
+   "flew": 114,
+   "delayed": 79,
+   "ontime": 35,
+   "cancelled": 5,
+   "median_delay": 19.0,
+   "median_when_delayed": 24.5,
+   "avg_dep_delay": 26.6,
    "metars": 48,
-   "conversion": 0.158,
-   "scored": 7
+   "conversion": 0.879,
+   "scored": 114
   },
   {
    "date": "2026-10-01",
-   "movements": 285,
+   "movements": 307,
    "flights": 4,
    "flew": 3,
    "delayed": 0,
@@ -2308,5 +2308,5 @@
   }
  ],
  "latest_metar": "METAR LTFM 011820Z 04024KT 9999 FEW020TCU BKN025 18/10 Q1024 NOSIG",
- "match_rate": 0.014
+ "match_rate": 0.013
 }
