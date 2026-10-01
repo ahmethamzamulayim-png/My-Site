@@ -1,19 +1,19 @@
 {
- "generated_utc": "2026-09-30T20:08:04+00:00",
- "days": 152,
+ "generated_utc": "2026-10-01T00:37:07+00:00",
+ "days": 153,
  "first_date": "2026-05-01",
- "last_date": "2026-09-30",
- "total_flights": 138064,
- "cargo_flights": 6770,
- "movements_tracked": 154516,
- "cross_validated": 47321,
- "delay_known": 68506,
+ "last_date": "2026-10-01",
+ "total_flights": 138066,
+ "cargo_flights": 6771,
+ "movements_tracked": 154568,
+ "cross_validated": 47323,
+ "delay_known": 68507,
  "median_delay": 0.0,
  "median_when_delayed": 31.0,
  "delay_hist": [
   {
    "bin": "<15",
-   "count": 59656
+   "count": 59657
   },
   {
    "bin": "15–30",
@@ -29,16 +29,16 @@
   }
  ],
  "delayed_15": 8850,
- "ontime": 59656,
+ "ontime": 59657,
  "pct_delayed": 12.9,
  "pct_ontime": 87.1,
  "recent": {
   "days": 14,
-  "first_date": "2026-09-15",
-  "last_date": "2026-09-28",
-  "flights": 1219,
-  "delayed_15": 788,
-  "pct_delayed": 64.6
+  "first_date": "2026-09-16",
+  "last_date": "2026-09-29",
+  "flights": 1189,
+  "delayed_15": 782,
+  "pct_delayed": 65.8
  },
  "daily": [
   {
@@ -2278,20 +2278,35 @@
   },
   {
    "date": "2026-09-30",
-   "movements": 450,
-   "flights": 5,
-   "flew": 4,
+   "movements": 498,
+   "flights": 6,
+   "flew": 5,
    "delayed": 0,
-   "ontime": 4,
+   "ontime": 5,
    "cancelled": 0,
    "median_delay": 0.0,
    "median_when_delayed": null,
    "avg_dep_delay": 0.0,
-   "metars": 40,
-   "conversion": 0.088,
-   "scored": 4
+   "metars": 48,
+   "conversion": 0.105,
+   "scored": 5
+  },
+  {
+   "date": "2026-10-01",
+   "movements": 4,
+   "flights": 1,
+   "flew": 0,
+   "delayed": 0,
+   "ontime": 0,
+   "cancelled": 0,
+   "median_delay": null,
+   "median_when_delayed": null,
+   "avg_dep_delay": null,
+   "metars": 1,
+   "conversion": 0.013,
+   "scored": 0
   }
  ],
- "latest_metar": "METAR LTFM 301950Z 05022KT 9999 SCT028 18/09 Q1024 NOSIG",
- "match_rate": 0.011
+ "latest_metar": "METAR LTFM 010020Z 04019KT 9999 SCT032 18/10 Q1023 NOSIG",
+ "match_rate": 0.25
 }
