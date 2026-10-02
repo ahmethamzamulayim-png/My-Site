@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-10-02T09:55:10+00:00",
+ "generated_utc": "2026-10-02T17:55:16+00:00",
  "airport": "IST",
  "board_date": "2026-10-02",
  "window_start_utc": "2026-10-01T13:00:00+00:00",
@@ -23,16 +23,16 @@
   "model": 0.742
  },
  "model_trained": {
-  "trained_rows": 68626,
+  "trained_rows": 68627,
   "trained_through": "2026-10-02"
  },
  "scoreboard": {
-  "resolved": 290,
+  "resolved": 291,
   "total": 809,
   "late": 181,
-  "ontime": 109,
-  "mean_predicted": 0.1749,
-  "actual_rate": 0.6241,
+  "ontime": 110,
+  "mean_predicted": 0.1747,
+  "actual_rate": 0.622,
   "window_days": 14
  },
  "hourly": [
@@ -1156,7 +1156,7 @@
    "flight": "BM503",
    "dest": "HLLM",
    "airline": "Medsky Airways",
-   "risk": 0.7432,
+   "risk": 0.656,
    "basis": "flight",
    "n": 60,
    "median_late": 58,
@@ -1463,7 +1463,7 @@
    "median_late": 29,
    "median_from": "airport",
    "hour_rate": 0.1613,
-   "actual": null,
+   "actual": "ontime",
    "actual_delay": null,
    "tier": "lookup",
    "turnaround_min": null,
