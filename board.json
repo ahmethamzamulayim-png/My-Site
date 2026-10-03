@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-10-03T11:49:45+00:00",
+ "generated_utc": "2026-10-03T16:31:52+00:00",
  "airport": "IST",
  "board_date": "2026-10-03",
  "window_start_utc": "2026-10-02T13:00:00+00:00",
@@ -23,16 +23,16 @@
   "model": 0.742
  },
  "model_trained": {
-  "trained_rows": 68720,
+  "trained_rows": 68722,
   "trained_through": "2026-10-03"
  },
  "scoreboard": {
-  "resolved": 319,
+  "resolved": 321,
   "total": 815,
   "late": 202,
-  "ontime": 117,
-  "mean_predicted": 0.1745,
-  "actual_rate": 0.6332,
+  "ontime": 119,
+  "mean_predicted": 0.1744,
+  "actual_rate": 0.6293,
   "window_days": 14
  },
  "hourly": [
@@ -1462,7 +1462,7 @@
    "median_late": 35,
    "median_from": "flight",
    "hour_rate": 0.1649,
-   "actual": null,
+   "actual": "ontime",
    "actual_delay": null,
    "tier": "lookup",
    "turnaround_min": null,
@@ -1556,7 +1556,7 @@
    "flight": "TU217",
    "dest": "DTTA",
    "airline": "Tunisair",
-   "risk": 0.2126,
+   "risk": 0.1652,
    "basis": "flight+hour",
    "n": 43,
    "median_late": 69,
@@ -1583,7 +1583,7 @@
    "median_late": 29,
    "median_from": "flight",
    "hour_rate": 0.134,
-   "actual": null,
+   "actual": "ontime",
    "actual_delay": null,
    "tier": "lookup",
    "turnaround_min": null,
