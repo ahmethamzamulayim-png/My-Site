@@ -1,37 +1,37 @@
 {
- "generated_utc": "2026-10-04T18:40:33+00:00",
+ "generated_utc": "2026-10-04T18:45:51+00:00",
  "days": 156,
  "first_date": "2026-05-01",
  "last_date": "2026-10-04",
- "total_flights": 138358,
- "cargo_flights": 6786,
- "movements_tracked": 161919,
- "cross_validated": 47468,
- "delay_known": 68775,
+ "total_flights": 138468,
+ "cargo_flights": 6789,
+ "movements_tracked": 162101,
+ "cross_validated": 47508,
+ "delay_known": 68882,
  "median_delay": 0.0,
  "median_when_delayed": 31.0,
  "delay_hist": [
   {
    "bin": "<15",
-   "count": 59734
+   "count": 59754
   },
   {
    "bin": "15–30",
-   "count": 4597
+   "count": 4643
   },
   {
    "bin": "30–60",
-   "count": 2800
+   "count": 2829
   },
   {
    "bin": "60+",
-   "count": 1644
+   "count": 1656
   }
  ],
- "delayed_15": 9041,
- "ontime": 59734,
- "pct_delayed": 13.1,
- "pct_ontime": 86.9,
+ "delayed_15": 9128,
+ "ontime": 59754,
+ "pct_delayed": 13.3,
+ "pct_ontime": 86.7,
  "recent": {
   "days": 14,
   "first_date": "2026-09-19",
@@ -2308,7 +2308,7 @@
   },
   {
    "date": "2026-10-02",
-   "movements": 1752,
+   "movements": 1928,
    "flights": 61,
    "flew": 57,
    "delayed": 45,
@@ -2324,21 +2324,21 @@
   {
    "date": "2026-10-03",
    "movements": 1781,
-   "flights": 9,
-   "flew": 6,
-   "delayed": 1,
-   "ontime": 5,
+   "flights": 119,
+   "flew": 113,
+   "delayed": 88,
+   "ontime": 25,
    "cancelled": 1,
-   "median_delay": 0.0,
-   "median_when_delayed": 20.0,
-   "avg_dep_delay": 10.0,
+   "median_delay": 23.0,
+   "median_when_delayed": 28.0,
+   "avg_dep_delay": 41.2,
    "metars": 48,
-   "conversion": 0.114,
-   "scored": 6
+   "conversion": 0.862,
+   "scored": 113
   },
   {
    "date": "2026-10-04",
-   "movements": 397,
+   "movements": 403,
    "flights": 5,
    "flew": 3,
    "delayed": 0,
@@ -2353,5 +2353,5 @@
   }
  ],
  "latest_metar": "METAR LTFM 041820Z 06013KT 9999 SCT032 17/09 Q1026 NOSIG",
- "match_rate": 0.013
+ "match_rate": 0.012
 }
