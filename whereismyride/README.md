@@ -12,12 +12,30 @@ Full plan and reasoning: [PLAN.md](PLAN.md).
 
 | | |
 |---|---|
-| Ride analysis (`analysis/`) | working on synthetic rides; first real ride pending |
-| M4 network (`network/m4.json`) | 23 stations from the official API; distances **straight-line, provisional** (~6% short) |
+| Recorder app (`app/`) | working in a browser test; not yet tried on a real phone |
+| Ride analysis (`analysis/`) | working on synthetic rides and on the app's own export; first real ride pending |
+| Network (`network/`) | all 18 lines, 245 stations from the official API; distances **straight-line, provisional** (~6% short on M4) |
 | Timetable fetcher (`timetable/`) | written, not yet run - the API wasn't reachable from where it was written |
 | Map | not started (Phase 6) |
 
-## Recording a ride
+## The recorder app
+
+`app/` is an installable web app (open it in Chrome on Android → ⋮ → *Add to Home screen*). Pick the line,
+where you board and where you get off, press start, ride, press stop. It records the motion sensor, notes the
+exact start time itself, and shares each ride as a `.zip` that `analysis.ride` reads directly:
+
+```
+python -m analysis.ride 2026-10-07_0812_M4_Goztepe-Kadikoy.zip
+```
+
+It needs HTTPS to read the sensor, so it has to be hosted (GitHub Pages works). Rides stay on the phone
+until shared; no GPS, no account, no server.
+
+**Limit:** a browser stops the motion sensor when the screen turns off. The app keeps the screen awake and
+flags any gap it sees, but a ride only works with the screen on. A native Android app (foreground service)
+would remove that limit - worth building once the web version has proven the idea with friends.
+
+## Recording a ride with phyphox instead
 
 1. Install **phyphox** (free). Use **Acceleration (without g)**; if you build a custom experiment, add
    Magnetometer and Pressure too.
@@ -41,6 +59,7 @@ python network/build_network.py M4 --osm      # once: real along-track distances
 python timetable/fetch_timetable.py M4        # daily: today's timetable
 python -m analysis.ride rides/2026-10-07_0812_kadikoy
 python tests/test_ride.py && python tests/test_robustness.py
+node tests/app_e2e.mjs ...                    # browser test of the app, see the file header
 ```
 
 `analysis.ride` prints, per run between stations: departure time, run time, dwell time, average and peak

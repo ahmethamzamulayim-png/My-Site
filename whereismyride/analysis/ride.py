@@ -22,6 +22,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+import zipfile
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -226,9 +227,19 @@ def _station_sequence(meta: dict, network: dict | None) -> tuple[list[dict], lis
     return seq, []
 
 
+def _read_meta(path: Path) -> dict:
+    """ride.yaml next to the CSVs, or inside the .zip the app shares."""
+    if path.suffix == ".zip":
+        with zipfile.ZipFile(path) as z:
+            names = [n for n in z.namelist() if n.endswith("ride.yaml")]
+            return yaml.safe_load(z.read(names[0])) if names else {}
+    f = path / "ride.yaml"
+    return yaml.safe_load(f.read_text()) if f.exists() else {}
+
+
 def analyse(folder: str | Path, network: dict | None = None) -> Ride:
     folder = Path(folder)
-    meta = yaml.safe_load((folder / "ride.yaml").read_text()) if (folder / "ride.yaml").exists() else {}
+    meta = _read_meta(folder)
     df = load_phyphox(folder)
     rate = 1.0 / float(np.median(np.diff(df.index.to_numpy())))
 
@@ -325,14 +336,22 @@ def report(ride: Ride, tt_rows: list[dict] | None = None) -> str:
 
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    p.add_argument("ride", help="ride folder (phyphox export + ride.yaml)")
-    p.add_argument("--network", default="network/m4.json")
+    p.add_argument("ride", help="ride folder (phyphox export + ride.yaml), or a .zip shared from the app")
+    p.add_argument("--network", help="default: network/<line>.json, else that line from network/lines.json")
     p.add_argument("--timetable", help="timetable JSON for that day (default: timetable/<date>.json if present)")
     p.add_argument("--json", action="store_true", help="print machine-readable output instead of the table")
     args = p.parse_args(argv)
 
-    net_path = Path(args.network)
-    network = json.loads(net_path.read_text()) if net_path.exists() else None
+    network = None
+    if args.network:
+        network = json.loads(Path(args.network).read_text())
+    else:
+        line = (_read_meta(Path(args.ride)).get("line") or "M4")
+        here = Path(__file__).resolve().parents[1] / "network"
+        if (here / f"{line.lower()}.json").exists():
+            network = json.loads((here / f"{line.lower()}.json").read_text())
+        elif (here / "lines.json").exists():
+            network = next((l for l in json.loads((here / "lines.json").read_text())["lines"] if l["line"] == line), None)
     ride = analyse(args.ride, network)
 
     tt_path = Path(args.timetable) if args.timetable else Path("timetable") / f"{ride.meta.get('date')}.json"

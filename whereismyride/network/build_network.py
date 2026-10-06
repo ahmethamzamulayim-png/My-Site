@@ -57,22 +57,41 @@ def fetch_stations() -> list[dict]:
 
 def order_stations(stations: list[dict]) -> list[dict]:
     """Put stations in travel order. The API's list isn't ordered (new stations
-    get new ids), so chain nearest neighbours starting from one end of the line:
-    the end is the station farthest from the line's centre."""
-    cx = sum(s["lat"] for s in stations) / len(stations)
-    cy = sum(s["lng"] for s in stations) / len(stations)
-    centre = {"lat": cx, "lng": cy}
-    left = sorted(stations, key=lambda s: -haversine_km(s, centre))
-    chain = [left.pop(0)]
-    while left:
-        nxt = min(left, key=lambda s: haversine_km(chain[-1], s))
-        left.remove(nxt)
-        chain.append(nxt)
-    # sanity: no hop should be wildly longer than the rest (would mean a branch or a wrong order)
+    get new ids), so build the order from geography: chain nearest neighbours,
+    trying every station as the starting end, then improve the shortest chain by
+    reversing stretches of it (2-opt) until no reversal makes it shorter. A
+    line is the shortest path through its stations; a greedy chain alone can
+    jump across (M1B did)."""
+    n = len(stations)
+    if n <= 2:
+        return list(stations)
+    dist = [[haversine_km(a, b) for b in stations] for a in stations]
+    length = lambda p: sum(dist[a][b] for a, b in zip(p, p[1:]))  # noqa: E731
+
+    best = None
+    for start in range(n):
+        path, left = [start], set(range(n)) - {start}
+        while left:
+            nxt = min(left, key=lambda k: dist[path[-1]][k])
+            left.remove(nxt)
+            path.append(nxt)
+        if best is None or length(path) < length(best):
+            best = path
+    improved = True
+    while improved:
+        improved = False
+        for i in range(0, n - 1):
+            for j in range(i + 2, n + 1):
+                cand = best[:i] + best[i:j][::-1] + best[j:]
+                if length(cand) < length(best) - 1e-9:
+                    best, improved = cand, True
+    chain = [stations[k] for k in best]
+
     hops = [haversine_km(a, b) for a, b in zip(chain, chain[1:])]
-    if hops and max(hops) > 4 * sorted(hops)[len(hops) // 2]:
-        print(f"warning: one hop is {max(hops):.1f} km vs median {sorted(hops)[len(hops) // 2]:.1f} km - "
-              "check the order by hand (branch line?)", file=sys.stderr)
+    median = sorted(hops)[len(hops) // 2]
+    if max(hops) > 4 * median:
+        print(f"warning: one hop is {max(hops):.1f} km vs median {median:.1f} km - "
+              "check the order by hand (branch line, or a long genuine gap?)", file=sys.stderr)
     return chain
 
 
@@ -126,7 +145,7 @@ out body;"""
 
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    p.add_argument("line", help="line code as the API names it, e.g. M4")
+    p.add_argument("line", help="line code as the API names it, e.g. M4 - or ALL for network/lines.json (every line, for the app)")
     p.add_argument("--stations", help="saved GetStations list (JSON) instead of calling the API")
     p.add_argument("--osm", action="store_true", help="along-track distances from OpenStreetMap")
     p.add_argument("--out", help="default: network/<line>.json")
@@ -137,6 +156,23 @@ def main(argv=None):
         allst = raw["list"] if isinstance(raw, dict) else raw
     else:
         allst = fetch_stations()
+    if args.line.upper() == "ALL":
+        lines = []
+        for code in sorted({s["line"] for s in allst}, key=lambda c: (c[0] != "M", c[0], int("".join(ch for ch in c if ch.isdigit()) or 0), c)):
+            st = order_stations([s for s in allst if s["line"] == code and s["lat"] is not None])
+            kms = [0.0]
+            for a, b in zip(st, st[1:]):
+                kms.append(kms[-1] + haversine_km(a, b))
+            lines.append({"line": code, "stations": [
+                {"id": s["id"], "name": s["name"], "lat": s["lat"], "lng": s["lng"], "km": round(k, 3)} for s, k in zip(st, kms)]})
+        path = Path(args.out or Path(__file__).parent / "lines.json")
+        path.write_text(json.dumps({
+            "km_source": "straight-line between consecutive stations (PROVISIONAL)",
+            "station_source": "Metro İstanbul GetStations, İBB Açık Veri Portalı (CC BY 4.0)",
+            "lines": lines}, ensure_ascii=False, separators=(",", ":")) + "\n")
+        print(f"{path}: {len(lines)} lines, {sum(len(l['stations']) for l in lines)} stations")
+        return
+
     line = [s for s in allst if s["line"] == args.line and s["lat"] is not None]
     if not line:
         sys.exit(f"no stations for line {args.line}; lines seen: {sorted({s['line'] for s in allst})}")

@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>WhereisMyRide</title>
+  <meta name="theme-color" content="#e81932" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icon.svg" type="image/svg+xml" />
+  <style>
+    :root {
+      --bg: #faf7f2; --panel: #ffffff; --text: #2b2732; --muted: #6f6878; --line: #e7e1d8;
+      --accent: #e81932; --accent-ink: #ffffff; --ok: #2f7d4a; --warn: #b5502e;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #17151b; --panel: #221f27; --text: #f1edf5; --muted: #a59eb0; --line: #36313d; }
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--bg); color: var(--text); }
+    body { font: 16px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; padding: 16px 16px calc(24px + env(safe-area-inset-bottom)); max-width: 560px; margin: 0 auto; }
+    h1 { font-size: 1.35rem; margin: 4px 0 2px; letter-spacing: -0.01em; }
+    .sub { color: var(--muted); margin: 0 0 16px; font-size: 0.92rem; }
+    section { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 16px; margin-bottom: 14px; }
+    label { display: block; font-weight: 600; font-size: 0.9rem; margin: 12px 0 6px; }
+    label:first-child { margin-top: 0; }
+    select, input[type=text] { width: 100%; font: inherit; color: inherit; background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 11px 12px; }
+    .lines { display: flex; flex-wrap: wrap; gap: 8px; }
+    .lines button { font: inherit; font-weight: 700; min-width: 54px; padding: 8px 10px; border-radius: 10px; border: 2px solid var(--line); background: var(--bg); color: var(--text); }
+    .lines button[aria-pressed=true] { border-color: var(--accent); background: var(--accent); color: var(--accent-ink); }
+    .dir { margin-top: 10px; color: var(--muted); font-size: 0.92rem; min-height: 1.4em; }
+    .big { width: 100%; font: inherit; font-size: 1.15rem; font-weight: 800; padding: 16px; border-radius: 14px; border: 0; background: var(--accent); color: var(--accent-ink); }
+    .big:disabled { opacity: 0.4; }
+    #start, #stop { margin-bottom: 14px; }
+    .big.stop { background: var(--text); color: var(--bg); }
+    .ghost { font: inherit; padding: 9px 12px; border-radius: 10px; border: 1px solid var(--line); background: transparent; color: var(--text); }
+    .rec { text-align: center; }
+    .clock { font-size: 3rem; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; margin: 4px 0; }
+    .state { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; padding: 6px 12px; border-radius: 999px; background: var(--bg); border: 1px solid var(--line); }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--muted); }
+    .moving .dot { background: var(--ok); }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 14px 0; }
+    .stats div { background: var(--bg); border-radius: 10px; padding: 8px 4px; }
+    .stats b { display: block; font-size: 1.2rem; font-variant-numeric: tabular-nums; }
+    .stats span { font-size: 0.75rem; color: var(--muted); }
+    .warn { color: var(--warn); font-size: 0.9rem; margin: 8px 0 0; }
+    .tip { color: var(--muted); font-size: 0.88rem; margin: 10px 0 0; }
+    ul.rides { list-style: none; padding: 0; margin: 0; }
+    ul.rides li { display: flex; gap: 10px; align-items: center; justify-content: space-between; padding: 10px 0; border-top: 1px solid var(--line); }
+    ul.rides li:first-child { border-top: 0; }
+    ul.rides small { color: var(--muted); display: block; }
+    .row { display: flex; gap: 8px; }
+    .hidden { display: none !important; }
+    .privacy { font-size: 0.85rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <h1>WhereisMyRide</h1>
+  <p class="sub" data-t="Metro yolculuğunu kaydet: tren ne zaman kalktı, ne kadar hızlı gitti, tarifeye ne kadar uydu.|Record your metro ride: when the train left, how fast it went, how well it kept to the timetable."></p>
+
+  <!-- 1. setup -->
+  <div id="setup">
+    <section>
+      <label data-t="Hat|Line"></label>
+      <div class="lines" id="lines" role="group"></div>
+
+      <label for="board" data-t="Bindiğin istasyon|Boarding at"></label>
+      <select id="board"></select>
+
+      <label for="alight" data-t="İneceğin istasyon|Getting off at"></label>
+      <select id="alight"></select>
+      <div class="dir" id="dir"></div>
+
+      <label for="pos" data-t="Telefon nerede?|Where is the phone?"></label>
+      <select id="pos">
+        <option value="lap-flat" data-t="Kucakta, düz|Flat on lap"></option>
+        <option value="bag-on-knees" data-t="Dizlerdeki çantada|In a bag on knees"></option>
+        <option value="pocket" data-t="Cepte|In a pocket"></option>
+        <option value="hand" data-t="Elde|In hand"></option>
+      </select>
+      <p class="tip" data-t="Trene bindikten sonra, kapılar kapanmadan başlat. Yolculuk boyunca telefonu aynı yerde tut.|Start once you're on board, before the doors close. Keep the phone in the same place the whole ride."></p>
+    </section>
+    <button class="big" id="start" disabled data-t="Kaydı başlat|Start recording"></button>
+    <p class="warn hidden" id="nosensor"></p>
+  </div>
+
+  <!-- 2. recording -->
+  <div id="recording" class="hidden">
+    <section class="rec">
+      <div id="route" class="sub"></div>
+      <div class="clock" id="elapsed">0:00</div>
+      <div class="state" id="state"><span class="dot"></span><span id="statetext"></span></div>
+      <div class="stats">
+        <div><b id="nstops">0</b><span data-t="durak|stops"></span></div>
+        <div><b id="expect">–</b><span data-t="beklenen|expected"></span></div>
+        <div><b id="hz">–</b><span data-t="ölçüm/sn|samples/s"></span></div>
+      </div>
+      <label for="notes" data-t="Not (isteğe bağlı)|Note (optional)"></label>
+      <input type="text" id="notes" data-ph="ör. tünelde 1 dk bekledik|e.g. held 1 min in a tunnel" />
+      <p class="warn hidden" id="gapwarn"></p>
+      <p class="tip" data-t="Ekran açık kalmalı: tarayıcı, ekran kapanınca sensörü durdurur.|Keep the screen on: the browser pauses the sensor when the screen turns off."></p>
+    </section>
+    <button class="big stop" id="stop" data-t="İndim, kaydı bitir|I'm off, stop recording"></button>
+  </div>
+
+  <!-- 3. saved rides -->
+  <section id="saved">
+    <div class="row" style="justify-content:space-between;align-items:center">
+      <strong data-t="Kayıtlı yolculuklar|Saved rides"></strong>
+      <button class="ghost hidden" id="shareall" data-t="Hepsini paylaş|Share all"></button>
+    </div>
+    <ul class="rides" id="rides"></ul>
+    <p class="privacy" data-t="Kayıtlar yalnızca bu telefonda durur. Sen paylaşmadıkça hiçbir yere gönderilmez. Konum (GPS) kullanılmaz.|Rides stay on this phone. Nothing is sent anywhere unless you share it. No location (GPS) is used."></p>
+  </section>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -74,11 +74,31 @@ def make_ride(distances_m: list[float], dwells_s: list[float], seed: int = 0, bi
     return df, truth
 
 
+def app_samples(out: Path, board: str, alight: str, network: Path, seed: int = 7) -> None:
+    """Samples for tests/app_e2e.mjs: a ride between two real stations, at 50 Hz like a phone."""
+    import json
+    km = {s["name"]: s["km"] for s in json.loads(network.read_text())["stations"]}
+    names = list(km)
+    i, j = names.index(board), names.index(alight)
+    hops = names[i : j + 1] if i < j else names[j : i + 1][::-1]
+    dists = [abs(km[b] - km[a]) * 1000 for a, b in zip(hops, hops[1:])]
+    df, truth = make_ride(dists, [30, 25, 35, 28, 32][: len(dists) - 1], seed=seed, bias=0.05)
+    df = df.iloc[::2]
+    cols = [c for c in df.columns if c.startswith("Linear")]
+    out.write_text(json.dumps({"t": df["Time (s)"].round(4).tolist(), "a": df[cols].round(5).values.tolist(),
+                               "truth": truth}))
+
+
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     p.add_argument("out")
     p.add_argument("--seed", type=int, default=0)
+    p.add_argument("--app-samples", nargs=2, metavar=("BOARD", "ALIGHT"),
+                   help="write JSON samples for the app's browser test instead (uses network/m4.json)")
     args = p.parse_args(argv)
+    if args.app_samples:
+        app_samples(Path(args.out), *args.app_samples, Path(__file__).resolve().parents[1] / "network" / "m4.json", args.seed)
+        return
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
     df, truth = make_ride([1200, 900, 1500, 1100], [30, 25, 35], seed=args.seed)
