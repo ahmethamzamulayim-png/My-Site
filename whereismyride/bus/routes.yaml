@@ -3,6 +3,7 @@
 # the line's stops so the exact one can be copied here.
 lines: ["17", "2"]
 destination: "Marmara Üniversitesi"
+dest_walk_min: 3            # from the destination bus stop to where I actually need to be - MEASURE
 board:                      # stops I can catch the bus at, and my walk to each (minutes) - MEASURE these
   Kazasker: {walk_min: 6}
   Ayşekadın: {walk_min: 9}

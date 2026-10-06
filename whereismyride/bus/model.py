@@ -170,7 +170,7 @@ def reached_times(pas: pd.DataFrame) -> dict[tuple[str, int], datetime]:
 
 def predict(line: str, stops: pd.DataFrame, latest: pd.DataFrame, seg: pd.DataFrame, hist: History,
             board: str, dest: str, walk_min: float, now: datetime,
-            reached: dict | None = None) -> list[dict]:
+            reached: dict | None = None, use_live: bool = True) -> list[dict]:
     """Every bus of `line` that will pass `board` before `dest`: when it reaches each, and when to leave.
     `reached` (from reached_times) lets the first segment count only the time still left on it."""
     out = []
@@ -191,7 +191,8 @@ def predict(line: str, stops: pd.DataFrame, latest: pd.DataFrame, seg: pd.DataFr
             usual_ride = [hist.usual(direction, o, now) for o in range(b, d)]
             if any(u is None for u in usual_to_board + usual_ride):
                 continue  # not enough history for this stretch yet
-            factor, n_live = live_factor(seg, hist, direction, range(max(0, k - 5), d), now)
+            factor, n_live = (live_factor(seg, hist, direction, range(max(0, k - 5), d), now)
+                              if use_live else (1.0, 0))
             lo, hi = spread(seg, direction, range(k, d))
             # time already spent on the current segment (bus k -> k+1) comes off it, but never below
             # 10% of it: a bus "overdue" for the next stop is late, not already there. It comes off

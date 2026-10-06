@@ -220,7 +220,13 @@ Bonuses: log the official/kiosk prediction next to reality → "how wrong is the
 (a result like the IST board). Traffic data later if needed: İBB traffic-index / segment-speed datasets
 (unverified); commercial APIs (Google, TomTom) cost money and usually forbid storing data.
 
-**Built** (`bus/`, tested on a simulated line with a jam): collector, stop-passage extraction, history with
+**The real goal: "I must be there at T — when do I leave?"** Built as `bus.leave --arrive-by`: replays past
+comparable days ("had I left then, which bus would I have caught?") and gives the latest leave time that
+arrived on time on 90% of them. Plus `bus.leave` (next buses, live) and `bus.score` (graded against what
+really happened, no peeking: next-bus error by minutes ahead vs a kiosk-style baseline; does the 90% promise
+come true ~90% of the time). Extends to multi-leg trips (bus → metro) by replaying each leg in sequence.
+
+**Built** (`bus/`, tested on a simulated line with jams): collector, stop-passage extraction, history with
 fallbacks, live traffic factor, "leave by" on the early quantile — for lines 17 and 2, Kazasker / Ayşekadın →
 Marmara Üniversitesi. Next: run it for real; add planned departures for buses not yet on the road; grade the
 official/kiosk prediction.
