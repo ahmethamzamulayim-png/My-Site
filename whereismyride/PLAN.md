@@ -177,6 +177,29 @@ dataset: raw private, summaries public.
 
 ---
 
+## Scope: all Istanbul transport — personal tool first
+
+Direction: one app for every mode I use, built first as my own daily tool (published or not, it pays off
+daily, and daily use is the best test).
+
+**Personal payoffs:** when to leave (from *my* measured walks, transfers and line punctuality) · transfer
+reliability (e.g. M4 → Marmaray at Ayrılık Çeşmesi) · which car to board for the nearest exit/transfer ·
+signal gaps on my routes · disruption alerts for my lines · a travel log (time per week, lines, trends).
+
+**Modes** (sources from memory where marked — verify):
+| Mode | Live position source | What measurement adds |
+|---|---|---|
+| Metro, tram, funicular | none public — measured | everything in this plan |
+| Buses, metrobüs | İETT live bus positions + GTFS (verify on the open-data portal) | comfort, crowding, accuracy of predicted arrivals |
+| Marmaray | no open API known | same sensor method as metro |
+| Ferries | **AIS** — ships broadcast position publicly, like ADS-B for planes; RTL-SDR dongle (~$30) on the Pi (check Turkish rules before a permanent receiver) | crowding, comfort, crossing times |
+
+**Keeping a mega-app finishable:**
+1. **One data model:** a journey = legs (mode, line, from, to); every leg uses the same recording and analysis.
+   A new mode = a new data source, not a new app.
+2. **Add modes in order of my own use:** M4 first, then the next most-used line.
+3. **Personal first:** a phone and a folder of rides. Accounts, servers, polish only if publishing.
+
 ## Field tests
 
 See [TESTING.md](TESTING.md): what to check on real rides, in order, with pass criteria and a results log.

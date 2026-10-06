@@ -49,6 +49,8 @@ cables, no soldering per sensor. Only the Pi's 40-pin header needs soldering if 
 | ~~VEML7700 light sensor~~ | light level | dropped: the box rides inside a backpack | - |
 | **Raspberry Pi Zero 2 W** | 4 cores instead of 1 | if the Zero W can't keep up with kHz IMU + air sensors together | 15–20 |
 
+| RTL-SDR USB receiver + small 162 MHz antenna | AIS from ferries (public ship broadcasts) | when ferries join the app; check Turkish rules before a permanent receiver | 30–40 |
+
 Not needed: GPS (the phone's dual-band GPS covers above-ground stretches).
 
 ## Carrying it: inside a backpack (decided)
