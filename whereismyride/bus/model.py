@@ -1,5 +1,9 @@
 """From logged bus positions to "leave at 08:07".
 
+THE QUESTION THIS ANSWERS: I must be at my destination at time T - when do I leave home?
+That is plan_arrival() at the bottom. Everything above it builds the pieces; predict()
+handles the near-term case ("which of the buses on the road right now gets me there").
+
 1. passages():   position pings -> when each bus reached each stop
 2. History:      stop-to-stop travel times, by weekday/weekend and hour
 3. live_factor(): how slow the road is RIGHT NOW, from the buses that just
@@ -210,3 +214,68 @@ def predict(line: str, stops: pd.DataFrame, latest: pd.DataFrame, seg: pd.DataFr
                 "traffic_factor": round(factor, 2), "live_segments": n_live,
             })
     return sorted(out, key=lambda r: r["at_dest"])
+
+
+# ---------------------------------------------------------------------------
+# Arrive-by planning: "I must be there at 09:00 - when do I leave home?"
+# ---------------------------------------------------------------------------
+
+def trips_between(pas: pd.DataFrame, stops: pd.DataFrame, board: str, dest: str) -> pd.DataFrame:
+    """Every recorded bus trip that served `board` then `dest`: when it was at each.
+    Columns: t_board, t_dest (datetimes), day (date)."""
+    b_rows, d_rows = find_stop(stops, board), find_stop(stops, dest)
+    out = []
+    for direction in sorted(set(b_rows.direction) & set(d_rows.direction)):
+        b = int(b_rows[b_rows.direction == direction].order.min())
+        d_c = d_rows[(d_rows.direction == direction) & (d_rows.order > b)]
+        if d_c.empty:
+            continue
+        d = int(d_c.order.min())
+        p = pas[(pas.direction == direction) & pas.order.isin([b, d])]
+        w = p.pivot_table(index=["door", "route", "trip"], columns="order", values="t", aggfunc="first").dropna()
+        for (_, _, _), r in w.iterrows():
+            if r[d] > r[b]:
+                out.append({"t_board": r[b], "t_dest": r[d]})
+    df = pd.DataFrame(out, columns=["t_board", "t_dest"])
+    return df.assign(day=df.t_board.dt.date) if not df.empty else df.assign(day=[])
+
+
+def replay(trips: pd.DataFrame, day, leave: datetime, walk_min: float, dest_walk_min: float) -> datetime | None:
+    """On a past `day`, leaving home at `leave` (time of day): arrival at the final destination,
+    taking the first bus that reaches the stop after I do. None = no bus that day after that."""
+    at_stop = datetime.combine(day, leave.time()) + timedelta(minutes=walk_min)
+    later = trips[(trips.day == day) & (trips.t_board >= at_stop)]
+    if later.empty:
+        return None
+    first = later.loc[later.t_board.idxmin()]
+    # a later bus can overtake an earlier one; I'm on the one I boarded, so its arrival counts
+    return first.t_dest + timedelta(minutes=dest_walk_min)
+
+
+def plan_arrival(trips: pd.DataFrame, target: datetime, walk_min: float, dest_walk_min: float = 0.0,
+                 confidence: float = 0.9, min_days: int = 5, search_min: int = 120) -> dict | None:
+    """Latest time to leave home and still arrive by `target` on at least `confidence` of past
+    comparable days (same weekday/weekend type).
+
+    Replays each past day: "had I left at L, which bus would I have caught, when would I have
+    arrived?" - so waiting, bunching, traffic and bad days are all in it, nothing modelled."""
+    if trips.empty:
+        return None
+    days = sorted(d for d in trips.day.unique() if day_type(datetime.combine(d, target.time())) == day_type(target)
+                  and d < target.date())
+    if len(days) < min_days:
+        return None
+    best = None
+    for minutes_before in range(0, search_min + 1):
+        leave = target - timedelta(minutes=minutes_before)
+        arrivals = [replay(trips, d, leave, walk_min, dest_walk_min) for d in days]
+        deadline = [datetime.combine(d, target.time()) for d in days]
+        ok = [a is not None and a <= dl for a, dl in zip(arrivals, deadline)]
+        rate = sum(ok) / len(days)
+        if rate >= confidence:
+            margins = [(dl - a).total_seconds() / 60 for a, dl in zip(arrivals, deadline) if a is not None]
+            best = {"leave": leave, "on_time_rate": rate, "days": len(days),
+                    "typical_early_min": float(np.median(margins)) if margins else None,
+                    "worst_early_min": float(min(margins)) if margins else None}
+            break  # scanning from latest to earliest: the first that works is the latest that works
+    return best
