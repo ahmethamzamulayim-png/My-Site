@@ -4,3 +4,5 @@ rides/*
 __pycache__/
 *.pyc
 .venv/
+# collected bus position logs (large; public data, but no need to commit)
+data/

@@ -220,6 +220,11 @@ Bonuses: log the official/kiosk prediction next to reality → "how wrong is the
 (a result like the IST board). Traffic data later if needed: İBB traffic-index / segment-speed datasets
 (unverified); commercial APIs (Google, TomTom) cost money and usually forbid storing data.
 
+**Built** (`bus/`, tested on a simulated line with a jam): collector, stop-passage extraction, history with
+fallbacks, live traffic factor, "leave by" on the early quantile — for lines 17 and 2, Kazasker / Ayşekadın →
+Marmara Üniversitesi. Next: run it for real; add planned departures for buses not yet on the road; grade the
+official/kiosk prediction.
+
 Collector: polling every 30–60 s all day doesn't fit GitHub Actions (Deno cron's 1-min minimum is borderline) →
 a small always-on box at home (a second Pi) or a cheap cloud server.
 

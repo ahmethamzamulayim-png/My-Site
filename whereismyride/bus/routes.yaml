@@ -1,0 +1,10 @@
+# My daily bus trip. Stop names are matched case- and accent-insensitively against İETT's stop list,
+# so "Ayşekadın" finds "AYŞEKADIN". If a name isn't found, `python -m bus.collect --stops-only` prints
+# the line's stops so the exact one can be copied here.
+lines: ["17", "2"]
+destination: "Marmara Üniversitesi"
+board:                      # stops I can catch the bus at, and my walk to each (minutes) - MEASURE these
+  Kazasker: {walk_min: 6}
+  Ayşekadın: {walk_min: 9}
+poll_seconds: 30
+data_dir: data/bus          # positions/YYYY-MM-DD.csv and stops/<line>.json land here
