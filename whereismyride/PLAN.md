@@ -12,6 +12,16 @@ how much reality drifts from it.
 
 ---
 
+## Why this exists
+
+I'm a mechanical engineering student. I like to take apart every system I meet — how it works, what limits
+it, how it could be better. Istanbul's transport is the system I use every day, so this project is my lab for
+dissecting it. The useful tools ("when do I leave?", next bus, coverage map) are by-products; the point is
+understanding.
+
+Every subsystem gets the same treatment, logged in [`dissections/`](dissections/):
+**how it works → measure it → what limits it → how could it be better** (with the data to estimate the gain).
+
 ## Phase 0 — Repo setup
 
 ```
