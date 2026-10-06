@@ -83,9 +83,11 @@ The ISO weighting filters are checked against the standard's tabulated factors (
 the app - different fleets on the same track) and **by stretch of track** (rough every time, whichever train
 runs it → a maintenance signal; getting rougher over weeks → a trend).
 
-**Limits, plainly:** ISO 2631-1 assumes a seat-mounted sensor. A phone on a lap or in a bag is softened by the
-body, so these are *comparison* numbers - valid between rides with the same `phone_position` - not ISO
-compliance figures. Jerk is measured after 1 Hz smoothing (otherwise it's just rail vibration differentiated),
+**Limits, plainly:** most metro riders stand, so the app assumes standing. Traction, braking and jerk are slow
+movements that a pocket or bag follows faithfully - they hold up wherever the phone is (except in a hand). The
+vibration number is softened by the body: ISO 2631-1 measures at the floor under a standing passenger's feet, so
+the closest a phone gets is a bag on the floor between your feet (`bag-on-floor`). Vibration figures are
+*comparison* numbers - valid between rides with the same `phone_position` - not ISO compliance figures. Jerk is measured after 1 Hz smoothing (otherwise it's just rail vibration differentiated),
 so it's comparable between rides, not a test against a design limit.
 
 ## How it works, briefly

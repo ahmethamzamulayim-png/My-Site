@@ -21,12 +21,16 @@ Three kinds of number, each answering a different passenger complaint:
      maintenance signal.
 
 HONEST LIMITS - read before quoting a number:
-- ISO 2631-1 measures at the seat surface with a fixed accelerometer. A phone on
-  a lap or in a bag is softened by the body/bag, so absolute values here are NOT
-  ISO compliance figures. Comparisons are valid when the phone sits the same way
-  (same `phone_position`), which is why rides record it. `seat-flat` (phone lying
-  on an empty seat cushion) is the closest a phone gets to the standard's
-  seat-surface measurement.
+- Where the phone is matters differently for the two kinds of number:
+  * Traction, braking and jerk are slow (< ~1 Hz). At those frequencies a pocket,
+    a bag or a lap moves with the train, so these hold up wherever the phone is
+    (except in a hand, which adds its own motion). They are also what matters
+    most to the standing passengers a metro mostly carries.
+  * Vibration is faster, and a body or bag softens it. ISO 2631-1 measures at
+    the seat surface (seated) or the floor under the feet (standing) with a fixed
+    sensor. Closest a phone gets: `bag-on-floor` (standing) or `seat-flat`
+    (seated). Absolute values are NOT ISO compliance figures in any position;
+    compare rides with the same `phone_position`, which is why rides record it.
 - Phones sample at ~50-100 Hz, so vibration above half the sample rate (25 Hz
   at 50 Hz) is not seen. Train ride vibration sits mostly below that; the
   weighting itself is exact up to that limit (applied in the frequency domain).
