@@ -106,6 +106,13 @@ ICM-42688-P would be 0x68/0x69 on I²C — **clashes with the DS3231 at 0x68** u
 | Tiers 0–2 (recommended start) | **~125–185** |
 | Tier 3, all of it | +75–115 |
 
+## Bluetooth device counting (no extra hardware)
+
+The Zero W's Bluetooth radio can scan passively while it also talks to the phone. Log **only unique-device
+counts per minute** (addresses hashed in memory with a per-ride key, never written to the card), and keep
+signal strength so the analysis can cut to "own car". Rules and limits: PLAN.md → *Crowding from Bluetooth
+device counts*.
+
 ## Syncing the box with a phone
 
 Main method: the native app sends the phone's time to the Pi over **Bluetooth** when it starts a ride.

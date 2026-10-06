@@ -116,6 +116,12 @@ only the thing being tested differs. Recruit one friend for the T2–T4 rides.
   first check at home that CO₂ there follows the room (breathe near it, open a window), not your back.
 - **Pass/decides:** whether CO₂ follows crowding closely enough to use as a crowding measure.
 
+### T18 — Bluetooth count vs. crowding
+- At home first: confirm the log contains only per-minute counts — **no addresses, hashed or not**.
+- Rides: Bluetooth count per minute (strong signals only, while moving) next to the 1–5 rating and CO₂.
+- **Decides:** whether the count follows crowding; which signal-strength cut-off best matches "own car";
+  how much the count jumps when phones change their addresses.
+
 ### T17 — Gyroscope path
 - Rides with the phone/box fixed; trace each stretch, compare with the OSM track.
 - **Decides:** how close the traced path gets, and how many rides it takes.
@@ -163,3 +169,4 @@ only the thing being tested differs. Recruit one friend for the T2–T4 rides.
 | T15 | | | | |
 | T16 | | | | |
 | T17 | | | | |
+| T18 | | | | |

@@ -212,6 +212,24 @@ See [TESTING.md](TESTING.md): what to check on real rides, in order, with pass c
   (speed ÷ turn rate) and, with the measured sideways acceleration, how much of the curve force the track's
   banking cancels. Needs the phone fixed relative to the car (bag on the floor).
 
+### Crowding from Bluetooth device counts (passive, anonymous)
+
+Count the Bluetooth signals that phones, watches and earbuds broadcast anyway — an established crowd-sensing
+method. **Rules, not optional:**
+- **Listen only.** Never connect to, pair with, or send anything to another device.
+- **Never store addresses.** Hash each address in memory with a key that changes every ride; save only the
+  number of unique devices per minute. Nobody can be followed across rides.
+- **Ethics:** university ethics-committee approval before publishing; mention it to Metro İstanbul. A
+  Bluetooth address is personal data under KVKK.
+- Skip Wi-Fi probe sniffing (more intrusive; the Zero W needs patched firmware for it).
+
+**What the count is:** a relative crowding signal, not a headcount — phones change their Bluetooth address
+every ~10–15 min (count per minute), one person can carry 3 devices or 0, signals cross car walls. Keep only
+strong signals (≈ own car) and count only while the train is moving (keeps the platform crowd out).
+
+**Crowding from four signals, cross-checked:** Bluetooth count (instant) · CO₂ (slow, real breathing) ·
+dwell time (crowds slow boarding) · manual 1–5 rating in the app (ground truth).
+
 ### Ideas backlog
 - **Magnetometer** as a second witness for departures (traction motors spike it); **barometer** for depth
   and tunnel sections (M-Loc used both to tell stations apart); **light** for platform vs. tunnel;
@@ -227,7 +245,8 @@ See [TESTING.md](TESTING.md): what to check on real rides, in order, with pass c
   published later, tap-in only). Would need raw Istanbulkart tap timestamps — ask İBB through the university.
 - **Lines the API doesn't cover:** Marmaray, M11, T2, T6, F2, F3, metrobüs — find other sources, or
   measurement-only for those.
-- **Crowding as a feature:** dwell time vs. how full the train felt (a 1–3 rating in the app?).
+- **Crowding rating in the app:** 1–5 "how full is the car", tapped a few times per ride — ground truth for the
+  Bluetooth / CO₂ / dwell-time crowding signals.
 
 ### Borrow from similar projects (ideas freely; code/data only with licence check or the author's OK)
 - **Transit app GO:** one tap to contribute, and contributors see live trains in return — the reason
