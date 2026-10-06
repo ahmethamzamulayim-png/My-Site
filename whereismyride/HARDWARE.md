@@ -45,6 +45,7 @@ cables, no soldering per sensor. Only the Pi's 40-pin header needs soldering if 
 | **ADXL355** (e.g. EVAL-ADXL355-PMDZ) | very low-noise acceleration | if the ICM-42688-P's spectra look noise-limited — this is the vibration-measurement-grade part | 40–60 |
 | **MMC5983MA** or **LIS3MDL** magnetometer | magnetic field, fast | traction-motor signatures at higher rate than the phone | 10–20 |
 | **SPH0645** or **INMP441** I²S MEMS microphone | sound level | wheel squeal, noise comfort. Compute loudness on the Pi; **never store audio** (privacy) | 5–10 |
+| **SGP41** VOC/NOx index sensor | air pollutants (relative index, not ppm) | pairs with the SCD41 for air quality; same I²C chain, address 0x59 | 10–15 |
 | ~~VEML7700 light sensor~~ | light level | dropped: the box rides inside a backpack | - |
 | **Raspberry Pi Zero 2 W** | 4 cores instead of 1 | if the Zero W can't keep up with kHz IMU + air sensors together | 15–20 |
 
@@ -92,7 +93,7 @@ box measures, no cameras/audio stored). Also a chance to start a useful contact.
 
 ## I²C addresses (no clashes in this list)
 
-SCD41 0x62 · BMP390 0x77 (0x76 alt.) · DS3231 0x68 · VEML7700 0x10 · LIS3MDL 0x1C/0x1E · MMC5983MA 0x30.
+SCD41 0x62 · SGP41 0x59 · BMP390 0x77 (0x76 alt.) · DS3231 0x68 · VEML7700 0x10 · LIS3MDL 0x1C/0x1E · MMC5983MA 0x30.
 ICM-42688-P would be 0x68/0x69 on I²C — **clashes with the DS3231 at 0x68** unless set to 0x69; on SPI
 (recommended) the question doesn't arise.
 
