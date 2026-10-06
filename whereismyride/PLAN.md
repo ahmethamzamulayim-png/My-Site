@@ -200,6 +200,29 @@ signal gaps on my routes · disruption alerts for my lines · a travel log (time
 2. **Add modes in order of my own use:** M4 first, then the next most-used line.
 3. **Personal first:** a phone and a folder of rides. Accounts, servers, polish only if publishing.
 
+### Buses: "when should I leave?" (personal Citymapper/Moovit, done properly)
+
+Problem: kiosks and apps say "1 min" for a bus 15 min away — they predict from *where the bus is*, not from
+*how buses are moving on that road right now*.
+
+1. **Log my routes' buses all day** — İETT bus positions (believed to be via İBB's older web services;
+   verify the current endpoint and its usage limits), polled every 30–60 s → when each bus passed each stop.
+2. **Historical travel times between stops** by hour/weekday — the IST-board method: most specific history
+   with enough data, else fall back to broader averages.
+3. **Live correction from the buses ahead:** the last buses on the same stretch *are* the traffic sensor
+   (vehicles as probes). Catches rain, accidents, match days that history misses.
+4. **Predict a range, not a point:** "leave at 08:07 → catch the 08:15 nine times in ten", using my measured
+   walk time to the stop.
+5. **Grade it on myself:** the native app detects boarding (walking → vehicle motion); every trip scores the
+   prediction.
+
+Bonuses: log the official/kiosk prediction next to reality → "how wrong is the official arrival time?"
+(a result like the IST board). Traffic data later if needed: İBB traffic-index / segment-speed datasets
+(unverified); commercial APIs (Google, TomTom) cost money and usually forbid storing data.
+
+Collector: polling every 30–60 s all day doesn't fit GitHub Actions (Deno cron's 1-min minimum is borderline) →
+a small always-on box at home (a second Pi) or a cheap cloud server.
+
 ## Field tests
 
 See [TESTING.md](TESTING.md): what to check on real rides, in order, with pass criteria and a results log.
