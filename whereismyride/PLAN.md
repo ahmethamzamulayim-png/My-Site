@@ -174,3 +174,59 @@ dataset: raw private, summaries public.
 2. Phase 1 + first API calls (Phase 2, step 1).
 3. Install phyphox; record the first 3–4 commutes with station markers.
 4. Send the first CSV — write the stop detector against real data, not imagined data.
+
+---
+
+## Field tests
+
+See [TESTING.md](TESTING.md): what to check on real rides, in order, with pass criteria and a results log.
+
+## Ideas and open questions — nothing here is lost
+
+### Next steps (in order)
+1. Create the `WhereisMyRide` repo; move this folder there with its history; enable GitHub Pages → app link.
+2. TESTING.md T0, T1, T11 on my own M4 commutes.
+3. Run the timetable fetcher and `build_network.py M4 --osm` from a laptop (T6, T7).
+4. Two-phone tests with one friend (T2–T4).
+5. Consent text + pilot with 3–5 friends.
+
+### To verify (claims not yet checked against a primary source)
+- ISO 2631-1 Table 3 weighting values in `tests/test_comfort.py` were typed from memory — check against
+  a real copy (university library). Wd at 10 Hz is the known suspect (remembered 212, formula gives 202).
+- The timetable API's request formats come from mdemirer/sonraki-tren, not from running it myself.
+- İBB open-data licence terms (station data says CC BY 4.0; the portal also has its own İBB licence) —
+  read before any commercial use.
+- Whether Metro İstanbul's or İBB's apps show live station crowding (could be a minute-level signal).
+
+### Ideas backlog
+- **Native Android app** — records with the screen off (foreground service), and can read the magnetometer
+  and barometer that the web can't. Build once the web app has proven friends will use it.
+- **Magnetometer** as a second witness for departures (traction motors spike it); **barometer** for depth
+  and tunnel sections (M-Loc used both to tell stations apart).
+- **Scheduled-position live map** on the portfolio site (Phase 6), with disrupted lines greyed out from
+  `GetServiceStatuses`, labelled with the measured timetable accuracy.
+- **Track-condition monitoring:** the same stretch getting rougher over weeks, on every train → maintenance
+  signal. Needs T9 (repeatability) first to know what change is real.
+- **Fleet comparison:** car numbers → train types; same track, different trains → which fleet rides worse.
+- **Punctuality dataset:** "the M4 timetable is accurate to X s, 95% of the time, over N rides" — not
+  published anywhere today.
+- **Crowd/turnstile idea:** infer arrivals from station entry surges. Not possible with public data (hourly,
+  published later, tap-in only). Would need raw Istanbulkart tap timestamps — ask İBB through the university.
+- **Lines the API doesn't cover:** Marmaray, M11, T2, T6, F2, F3, metrobüs — find other sources, or
+  measurement-only for those.
+- **Crowding as a feature:** dwell time vs. how full the train felt (a 1–3 rating in the app?).
+
+### Borrow from similar projects (ideas freely; code/data only with licence check or the author's OK)
+- **Transit app GO:** one tap to contribute, and contributors see live trains in return — the reason
+  people keep using it.
+- **M-Loc / SubwayPS / MetroEye (research):** extra sensors to identify stations; ~70 rides was enough for
+  SubwayPS — a realistic target for me + friends.
+- **Rayİst / sonraki-tren:** disruption handling via `GetServiceStatuses`; sonraki-tren's API retry and
+  caching notes. Worth messaging its author — they solved this API's quirks and may want punctuality data back.
+
+### Where it could go
+- **Portfolio / paper / student competition** — near-certain value.
+- **Data, not a consumer app:** punctuality data (journalists, planners, Moovit/Google), ride-comfort and
+  track-condition data (operators, maintenance contractors, train makers). Few buyers, slow sales — a
+  hypothesis to test once the data shows something real.
+- **Before any of it:** KVKK compliance for friends' rides; never use "Metro İstanbul" name or logo in branding.
