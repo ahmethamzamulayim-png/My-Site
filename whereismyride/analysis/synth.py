@@ -37,8 +37,12 @@ def random_rotation(rng: np.random.Generator) -> np.ndarray:
 
 
 def make_ride(distances_m: list[float], dwells_s: list[float], seed: int = 0, bias: float = 0.03,
-              lead_s: float = 20.0, tail_s: float = 15.0):
-    """Return (phyphox-style DataFrame, truth list of (depart_s, arrive_s, distance_m, peak_ms))."""
+              lead_s: float = 20.0, tail_s: float = 15.0, gravity: bool = False, vert_sine: float = 0.0):
+    """Return (phyphox-style DataFrame, truth list of (depart_s, arrive_s, distance_m, peak_ms)).
+
+    gravity=True adds the app's gravity columns; vert_sine adds a 6 Hz vertical
+    vibration of that amplitude (m/s^2) while moving - known inputs for the
+    comfort tests."""
     rng = np.random.default_rng(seed)
     along, moving, truth = [np.zeros(int(lead_s * RATE))], [np.zeros(int(lead_s * RATE), bool)], []
     t = lead_s
@@ -60,8 +64,10 @@ def make_ride(distances_m: list[float], dwells_s: list[float], seed: int = 0, bi
     # train frame: x along track, y sideways, z up. Vibration only while moving.
     vib = np.where(moving, 0.18, 0.015)[:, None] * rng.normal(size=(n, 3))
     sway = np.where(moving, 1, 0) * 0.08 * np.sin(2 * np.pi * 0.7 * np.arange(n) / RATE)
-    train = np.column_stack([along, sway, np.zeros(n)]) + vib
-    phone = train @ random_rotation(rng).T + bias  # phone sits at an unknown angle; sensor has a constant bias
+    vert = np.where(moving, 1, 0) * vert_sine * np.sin(2 * np.pi * 6.0 * np.arange(n) / RATE)
+    train = np.column_stack([along, sway, vert]) + vib
+    rot = random_rotation(rng)
+    phone = train @ rot.T + bias  # phone sits at an unknown angle; sensor has a constant bias
 
     time = np.arange(n) / RATE
     df = pd.DataFrame({
@@ -71,6 +77,10 @@ def make_ride(distances_m: list[float], dwells_s: list[float], seed: int = 0, bi
         "Linear Acceleration z (m/s^2)": phone[:, 2],
     })
     df["Absolute acceleration (m/s^2)"] = np.linalg.norm(phone, axis=1)
+    if gravity:
+        g = np.array([0.0, 0.0, 9.81]) @ rot.T  # gravity is "up" in the train frame, seen through the phone's tilt
+        for i, a in enumerate("xyz"):
+            df[f"Gravity {a} (m/s^2)"] = g[i]
     return df, truth
 
 
@@ -82,11 +92,13 @@ def app_samples(out: Path, board: str, alight: str, network: Path, seed: int = 7
     i, j = names.index(board), names.index(alight)
     hops = names[i : j + 1] if i < j else names[j : i + 1][::-1]
     dists = [abs(km[b] - km[a]) * 1000 for a, b in zip(hops, hops[1:])]
-    df, truth = make_ride(dists, [30, 25, 35, 28, 32][: len(dists) - 1], seed=seed, bias=0.05)
+    df, truth = make_ride(dists, [30, 25, 35, 28, 32][: len(dists) - 1], seed=seed, bias=0.05,
+                          gravity=True, vert_sine=0.3)
     df = df.iloc[::2]
     cols = [c for c in df.columns if c.startswith("Linear")]
+    gcols = [c for c in df.columns if c.startswith("Gravity")]
     out.write_text(json.dumps({"t": df["Time (s)"].round(4).tolist(), "a": df[cols].round(5).values.tolist(),
-                               "truth": truth}))
+                               "g": df[gcols].round(4).values.tolist(), "truth": truth}))
 
 
 def main(argv=None):

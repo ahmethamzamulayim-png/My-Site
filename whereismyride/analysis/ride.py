@@ -32,6 +32,7 @@ import pandas as pd
 import yaml
 from scipy.signal import butter, sosfiltfilt
 
+from .comfort import run_comfort, train_axes
 from .load import load_phyphox
 
 ACTIVITY_WINDOW_S = 3.0  # rolling window for "how much is the phone shaking"
@@ -53,6 +54,7 @@ class Segment:
     peak_kmh: float | None = None
     bias_ms2: float | None = None  # accelerometer bias removed on this segment
     profile: list[tuple[float, float]] = field(default_factory=list)  # (t since depart, km/h), 1 Hz
+    comfort: dict = field(default_factory=dict)  # see analysis/comfort.py
 
     @property
     def run_s(self) -> float:
@@ -254,6 +256,7 @@ def analyse(folder: str | Path, network: dict | None = None) -> Ride:
         )
         stations = []
 
+    axes3 = train_axes(df, axis)
     segments = []
     for k, (dep, arr) in enumerate(runs):
         dep, arr = refine_edges(df, rate, axis, dep, arr)
@@ -267,6 +270,7 @@ def analyse(folder: str | Path, network: dict | None = None) -> Ride:
             seg.from_station, seg.to_station = a["name"], b["name"]
             if a.get("km") is not None and b.get("km") is not None:
                 seg.track_m = round(abs(b["km"] - a["km"]) * 1000, 1)
+        seg.comfort = run_comfort(df, rate, axis, dep, arr, axes3)
         dist = seg.track_m if seg.track_m else seg.integrated_m
         seg.avg_kmh = round(dist / seg.run_s * 3.6, 1) if seg.run_s > 0 else None
         segments.append(seg)
@@ -324,6 +328,17 @@ def report(ride: Ride, tt_rows: list[dict] | None = None) -> str:
     lines.append("")
     lines.append("avg/peak in km/h. 'dist chk' = integrated distance / track distance; near 100% means the")
     lines.append("speed profile can be trusted, far off means the phone moved or the axis was misjudged.")
+    if ride.segments and ride.segments[0].comfort:
+        lines += ["", "Ride comfort (ISO 2631-1 weighted vibration; jerk = how abruptly the push changes):",
+                  f"{'#':>2}  {'from':<22} {'traction':>8} {'braking':>8} {'jerk go':>8} {'jerk stop':>9} {'vib':>6}  feels"]
+        for k, s in enumerate(ride.segments):
+            c = s.comfort
+            lines.append(f"{k + 1:>2}  {(s.from_station or '-'):<22} {c['traction_peak_ms2']:>8.2f} {c['braking_peak_ms2']:>8.2f} "
+                         f"{c['jerk_start_ms3']:>8.2f} {c['jerk_stop_ms3']:>9.2f} {c['aw_total']:>6.3f}  {c['comfort']}")
+        lines.append("traction/braking m/s^2, jerk m/s^3, vib = weighted RMS m/s^2. Phone on a lap/in a bag reads lower")
+        lines.append("than a seat-mounted sensor: compare rides with the same phone_position, don't quote as ISO figures.")
+        if "axes_note" in ride.segments[0].comfort:
+            lines.append("(" + ride.segments[0].comfort["axes_note"] + ")")
     if tt_rows:
         lines += ["", "vs. timetable (timetable is HH:MM only, so +/-30 s is 'on time'):"]
         for r in tt_rows:

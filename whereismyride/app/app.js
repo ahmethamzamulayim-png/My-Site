@@ -105,13 +105,14 @@
       } catch { return; }
     }
     save("last", { line: sel.line, board: sel.board, alight: sel.alight, pos: $("pos").value });
-    rec = { t: [], x: [], y: [], z: [], wall0: null, t0: null, sensor: null, gaps: [], lastT: null,
+    rec = { t: [], x: [], y: [], z: [], gx: [], gy: [], gz: [], wall0: null, t0: null, sensor: null, gaps: [], lastT: null,
             line: sel.line, board: sel.board, alight: sel.alight, direction: sel.direction,
             nstops: sel.nstops, pos: $("pos").value, live: { moving: false, since: 0, stops: 0, runs: 0 } };
     $("route").textContent = `${sel.line} · ${sel.board} → ${sel.alight}`;
     $("expect").textContent = sel.nstops;
     $("nstops").textContent = "0";
     $("notes").value = "";
+    $("vehicle").value = "";
     $("gapwarn").classList.add("hidden");
     $("setup").classList.add("hidden");
     $("recording").classList.remove("hidden");
@@ -134,6 +135,12 @@
     if (rec.lastT !== null && t - rec.lastT > 1.0) rec.gaps.push([round(rec.lastT, 2), round(t, 2)]);
     rec.lastT = t;
     rec.t.push(t); rec.x.push(a.x); rec.y.push(a.y); rec.z.push(a.z);
+    // gravity direction: tells the analysis which way is down, so it can split
+    // vertical from sideways shaking (ride comfort). Only when both readings exist.
+    const g = e.accelerationIncludingGravity;
+    if (sensor === "linear" && g && g.x != null) {
+      rec.gx.push(g.x - a.x); rec.gy.push(g.y - a.y); rec.gz.push(g.z - a.z);
+    }
   }
 
   // Live stopped/moving guess, for the screen only - the real analysis is offline.
@@ -189,6 +196,7 @@
       meta: {
         date: ymd(r.wall0), line: r.line, direction: r.direction, board: r.board, alight: r.alight,
         phone_position: r.pos, start_clock: hms(r.wall0), notes: $("notes").value.trim(),
+        vehicle: $("vehicle").value.trim(),
         sensor: r.sensor, samples: r.t.length, duration_s: round(r.t[r.t.length - 1], 1),
         sample_rate_hz: round(r.t.length / Math.max(r.t[r.t.length - 1], 1), 1),
         sensor_gaps: r.gaps, live_stops_counted: r.live.stops, stations_expected: r.nstops,
@@ -206,7 +214,13 @@
       ? '"Time (s)","Linear Acceleration x (m/s^2)","Linear Acceleration y (m/s^2)","Linear Acceleration z (m/s^2)"'
       : '"Time (s)","Acceleration x (m/s^2)","Acceleration y (m/s^2)","Acceleration z (m/s^2)"';
     const out = [head];
-    for (let i = 0; i < r.t.length; i++) out.push(`${r.t[i].toFixed(4)},${r.x[i].toFixed(5)},${r.y[i].toFixed(5)},${r.z[i].toFixed(5)}`);
+    const grav = r.gx.length === r.t.length; // gravity columns only if every sample has them
+    if (grav) out[0] += ',"Gravity x (m/s^2)","Gravity y (m/s^2)","Gravity z (m/s^2)"';
+    for (let i = 0; i < r.t.length; i++) {
+      let row = `${r.t[i].toFixed(4)},${r.x[i].toFixed(5)},${r.y[i].toFixed(5)},${r.z[i].toFixed(5)}`;
+      if (grav) row += `,${r.gx[i].toFixed(3)},${r.gy[i].toFixed(3)},${r.gz[i].toFixed(3)}`;
+      out.push(row);
+    }
     return out.join("\n") + "\n";
   }
 

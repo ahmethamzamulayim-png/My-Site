@@ -116,6 +116,17 @@ crowding; per-segment speed profiles overlaid.
 **Self-check:** `tests/` — synthetic rides with known answers, including a bumped phone and a large sensor
 bias; detected stops must land within 2 s (currently < 1 s). On real rides: the hand-noted station times.
 
+## Phase 4b — Ride comfort
+
+Same rides, second question: *how does the ride feel, and where is it worst?*
+
+- Per run: traction/braking peak (m/s²), jerk at start and stop (m/s³), ISO 2631-1 weighted vibration
+  (vertical Wk, horizontal Wd; vertical found from the gravity direction the app records).
+- Across rides (`analysis.summary`): by line, by vehicle (car number typed in the app), by stretch of track.
+- A stretch that is rough on every train is the track; a train that is rough on every stretch is the train.
+  That separation is the result worth showing to an operator.
+- Phone ≠ seat sensor: compare like with like (`phone_position`), don't quote ISO compliance.
+
 ## Phase 5 — Decision gate
 
 After ~40 rides, answer one question with data:

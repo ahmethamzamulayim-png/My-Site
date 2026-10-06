@@ -34,12 +34,14 @@ await page.selectOption('#board', 'Göztepe'); await page.selectOption('#alight'
 const dirText = await page.textContent('#dir');
 await page.screenshot({ path: OUT + '/app-setup.png' });
 await page.click('#start');
+await page.fill('#vehicle', '4012');
 const s = JSON.parse(fs.readFileSync(SAMPLES));
 // play the ride into the sensor API with faked event timestamps (as fast as possible)
-await page.evaluate(({ t, a }) => {
+await page.evaluate(({ t, a, g }) => {
   const base = performance.now();
   for (let i = 0; i < t.length; i++) {
-    const ev = new DeviceMotionEvent('devicemotion', { acceleration: { x: a[i][0], y: a[i][1], z: a[i][2] }, interval: 20 });
+    const withG = g ? { x: a[i][0] + g[i][0], y: a[i][1] + g[i][1], z: a[i][2] + g[i][2] } : null;
+    const ev = new DeviceMotionEvent('devicemotion', { acceleration: { x: a[i][0], y: a[i][1], z: a[i][2] }, accelerationIncludingGravity: withG, interval: 20 });
     Object.defineProperty(ev, 'timeStamp', { value: base + t[i] * 1000 });
     window.dispatchEvent(ev);
   }

@@ -6,5 +6,5 @@ board: Göztepe              # where you got on
 alight: Kadıköy             # where you got off
 phone_position: lap-flat    # lap-flat | bag-on-knees | pocket | hand ... keep it the same all ride
 start_clock: "08:12:30"     # wall-clock time you pressed start, to the SECOND - the whole timetable comparison hangs on this
-car: 3                      # optional: which car (front/back cars may feel braking differently)
+vehicle: "4012"             # optional: the car number shown inside the car - compares train types/fleets for ride comfort
 notes: ""                   # anything unusual: held in a tunnel, very crowded, phone moved at Ünalan

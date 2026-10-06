@@ -8,6 +8,7 @@ names look like "Time (s)", "Linear Acceleration x (m/s^2)", ...
 Everything is resampled onto one uniform clock so the detectors can work
 with fixed-length windows. Output columns (whichever sensors were recorded):
     ax, ay, az   linear acceleration, gravity removed, m/s^2
+    gx, gy, gz   gravity direction (app recordings only) - tells vertical from horizontal
     mag          magnetic field magnitude, uT
     pressure     hPa
 """
@@ -71,6 +72,10 @@ def load_phyphox(path: str | Path, rate_hz: int = RATE_HZ) -> pd.DataFrame:
             if all(cols):
                 m = np.sqrt(sum(df[c].to_numpy(float) ** 2 for c in cols))
                 series["mag"] = pd.Series(m, index=time)
+        for axis in "xyz":  # the app's gravity direction columns ("Gravity x (m/s^2)")
+            c = _col(df, r"gravity", rf"\b{axis}\b")
+            if c:
+                series[f"g{axis}"] = pd.Series(df[c].to_numpy(float), index=time)
         p = _col(df, r"pressure")
         if p:
             series["pressure"] = pd.Series(df[p].to_numpy(float), index=time)

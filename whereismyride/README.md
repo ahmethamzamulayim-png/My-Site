@@ -16,6 +16,7 @@ Full plan and reasoning: [PLAN.md](PLAN.md).
 | Ride analysis (`analysis/`) | working on synthetic rides and on the app's own export; first real ride pending |
 | Network (`network/`) | all 18 lines, 245 stations from the official API; distances **straight-line, provisional** (~6% short on M4) |
 | Timetable fetcher (`timetable/`) | written, not yet run - the API wasn't reachable from where it was written |
+| Ride comfort (`analysis/comfort.py`, `summary.py`) | ISO 2631-1 weighting verified; by line / vehicle / stretch summaries |
 | Map | not started (Phase 6) |
 
 ## The recorder app
@@ -65,6 +66,27 @@ node tests/app_e2e.mjs ...                    # browser test of the app, see the
 `analysis.ride` prints, per run between stations: departure time, run time, dwell time, average and peak
 speed, a distance check, and how far each departure was from the timetable. `--json` for machine-readable
 output.
+
+## Ride comfort
+
+Every run between two stations also gets comfort numbers (`analysis/comfort.py`):
+
+| number | unit | what a passenger feels |
+|---|---|---|
+| traction / braking peak | m/s² | how hard the train pushes you back / forward |
+| jerk at start / stop | m/s³ | how *abruptly* that push changes - the lurch |
+| weighted vibration `aw` | m/s² | how rough the ride is, ISO 2631-1 weighted (vertical Wk, horizontal Wd) |
+
+The ISO weighting filters are checked against the standard's tabulated factors (`tests/test_comfort.py`).
+
+`python -m analysis.summary rides/` compares many rides: **by line**, **by vehicle** (the car number noted in
+the app - different fleets on the same track) and **by stretch of track** (rough every time, whichever train
+runs it → a maintenance signal; getting rougher over weeks → a trend).
+
+**Limits, plainly:** ISO 2631-1 assumes a seat-mounted sensor. A phone on a lap or in a bag is softened by the
+body, so these are *comparison* numbers - valid between rides with the same `phone_position` - not ISO
+compliance figures. Jerk is measured after 1 Hz smoothing (otherwise it's just rail vibration differentiated),
+so it's comparable between rides, not a test against a design limit.
 
 ## How it works, briefly
 
