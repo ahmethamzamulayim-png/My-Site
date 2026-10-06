@@ -92,6 +92,31 @@ only the thing being tested differs. Recruit one friend for the T2–T4 rides.
 
 ---
 
+## F. Reference box (once the parts arrive)
+
+### T13 — Box vs. bench
+- Box still on a table for 10 min: noise floor of every sensor. Then tap it: sync spike is sharp and found.
+- **Pass:** no dropped samples at the chosen IMU rate (check timestamps), CO₂ and PM readings settle.
+
+### T14 — Box vs. phone (same ride)
+- Box on the floor, phone in each position in turn (one position per ride).
+- **Compare:** stop times, braking, jerk, vibration spectra.
+- **Decides:** the per-position correction for phone recordings, and whether box and phone agree where they
+  should (stops, braking).
+
+### T15 — Wheel flats / corrugation
+- Several rides, same stretch. Vibration spectrum vs. speed.
+- **Look for:** a peak moving with speed at speed ÷ wheel circumference (wheel flat), or a fixed-wavelength
+  tone (corrugation). Note car numbers — a flat belongs to a train, corrugation to the track.
+
+### T16 — CO₂ vs. crowding
+- Note how full the car is (1–5) at a few points per ride.
+- **Pass/decides:** whether CO₂ follows crowding closely enough to use as a crowding measure.
+
+### T17 — Gyroscope path
+- Rides with the phone/box fixed; trace each stretch, compare with the OSM track.
+- **Decides:** how close the traced path gets, and how many rides it takes.
+
 ## D. Unusual rides (collect as they happen, don't stage)
 
 | Situation | What to check |
@@ -130,3 +155,8 @@ only the thing being tested differs. Recruit one friend for the T2–T4 rides.
 | T9 | | | | |
 | T11 | | | | |
 | T12 | | | | |
+| T13 | | | | |
+| T14 | | | | |
+| T15 | | | | |
+| T16 | | | | |
+| T17 | | | | |

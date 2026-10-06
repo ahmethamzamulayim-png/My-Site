@@ -198,11 +198,22 @@ See [TESTING.md](TESTING.md): what to check on real rides, in order, with pass c
   read before any commercial use.
 - Whether Metro İstanbul's or İBB's apps show live station crowding (could be a minute-level signal).
 
+### Hardware: phones are the crowd, the Pi box is the reference
+- **Native Android app (decided):** every phone sensor — accelerometer, gyroscope, magnetometer, barometer,
+  light, proximity — recording with the screen off. The web app stays only as a quick prototype.
+- **Raspberry Pi Zero W reference box** ([HARDWARE.md](HARDWARE.md) has the shopping list): kHz vibration
+  (wheel flats, rail corrugation — the bearing-fault idea applied to a train), floor-mounted ISO comfort,
+  CO₂ (crowding), PM2.5 (metro dust), high-resolution pressure. Rides with box + phone together give a
+  per-position correction for every phone recording.
+- **Gyroscope path tracing:** turn rate × speed → the track's shape between stations, with gyro drift
+  removed by forcing each path to end at the next station (same trick as the speed bias). Gives curve radius
+  (speed ÷ turn rate) and, with the measured sideways acceleration, how much of the curve force the track's
+  banking cancels. Needs the phone fixed relative to the car (bag on the floor).
+
 ### Ideas backlog
-- **Native Android app** — records with the screen off (foreground service), and can read the magnetometer
-  and barometer that the web can't. Build once the web app has proven friends will use it.
 - **Magnetometer** as a second witness for departures (traction motors spike it); **barometer** for depth
-  and tunnel sections (M-Loc used both to tell stations apart).
+  and tunnel sections (M-Loc used both to tell stations apart); **light** for platform vs. tunnel;
+  **proximity** to record pocket/bag automatically; **microphone loudness** (never audio) for noise comfort.
 - **Scheduled-position live map** on the portfolio site (Phase 6), with disrupted lines greyed out from
   `GetServiceStatuses`, labelled with the measured timetable accuracy.
 - **Track-condition monitoring:** the same stretch getting rougher over weeks, on every train → maintenance
