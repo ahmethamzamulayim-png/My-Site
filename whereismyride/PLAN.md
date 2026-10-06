@@ -230,6 +230,32 @@ strong signals (≈ own car) and count only while the train is moving (keeps the
 **Crowding from four signals, cross-checked:** Bluetooth count (instant) · CO₂ (slow, real breathing) ·
 dwell time (crowds slow boarding) · manual 1–5 rating in the app (ground truth).
 
+### What else to sense — respectfully
+
+Rule: **sense the environment and the infrastructure, never people's content or identities.**
+
+**In scope**
+| Signal | Source | Gives |
+|---|---|---|
+| Own phone's cellular signal: strength, serving cell, handovers | native app (own data) | coverage map per stretch; handovers happen at fixed tunnel-antenna positions → a second way to identify stations |
+| Wi-Fi access points — fixed infrastructure only | app / Pi | station fingerprint for positioning; personal-hotspot names are personal data → count only, never store names |
+| Infrastructure Bluetooth beacons (if Istanbul's stations have any — unverified) | app / Pi | exact station positions |
+| Door chimes / announcement tones, detected on-device | microphone | exact door open/close times → precise dwell; store event times only, never audio |
+| Loudness + coarse frequency bands | microphone, on-device | noise comfort; wheel squeal on curves (pairs with gyroscope curves); coarse bands can't be turned back into speech |
+| Magnetic field | magnetometer | traction-motor signature; with the motion data, possibly a rough energy-use proxy (hypothesis) |
+| Temperature, humidity, CO₂, PM, VOC (SGP41) | Pi box | air quality; how well the car's air conditioning copes with crowds |
+| GPS | phone | true speed on above-ground stretches to validate the accelerometer |
+
+**Out of scope — never**
+- Wi-Fi probe requests from people's phones (identifiers; more intrusive than BLE counting)
+- Any network traffic content, even unencrypted
+- Istanbulkart / NFC — reading anyone's card
+- Audio recordings, cameras, photos of people
+- The train's control radio (CBTC) and staff radio — safety-critical, and intercepting them is illegal in Turkey
+
+**First to add:** cellular handovers (free, own data, a second underground positioning method) and door-chime
+detection (precise dwell times, zero audio stored).
+
 ### Ideas backlog
 - **Magnetometer** as a second witness for departures (traction motors spike it); **barometer** for depth
   and tunnel sections (M-Loc used both to tell stations apart); **light** for platform vs. tunnel;

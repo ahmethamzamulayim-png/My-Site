@@ -122,6 +122,15 @@ only the thing being tested differs. Recruit one friend for the T2–T4 rides.
 - **Decides:** whether the count follows crowding; which signal-strength cut-off best matches "own car";
   how much the count jumps when phones change their addresses.
 
+### T19 — Cellular handovers as position markers
+- Log serving cell + signal strength (native app) on ~10 rides of the same stretch.
+- **Decides:** do handovers happen at the same place every ride (→ usable as position markers), and does it
+  depend on the operator (Turkcell / Vodafone / Türk Telekom)?
+
+### T20 — Door-chime detection
+- On-device detector; log event times only. Check at home that no audio is written anywhere.
+- **Pass:** detected door open/close times match noted times within ~1 s at a few stations.
+
 ### T17 — Gyroscope path
 - Rides with the phone/box fixed; trace each stretch, compare with the OSM track.
 - **Decides:** how close the traced path gets, and how many rides it takes.
@@ -170,3 +179,5 @@ only the thing being tested differs. Recruit one friend for the T2–T4 rides.
 | T16 | | | | |
 | T17 | | | | |
 | T18 | | | | |
+| T19 | | | | |
+| T20 | | | | |
