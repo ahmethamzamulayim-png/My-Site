@@ -31,8 +31,9 @@ Every subsystem gets the same treatment, logged in [`dissections/`](dissections/
 
 ## The recorder app
 
-`app/` is an installable web app (open it in Chrome on Android → ⋮ → *Add to Home screen*). Pick the line,
-where you board and where you get off, press start, ride, press stop. It records the motion sensor, notes the
+`app/` is an installable web app (open it in Chrome on Android → ⋮ → *Add to Home screen*). Tap a line tile
+(official line colours), tap where you are on the station strip, tap where you're going, say where the phone
+is, start, ride, stop. "Same as last time" repeats the daily commute in one tap. It records the motion sensor, notes the
 exact start time itself, and shares each ride as a `.zip` that `analysis.ride` reads directly:
 
 ```

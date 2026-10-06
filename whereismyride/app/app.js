@@ -1,15 +1,15 @@
 /* WhereisMyRide recorder.
  *
- * Pick line + boarding + alighting station, press start, ride, press stop.
+ * Tap a line tile → its stations slide up as a metro strip → tap where you are
+ * → tap where you're going → pick where the phone is → start. Ride. Stop.
  * The ride is kept on the phone (IndexedDB) and shared as a .zip holding
- *   Raw Data.csv  - phyphox's "Acceleration (without g)" CSV layout
+ *   Raw Data.csv  - phyphox's "Acceleration (without g)" CSV layout (+ gravity)
  *   ride.yaml     - line, stations, direction, exact start time, phone position
- * which is exactly what analysis/ride.py reads, so a shared ride goes straight
- * into the analysis with no hand-editing.
+ * which analysis/ride.py reads directly.
  */
 (() => {
   "use strict";
-  const VERSION = "0.1.0";
+  const VERSION = "0.2.0";
   // Turkish unless the phone is set to another language; data-t holds "Türkçe|English"
   const EN = !(navigator.language || "tr").toLowerCase().startsWith("tr");
   const T = (pair) => pair.split("|")[EN ? 1 : 0] ?? pair;
@@ -17,67 +17,199 @@
   document.documentElement.lang = EN ? "en" : "tr";
   document.querySelectorAll("[data-t]").forEach((el) => (el.textContent = T(el.dataset.t)));
   document.querySelectorAll("[data-ph]").forEach((el) => (el.placeholder = T(el.dataset.ph)));
-
   const $ = (id) => document.getElementById(id);
-  let LINES = [];
-  const sel = { line: null, board: null, alight: null };
 
-  // ---------- setup screen ----------
-  fetch("lines.json")
-    .then((r) => r.json())
-    .then((j) => {
-      LINES = j.lines;
-      const box = $("lines");
-      for (const l of LINES) {
+  // Line colours as on Metro İstanbul's network map (values as used by mdemirer/sonraki-tren).
+  const COLORS = {
+    M1A: "#EE2229", M1B: "#EE2229", M2: "#059A4D", M3: "#0CA6DF", M4: "#E81E77", M5: "#683166",
+    M6: "#C9AA79", M7: "#F490B3", M8: "#487ABF", M9: "#FCD10D", M11: "#A1609B", M12: "#7DBB42", M14: "#9C7E4F",
+    T1: "#004B86", T2: "#90ABA0", T3: "#99562F", T4: "#FF7E42", T5: "#7B72B2",
+    F1: "#7A745A", F2: "#7A745A", F3: "#7A745A", F4: "#7A745A", TF1: "#5C7A8A", TF2: "#5C7A8A",
+  };
+  const GROUPS = [
+    { key: "M", title: "Metro|Metro", test: (c) => /^M/.test(c) },
+    { key: "T", title: "Tramvay|Tram", test: (c) => /^T\d/.test(c) },
+    { key: "F", title: "Füniküler & teleferik|Funicular & cable car", test: (c) => /^(F|TF)/.test(c) },
+  ];
+  const POSITIONS = [
+    ["bag-on-floor", "Çanta yerde, ayaklarımın arasında|Bag on the floor between my feet"],
+    ["pocket", "Ön cepte|Front pocket"],
+    ["bag-on-body", "Taktığım çantada|In a bag I'm wearing"],
+    ["hand", "Elimde|In my hand"],
+    ["seat-flat", "Boş koltukta, düz|Flat on an empty seat"],
+    ["lap-flat", "Kucakta, düz|Flat on my lap"],
+  ];
+
+  // ---------- colour helpers ----------
+  const rgb = (hex) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
+  const hex = (c) => "#" + c.map((v) => Math.max(0, Math.min(255, Math.round(v))).toString(16).padStart(2, "0")).join("");
+  const darker = (h, k = 0.72) => hex(rgb(h).map((v) => v * k));
+  const lum = (h) => {
+    const [r, g, b] = rgb(h).map((v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; });
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  };
+  const inkOn = (h) => (lum(h) > 0.42 ? "#16181D" : "#FFFFFF"); // yellow M9, beige M6, pink M7 get dark text
+  const colorOf = (code) => COLORS[code] || "#5B6878";
+  function paint(el, code, prefix = "--c") {
+    const c = colorOf(code);
+    el.style.setProperty(prefix, c);
+    el.style.setProperty(prefix + "-dark", darker(c));
+    el.style.setProperty(prefix + "-ink", inkOn(c));
+  }
+  function badge(el, code) {
+    el.textContent = code;
+    el.style.setProperty("--b", colorOf(code));
+    el.style.setProperty("--b-ink", inkOn(colorOf(code)));
+  }
+
+  // ---------- state ----------
+  let LINES = [];
+  const sel = { line: null, from: null, to: null, pos: load("pos", "bag-on-floor") };
+  const lineObj = () => LINES.find((l) => l.line === sel.line);
+  const names = () => lineObj().stations.map((s) => s.name);
+
+  // ---------- home ----------
+  fetch("lines.json").then((r) => r.json()).then((j) => {
+    LINES = j.lines;
+    const box = $("groups");
+    for (const g of GROUPS) {
+      const lines = LINES.filter((l) => g.test(l.line));
+      if (!lines.length) continue;
+      const h = document.createElement("h2");
+      h.textContent = T(g.title);
+      const grid = document.createElement("div");
+      grid.className = "tiles";
+      for (const l of lines) {
         const b = document.createElement("button");
         b.type = "button";
-        b.textContent = l.line;
-        b.setAttribute("aria-pressed", "false");
-        b.onclick = () => pickLine(l.line);
-        box.appendChild(b);
+        b.className = "tile";
+        b.dataset.line = l.line;
+        const c = colorOf(l.line);
+        b.style.setProperty("--t", c);
+        b.style.setProperty("--t-dark", darker(c));
+        b.style.setProperty("--t-ink", inkOn(c));
+        const st = l.stations;
+        b.innerHTML = `<span class="code"></span><span class="ends"></span>`;
+        b.querySelector(".code").textContent = l.line;
+        b.querySelector(".ends").textContent = `${st[0].name} – ${st[st.length - 1].name}`;
+        b.setAttribute("aria-label", `${l.line}: ${st[0].name} – ${st[st.length - 1].name}`);
+        b.onclick = () => openLine(l.line);
+        grid.appendChild(b);
       }
-      const last = load("last", null);
-      pickLine(last && LINES.some((l) => l.line === last.line) ? last.line : "M4", last);
-    });
-
-  function lineObj() { return LINES.find((l) => l.line === sel.line); }
-
-  function fillSelect(el, stations, value) {
-    el.innerHTML = "";
-    for (const s of stations) {
-      const o = document.createElement("option");
-      o.value = s.name;
-      o.textContent = s.name;
-      el.appendChild(o);
+      box.append(h, grid);
     }
-    if (value && stations.some((s) => s.name === value)) el.value = value;
+    showAgain();
+  });
+
+  function showAgain() {
+    const last = load("last", null);
+    if (!last || !LINES.some((l) => l.line === last.line)) return;
+    badge($("againBadge"), last.line);
+    $("againRoute").textContent = `${last.from} → ${last.to}`;
+    $("again").classList.remove("hidden");
+    $("again").onclick = () => {
+      openLine(last.line);
+      pickStation(last.from);
+      pickStation(last.to);
+    };
   }
 
-  function pickLine(code, last) {
+  // ---------- sheet: stations ----------
+  function openLine(code) {
     sel.line = code;
-    document.querySelectorAll("#lines button").forEach((b) => b.setAttribute("aria-pressed", String(b.textContent === code)));
+    sel.from = sel.to = null;
+    paint(document.documentElement, code);
     const st = lineObj().stations;
-    fillSelect($("board"), st, last && last.board);
-    fillSelect($("alight"), st, last ? last.alight : st[st.length - 1].name);
-    if (last && last.pos) $("pos").value = last.pos;
-    updateDir();
+    badge($("sheetBadge"), code);
+    $("sheetTitle").textContent = code;
+    $("sheetEnds").textContent = `${st[0].name} – ${st[st.length - 1].name}`;
+    $("filter").value = "";
+    $("filter").placeholder = tr("İstasyon ara", "Search stations");
+    $("filter").classList.toggle("hidden", st.length < 9);
+    $("sheet").classList.remove("hidden");
+    document.body.style.overflow = "hidden";
+    step(1);
   }
 
-  function updateDir() {
-    sel.board = $("board").value;
-    sel.alight = $("alight").value;
-    const st = lineObj().stations.map((s) => s.name);
-    const i = st.indexOf(sel.board), j = st.indexOf(sel.alight);
-    const ok = i >= 0 && j >= 0 && i !== j;
-    sel.direction = ok ? (j > i ? st[st.length - 1] : st[0]) : null;
-    sel.nstops = ok ? Math.abs(j - i) : null;
-    $("dir").textContent = ok
-      ? tr(`${sel.direction} yönü · ${sel.nstops} durak`, `towards ${sel.direction} · ${sel.nstops} stops`)
-      : tr("Farklı iki istasyon seç.", "Pick two different stations.");
-    $("start").disabled = !ok || !sensorOK;
+  function closeSheet() {
+    $("sheet").classList.add("hidden");
+    document.body.style.overflow = "";
   }
-  $("board").onchange = updateDir;
-  $("alight").onchange = updateDir;
+  $("sheetClose").onclick = closeSheet;
+  $("sheet").addEventListener("click", (e) => { if (e.target === $("sheet")) closeSheet(); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !$("sheet").classList.contains("hidden")) closeSheet(); });
+  $("filter").addEventListener("input", () => drawStrip());
+
+  function step(n) {
+    document.querySelectorAll(".steps i").forEach((i) => i.classList.toggle("on", Number(i.dataset.step) <= n));
+    $("pickStations").classList.toggle("hidden", n === 3);
+    $("confirm").classList.toggle("hidden", n !== 3);
+    $("prompt").textContent = n === 1 ? tr("Neredesin?", "Where are you?")
+      : n === 2 ? tr("Nereye gidiyorsun?", "Where are you going?") : tr("Hazır mısın?", "Ready?");
+    if (n < 3) drawStrip();
+    else drawConfirm();
+  }
+
+  function drawStrip() {
+    const ol = $("strip");
+    ol.innerHTML = "";
+    const all = names();
+    const q = norm($("filter").value);
+    const i = sel.from ? all.indexOf(sel.from) : -1;
+    all.forEach((name, k) => {
+      if (q && !norm(name).includes(q)) return;
+      const li = document.createElement("li");
+      const b = document.createElement("button");
+      b.type = "button";
+      b.innerHTML = `<span class="rail"><span class="node"></span></span><span class="sname"></span>`;
+      b.querySelector(".sname").textContent = name;
+      if (name === sel.from) {
+        li.classList.add("from");
+        b.disabled = true;
+        b.append(pill(tr("Buradasın", "You're here")));
+      }
+      b.onclick = () => pickStation(name);
+      li.appendChild(b);
+      ol.appendChild(li);
+      void k;
+    });
+    if (i >= 0 && !q) ol.children[i].scrollIntoView({ block: "center" });
+  }
+
+  function pickStation(name) {
+    if (!sel.from) {
+      sel.from = name;
+      step(2);
+      return;
+    }
+    if (name === sel.from) return;
+    sel.to = name;
+    step(3);
+  }
+
+  function drawConfirm() {
+    const all = names();
+    const i = all.indexOf(sel.from), j = all.indexOf(sel.to);
+    sel.direction = j > i ? all[all.length - 1] : all[0];
+    sel.nstops = Math.abs(j - i);
+    $("cFrom").textContent = sel.from;
+    $("cTo").textContent = sel.to;
+    $("cDir").textContent = tr(`${sel.direction} yönü · ${sel.nstops} durak`, `towards ${sel.direction} · ${sel.nstops} stops`);
+    const box = $("pos");
+    box.innerHTML = "";
+    for (const [value, label] of POSITIONS) {
+      const c = document.createElement("button");
+      c.type = "button";
+      c.className = "chip";
+      c.setAttribute("role", "radio");
+      c.setAttribute("aria-checked", String(sel.pos === value));
+      c.textContent = T(label);
+      c.onclick = () => { sel.pos = value; save("pos", value); drawConfirm(); };
+      box.appendChild(c);
+    }
+    $("start").disabled = !sensorOK;
+  }
+  $("backToStations").onclick = () => { sel.from = sel.to = null; step(1); };
 
   const sensorOK = "DeviceMotionEvent" in window;
   if (!sensorOK) {
@@ -86,7 +218,7 @@
   }
 
   // ---------- recording ----------
-  let rec = null; // { t:[], x:[], y:[], z:[], wall0, t0, sensor, gaps:[], ... }
+  let rec = null;
   let wakeLock = null;
   let tick = null;
 
@@ -104,22 +236,52 @@
         if ((await DeviceMotionEvent.requestPermission()) !== "granted") return;
       } catch { return; }
     }
-    save("last", { line: sel.line, board: sel.board, alight: sel.alight, pos: $("pos").value });
+    save("last", { line: sel.line, from: sel.from, to: sel.to });
+    const all = names();
+    const i = all.indexOf(sel.from), j = all.indexOf(sel.to);
     rec = { t: [], x: [], y: [], z: [], gx: [], gy: [], gz: [], wall0: null, t0: null, sensor: null, gaps: [], lastT: null,
-            line: sel.line, board: sel.board, alight: sel.alight, direction: sel.direction,
-            nstops: sel.nstops, pos: $("pos").value, live: { moving: false, since: 0, stops: 0, runs: 0 } };
-    $("route").textContent = `${sel.line} · ${sel.board} → ${sel.alight}`;
+            line: sel.line, board: sel.from, alight: sel.to, direction: sel.direction,
+            nstops: sel.nstops, pos: sel.pos, trip: i < j ? all.slice(i, j + 1) : all.slice(j, i + 1).reverse(),
+            live: { moving: false, since: 0, stops: 0 } };
+    closeSheet();
+    badge($("recBadge"), sel.line);
+    $("recBadge").style.setProperty("--b", inkOn(colorOf(sel.line)));  // inverted on the coloured band
+    $("recBadge").style.setProperty("--b-ink", colorOf(sel.line));
+    $("recRoute").textContent = `${sel.from} → ${sel.to}`;
+    $("recDir").textContent = tr(`${sel.direction} yönü`, `towards ${sel.direction}`);
     $("expect").textContent = sel.nstops;
     $("nstops").textContent = "0";
     $("notes").value = "";
     $("vehicle").value = "";
     $("gapwarn").classList.add("hidden");
-    $("setup").classList.add("hidden");
+    $("home").classList.add("hidden");
     $("recording").classList.remove("hidden");
+    drawRecStrip();
+    window.scrollTo(0, 0);
     await keepAwake();
     window.addEventListener("devicemotion", onMotion);
     tick = setInterval(render, 500);
   };
+
+  function drawRecStrip() {
+    const ol = $("recStrip");
+    ol.innerHTML = "";
+    const at = Math.min(rec.live.stops, rec.trip.length - 1);
+    rec.trip.forEach((name, k) => {
+      const li = document.createElement("li");
+      li.className = "inride" + (k === 0 ? " first" : "") + (k === rec.trip.length - 1 ? " last" : "");
+      if (k < at) li.classList.add("passed");
+      if (k === at) li.classList.add("train");
+      if (k === rec.trip.length - 1) li.classList.add("to");
+      const row = document.createElement("div");
+      row.className = "row";
+      row.innerHTML = `<span class="rail"><span class="node"></span></span><span class="sname"></span>`;
+      row.querySelector(".sname").textContent = name;
+      if (k === at) row.append(pill(rec.live.moving ? tr("Yolda", "Moving") : tr("Burada", "Here")));
+      li.appendChild(row);
+      ol.appendChild(li);
+    });
+  }
 
   function onMotion(e) {
     let a = e.acceleration, sensor = "linear";
@@ -168,12 +330,14 @@
     if (!s) { $("statetext").textContent = tr("Sensör bekleniyor…", "Waiting for sensor…"); return; }
     $("hz").textContent = Math.round(s.hz);
     const L = rec.live;
+    const before = `${L.stops}${L.moving}`;
     const moving = s.shake > 0.06; // rough; a train shakes a phone far more than a platform does
     if (moving !== L.moving && s.t - L.since > (moving ? 4 : 8)) {
       if (!moving && s.t - L.since > 15) { L.stops++; $("nstops").textContent = L.stops; }
       L.moving = moving;
       L.since = s.t;
     }
+    if (`${L.stops}${L.moving}` !== before) drawRecStrip();
     $("state").classList.toggle("moving", L.moving);
     $("statetext").textContent = L.moving ? tr("Hareket halinde", "Moving") : tr("Duruyor", "Stopped");
     if (rec.gaps.length) {
@@ -189,8 +353,9 @@
     const r = rec;
     rec = null;
     $("recording").classList.add("hidden");
-    $("setup").classList.remove("hidden");
-    if (!r.t.length) { alert(tr("Hiç sensör verisi gelmedi.", "No sensor data arrived.")); return; }
+    $("home").classList.remove("hidden");
+    showAgain();
+    if (!r.t.length) { toast(tr("Hiç sensör verisi gelmedi.", "No sensor data arrived.")); return; }
     const ride = {
       id: `${ymd(r.wall0)}_${hm(r.wall0)}_${r.line}_${slug(r.board)}-${slug(r.alight)}`,
       meta: {
@@ -206,6 +371,7 @@
     };
     await dbPut(ride);
     listRides();
+    toast(tr("Kaydedildi ✓", "Saved ✓"));
   };
 
   // ---------- export ----------
@@ -258,35 +424,56 @@
     $("shareall").onclick = () => share(rides);
     if (!rides.length) {
       const li = document.createElement("li");
-      li.textContent = tr("Henüz kayıt yok.", "No rides yet.");
+      li.className = "empty";
+      li.textContent = tr("Henüz yolculuk yok. Bir hat seç ve başla.", "No rides yet. Pick a line to start.");
       ul.appendChild(li);
       return;
     }
     for (const r of rides) {
       const li = document.createElement("li");
+      li.className = "ride";
+      const b = document.createElement("span");
+      b.className = "badge";
+      badge(b, r.meta.line);
       const info = document.createElement("div");
-      const title = document.createElement("div");
-      title.textContent = `${r.meta.line} · ${r.meta.board} → ${r.meta.alight}`;
+      info.className = "info";
+      const title = document.createElement("b");
+      title.textContent = `${r.meta.board} → ${r.meta.alight}`;
       const small = document.createElement("small");
       small.textContent = `${r.meta.date} ${r.meta.start_clock.slice(0, 5)} · ${Math.round(r.meta.duration_s / 60)} ${tr("dk", "min")}` +
         (r.meta.sensor_gaps.length ? ` · ⚠ ${r.meta.sensor_gaps.length} ${tr("boşluk", "gaps")}` : "");
       info.append(title, small);
-      const btns = document.createElement("div");
-      btns.className = "row";
       const sh = document.createElement("button");
-      sh.className = "ghost";
+      sh.className = "icon-btn";
+      sh.type = "button";
       sh.textContent = tr("Paylaş", "Share");
       sh.onclick = () => share([r]);
       const del = document.createElement("button");
-      del.className = "ghost";
+      del.className = "icon-btn";
+      del.type = "button";
       del.textContent = "✕";
       del.setAttribute("aria-label", tr("Sil", "Delete"));
       del.onclick = async () => { if (confirm(tr("Bu kayıt silinsin mi?", "Delete this ride?"))) { await dbDel(r.id); listRides(); } };
-      btns.append(sh, del);
-      li.append(info, btns);
+      li.append(b, info, sh, del);
       ul.appendChild(li);
     }
   }
+
+  // ---------- small UI helpers ----------
+  function pill(text) {
+    const p = document.createElement("span");
+    p.className = "pill";
+    p.textContent = text;
+    return p;
+  }
+  let toastTimer;
+  function toast(text) {
+    $("toast").textContent = text;
+    $("toast").classList.remove("hidden");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => $("toast").classList.add("hidden"), 2200);
+  }
+  const norm = (s) => s.toLocaleLowerCase("tr").normalize("NFKD").replace(/[̀-ͯ]/g, "").replace(/ı/g, "i").trim();
 
   // ---------- helpers ----------
   const pad = (n, w = 2) => String(n).padStart(w, "0");
