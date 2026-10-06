@@ -313,6 +313,11 @@ textarea:focus-visible,
 
 .contact-form button {
   margin-top: 4px;
+  /* a <button> doesn't inherit font or drop its border like the <a class="button"> links do */
+  font: inherit;
+  font-weight: 700;
+  border: 0;
+  cursor: pointer;
 }
 
 .hp-field {
