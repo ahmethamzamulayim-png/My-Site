@@ -136,6 +136,15 @@ only the thing being tested differs. Recruit one friend for the T2–T4 rides.
 - On-device detector; log event times only. Check at home that no audio is written anywhere.
 - **Pass:** detected door open/close times match noted times within ~1 s at a few stations.
 
+### T22 — Rainflow / fatigue repeatability
+- Same stretch, same position, ~10 rides: relative damage per km for that stretch.
+- **Decides:** how stable the number is ride to ride - only then compare lines or buses.
+
+### T23 — Bus road roughness
+- Phone (or box) on the bus floor/seat, GPS on, ~5 rides of the same route.
+- **Pass:** rough patches (and known potholes) show up in the same places every ride; ISO 8608 class per
+  stretch is stable.
+
 ### T17 — Gyroscope path
 - Rides with the phone/box fixed; trace each stretch, compare with the OSM track.
 - **Decides:** how close the traced path gets, and how many rides it takes.
@@ -187,3 +196,5 @@ only the thing being tested differs. Recruit one friend for the T2–T4 rides.
 | T19 | | | | |
 | T20 | | | | |
 | T21 | | | | |
+| T22 | | | | |
+| T23 | | | | |

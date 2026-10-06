@@ -177,6 +177,35 @@ dataset: raw private, summaries public.
 
 ---
 
+## Mechanical-engineering track — vibration, wear and tear
+
+The transport features answer "when do I leave"; this track answers "what is all this riding doing to the
+vehicles and the track". Same recordings, different questions.
+
+**Built and tested (metro):**
+- ISO 2631-1 ride comfort (Wk vertical, Wd horizontal), traction/braking peaks, jerk at start and stop
+- summaries by line, by train (car number), by stretch of track; a stretch getting rougher over weeks = wear signal
+
+**Planned, tests written (Pi box, TESTING.md T15, T17):**
+- wheel flats — impacts at speed ÷ wheel circumference (the bearing-fault idea, BPFO, applied to a train)
+- rail corrugation — fixed-wavelength tone, frequency rising with speed
+- curve radius and banking (cant deficiency) from the gyroscope
+
+**New ideas:**
+1. **Fatigue via rainflow counting** — the standard ME method: acceleration time history → load cycles →
+   relative fatigue damage per km (Miner's rule, S-N slope as a parameter). Compare lines / stretches / buses:
+   which route wears a vehicle's suspension fastest. Relative, not a lifetime prediction.
+2. **Brake-wear hot spots** — count braking events and their severity per stretch; where every vehicle brakes
+   hard every time is where brakes (and, on the metro, rails) wear.
+3. **Flange-wear curves** — gyroscope radius × speed × lateral acceleration × squeal loudness (mic, loudness
+   only): tight, fast, squealing curves are where flanges and rails wear.
+4. **Road roughness from the bus** — vertical-vibration spectrum → ISO 8608 road class; GPS works above ground
+   → a roughness / pothole map of my bus route. Plus bus ride comfort with the same ISO 2631 code.
+5. **Driving smoothness per bus line** — braking and jerk per line/driver, same measure as metro trains.
+
+Reuse: `analysis/comfort.py` is vehicle-agnostic; buses need a stop detector that tells bus stops from traffic
+stops (GPS + the line's stop list does that).
+
 ## Scope: all Istanbul transport — personal tool first
 
 Direction: one app for every mode I use, built first as my own daily tool (published or not, it pays off
