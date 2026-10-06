@@ -201,7 +201,9 @@ See [TESTING.md](TESTING.md): what to check on real rides, in order, with pass c
 ### Hardware: phones are the crowd, the Pi box is the reference
 - **Native Android app (decided):** every phone sensor — accelerometer, gyroscope, magnetometer, barometer,
   light, proximity — recording with the screen off. The web app stays only as a quick prototype.
-- **Raspberry Pi Zero W reference box** ([HARDWARE.md](HARDWARE.md) has the shopping list): kHz vibration
+- **Raspberry Pi Zero W reference box**, carried **inside a backpack** (on the floor between the feet is best;
+  started/stopped and time-synced from the phone over Bluetooth) ([HARDWARE.md](HARDWARE.md) has the
+  shopping list and carrying notes): kHz vibration
   (wheel flats, rail corrugation — the bearing-fault idea applied to a train), floor-mounted ISO comfort,
   CO₂ (crowding), PM2.5 (metro dust), high-resolution pressure. Rides with box + phone together give a
   per-position correction for every phone recording.

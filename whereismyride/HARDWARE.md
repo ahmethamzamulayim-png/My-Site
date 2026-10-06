@@ -45,10 +45,37 @@ cables, no soldering per sensor. Only the Pi's 40-pin header needs soldering if 
 | **ADXL355** (e.g. EVAL-ADXL355-PMDZ) | very low-noise acceleration | if the ICM-42688-P's spectra look noise-limited — this is the vibration-measurement-grade part | 40–60 |
 | **MMC5983MA** or **LIS3MDL** magnetometer | magnetic field, fast | traction-motor signatures at higher rate than the phone | 10–20 |
 | **SPH0645** or **INMP441** I²S MEMS microphone | sound level | wheel squeal, noise comfort. Compute loudness on the Pi; **never store audio** (privacy) | 5–10 |
-| **VEML7700** light sensor | light level | platform vs. tunnel; only if the box has a window | 5 |
+| ~~VEML7700 light sensor~~ | light level | dropped: the box rides inside a backpack | - |
 | **Raspberry Pi Zero 2 W** | 4 cores instead of 1 | if the Zero W can't keep up with kHz IMU + air sensors together | 15–20 |
 
 Not needed: GPS (the phone's dual-band GPS covers above-ground stretches).
+
+## Carrying it: inside a backpack (decided)
+
+The box rides **inside a backpack** - pulling out a box of electronics on a metro would alarm people.
+
+| Backpack position | Good for | Weak for |
+|---|---|---|
+| **On the floor between your feet** (best, and common on crowded trains) | vibration, ISO-style comfort, braking, jerk, gyroscope curves | - |
+| On your back | stops, braking, jerk, pressure (slow motion follows the body) | vibration (softened by the body), gyroscope paths (your turning and sway) |
+
+Record which one in `phone_position`: `backpack-floor` or `backpack-worn`.
+
+- **Fix the box at the bottom of the bag in firm foam.** A box rattling inside the bag records fake
+  vibration - the worst error, because it looks like data.
+- **Air sensors need outside air.** Inside a closed backpack the SCD41 measures your breath and the PMS5003
+  measures lint. Put the SCD41 and the PMS5003 intake in an **outer mesh pocket** (water-bottle pocket),
+  with a short cable/tube through. Check with T16 that CO₂ still follows crowding.
+- **Skip the light sensor** (VEML7700) - it sees nothing in a bag.
+- **Start/stop without opening the bag:** the native app talks to the Pi over **Bluetooth** (the Zero W has
+  it) - start, stop, and send the phone's exact time at start. That replaces tap-sync, which doesn't work
+  through a bag. Backup: a small button on a cable clipped to the shoulder strap.
+- **Heat:** Pi + power bank in a closed bag run warm; the SCD41 logs temperature - watch it on the first rides.
+
+**Security checks:** some stations X-ray bags at the entrance; a box with a battery and wires may get the bag
+searched. Make that a short conversation: closed tidy case, no loose wires, a label inside (project,
+university, contact), and carry a one-page Turkish explanation (what it measures; no camera; no audio stored)
+plus student ID. A permission letter from Metro İstanbul beats any explanation.
 
 ## Box and mounting
 
@@ -57,7 +84,8 @@ Not needed: GPS (the phone's dual-band GPS covers above-ground stretches).
 | Closed ABS project box, roughly 15×10×5 cm | tidy, no loose wires in public |
 | Anti-slip silicone/rubber mat under it + a small steel plate inside for weight | must not slide when the train brakes, or the vibration and braking numbers are wrong |
 | Vent holes / mesh for SCD41 and PMS5003 | air sensors need outside air |
-| Printed label: project name, university, contact | a box of electronics on a metro floor can worry people — make it obviously a student instrument |
+| Firm foam to fix the box at the bottom of the backpack | no rattling = no fake vibration |
+| Printed label inside: project name, university, contact + a one-page Turkish explanation to carry | for a bag search at a station X-ray |
 
 **Before more than a few test rides: ask Metro İstanbul for permission** (student project, purpose, what the
 box measures, no cameras/audio stored). Also a chance to start a useful contact.
@@ -80,6 +108,7 @@ ICM-42688-P would be 0x68/0x69 on I²C — **clashes with the DS3231 at 0x68** u
 
 ## Syncing the box with a phone
 
-At the start of each ride, **tap the box and the phone together** (or tap the phone on the box lid). Both
-accelerometers record the same sharp spike; the analysis lines the recordings up on it to within a few ms.
+Main method: the native app sends the phone's time to the Pi over **Bluetooth** when it starts a ride.
+Fallback when the box is out of the bag (bench tests): **tap the box and the phone together** - both
+accelerometers record the same spike; the analysis lines the recordings up on it to within a few ms.
 The DS3231 keeps the Pi's clock roughly right in between.

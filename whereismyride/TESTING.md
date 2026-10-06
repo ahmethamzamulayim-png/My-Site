@@ -98,8 +98,10 @@ only the thing being tested differs. Recruit one friend for the T2–T4 rides.
 - Box still on a table for 10 min: noise floor of every sensor. Then tap it: sync spike is sharp and found.
 - **Pass:** no dropped samples at the chosen IMU rate (check timestamps), CO₂ and PM readings settle.
 
-### T14 — Box vs. phone (same ride)
-- Box on the floor, phone in each position in turn (one position per ride).
+### T14 — Box vs. phone, and backpack on the floor vs. worn (same ride)
+- Backpack with the box on the floor between your feet, phone in each position in turn (one per ride).
+  Then repeat with the backpack worn on your back.
+- Also: shake-test at home first - does anything rattle inside the bag? (Rattle = fake vibration.)
 - **Compare:** stop times, braking, jerk, vibration spectra.
 - **Decides:** the per-position correction for phone recordings, and whether box and phone agree where they
   should (stops, braking).
@@ -110,7 +112,8 @@ only the thing being tested differs. Recruit one friend for the T2–T4 rides.
   tone (corrugation). Note car numbers — a flat belongs to a train, corrugation to the track.
 
 ### T16 — CO₂ vs. crowding
-- Note how full the car is (1–5) at a few points per ride.
+- Note how full the car is (1–5) at a few points per ride. Sensors sit in the backpack's outer mesh pocket:
+  first check at home that CO₂ there follows the room (breathe near it, open a window), not your back.
 - **Pass/decides:** whether CO₂ follows crowding closely enough to use as a crowding measure.
 
 ### T17 — Gyroscope path
