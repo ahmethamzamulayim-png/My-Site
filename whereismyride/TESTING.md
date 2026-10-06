@@ -127,6 +127,11 @@ only the thing being tested differs. Recruit one friend for the T2–T4 rides.
 - **Decides:** do handovers happen at the same place every ride (→ usable as position markers), and does it
   depend on the operator (Turkcell / Vodafone / Türk Telekom)?
 
+### T21 — Coverage map repeatability
+- Same stretch, ~5 rides, same phone and SIM. Then a friend's phone on another operator, same ride.
+- **Decides:** do the gaps sit at the same places every ride (→ worth mapping), how far apart two phone
+  models read on the same operator (calibration), and whether dual-SIM logging reports both operators.
+
 ### T20 — Door-chime detection
 - On-device detector; log event times only. Check at home that no audio is written anywhere.
 - **Pass:** detected door open/close times match noted times within ~1 s at a few stations.
@@ -181,3 +186,4 @@ only the thing being tested differs. Recruit one friend for the T2–T4 rides.
 | T18 | | | | |
 | T19 | | | | |
 | T20 | | | | |
+| T21 | | | | |

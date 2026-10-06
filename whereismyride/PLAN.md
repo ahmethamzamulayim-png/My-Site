@@ -230,6 +230,24 @@ strong signals (≈ own car) and count only while the train is moving (keeps the
 **Crowding from four signals, cross-checked:** Bluetooth count (instant) · CO₂ (slow, real breathing) ·
 dwell time (crowds slow boarding) · manual 1–5 rating in the app (ground truth).
 
+### Underground mobile-coverage map (per stretch, per operator)
+
+Existing coverage maps (OpenSignal, nPerf, CellMapper) place readings with GPS — which doesn't work
+underground, so metro tunnels are blank or wrong on them. This project knows where the train is without GPS
+(stop detection + speed between stations), so it can map coverage where nobody else can.
+
+- **Native app logs, ~1/s (Android limits some fields to every few s):** signal strength (RSRP), quality
+  (RSRQ / SINR), network type (5G/4G/3G/none), serving cell, and whether mobile data works. Own data only.
+- **Optional data check** (a setting — costs a little data): a tiny request every ~10 s → works / latency.
+- **Analysis:** each reading placed on the track (stretch + distance along it from the speed profile).
+- **Output:** per-operator map, each stretch coloured strong → dead, gaps listed
+  ("M4 Ünalan → Acıbadem: Turkcell drops for ~400 m").
+- **Coverage of all three operators** (Turkcell, Vodafone, Türk Telekom) comes from friends' SIMs; a dual-SIM
+  phone may log two at once (check that it reports both).
+- **Limits:** phone models report a few dB apart (calibrate per phone, like T4); readings every few s =
+  every ~20–50 m at metro speeds — fine for gaps; good signal ≠ working data (hence the optional check).
+- **Most shareable output of the project:** useful to every rider, no privacy issues, own data.
+
 ### What else to sense — respectfully
 
 Rule: **sense the environment and the infrastructure, never people's content or identities.**
