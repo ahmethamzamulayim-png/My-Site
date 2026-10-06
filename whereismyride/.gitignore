@@ -1,8 +1,0 @@
-# raw rides stay private: timestamped records of where I am every weekday
-rides/*
-!rides/_example/
-__pycache__/
-*.pyc
-.venv/
-# collected bus position logs (large; public data, but no need to commit)
-data/

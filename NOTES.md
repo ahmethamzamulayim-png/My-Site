@@ -34,6 +34,5 @@ Screenshots were taken with `tools/visual-check.mjs`.
 
 ## WhereisMyRide
 
-Everything is in [`whereismyride/`](whereismyride/) — PLAN.md, TESTING.md, HARDWARE.md, README.md.
-Temporary home: move to its own repo (with history) and remove from this branch **before merging to main**,
-or it goes live on the site.
+Moved (with its full history) to its own repo: **ahmethamzamulayim-png/WhereisMyRide**. This branch now holds
+only the website fixes and these notes — safe to merge.
