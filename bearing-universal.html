@@ -112,6 +112,11 @@
       }
       .rtable th { color: var(--plum); font-family: "Space Grotesk", sans-serif; font-weight: 600; }
       .rtable td { color: var(--muted); }
+      @media (max-width: 520px) {
+        /* narrow phones: tighter cells so the 4-column tables fit without side-scrolling the page */
+        .rtable { font-size: 0.82rem; }
+        .rtable th, .rtable td { padding: 7px 5px; }
+      }
       .limits {
         margin: 26px 0 0;
         padding-left: 20px;

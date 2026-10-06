@@ -108,9 +108,11 @@ if (contactForm) {
       .catch(() => showFailed(FALLBACK_MSG));
   });
 
-  resultFrame.addEventListener("load", () => {
-    if (submitted) showSent();
-  });
+  if (resultFrame) {
+    resultFrame.addEventListener("load", () => {
+      if (submitted) showSent();
+    });
+  }
 }
 
 // Homepage hero tiles: swap the static blurb for a live number once it arrives.

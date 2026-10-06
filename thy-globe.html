@@ -303,6 +303,9 @@
       const M_TO_FT = 3.28084, MS_TO_KT = 1.94384;
       const PLANE_SVG = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>';
 
+      // adsbdb/OpenSky strings are third-party data: escape before innerHTML
+      const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+
       let planes = [];
       let selected = null; // callsign of selected plane
 
@@ -325,7 +328,9 @@
       async function getAircraft(hex) {
         if (AC[hex] !== undefined) return AC[hex];
         try {
-          const j = await (await fetch(`${ADSBDB}/aircraft/${hex}`)).json();
+          const res = await fetch(`${ADSBDB}/aircraft/${hex}`);
+          if (!res.ok && res.status !== 404) return null; // rate limit/outage: retry later, don't cache
+          const j = await res.json();
           const a = j.response && j.response.aircraft;
           AC[hex] = a ? { model: `${a.manufacturer} ${a.type}`, reg: a.registration, t: a.icao_type || "" } : null;
           save();
@@ -336,7 +341,9 @@
       async function getRoute(cs) {
         if (RT[cs] !== undefined) return RT[cs];
         try {
-          const j = await (await fetch(`${ADSBDB}/callsign/${cs}`)).json();
+          const res = await fetch(`${ADSBDB}/callsign/${cs}`);
+          if (!res.ok && res.status !== 404) return null; // rate limit/outage: retry later, don't cache
+          const j = await res.json();
           const f = j.response && j.response.flightroute;
           RT[cs] = f && f.origin && f.destination ? {
             oi: f.origin.iata_code, on: f.origin.name, om: f.origin.municipality,
@@ -428,8 +435,8 @@
       const tip = $("tip");
       function showTip(p, e) {
         const ac = AC[p.hex];
-        tip.innerHTML = `<b>${p.callsign}</b> · ${p.cargo ? t("Cargo", "Kargo") : t("Passenger", "Yolcu")}<br>` +
-          (ac ? `${ac.model}<br>` : "") +
+        tip.innerHTML = `<b>${esc(p.callsign)}</b> · ${p.cargo ? t("Cargo", "Kargo") : t("Passenger", "Yolcu")}<br>` +
+          (ac ? `${esc(ac.model)}<br>` : "") +
           `${Math.round(p.alt_m * M_TO_FT).toLocaleString()} ft · ${Math.round(p.spd_ms * MS_TO_KT)} kts`;
         tip.style.display = "block";
         moveTip(e);
@@ -458,7 +465,7 @@
         getRoute(p.callsign).then(rt => {
           if (selected !== p.callsign) return;
           if (!rt) { $("droute").textContent = t("Route not in database (common for letter-suffix callsigns)", "Rota veritabanında yok (harf ekli çağrı kodlarında sık görülür)"); return; }
-          $("droute").innerHTML = `<b>${rt.oi}</b> ${rt.om || rt.on} <br>→ <b>${rt.di}</b> ${rt.dm || rt.dn}`;
+          $("droute").innerHTML = `<b>${esc(rt.oi)}</b> ${esc(rt.om || rt.on)} <br>→ <b>${esc(rt.di)}</b> ${esc(rt.dm || rt.dn)}`;
           globe.arcsData([{ startLat: rt.olat, startLng: rt.olng, endLat: rt.dlat, endLng: rt.dlng }]);
           globe.labelsData([
             { lat: rt.olat, lng: rt.olng, text: rt.oi },
@@ -507,8 +514,8 @@
         list.innerHTML = shown.map(p => {
           const ac = AC[p.hex];
           const kind = p.cargo ? t("cargo", "kargo") : t("passenger", "yolcu");
-          const model = ac && ac.model ? `, ${ac.model}` : "";
-          return `<li>${p.callsign} (${kind}${model})</li>`;
+          const model = ac && ac.model ? `, ${esc(ac.model)}` : "";
+          return `<li>${esc(p.callsign)} (${kind}${model})</li>`;
         }).join("");
       }
       $("search").addEventListener("input", render);
