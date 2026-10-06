@@ -39,8 +39,6 @@ button { font: inherit; color: inherit; cursor: pointer; }
 /* ---------- header ---------- */
 .top { padding: 8px 2px 4px; }
 .brand { display: flex; align-items: center; gap: 10px; font-weight: 900; font-size: 1.05rem; letter-spacing: -0.01em; }
-.logo { width: 30px; height: 30px; border-radius: 9px; background:
-  conic-gradient(#EE2229 0 25%, #059A4D 0 50%, #E81E77 0 75%, #FCD10D 0); box-shadow: 0 3px 0 var(--shadow); }
 .hello { font-size: 1.9rem; font-weight: 900; margin: 18px 0 12px; letter-spacing: -0.02em; line-height: 1.1; }
 
 /* ---------- line badge (the M4 square) ---------- */
