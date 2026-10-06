@@ -4,7 +4,7 @@ line: M4
 direction: Kadıköy          # end station the train is heading to (matched against the timetable's direction names)
 board: Göztepe              # where you got on
 alight: Kadıköy             # where you got off
-phone_position: lap-flat    # lap-flat | bag-on-knees | pocket | hand ... keep it the same all ride
+phone_position: lap-flat    # seat-flat (best for comfort) | lap-flat | bag-on-knees | pocket | hand - keep it the same all ride
 start_clock: "08:12:30"     # wall-clock time you pressed start, to the SECOND - the whole timetable comparison hangs on this
 vehicle: "4012"             # optional: the car number shown inside the car - compares train types/fleets for ride comfort
 notes: ""                   # anything unusual: held in a tunnel, very crowded, phone moved at Ünalan

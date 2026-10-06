@@ -24,7 +24,9 @@ HONEST LIMITS - read before quoting a number:
 - ISO 2631-1 measures at the seat surface with a fixed accelerometer. A phone on
   a lap or in a bag is softened by the body/bag, so absolute values here are NOT
   ISO compliance figures. Comparisons are valid when the phone sits the same way
-  (same `phone_position`), which is why rides record it.
+  (same `phone_position`), which is why rides record it. `seat-flat` (phone lying
+  on an empty seat cushion) is the closest a phone gets to the standard's
+  seat-surface measurement.
 - Phones sample at ~50-100 Hz, so vibration above half the sample rate (25 Hz
   at 50 Hz) is not seen. Train ride vibration sits mostly below that; the
   weighting itself is exact up to that limit (applied in the frequency domain).
