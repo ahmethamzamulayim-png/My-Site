@@ -1,13 +1,13 @@
 {
- "generated_utc": "2026-10-06T22:42:11+00:00",
- "days": 158,
+ "generated_utc": "2026-10-07T06:11:02+00:00",
+ "days": 159,
  "first_date": "2026-05-01",
- "last_date": "2026-10-06",
- "total_flights": 138660,
+ "last_date": "2026-10-07",
+ "total_flights": 138663,
  "cargo_flights": 6800,
- "movements_tracked": 165887,
- "cross_validated": 47603,
- "delay_known": 69060,
+ "movements_tracked": 167151,
+ "cross_validated": 47605,
+ "delay_known": 69062,
  "median_delay": 0.0,
  "median_when_delayed": 30.0,
  "delay_hist": [
@@ -17,7 +17,7 @@
   },
   {
    "bin": "15–30",
-   "count": 4721
+   "count": 4723
   },
   {
    "bin": "30–60",
@@ -28,17 +28,17 @@
    "count": 1668
   }
  ],
- "delayed_15": 9246,
+ "delayed_15": 9248,
  "ontime": 59814,
  "pct_delayed": 13.4,
  "pct_ontime": 86.6,
  "recent": {
   "days": 14,
-  "first_date": "2026-09-21",
-  "last_date": "2026-10-04",
-  "flights": 1247,
-  "delayed_15": 867,
-  "pct_delayed": 69.5
+  "first_date": "2026-09-22",
+  "last_date": "2026-10-05",
+  "flights": 1281,
+  "delayed_15": 897,
+  "pct_delayed": 70.0
  },
  "daily": [
   {
@@ -2368,20 +2368,35 @@
   },
   {
    "date": "2026-10-06",
-   "movements": 406,
-   "flights": 2,
-   "flew": 2,
-   "delayed": 0,
+   "movements": 1572,
+   "flights": 3,
+   "flew": 3,
+   "delayed": 1,
    "ontime": 2,
    "cancelled": 0,
    "median_delay": 0.0,
-   "median_when_delayed": null,
-   "avg_dep_delay": 0.0,
-   "metars": 45,
-   "conversion": 0.069,
-   "scored": 2
+   "median_when_delayed": 20.0,
+   "avg_dep_delay": 6.7,
+   "metars": 48,
+   "conversion": 0.103,
+   "scored": 3
+  },
+  {
+   "date": "2026-10-07",
+   "movements": 98,
+   "flights": 2,
+   "flew": 1,
+   "delayed": 1,
+   "ontime": 0,
+   "cancelled": 1,
+   "median_delay": 20.0,
+   "median_when_delayed": 20.0,
+   "avg_dep_delay": 20.0,
+   "metars": 12,
+   "conversion": 0.048,
+   "scored": 1
   }
  ],
- "latest_metar": "METAR LTFM 062220Z 12003KT 070V150 CAVOK 16/12 Q1022 NOSIG",
- "match_rate": 0.005
+ "latest_metar": "METAR LTFM 070550Z VRB01KT 9999 FEW025 17/13 Q1022 NOSIG",
+ "match_rate": 0.01
 }
