@@ -1,35 +1,35 @@
 {
- "generated_utc": "2026-10-08T10:45:03+00:00",
+ "generated_utc": "2026-10-08T18:45:44+00:00",
  "days": 160,
  "first_date": "2026-05-01",
  "last_date": "2026-10-08",
- "total_flights": 138782,
- "cargo_flights": 6806,
- "movements_tracked": 168863,
- "cross_validated": 47646,
- "delay_known": 69174,
+ "total_flights": 138885,
+ "cargo_flights": 6812,
+ "movements_tracked": 169167,
+ "cross_validated": 47669,
+ "delay_known": 69271,
  "median_delay": 0.0,
  "median_when_delayed": 30.0,
  "delay_hist": [
   {
    "bin": "<15",
-   "count": 59857
+   "count": 59892
   },
   {
    "bin": "15–30",
-   "count": 4781
+   "count": 4823
   },
   {
    "bin": "30–60",
-   "count": 2866
+   "count": 2880
   },
   {
    "bin": "60+",
-   "count": 1670
+   "count": 1676
   }
  ],
- "delayed_15": 9317,
- "ontime": 59857,
+ "delayed_15": 9379,
+ "ontime": 59892,
  "pct_delayed": 13.5,
  "pct_ontime": 86.5,
  "recent": {
@@ -2368,7 +2368,7 @@
   },
   {
    "date": "2026-10-06",
-   "movements": 1573,
+   "movements": 1731,
    "flights": 111,
    "flew": 108,
    "delayed": 68,
@@ -2384,21 +2384,21 @@
   {
    "date": "2026-10-07",
    "movements": 1528,
-   "flights": 8,
-   "flew": 5,
-   "delayed": 2,
-   "ontime": 3,
+   "flights": 111,
+   "flew": 102,
+   "delayed": 64,
+   "ontime": 38,
    "cancelled": 1,
-   "median_delay": 0.0,
-   "median_when_delayed": 20.0,
-   "avg_dep_delay": 8.0,
+   "median_delay": 17.5,
+   "median_when_delayed": 24.0,
+   "avg_dep_delay": 22.8,
    "metars": 48,
-   "conversion": 0.19,
-   "scored": 5
+   "conversion": 0.835,
+   "scored": 102
   },
   {
    "date": "2026-10-08",
-   "movements": 115,
+   "movements": 261,
    "flights": 5,
    "flew": 3,
    "delayed": 1,
@@ -2407,11 +2407,11 @@
    "median_delay": 0.0,
    "median_when_delayed": 20.0,
    "avg_dep_delay": 6.7,
-   "metars": 21,
+   "metars": 37,
    "conversion": 0.082,
    "scored": 3
   }
  ],
- "latest_metar": "METAR LTFM 081020Z 22008KT 170V310 CAVOK 21/14 Q1021 NOSIG",
- "match_rate": 0.043
+ "latest_metar": "METAR LTFM 081820Z 19008KT CAVOK 16/12 Q1019 NOSIG",
+ "match_rate": 0.019
 }
