@@ -1,19 +1,19 @@
 {
- "generated_utc": "2026-10-08T01:04:37+00:00",
+ "generated_utc": "2026-10-08T10:45:03+00:00",
  "days": 160,
  "first_date": "2026-05-01",
  "last_date": "2026-10-08",
- "total_flights": 138777,
- "cargo_flights": 6803,
- "movements_tracked": 167672,
- "cross_validated": 47641,
- "delay_known": 69172,
+ "total_flights": 138782,
+ "cargo_flights": 6806,
+ "movements_tracked": 168863,
+ "cross_validated": 47646,
+ "delay_known": 69174,
  "median_delay": 0.0,
  "median_when_delayed": 30.0,
  "delay_hist": [
   {
    "bin": "<15",
-   "count": 59855
+   "count": 59857
   },
   {
    "bin": "15–30",
@@ -29,7 +29,7 @@
   }
  ],
  "delayed_15": 9317,
- "ontime": 59855,
+ "ontime": 59857,
  "pct_delayed": 13.5,
  "pct_ontime": 86.5,
  "recent": {
@@ -2383,23 +2383,23 @@
   },
   {
    "date": "2026-10-07",
-   "movements": 447,
-   "flights": 4,
-   "flew": 3,
+   "movements": 1528,
+   "flights": 8,
+   "flew": 5,
    "delayed": 2,
-   "ontime": 1,
+   "ontime": 3,
    "cancelled": 1,
-   "median_delay": 20.0,
+   "median_delay": 0.0,
    "median_when_delayed": 20.0,
-   "avg_dep_delay": 13.3,
+   "avg_dep_delay": 8.0,
    "metars": 48,
-   "conversion": 0.095,
-   "scored": 3
+   "conversion": 0.19,
+   "scored": 5
   },
   {
    "date": "2026-10-08",
-   "movements": 5,
-   "flights": 4,
+   "movements": 115,
+   "flights": 5,
    "flew": 3,
    "delayed": 1,
    "ontime": 2,
@@ -2407,11 +2407,11 @@
    "median_delay": 0.0,
    "median_when_delayed": 20.0,
    "avg_dep_delay": 6.7,
-   "metars": 2,
-   "conversion": 0.066,
+   "metars": 21,
+   "conversion": 0.082,
    "scored": 3
   }
  ],
- "latest_metar": "METAR LTFM 080050Z 19004KT CAVOK 13/11 Q1020 NOSIG",
- "match_rate": 0.8
+ "latest_metar": "METAR LTFM 081020Z 22008KT 170V310 CAVOK 21/14 Q1021 NOSIG",
+ "match_rate": 0.043
 }

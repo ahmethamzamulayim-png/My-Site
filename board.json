@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-10-08T01:04:46+00:00",
+ "generated_utc": "2026-10-08T10:45:17+00:00",
  "airport": "IST",
  "board_date": "2026-10-08",
  "window_start_utc": "2026-10-07T13:00:00+00:00",
@@ -9,13 +9,12 @@
  "late_threshold_min": 15,
  "baseline": 0.1347,
  "trained_on": {
-  "flights": 69169,
+  "flights": 69171,
   "days": 153,
   "through": "2026-10-07"
  },
  "tiers": {
-  "lookup": 51,
-  "hybrid": 6
+  "lookup": 57
  },
  "tier_auc": {
   "lookup": 0.711,
@@ -23,16 +22,16 @@
   "model": 0.742
  },
  "model_trained": {
-  "trained_rows": 69172,
+  "trained_rows": 69174,
   "trained_through": "2026-10-08"
  },
  "scoreboard": {
-  "resolved": 365,
+  "resolved": 367,
   "total": 775,
   "late": 236,
-  "ontime": 129,
-  "mean_predicted": 0.177,
-  "actual_rate": 0.6466,
+  "ontime": 131,
+  "mean_predicted": 0.1763,
+  "actual_rate": 0.6431,
   "window_days": 14
  },
  "hourly": [
@@ -49,12 +48,12 @@
   {
    "h": 2,
    "pct": 0.1786,
-   "n": 2368
+   "n": 2369
   },
   {
    "h": 3,
-   "pct": 0.1408,
-   "n": 767
+   "pct": 0.1406,
+   "n": 768
   },
   {
    "h": 4,
@@ -976,9 +975,9 @@
    "flight": "TK814",
    "dest": "OJAI",
    "airline": "Turkish Airlines",
-   "risk": 0.1102,
+   "risk": 0.109,
    "basis": "flight+hour",
-   "n": 89,
+   "n": 90,
    "median_late": 22,
    "median_from": "flight",
    "hour_rate": 0.1786,
@@ -1196,16 +1195,15 @@
    "flight": null,
    "dest": "HLLM",
    "airline": "empty",
-   "risk": 0.0329,
+   "risk": 0.0206,
    "basis": "route+hour",
    "n": 38,
    "median_late": 45,
    "median_from": "destination",
-   "hour_rate": 0.1408,
+   "hour_rate": 0.1406,
    "actual": null,
    "actual_delay": null,
-   "lookup_risk": 0.0206,
-   "tier": "hybrid",
+   "tier": "lookup",
    "turnaround_min": null,
    "inbound_delay_min": null
   },
@@ -1217,16 +1215,15 @@
    "flight": "YL101",
    "dest": "HLLM",
    "airline": "Libyan Wings",
-   "risk": 0.2927,
+   "risk": 0.4293,
    "basis": "flight+hour",
    "n": 107,
    "median_late": 44,
    "median_from": "flight",
-   "hour_rate": 0.1408,
+   "hour_rate": 0.1406,
    "actual": null,
    "actual_delay": null,
-   "lookup_risk": 0.4293,
-   "tier": "hybrid",
+   "tier": "lookup",
    "turnaround_min": null,
    "inbound_delay_min": null
   },
@@ -1238,16 +1235,15 @@
    "flight": "TU217",
    "dest": "DTTA",
    "airline": "Tunisair",
-   "risk": 0.3512,
+   "risk": 0.2884,
    "basis": "flight+hour",
    "n": 45,
    "median_late": 80,
    "median_from": "flight",
-   "hour_rate": 0.1408,
+   "hour_rate": 0.1406,
    "actual": null,
    "actual_delay": null,
-   "lookup_risk": 0.2884,
-   "tier": "hybrid",
+   "tier": "lookup",
    "turnaround_min": null,
    "inbound_delay_min": null
   },
@@ -1259,16 +1255,15 @@
    "flight": "LH1743",
    "dest": "EDDM",
    "airline": "Lufthansa",
-   "risk": 0.026,
+   "risk": 0.0274,
    "basis": "flight+hour",
-   "n": 145,
+   "n": 146,
    "median_late": 24,
    "median_from": "destination",
-   "hour_rate": 0.1408,
+   "hour_rate": 0.1406,
    "actual": "ontime",
    "actual_delay": 0,
-   "lookup_risk": 0.0276,
-   "tier": "hybrid",
+   "tier": "lookup",
    "turnaround_min": null,
    "inbound_delay_min": null
   },
@@ -1280,16 +1275,15 @@
    "flight": "MS746",
    "dest": "HECA",
    "airline": "Egyptair",
-   "risk": 0.0567,
+   "risk": 0.0896,
    "basis": "flight+hour",
    "n": 134,
    "median_late": 26,
    "median_from": "flight",
-   "hour_rate": 0.1408,
+   "hour_rate": 0.1406,
    "actual": "ontime",
    "actual_delay": 0,
-   "lookup_risk": 0.0896,
-   "tier": "hybrid",
+   "tier": "lookup",
    "turnaround_min": null,
    "inbound_delay_min": null
   },
@@ -1301,7 +1295,7 @@
    "flight": "SU2133",
    "dest": "UUEE",
    "airline": "Aeroflot",
-   "risk": 0.33,
+   "risk": 0.3576,
    "basis": "flight+hour",
    "n": 137,
    "median_late": 35,
@@ -1309,8 +1303,7 @@
    "hour_rate": 0.1546,
    "actual": null,
    "actual_delay": null,
-   "lookup_risk": 0.3576,
-   "tier": "hybrid",
+   "tier": "lookup",
    "turnaround_min": null,
    "inbound_delay_min": null
   }
