@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-10-10T09:59:37+00:00",
+ "generated_utc": "2026-10-10T17:23:44+00:00",
  "airport": "IST",
  "board_date": "2026-10-10",
  "window_start_utc": "2026-10-09T13:00:00+00:00",
@@ -23,16 +23,16 @@
   "model": 0.742
  },
  "model_trained": {
-  "trained_rows": 69376,
+  "trained_rows": 69377,
   "trained_through": "2026-10-10"
  },
  "scoreboard": {
-  "resolved": 389,
+  "resolved": 390,
   "total": 724,
   "late": 250,
-  "ontime": 139,
-  "mean_predicted": 0.1749,
-  "actual_rate": 0.6427,
+  "ontime": 140,
+  "mean_predicted": 0.1754,
+  "actual_rate": 0.641,
   "window_days": 14
  },
  "hourly": [
@@ -196,7 +196,7 @@
    "flight": "C6304",
    "dest": "UZTT",
    "airline": "My Freighter",
-   "risk": 0.3994,
+   "risk": 0.4007,
    "basis": "flight+hour",
    "n": 9,
    "median_late": 45,
@@ -463,8 +463,8 @@
    "median_late": 34,
    "median_from": "flight",
    "hour_rate": 0.1565,
-   "actual": null,
-   "actual_delay": null,
+   "actual": "ontime",
+   "actual_delay": 0,
    "tier": "lookup",
    "turnaround_min": null,
    "inbound_delay_min": null
