@@ -1,13 +1,13 @@
 {
- "generated_utc": "2026-10-09T18:45:53+00:00",
- "days": 161,
+ "generated_utc": "2026-10-10T01:00:03+00:00",
+ "days": 162,
  "first_date": "2026-05-01",
- "last_date": "2026-10-09",
- "total_flights": 138996,
+ "last_date": "2026-10-10",
+ "total_flights": 138998,
  "cargo_flights": 6819,
- "movements_tracked": 170887,
- "cross_validated": 47733,
- "delay_known": 69373,
+ "movements_tracked": 170956,
+ "cross_validated": 47734,
+ "delay_known": 69374,
  "median_delay": 0.0,
  "median_when_delayed": 30.0,
  "delay_hist": [
@@ -17,7 +17,7 @@
   },
   {
    "bin": "15–30",
-   "count": 4857
+   "count": 4858
   },
   {
    "bin": "30–60",
@@ -28,17 +28,17 @@
    "count": 1683
   }
  ],
- "delayed_15": 9435,
+ "delayed_15": 9436,
  "ontime": 59938,
  "pct_delayed": 13.6,
  "pct_ontime": 86.4,
  "recent": {
   "days": 14,
-  "first_date": "2026-09-24",
-  "last_date": "2026-10-07",
-  "flights": 1284,
-  "delayed_15": 894,
-  "pct_delayed": 69.6
+  "first_date": "2026-09-25",
+  "last_date": "2026-10-08",
+  "flights": 1291,
+  "delayed_15": 881,
+  "pct_delayed": 68.2
  },
  "daily": [
   {
@@ -2413,7 +2413,7 @@
   },
   {
    "date": "2026-10-09",
-   "movements": 289,
+   "movements": 356,
    "flights": 5,
    "flew": 4,
    "delayed": 1,
@@ -2422,11 +2422,26 @@
    "median_delay": 0.0,
    "median_when_delayed": 30.0,
    "avg_dep_delay": 7.5,
-   "metars": 37,
+   "metars": 48,
    "conversion": 0.161,
    "scored": 4
+  },
+  {
+   "date": "2026-10-10",
+   "movements": 2,
+   "flights": 2,
+   "flew": 1,
+   "delayed": 1,
+   "ontime": 0,
+   "cancelled": 1,
+   "median_delay": 23.0,
+   "median_when_delayed": 23.0,
+   "avg_dep_delay": 23.0,
+   "metars": 2,
+   "conversion": 0.095,
+   "scored": 1
   }
  ],
- "latest_metar": "METAR LTFM 091820Z 20008KT CAVOK 19/07 Q1017 NOSIG",
- "match_rate": 0.017
+ "latest_metar": "METAR LTFM 100050Z 19009KT CAVOK 16/13 Q1017 NOSIG",
+ "match_rate": 0.5
 }
