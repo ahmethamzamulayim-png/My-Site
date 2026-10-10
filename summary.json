@@ -1,19 +1,19 @@
 {
- "generated_utc": "2026-10-10T01:00:03+00:00",
+ "generated_utc": "2026-10-10T09:59:30+00:00",
  "days": 162,
  "first_date": "2026-05-01",
  "last_date": "2026-10-10",
- "total_flights": 138998,
- "cargo_flights": 6819,
- "movements_tracked": 170956,
- "cross_validated": 47734,
- "delay_known": 69374,
+ "total_flights": 139002,
+ "cargo_flights": 6821,
+ "movements_tracked": 172303,
+ "cross_validated": 47738,
+ "delay_known": 69376,
  "median_delay": 0.0,
  "median_when_delayed": 30.0,
  "delay_hist": [
   {
    "bin": "<15",
-   "count": 59938
+   "count": 59939
   },
   {
    "bin": "15–30",
@@ -21,15 +21,15 @@
   },
   {
    "bin": "30–60",
-   "count": 2895
+   "count": 2896
   },
   {
    "bin": "60+",
    "count": 1683
   }
  ],
- "delayed_15": 9436,
- "ontime": 59938,
+ "delayed_15": 9437,
+ "ontime": 59939,
  "pct_delayed": 13.6,
  "pct_ontime": 86.4,
  "recent": {
@@ -2413,35 +2413,35 @@
   },
   {
    "date": "2026-10-09",
-   "movements": 356,
-   "flights": 5,
-   "flew": 4,
+   "movements": 1585,
+   "flights": 7,
+   "flew": 5,
    "delayed": 1,
-   "ontime": 3,
+   "ontime": 4,
    "cancelled": 0,
    "median_delay": 0.0,
    "median_when_delayed": 30.0,
-   "avg_dep_delay": 7.5,
+   "avg_dep_delay": 6.0,
    "metars": 48,
-   "conversion": 0.161,
-   "scored": 4
+   "conversion": 0.226,
+   "scored": 5
   },
   {
    "date": "2026-10-10",
-   "movements": 2,
-   "flights": 2,
-   "flew": 1,
-   "delayed": 1,
+   "movements": 120,
+   "flights": 4,
+   "flew": 2,
+   "delayed": 2,
    "ontime": 0,
    "cancelled": 1,
-   "median_delay": 23.0,
-   "median_when_delayed": 23.0,
-   "avg_dep_delay": 23.0,
-   "metars": 2,
-   "conversion": 0.095,
-   "scored": 1
+   "median_delay": 26.5,
+   "median_when_delayed": 26.5,
+   "avg_dep_delay": 26.5,
+   "metars": 20,
+   "conversion": 0.19,
+   "scored": 2
   }
  ],
- "latest_metar": "METAR LTFM 100050Z 19009KT CAVOK 16/13 Q1017 NOSIG",
- "match_rate": 0.5
+ "latest_metar": "METAR LTFM 100950Z 22009KT 180V240 CAVOK 26/11 Q1017 NOSIG",
+ "match_rate": 0.025
 }
