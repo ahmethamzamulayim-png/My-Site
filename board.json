@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-10-11T06:00:30+00:00",
+ "generated_utc": "2026-10-11T13:06:21+00:00",
  "airport": "IST",
  "board_date": "2026-10-11",
  "window_start_utc": "2026-10-10T13:00:00+00:00",
@@ -23,16 +23,16 @@
   "model": 0.742
  },
  "model_trained": {
-  "trained_rows": 69432,
+  "trained_rows": 69434,
   "trained_through": "2026-10-11"
  },
  "scoreboard": {
-  "resolved": 357,
+  "resolved": 359,
   "total": 734,
   "late": 230,
-  "ontime": 127,
-  "mean_predicted": 0.1803,
-  "actual_rate": 0.6443,
+  "ontime": 129,
+  "mean_predicted": 0.1814,
+  "actual_rate": 0.6407,
   "window_days": 14
  },
  "hourly": [
@@ -1136,7 +1136,7 @@
    "flight": "RB444",
    "dest": "OSDI",
    "airline": "Syrian Air",
-   "risk": 0.1903,
+   "risk": 0.1644,
    "basis": "flight+hour",
    "n": 16,
    "median_late": 28,
@@ -1363,7 +1363,7 @@
    "median_late": 35,
    "median_from": "flight",
    "hour_rate": 0.1857,
-   "actual": null,
+   "actual": "ontime",
    "actual_delay": null,
    "tier": "lookup",
    "turnaround_min": null,
@@ -1423,7 +1423,7 @@
    "median_late": 44,
    "median_from": "flight",
    "hour_rate": 0.1454,
-   "actual": null,
+   "actual": "ontime",
    "actual_delay": null,
    "tier": "lookup",
    "turnaround_min": null,
