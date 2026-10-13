@@ -1,11 +1,11 @@
 {
- "generated_utc": "2026-10-12T21:20:27+00:00",
+ "generated_utc": "2026-10-13T02:39:50+00:00",
  "airport": "IST",
- "board_date": "2026-10-13",
- "window_start_utc": "2026-10-12T21:20:21+00:00",
- "window_end_utc": "2026-10-13T09:20:21+00:00",
+ "board_date": "2026-10-12",
+ "window_start_utc": "2026-10-12T13:00:00+00:00",
+ "window_end_utc": "2026-10-13T01:00:00+00:00",
  "window_hours": 12,
- "window_mode": "upcoming",
+ "window_mode": "recent",
  "late_threshold_min": 15,
  "baseline": 0.1373,
  "trained_on": {
@@ -14,6 +14,7 @@
   "through": "2026-10-11"
  },
  "tiers": {
+  "hybrid": 3,
   "lookup": 68
  },
  "tier_auc": {
@@ -26,12 +27,12 @@
   "trained_through": "2026-10-11"
  },
  "scoreboard": {
-  "resolved": 348,
-  "total": 851,
-  "late": 217,
-  "ontime": 131,
-  "mean_predicted": 0.1837,
-  "actual_rate": 0.6236,
+  "resolved": 322,
+  "total": 779,
+  "late": 200,
+  "ontime": 122,
+  "mean_predicted": 0.1776,
+  "actual_rate": 0.6211,
   "window_days": 14
  },
  "hourly": [
@@ -167,6 +168,48 @@
   "lift": 3.0
  },
  "departures": [
+  {
+   "time": "00:05",
+   "hour": 0,
+   "date": "2026-10-13",
+   "scheduled_utc": "2026-10-12T21:05:00+00:00",
+   "flight": "RJ875",
+   "dest": "OJAM",
+   "airline": "Royal Jordanian",
+   "risk": 0.1707,
+   "basis": "route+hour",
+   "n": 1,
+   "median_late": 22,
+   "median_from": "destination",
+   "hour_rate": 0.1748,
+   "actual": null,
+   "actual_delay": null,
+   "lookup_risk": 0.2126,
+   "tier": "hybrid",
+   "turnaround_min": null,
+   "inbound_delay_min": null
+  },
+  {
+   "time": "00:20",
+   "hour": 0,
+   "date": "2026-10-13",
+   "scheduled_utc": "2026-10-12T21:20:00+00:00",
+   "flight": "W62498",
+   "dest": "LHBP",
+   "airline": "Wizz Air",
+   "risk": 0.158,
+   "basis": "route",
+   "n": 103,
+   "median_late": 36,
+   "median_from": "route",
+   "hour_rate": 0.1748,
+   "actual": null,
+   "actual_delay": null,
+   "lookup_risk": 0.0768,
+   "tier": "hybrid",
+   "turnaround_min": null,
+   "inbound_delay_min": null
+  },
   {
    "time": "00:30",
    "hour": 0,
@@ -1524,6 +1567,27 @@
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
+  },
+  {
+   "time": "22:20",
+   "hour": 22,
+   "date": "2026-10-12",
+   "scheduled_utc": "2026-10-12T19:20:00+00:00",
+   "flight": "FX6917",
+   "dest": "LFPG",
+   "airline": "FedEx",
+   "risk": 0.0558,
+   "basis": "flight+hour",
+   "n": 12,
+   "median_late": 51,
+   "median_from": "route",
+   "hour_rate": 0.1153,
+   "actual": null,
+   "actual_delay": null,
+   "lookup_risk": 0.0443,
+   "tier": "hybrid",
    "turnaround_min": null,
    "inbound_delay_min": null
   }
