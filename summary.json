@@ -1,8 +1,8 @@
 {
- "generated_utc": "2026-10-13T10:48:27+00:00",
- "days": 164,
+ "generated_utc": "2026-10-13T18:47:23+00:00",
+ "days": 165,
  "first_date": "2026-05-01",
- "last_date": "2026-10-12",
+ "last_date": "2026-10-13",
  "total_flights": 139140,
  "cargo_flights": 6827,
  "movements_tracked": 174431,
@@ -2472,6 +2472,6 @@
    "scored": 0
   }
  ],
- "latest_metar": "METAR LTFM 121820Z 36007KT 9999 SCT008 BKN028 BKN080 19/18 Q1013 RESHRA NOSIG",
+ "latest_metar": "METAR LTFM 131820Z 03013KT 4000 SHRA BKN006 BKN020 15/15 Q1015 NOSIG RMK RWY17L 02014KT RWY34L 02012KT RWY16R 03014KT RWY36 02015KT RWY18 03014KT",
  "match_rate": null
 }
