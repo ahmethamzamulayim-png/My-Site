@@ -1,9 +1,9 @@
 {
- "generated_utc": "2026-10-15T17:11:45+00:00",
- "days": 166,
+ "generated_utc": "2026-10-15T18:47:42+00:00",
+ "days": 167,
  "first_date": "2026-05-01",
- "last_date": "2026-10-14",
- "total_flights": 139140,
+ "last_date": "2026-10-15",
+ "total_flights": 139141,
  "cargo_flights": 6827,
  "movements_tracked": 174431,
  "cross_validated": 47811,
@@ -34,11 +34,11 @@
  "pct_ontime": 86.3,
  "recent": {
   "days": 14,
-  "first_date": "2026-09-27",
-  "last_date": "2026-10-10",
-  "flights": 1264,
-  "delayed_15": 897,
-  "pct_delayed": 71.0
+  "first_date": "2026-09-28",
+  "last_date": "2026-10-11",
+  "flights": 1164,
+  "delayed_15": 824,
+  "pct_delayed": 70.8
  },
  "daily": [
   {
@@ -2470,8 +2470,23 @@
    "metars": 37,
    "conversion": 0.014,
    "scored": 0
+  },
+  {
+   "date": "2026-10-15",
+   "movements": 0,
+   "flights": 1,
+   "flew": 0,
+   "delayed": 0,
+   "ontime": 0,
+   "cancelled": 1,
+   "median_delay": null,
+   "median_when_delayed": null,
+   "avg_dep_delay": null,
+   "metars": 37,
+   "conversion": 0.013,
+   "scored": 0
   }
  ],
- "latest_metar": "METAR LTFM 141820Z 01031KT 4000 0700N R35R/P1500D R17L/P1500N R34L/0750N R36/0700N SHRA BKN006 BKN020 15/14 Q1015 NOSIG RMK RWY17L 01030G42KT RWY34L 36034KT RWY16R 36030KT RWY36 01033KT RWY18 01030KT",
+ "latest_metar": "METAR LTFM 151820Z 36014KT 9999 SCT032 BKN100 14/08 Q1020 NOSIG",
  "match_rate": null
 }
