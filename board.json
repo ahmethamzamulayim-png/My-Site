@@ -1,11 +1,11 @@
 {
- "generated_utc": "2026-10-15T21:32:51+00:00",
+ "generated_utc": "2026-10-16T04:44:21+00:00",
  "airport": "IST",
  "board_date": "2026-10-16",
- "window_start_utc": "2026-10-15T21:32:39+00:00",
- "window_end_utc": "2026-10-16T09:32:39+00:00",
+ "window_start_utc": "2026-10-15T13:00:00+00:00",
+ "window_end_utc": "2026-10-16T01:00:00+00:00",
  "window_hours": 12,
- "window_mode": "upcoming",
+ "window_mode": "recent",
  "late_threshold_min": 15,
  "baseline": 0.1373,
  "trained_on": {
@@ -14,6 +14,7 @@
   "through": "2026-10-11"
  },
  "tiers": {
+  "hybrid": 1,
   "lookup": 60
  },
  "tier_auc": {
@@ -26,12 +27,12 @@
   "trained_through": "2026-10-11"
  },
  "scoreboard": {
-  "resolved": 246,
-  "total": 821,
-  "late": 151,
-  "ontime": 95,
-  "mean_predicted": 0.1724,
-  "actual_rate": 0.6138,
+  "resolved": 237,
+  "total": 746,
+  "late": 150,
+  "ontime": 87,
+  "mean_predicted": 0.1708,
+  "actual_rate": 0.6329,
   "window_days": 14
  },
  "hourly": [
@@ -167,6 +168,27 @@
   "lift": 3.0
  },
  "departures": [
+  {
+   "time": "00:20",
+   "hour": 0,
+   "date": "2026-10-16",
+   "scheduled_utc": "2026-10-15T21:20:00+00:00",
+   "flight": "MB4300",
+   "dest": "UAAA",
+   "airline": "MNG Airlines",
+   "risk": 0.2191,
+   "basis": "flight+hour",
+   "n": 1,
+   "median_late": 59,
+   "median_from": "route",
+   "hour_rate": 0.1748,
+   "actual": null,
+   "actual_delay": null,
+   "lookup_risk": 0.1099,
+   "tier": "hybrid",
+   "turnaround_min": null,
+   "inbound_delay_min": null
+  },
   {
    "time": "01:10",
    "hour": 1,
