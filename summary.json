@@ -1,13 +1,13 @@
 {
- "generated_utc": "2026-10-20T14:23:50+00:00",
- "days": 171,
+ "generated_utc": "2026-10-20T18:47:26+00:00",
+ "days": 172,
  "first_date": "2026-05-01",
- "last_date": "2026-10-19",
- "total_flights": 139141,
+ "last_date": "2026-10-20",
+ "total_flights": 139143,
  "cargo_flights": 6827,
  "movements_tracked": 174431,
  "cross_validated": 47811,
- "delay_known": 69505,
+ "delay_known": 69506,
  "median_delay": 0.0,
  "median_when_delayed": 30.0,
  "delay_hist": [
@@ -21,14 +21,14 @@
   },
   {
    "bin": "30–60",
-   "count": 2928
+   "count": 2929
   },
   {
    "bin": "60+",
    "count": 1696
   }
  ],
- "delayed_15": 9544,
+ "delayed_15": 9545,
  "ontime": 59961,
  "pct_delayed": 13.7,
  "pct_ontime": 86.3,
@@ -2485,8 +2485,23 @@
    "metars": 37,
    "conversion": 0.013,
    "scored": 0
+  },
+  {
+   "date": "2026-10-20",
+   "movements": 0,
+   "flights": 2,
+   "flew": 1,
+   "delayed": 1,
+   "ontime": 0,
+   "cancelled": 1,
+   "median_delay": 35.0,
+   "median_when_delayed": 35.0,
+   "avg_dep_delay": 35.0,
+   "metars": 37,
+   "conversion": 0.027,
+   "scored": 1
   }
  ],
- "latest_metar": "METAR LTFM 191820Z 19008KT 9999 SCT040 BKN080 15/11 Q1021 NOSIG RMK RWY17L 19010KT RWY34L 20008KT RWY16R 20009KT RWY36 20007KT RWY18 20010KT",
+ "latest_metar": "METAR LTFM 201820Z 16007KT CAVOK 16/11 Q1025 NOSIG RMK RWY17L 14005KT RWY34L VRB02KT RWY16R 13007KT RWY36 13006KT 040V150 RWY18 14007KT",
  "match_rate": null
 }
