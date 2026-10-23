@@ -1,9 +1,9 @@
 {
- "generated_utc": "2026-10-23T17:18:08+00:00",
- "days": 174,
+ "generated_utc": "2026-10-23T18:47:19+00:00",
+ "days": 175,
  "first_date": "2026-05-01",
- "last_date": "2026-10-22",
- "total_flights": 139145,
+ "last_date": "2026-10-23",
+ "total_flights": 139147,
  "cargo_flights": 6827,
  "movements_tracked": 174431,
  "cross_validated": 47811,
@@ -2530,8 +2530,23 @@
    "metars": 37,
    "conversion": 0.013,
    "scored": 0
+  },
+  {
+   "date": "2026-10-23",
+   "movements": 0,
+   "flights": 2,
+   "flew": 0,
+   "delayed": 0,
+   "ontime": 0,
+   "cancelled": 2,
+   "median_delay": null,
+   "median_when_delayed": null,
+   "avg_dep_delay": null,
+   "metars": 37,
+   "conversion": 0.026,
+   "scored": 0
   }
  ],
- "latest_metar": "METAR LTFM 221820Z 16006KT 9999 BKN028 BKN080 18/14 Q1018 NOSIG RMK RWY17L 17007KT 150V210 RWY34L 16005KT RWY16R 16009KT RWY36 17006KT 130V190 RWY18 18008KT",
+ "latest_metar": "METAR LTFM 231820Z 01010KT 9999 -SHRA BKN013 FEW018TCU BKN023 15/14 Q1020 NOSIG RMK RWY17L 36011KT RWY34L 35010KT RWY16R 36010KT RWY36 01012KT RWY18 01010KT",
  "match_rate": null
 }
