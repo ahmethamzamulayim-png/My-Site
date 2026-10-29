@@ -1,9 +1,9 @@
 {
- "generated_utc": "2026-10-29T01:03:45+00:00",
+ "generated_utc": "2026-10-29T10:11:33+00:00",
  "airport": "IST",
  "board_date": null,
- "window_start_utc": "2026-10-29T01:03:36+00:00",
- "window_end_utc": "2026-10-29T13:03:36+00:00",
+ "window_start_utc": "2026-10-29T10:11:21+00:00",
+ "window_end_utc": "2026-10-29T22:11:21+00:00",
  "window_hours": 12,
  "window_mode": "upcoming",
  "late_threshold_min": 15,
