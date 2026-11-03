@@ -1,19 +1,20 @@
 {
- "generated_utc": "2026-11-02T19:37:36+00:00",
+ "generated_utc": "2026-11-03T02:59:02+00:00",
  "airport": "IST",
- "board_date": "2026-11-03",
- "window_start_utc": "2026-11-02T19:37:27+00:00",
- "window_end_utc": "2026-11-03T07:37:27+00:00",
+ "board_date": "2026-11-02",
+ "window_start_utc": "2026-11-02T12:50:00+00:00",
+ "window_end_utc": "2026-11-03T00:50:00+00:00",
  "window_hours": 12,
- "window_mode": "upcoming",
+ "window_mode": "recent",
  "late_threshold_min": 15,
  "baseline": 0.1373,
  "trained_on": {
-  "flights": 69508,
-  "days": 159,
-  "through": "2026-11-02"
+  "flights": 69506,
+  "days": 158,
+  "through": "2026-10-20"
  },
  "tiers": {
+  "hybrid": 2,
   "lookup": 63
  },
  "tier_auc": {
@@ -27,7 +28,7 @@
  },
  "scoreboard": {
   "resolved": 1,
-  "total": 537,
+  "total": 467,
   "late": 1,
   "ontime": 0,
   "mean_predicted": 0.1407,
@@ -138,7 +139,7 @@
   {
    "h": 20,
    "pct": 0.126,
-   "n": 3413
+   "n": 3412
   },
   {
    "h": 21,
@@ -147,8 +148,8 @@
   },
   {
    "h": 22,
-   "pct": 0.116,
-   "n": 1276
+   "pct": 0.1153,
+   "n": 1275
   },
   {
    "h": 23,
@@ -1424,6 +1425,48 @@
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
+  },
+  {
+   "time": "20:55",
+   "hour": 20,
+   "date": "2026-11-02",
+   "scheduled_utc": "2026-11-02T17:55:00+00:00",
+   "flight": "IS7341",
+   "dest": "OIIE",
+   "airline": "Sepehran Airlines",
+   "risk": 0.2091,
+   "basis": "flight",
+   "n": 21,
+   "median_late": 30,
+   "median_from": "flight",
+   "hour_rate": 0.126,
+   "actual": "ontime",
+   "actual_delay": null,
+   "lookup_risk": 0.2369,
+   "tier": "hybrid",
+   "turnaround_min": null,
+   "inbound_delay_min": null
+  },
+  {
+   "time": "22:00",
+   "hour": 22,
+   "date": "2026-11-02",
+   "scheduled_utc": "2026-11-02T19:00:00+00:00",
+   "flight": "MB9389",
+   "dest": "EGNX",
+   "airline": "MNG Airlines",
+   "risk": 0.1407,
+   "basis": "flight+hour",
+   "n": 8,
+   "median_late": 29,
+   "median_from": "airport",
+   "hour_rate": 0.1153,
+   "actual": "late",
+   "actual_delay": 20,
+   "lookup_risk": 0.0612,
+   "tier": "hybrid",
    "turnaround_min": null,
    "inbound_delay_min": null
   }
