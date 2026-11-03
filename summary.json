@@ -1,13 +1,13 @@
 {
- "generated_utc": "2026-11-03T11:03:33+00:00",
- "days": 179,
+ "generated_utc": "2026-11-03T18:47:28+00:00",
+ "days": 180,
  "first_date": "2026-05-01",
- "last_date": "2026-11-02",
- "total_flights": 139150,
+ "last_date": "2026-11-03",
+ "total_flights": 139152,
  "cargo_flights": 6827,
  "movements_tracked": 174431,
  "cross_validated": 47811,
- "delay_known": 69508,
+ "delay_known": 69509,
  "median_delay": 0.0,
  "median_when_delayed": 30.0,
  "delay_hist": [
@@ -21,14 +21,14 @@
   },
   {
    "bin": "30–60",
-   "count": 2929
+   "count": 2930
   },
   {
    "bin": "60+",
    "count": 1696
   }
  ],
- "delayed_15": 9546,
+ "delayed_15": 9547,
  "ontime": 59962,
  "pct_delayed": 13.7,
  "pct_ontime": 86.3,
@@ -2575,8 +2575,23 @@
    "metars": 37,
    "conversion": 0.024,
    "scored": 2
+  },
+  {
+   "date": "2026-11-03",
+   "movements": 0,
+   "flights": 2,
+   "flew": 1,
+   "delayed": 1,
+   "ontime": 0,
+   "cancelled": 1,
+   "median_delay": 50.0,
+   "median_when_delayed": 50.0,
+   "avg_dep_delay": 50.0,
+   "metars": 37,
+   "conversion": 0.029,
+   "scored": 1
   }
  ],
- "latest_metar": "METAR LTFM 021820Z VRB03KT 9999 -SHRA SCT035 BKN080 18/14 Q1015 NOSIG RMK RWY17L VRB03KT RWY34L 29005KT RWY16R 27005KT 240V300 RWY36 VRB01KT RWY18 32003KT",
+ "latest_metar": "METAR LTFM 031820Z 09008KT 7000 SHRA SCT004 BKN025 16/15 Q1014 NOSIG RMK RWY17L 09006KT RWY34L 08007KT RWY16R 08006KT RWY36 08006KT RWY18 08004KT",
  "match_rate": null
 }
