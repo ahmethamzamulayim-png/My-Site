@@ -1,20 +1,20 @@
 {
- "generated_utc": "2026-11-03T18:47:40+00:00",
+ "generated_utc": "2026-11-03T19:39:17+00:00",
  "airport": "IST",
- "board_date": "2026-11-03",
- "window_start_utc": "2026-11-03T18:47:29+00:00",
- "window_end_utc": "2026-11-04T06:47:29+00:00",
+ "board_date": "2026-11-04",
+ "window_start_utc": "2026-11-03T19:39:05+00:00",
+ "window_end_utc": "2026-11-04T07:39:05+00:00",
  "window_hours": 12,
  "window_mode": "upcoming",
  "late_threshold_min": 15,
  "baseline": 0.1373,
  "trained_on": {
-  "flights": 69508,
-  "days": 159,
-  "through": "2026-11-02"
+  "flights": 69509,
+  "days": 160,
+  "through": "2026-11-03"
  },
  "tiers": {
-  "hybrid": 3,
+  "hybrid": 2,
   "lookup": 64
  },
  "tier_auc": {
@@ -148,8 +148,8 @@
   },
   {
    "h": 22,
-   "pct": 0.116,
-   "n": 1276
+   "pct": 0.1167,
+   "n": 1277
   },
   {
    "h": 23,
@@ -176,7 +176,7 @@
    "flight": "B9",
    "dest": "OISS",
    "airline": "Iran Airtour",
-   "risk": 0.1047,
+   "risk": 0.1021,
    "basis": "flight+hour",
    "n": 1,
    "median_late": 23,
@@ -1487,27 +1487,6 @@
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
-   "turnaround_min": null,
-   "inbound_delay_min": null
-  },
-  {
-   "time": "22:00",
-   "hour": 22,
-   "date": "2026-11-03",
-   "scheduled_utc": "2026-11-03T19:00:00+00:00",
-   "flight": "MB9391",
-   "dest": "EGNX",
-   "airline": "Solinair",
-   "risk": 0.0627,
-   "basis": "flight+hour",
-   "n": 10,
-   "median_late": 79,
-   "median_from": "destination",
-   "hour_rate": 0.116,
-   "actual": "late",
-   "actual_delay": 50,
-   "lookup_risk": 0.0557,
-   "tier": "hybrid",
    "turnaround_min": null,
    "inbound_delay_min": null
   }
