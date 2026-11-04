@@ -1,20 +1,20 @@
 {
- "generated_utc": "2026-11-03T19:39:17+00:00",
+ "generated_utc": "2026-11-04T01:30:03+00:00",
  "airport": "IST",
- "board_date": "2026-11-04",
- "window_start_utc": "2026-11-03T19:39:05+00:00",
- "window_end_utc": "2026-11-04T07:39:05+00:00",
+ "board_date": "2026-11-03",
+ "window_start_utc": "2026-11-03T13:00:00+00:00",
+ "window_end_utc": "2026-11-04T01:00:00+00:00",
  "window_hours": 12,
- "window_mode": "upcoming",
+ "window_mode": "recent",
  "late_threshold_min": 15,
  "baseline": 0.1373,
  "trained_on": {
-  "flights": 69509,
-  "days": 160,
-  "through": "2026-11-03"
+  "flights": 69508,
+  "days": 159,
+  "through": "2026-11-02"
  },
  "tiers": {
-  "hybrid": 2,
+  "hybrid": 4,
   "lookup": 64
  },
  "tier_auc": {
@@ -28,7 +28,7 @@
  },
  "scoreboard": {
   "resolved": 2,
-  "total": 534,
+  "total": 461,
   "late": 2,
   "ontime": 0,
   "mean_predicted": 0.1017,
@@ -148,8 +148,8 @@
   },
   {
    "h": 22,
-   "pct": 0.1167,
-   "n": 1277
+   "pct": 0.116,
+   "n": 1276
   },
   {
    "h": 23,
@@ -176,7 +176,7 @@
    "flight": "B9",
    "dest": "OISS",
    "airline": "Iran Airtour",
-   "risk": 0.1021,
+   "risk": 0.1047,
    "basis": "flight+hour",
    "n": 1,
    "median_late": 23,
@@ -1487,6 +1487,48 @@
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
+  },
+  {
+   "time": "21:00",
+   "hour": 21,
+   "date": "2026-11-03",
+   "scheduled_utc": "2026-11-03T18:00:00+00:00",
+   "flight": "I36620",
+   "dest": "OIIE",
+   "airline": "ATA Airlines",
+   "risk": 0.3384,
+   "basis": "flight",
+   "n": 27,
+   "median_late": 61,
+   "median_from": "flight",
+   "hour_rate": 0.1344,
+   "actual": null,
+   "actual_delay": null,
+   "lookup_risk": 0.2522,
+   "tier": "hybrid",
+   "turnaround_min": null,
+   "inbound_delay_min": null
+  },
+  {
+   "time": "22:00",
+   "hour": 22,
+   "date": "2026-11-03",
+   "scheduled_utc": "2026-11-03T19:00:00+00:00",
+   "flight": "MB9391",
+   "dest": "EGNX",
+   "airline": "Solinair",
+   "risk": 0.0627,
+   "basis": "flight+hour",
+   "n": 10,
+   "median_late": 79,
+   "median_from": "destination",
+   "hour_rate": 0.116,
+   "actual": "late",
+   "actual_delay": 50,
+   "lookup_risk": 0.0557,
+   "tier": "hybrid",
    "turnaround_min": null,
    "inbound_delay_min": null
   }
