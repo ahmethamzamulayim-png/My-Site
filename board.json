@@ -1,11 +1,11 @@
 {
- "generated_utc": "2026-11-05T20:07:23+00:00",
+ "generated_utc": "2026-11-06T01:39:49+00:00",
  "airport": "IST",
  "board_date": "2026-11-06",
- "window_start_utc": "2026-11-05T20:07:15+00:00",
- "window_end_utc": "2026-11-06T08:07:15+00:00",
+ "window_start_utc": "2026-11-05T12:50:00+00:00",
+ "window_end_utc": "2026-11-06T00:50:00+00:00",
  "window_hours": 12,
- "window_mode": "upcoming",
+ "window_mode": "recent",
  "late_threshold_min": 15,
  "baseline": 0.1373,
  "trained_on": {
@@ -28,7 +28,7 @@
  },
  "scoreboard": {
   "resolved": 2,
-  "total": 531,
+  "total": 460,
   "late": 2,
   "ontime": 0,
   "mean_predicted": 0.1017,
