@@ -1,11 +1,11 @@
 {
- "generated_utc": "2026-11-08T19:47:40+00:00",
+ "generated_utc": "2026-11-09T01:01:20+00:00",
  "airport": "IST",
- "board_date": "2026-11-09",
- "window_start_utc": "2026-11-08T19:47:30+00:00",
- "window_end_utc": "2026-11-09T07:47:30+00:00",
+ "board_date": "2026-11-08",
+ "window_start_utc": "2026-11-08T12:50:00+00:00",
+ "window_end_utc": "2026-11-09T00:50:00+00:00",
  "window_hours": 12,
- "window_mode": "upcoming",
+ "window_mode": "recent",
  "late_threshold_min": 15,
  "baseline": 0.1373,
  "trained_on": {
@@ -14,8 +14,8 @@
   "through": "2026-11-03"
  },
  "tiers": {
-  "hybrid": 1,
-  "lookup": 71
+  "lookup": 72,
+  "hybrid": 1
  },
  "tier_auc": {
   "lookup": 0.711,
@@ -28,7 +28,7 @@
  },
  "scoreboard": {
   "resolved": 2,
-  "total": 574,
+  "total": 520,
   "late": 2,
   "ontime": 0,
   "mean_predicted": 0.1017,
@@ -176,7 +176,7 @@
    "flight": "MB1546",
    "dest": "LEZG",
    "airline": "Chrono Jet",
-   "risk": 0.0154,
+   "risk": 0.0146,
    "basis": "flight+hour",
    "n": 2,
    "median_late": 25,
@@ -1603,6 +1603,26 @@
    "median_late": 28,
    "median_from": "flight",
    "hour_rate": 0.1449,
+   "actual": null,
+   "actual_delay": null,
+   "tier": "lookup",
+   "turnaround_min": null,
+   "inbound_delay_min": null
+  },
+  {
+   "time": "19:30",
+   "hour": 19,
+   "date": "2026-11-08",
+   "scheduled_utc": "2026-11-08T16:30:00+00:00",
+   "flight": null,
+   "dest": "OIIE",
+   "airline": "Su Airlines",
+   "risk": 0.2095,
+   "basis": "route+hour",
+   "n": 4,
+   "median_late": 45,
+   "median_from": "destination",
+   "hour_rate": 0.1173,
    "actual": null,
    "actual_delay": null,
    "tier": "lookup",
