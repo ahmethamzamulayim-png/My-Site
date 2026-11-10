@@ -1,8 +1,8 @@
 {
- "generated_utc": "2026-11-10T17:09:52+00:00",
- "days": 186,
+ "generated_utc": "2026-11-10T18:47:30+00:00",
+ "days": 187,
  "first_date": "2026-05-01",
- "last_date": "2026-11-09",
+ "last_date": "2026-11-10",
  "total_flights": 139155,
  "cargo_flights": 6827,
  "movements_tracked": 174431,
@@ -2622,6 +2622,6 @@
    "scored": 2
   }
  ],
- "latest_metar": "METAR LTFM 091820Z 20006KT CAVOK 10/05 Q1025 NOSIG RMK RWY17L 20007KT 170V230 RWY34L 17004KT RWY16R 20004KT 160V230 RWY36 17007KT 110V190 RWY18 19006KT",
+ "latest_metar": "METAR LTFM 101820Z 19007KT CAVOK 09/08 Q1020 NOSIG RMK RWY17L 19011KT 170V230 RWY34L 20007KT RWY16R 18006KT RWY36 19008KT RWY18 19008KT",
  "match_rate": null
 }
