@@ -406,7 +406,7 @@ textarea:focus-visible,
 .treemap {
   display: grid;
   grid-template-columns: 1.15fr 1fr;
-  grid-template-rows: 1.9fr 1fr 0.9fr 0.9fr;
+  grid-template-rows: 1.9fr 1fr 1fr;
   gap: 10px;
   min-height: 320px; /* floor for when the hero stacks to one column */
 }
@@ -1064,3 +1064,26 @@ textarea:focus-visible,
 
 /* card-bb's hover flips its background near-black — keep the cursor visible on it */
 body:has(.card-bb:hover) .custom-cursor { color: #fff; }
+
+/* Archived-project notice (IST pipeline, switched off Nov 2026) */
+.archive-banner {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  flex-wrap: wrap;
+  margin: 0 0 22px;
+  padding: 14px 18px;
+  border-radius: 16px;
+  background: rgba(201, 138, 26, 0.12);
+  border: 1px solid rgba(201, 138, 26, 0.35);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+.archive-banner b {
+  font-family: "Space Grotesk", sans-serif;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  color: #8a5c0b;
+}
+.archive-banner a { color: inherit; font-weight: 700; }

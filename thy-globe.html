@@ -152,6 +152,8 @@
       .status-row.load .dot { background: var(--accent-2); box-shadow: 0 0 12px rgba(255, 125, 142, 0.6); }
       .status-row.err .dot { background: #e81932; box-shadow: 0 0 12px rgba(232, 25, 50, 0.7); }
       .status-row.stale .dot { background: var(--gold); box-shadow: 0 0 12px rgba(201, 138, 26, 0.6); }
+      .offline-note { margin: 12px 0 0; padding: 10px 12px; border-radius: 12px; font-size: 0.8rem; line-height: 1.5;
+        background: rgba(201, 138, 26, 0.14); border: 1px solid rgba(201, 138, 26, 0.4); }
       .hint {
         margin-top: 12px;
         font-size: 0.78rem;
@@ -267,7 +269,7 @@
 
       <aside class="globe-panel">
         <h1 class="sr-only">Live Turkish Airlines Flight Globe</h1>
-        <p class="eyebrow"><span class="tulip" aria-hidden="true"></span> Turkish Airlines · live · Jul 2026</p>
+        <p class="eyebrow"><span class="tulip" aria-hidden="true"></span> Turkish Airlines · offline · Jul 2026</p>
         <div class="big-count"><span id="count">–</span><small id="countlabel">aircraft airborne</small></div>
         <p class="updated" id="updated">waiting for first data…</p>
         <div class="legend">
@@ -276,6 +278,7 @@
         </div>
         <input class="flight-search" id="search" type="search" placeholder="Filter flight, e.g. 1951" aria-label="Filter by flight number" />
         <div class="status-row" id="statusrow"><span class="dot"></span><span id="statustext">connecting…</span></div>
+        <p class="offline-note"><b>Offline right now.</b> The live feed depends on the OpenSky Network, and the relay that fetches it stopped responding in late 2026. The globe stays up as a demo of the build; planes reappear on their own if the feed comes back. <a href="/ist-shutdown">Why I stopped maintaining the flight-data projects →</a></p>
         <p class="hint">Drag to rotate · scroll to zoom · click a plane for its route &amp; model</p>
       </aside>
 

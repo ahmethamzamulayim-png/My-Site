@@ -262,6 +262,7 @@
 
     <main>
       <section class="section" data-reveal>
+        <div class="archive-banner"><b>Archived</b><span>This board stopped updating in November 2026. It shows the last clean window (11–12 Sep 2026) with what actually happened to each flight, and the board's full live record: AUC 0.729 on 1,067 flights. <a href="/ist-shutdown">Why I shut it down →</a></span></div>
         <div class="section-heading">
           <p class="eyebrow">Demo · the statistical half · Jul–Aug 2026</p>
           <h1>Departure delay board</h1>
@@ -277,7 +278,7 @@
           <div class="flapboard" id="board"></div>
           <div class="pager" id="pager"></div>
           <div class="detail" id="detail" hidden></div>
-          <div class="callout alt"><b>Why does the board stop at 04:00?</b> The free plan returns 100 rows per request, and that page starts at the very <b>beginning</b> of tomorrow's schedule — roughly the first four hours after midnight. It cuts off there because the page ran out, not because these flights were chosen. A whole day (~1,700 departures) would take 17 requests; the free quota is 100 requests a month — and it is currently exhausted.</div>
+          <div class="callout alt"><b>Why does the board stop at 04:00?</b> The free plan returns 100 rows per request, and that page starts at the very <b>beginning</b> of tomorrow's schedule — roughly the first four hours after midnight. It cuts off there because the page ran out, not because these flights were chosen. A whole day (~1,700 departures) would take 17 requests; the free quota was 100 requests a month.</div>
         </div>
 
         <div class="chart-panel">
@@ -295,7 +296,7 @@
     </main>
 
     <footer class="footer">
-      <p>Data: IST · aviationstack + OpenSky Network · retrained nightly</p>
+      <p>Data: IST · aviationstack + OpenSky Network · archived Nov 2026 · last clean board 12 Sep 2026</p>
       <p id="year"></p>
     </footer>
 

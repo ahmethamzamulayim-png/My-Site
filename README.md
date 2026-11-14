@@ -7,9 +7,10 @@ Static portfolio for GitHub Pages, live at [ahmethmzamlym.engineer](https://ahme
 | Page | What it is |
 |---|---|
 | `index.html` | The portfolio: about, projects, skills, timeline, contact form |
-| `thy-globe.html` | Every airborne Turkish Airlines flight on a live 3D globe (ADS-B, 15s refresh) |
-| `ist-rotar.html` | Status dashboard for a daily-collected Istanbul Airport (IST) delay dataset |
-| `board.html` | Live IST departure board — each flight scored against its own delay history |
+| `thy-globe.html` | Every airborne Turkish Airlines flight on a live 3D globe (ADS-B, 15s refresh) — feed offline since late 2026, page kept as a demo |
+| `ist-shutdown.html` | Write-up: why the IST pipeline was switched off (Nov 2026), and what it produced |
+| `ist-rotar.html` | Archived dashboard for the Istanbul Airport (IST) delay dataset, frozen on 1 May – 12 Sep 2026 |
+| `board.html` | Archived IST departure board — last clean window (12 Sep 2026) with outcomes and the full live record |
 | `route-delay-globe.html` | IST's riskiest outbound routes, plotted on a 3D globe |
 | `bearing.html` | Bearing failure prediction on NASA's IMS vibration dataset |
 | `bearing-universal.html` | Part 2 — does the model generalize across 3 rigs / 36 bearings (IMS, XJTU-SY, FEMTO)? |
@@ -33,7 +34,7 @@ Every airborne Turkish Airlines flight on an interactive 3D globe ([globe.gl](ht
 
 ## IST delay dataset
 
-`ist-rotar.html`, `board.html`, `route-delay-globe.html`, `phase2.html`, `model.html`, and `three-hubs.html` are all built on one growing dataset: IST flight movements (OpenSky) joined with schedules (aviationstack) and archived METAR weather, collected daily by a companion pipeline. `board.json` and `summary.json` in this repo are the pre-scored snapshots those pages read from — no live API calls from the browser.
+`ist-rotar.html`, `board.html`, `route-delay-globe.html`, `phase2.html`, `model.html`, and `three-hubs.html` are all built on one dataset: IST flight movements (OpenSky) joined with schedules (aviationstack) and archived METAR weather, collected daily by a companion pipeline from May to October 2026. **The pipeline was switched off on 2026-11-14** (see `ist-shutdown.html`). `board.json` and `summary.json` are now frozen snapshots of the clean period (up to 2026-09-12), regenerated once from the dataset repo — nothing writes to them any more.
 
 ## Notes
 

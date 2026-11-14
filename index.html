@@ -106,7 +106,7 @@
                 <span class="tile-note">3 rigs · 36 bearings</span>
               </a>
               <a class="tile t-globe" href="/thy-globe">
-                <span class="tile-tag">Web · live now</span>
+                <span class="tile-tag">Web · offline</span>
                 <strong>THY flight globe</strong>
                 <span class="tile-note" id="live-globe-note">130+ flights on a 3D globe</span>
               </a>
@@ -118,20 +118,10 @@
                 <span class="tile-tag">CAD Automation</span>
                 <strong>Pipe reducer generator</strong>
               </a>
-              <a class="tile t-rig" href="/ist-rotar">
-                <span class="tile-tag">Data · daily pipeline</span>
+              <a class="tile t-rig" href="/ist-shutdown">
+                <span class="tile-tag">Data · archived</span>
                 <strong>IST delay dataset</strong>
-                <span class="tile-note" id="live-ist-note">Collecting daily</span>
-              </a>
-              <a class="tile t-phase2" href="/phase2">
-                <span class="tile-tag">Data / ML · roadmap</span>
-                <strong>Phase 2: delay prediction</strong>
-                <span class="tile-note">Hourly, weekly, monthly — 3 airports compared</span>
-              </a>
-              <a class="tile t-hubs" href="/three-hubs">
-                <span class="tile-tag">Data · new</span>
-                <strong>Three hubs</strong>
-                <span class="tile-note">IST beats LHR &amp; FRA</span>
+                <span class="tile-note">Switched off Nov 2026 — why</span>
               </a>
             </div>
           </div>
@@ -183,56 +173,34 @@
             <a class="card-link" href="/reducer">Open the project →</a>
           </article>
 
-          <p class="group-heading" data-reveal>Aviation Data &amp; Systems</p>
-          <p class="group-note" data-reveal>Live flight tracking, a delay dataset I built myself, and the model and comparisons built on top of it.</p>
-
-          <article class="card card-red" data-reveal>
-            <p class="card-tag">Aviation Data · Live · Jul 2026</p>
-            <h3>Live Turkish Airlines flight globe</h3>
-            <p>Where is every Turkish Airlines aircraft right now, and what is it flying?</p>
-            <div class="card-metrics">
-              <div><strong>130+</strong><span>Flights tracked live</span></div>
-              <div><strong>15s</strong><span>Refresh interval</span></div>
-              <div><strong>ADS-B</strong><span>Live transponder data</span></div>
-            </div>
-            <a class="card-link" href="/thy-globe">Open the live globe →</a>
-          </article>
+          <p class="group-heading" data-reveal>Past Data Work</p>
+          <p class="group-note" data-reveal>Flight-data projects I ran alongside my studies in 2026. Archived — the pages stay up, frozen on the clean data.</p>
 
           <article class="card card-leaf" data-reveal>
-            <p class="card-tag">Aviation Data · Pipeline · Jul 2026</p>
-            <h3>IST flight delay dataset</h3>
-            <p>Istanbul Airport has no public historical delay dataset — so what does one look like once you build it?</p>
-            <ul>
-              <li>OpenSky + aviationstack joined on callsign</li>
-              <li>Append-only CSVs with quality flags</li>
-              <li>Collected daily by a zero-maintenance GitHub Actions pipeline</li>
-            </ul>
-            <a class="card-link" href="/ist-rotar">Open the status dashboard →</a>
+            <p class="card-tag">Aviation Data · Archived · May–Oct 2026</p>
+            <h3>IST flight delay dataset, model and board</h3>
+            <p>Six months of collecting every Istanbul Airport departure — and why I switched it off after two outside data sources failed without a single error.</p>
+            <div class="card-metrics">
+              <div><strong>136K</strong><span>Flights collected</span></div>
+              <div><strong>0.729</strong><span>Live AUC on 1,067 flights</span></div>
+              <div><strong>11.8%</strong><span>Departures 15+ min late</span></div>
+            </div>
+            <a class="card-link" href="/ist-shutdown">Read the write-up →</a>
+            <a class="card-link" href="/ist-rotar">Dataset →</a>
+            <a class="card-link" href="/model">Model →</a>
+            <a class="card-link" href="/three-hubs">Three hubs →</a>
           </article>
 
-          <article class="card card-gold" data-reveal>
-            <p class="card-tag">Aviation Data · Prediction · Jul–Aug 2026</p>
-            <h3>Delay prediction: Phase 2</h3>
-            <p>Can a model beat a simple delay lookup table — and if so, why?</p>
+          <article class="card card-red" data-reveal>
+            <p class="card-tag">Aviation Data · Offline · Jul 2026</p>
+            <h3>Turkish Airlines flight globe</h3>
+            <p>Where is every Turkish Airlines aircraft right now, and what is it flying? The live feed is currently down; the globe stays up as a demo.</p>
             <div class="card-metrics">
-              <div><strong>0.742</strong><span>Model AUC</span></div>
-              <div><strong>0.711</strong><span>Lookup baseline</span></div>
-              <div><strong>Blind</strong><span>Tested on July hold-out</span></div>
+              <div><strong>130+</strong><span>Flights tracked at once</span></div>
+              <div><strong>15s</strong><span>Refresh interval</span></div>
+              <div><strong>ADS-B</strong><span>Transponder data</span></div>
             </div>
-            <a class="card-link" href="/model">Open the model →</a>
-            <a class="card-link" href="/phase2">All of Phase 2 →</a>
-          </article>
-
-          <article class="card card-teal" data-reveal>
-            <p class="card-tag">Aviation Data · Comparison · Jul 2026</p>
-            <h3>Three hubs: who is actually on time?</h3>
-            <p>Is Istanbul's busiest-in-Europe traffic actually less punctual than Heathrow or Frankfurt?</p>
-            <div class="card-metrics">
-              <div><strong>172K+</strong><span>Departures compared</span></div>
-              <div><strong>3</strong><span>Airports, same window</span></div>
-              <div><strong>86</strong><span>Days, same source</span></div>
-            </div>
-            <a class="card-link" href="/three-hubs">See the comparison →</a>
+            <a class="card-link" href="/thy-globe">Open the globe →</a>
           </article>
 
           <a class="offclock-card" href="/ist-history" data-reveal>

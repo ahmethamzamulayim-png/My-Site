@@ -140,19 +140,6 @@ if (globeNote) {
     .catch(() => {});
 }
 
-const istNote = document.getElementById("live-ist-note");
-if (istNote) {
-  fetch("/summary.json", { cache: "no-store" })
-    .then((res) => (res.ok ? res.json() : null))
-    .then((data) => {
-      if (!data || !data.delay_known) return;
-      const nEN = data.delay_known.toLocaleString("en-US");
-      const nTR = data.delay_known.toLocaleString("tr-TR");
-      setLiveTileText("live-ist-note", `${nEN} flown departures`, `${nTR} uçan kalkış`);
-    })
-    .catch(() => {});
-}
-
 // Easter egg: type "concorde" anywhere on the site to fly a plane across the screen.
 (() => {
   const TARGET = "concorde";

@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>IST Flight Delay Dataset | Ahmet Hamza Mülayim</title>
-    <meta name="description" content="An open flight-delay dataset for Istanbul Airport (IST/LTFM), collected daily — with a live status dashboard." />
+    <meta name="description" content="An open flight-delay dataset for Istanbul Airport (IST/LTFM), collected May – Oct 2026. Archived; figures frozen on the clean period, May – Sep 2026." />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e81932'/%3E%3Ctext x='32' y='45' font-size='38' font-family='sans-serif' font-weight='700' text-anchor='middle' fill='%23fff'%3EA%3C/text%3E%3C/svg%3E" />
     <link rel="canonical" href="https://ahmethmzamlym.engineer/ist-rotar" />
     <link rel="alternate" hreflang="en" href="https://ahmethmzamlym.engineer/ist-rotar" />
@@ -12,7 +12,7 @@
     <link rel="alternate" hreflang="x-default" href="https://ahmethmzamlym.engineer/ist-rotar" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="IST Flight Delay Dataset | Ahmet Hamza Mülayim" />
-    <meta property="og:description" content="An open flight-delay dataset for Istanbul Airport (IST/LTFM), collected daily — with a live status dashboard." />
+    <meta property="og:description" content="An open flight-delay dataset for Istanbul Airport (IST/LTFM), collected May – Oct 2026. Archived; figures frozen on the clean period, May – Sep 2026." />
     <meta property="og:url" content="https://ahmethmzamlym.engineer/ist-rotar" />
     <meta property="og:image" content="https://ahmethmzamlym.engineer/assets/img/og/ist-rotar.jpg" />
     <meta property="og:image:width" content="1200" />
@@ -160,7 +160,7 @@
         "@context": "https://schema.org",
         "@type": "Article",
         "headline": "IST Flight Delay Dataset",
-        "description": "An open flight-delay dataset for Istanbul Airport (IST/LTFM), collected daily — with a live status dashboard.",
+        "description": "An open flight-delay dataset for Istanbul Airport (IST/LTFM), collected May – Oct 2026. Archived; figures frozen on the clean period, May – Sep 2026.",
         "url": "https://ahmethmzamlym.engineer/ist-rotar",
         "image": "https://ahmethmzamlym.engineer/assets/img/og/ist-rotar.jpg",
         "datePublished": "2026-07-18",
@@ -192,19 +192,20 @@
 
     <main>
       <section class="section" data-reveal>
+        <div class="archive-banner"><b>Archived</b><span>This project was switched off in November 2026. The figures below are frozen on the clean period, 1 May – 12 Sep 2026. <a href="/ist-shutdown">Why I shut it down →</a></span></div>
         <div class="section-heading">
-          <p class="eyebrow">Live data project · Jul 2026</p>
+          <p class="eyebrow">Archived data project · May – Oct 2026</p>
           <h1><span>IST delay dataset</span> <span id="badge" class="dash-badge">loading…</span></h1>
-          <p class="hero-text">There is no openly redistributable, daily-updated delay dataset for Istanbul Airport (LTFM) — research archives exist, but they run four months a year, two years behind, under terms that forbid sharing the rows. This project builds the other kind, collecting and joining the day's flights from OpenSky and aviationstack every night. Phase 2 trains a delay prediction model on it.</p>
+          <p class="hero-text">There is no openly redistributable, daily-updated delay dataset for Istanbul Airport (LTFM) — research archives exist, but they run four months a year, two years behind, under terms that forbid sharing the rows. This project built the other kind, collecting and joining each day's flights from OpenSky and aviationstack every night from May to October 2026, and a delay prediction model was trained on it.</p>
         </div>
 
         <h2 class="stat-head">Data collection</h2>
         <div class="stat-grid">
-          <div class="stat"><strong id="days">—</strong><span>Days collecting</span></div>
+          <div class="stat"><strong id="days">—</strong><span>Days collected (clean period)</span></div>
           <div class="stat"><strong id="crossval">—</strong><span>ADS-B cross-validated · OpenSky</span></div>
           <div class="stat"><strong id="total">—</strong><span>Flights recorded</span></div>
         </div>
-        <p class="warmup">The historical months are schedule-sourced (aviationstack) with no ADS-B at all. Only the live daily collection cross-checks against ADS-B (OpenSky), and the free tier reaches about half of a given day's flights — so the confirmed count above covers a small share of the dataset, though it grows every day.</p>
+        <p class="warmup">The historical months are schedule-sourced (aviationstack) with no ADS-B at all. Only the live daily collection cross-checks against ADS-B (OpenSky), and the free tier reaches about half of a given day's flights — so the confirmed count above covers a small share of the dataset.</p>
         <h2 class="stat-head" id="punchead">Dakiklik</h2>
         <div class="stat-grid">
           <div class="stat late"><strong id="late">—</strong><span>Delayed (15+ min)</span></div>
@@ -250,18 +251,19 @@
 
       <section class="section" data-reveal>
         <div class="section-heading">
-          <p class="eyebrow">Phase 2</p>
-          <h2>Delay prediction work is underway</h2>
-          <p class="hero-text">A delay prediction model and hourly/weekly/monthly traffic analysis are being built on this data — the roadmap and first findings live on their own page.</p>
+          <p class="eyebrow">How it ended</p>
+          <h2>Collection stopped in October 2026</h2>
+          <p class="hero-text">The pipeline ran from May to October 2026. A schedule provider quietly changed its delay definition in September and the OpenSky relay failed in October; both went unnoticed for weeks, and I switched it off in November.</p>
         </div>
         <div class="contact-actions">
-          <a class="button primary" href="/phase2">See Phase 2 →</a>
+          <a class="button primary" href="/ist-shutdown">Read why →</a>
+          <a class="button secondary" href="/model">The model it fed →</a>
         </div>
       </section>
     </main>
 
     <footer class="footer">
-      <p>Data: OpenSky Network + aviationstack + aviationweather.gov · daily GitHub Actions</p>
+      <p>Data: OpenSky Network + aviationstack + aviationweather.gov · collected May – Oct 2026</p>
       <p id="year"></p>
     </footer>
 
@@ -297,7 +299,7 @@
         // the most recent day is still being collected — its count is tiny until
         // finalized next evening. Say so, so a small "today" never reads as broken.
         const last = (S.daily || [])[S.daily.length - 1];
-        if (last) {
+        if (last && !S.archived) {
           const pn = document.getElementById("provnote");
           pn.hidden = false;
           pn.textContent = t(
@@ -307,7 +309,10 @@
 
         const badge = document.getElementById("badge");
         badge.removeAttribute("data-i18n"); // dynamic from here on
-        if (S.generated_utc) {
+        if (S.archived) {
+          badge.textContent = t(`archived · data through ${S.last_date}`, `arşiv · veri ${S.last_date} tarihine kadar`);
+          badge.className = "dash-badge stale";
+        } else if (S.generated_utc) {
           const ageH = (Date.now() - new Date(S.generated_utc)) / 36e5;
           const d = Math.floor(ageH / 24);
           const when = d === 0 ? t("today", "bugün")
@@ -332,7 +337,7 @@
         const sel = document.getElementById("daypick");
         sel.innerHTML = daily.map((d, i) => `<option value="${i}">${d.date}</option>`).join("");
         // default to the latest FINALIZED day (the last one is still collecting)
-        sel.value = daily.length >= 2 ? daily.length - 2 : 0;
+        sel.value = S.archived ? daily.length - 1 : daily.length >= 2 ? daily.length - 2 : 0;
         sel.onchange = renderBoard;
         renderBoard();
       }
@@ -357,7 +362,7 @@
         document.getElementById("dayboard").innerHTML = tiles.map(
           ([v, l, c]) => `<div class="stat ${c}"><strong>${v}</strong><span>${l}</span></div>`).join("");
         const prov = document.getElementById("dayprov");
-        if (+sel.value === daily.length - 1) {
+        if (!S.archived && +sel.value === daily.length - 1) {
           prov.hidden = false;
           prov.textContent = t("still collecting today — finalizes tomorrow evening.",
                                "bugün hâlâ toplanıyor — yarın akşam kesinleşir.");

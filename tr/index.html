@@ -100,7 +100,7 @@
                 <span class="tile-note">3 düzenek · 36 rulman</span>
               </a>
               <a class="tile t-globe" href="/tr/thy-globe">
-                <span class="tile-tag">Web · şu an canlı</span>
+                <span class="tile-tag">Web · çevrimdışı</span>
                 <strong>THY uçuş küresi</strong>
                 <span class="tile-note" id="live-globe-note">3B kürede 130+ uçuş</span>
               </a>
@@ -112,20 +112,10 @@
                 <span class="tile-tag">CAD Otomasyonu</span>
                 <strong>Boru redüksiyon üretici</strong>
               </a>
-              <a class="tile t-rig" href="/tr/ist-rotar">
-                <span class="tile-tag">Veri · günlük toplama</span>
+              <a class="tile t-rig" href="/tr/ist-shutdown">
+                <span class="tile-tag">Veri · arşiv</span>
                 <strong>IST rötar veri seti</strong>
-                <span class="tile-note" id="live-ist-note">Her gün toplanıyor</span>
-              </a>
-              <a class="tile t-phase2" href="/tr/phase2">
-                <span class="tile-tag">Veri / ML · yol haritası</span>
-                <strong>Aşama 2: rötar tahmini</strong>
-                <span class="tile-note">Saatlik, haftalık, aylık — 3 havalimanı karşılaştırması</span>
-              </a>
-              <a class="tile t-hubs" href="/tr/three-hubs">
-                <span class="tile-tag">Veri · yeni</span>
-                <strong>3 havalimanı</strong>
-                <span class="tile-note">IST, LHR ve FRA'yı geçiyor</span>
+                <span class="tile-note">Kasım 2026'da kapatıldı — neden</span>
               </a>
             </div>
           </div>
@@ -177,52 +167,34 @@
             <a class="card-link" href="/tr/reducer">Projeyi aç →</a>
           </article>
 
-          <p class="group-heading" data-reveal>Havacılık Verisi ve Sistemleri</p>
-          <p class="group-note" data-reveal>Canlı uçuş takibi, kendi kurduğum bir rötar veri seti, ve üzerine inşa ettiğim model ve karşılaştırmalar.</p>
-
-          <article class="card card-red" data-reveal>
-            <p class="card-tag">Havacılık Verisi · Canlı · Temmuz 2026</p>
-            <h3>Canlı Türk Hava Yolları uçuş küresi</h3>
-            <p>Şu anda her Türk Hava Yolları uçağı nerede ve ne uçuruyor?</p>
-            <div class="card-metrics">
-              <div><strong>130+</strong><span>Canlı izlenen uçuş</span></div>
-              <div><strong>15s</strong><span>Güncelleme aralığı</span></div>
-              <div><strong>ADS-B</strong><span>Canlı transponder verisi</span></div>
-            </div>
-            <a class="card-link" href="/tr/thy-globe">Canlı küreyi aç →</a>
-          </article>
+          <p class="group-heading" data-reveal>Geçmiş Veri İşleri</p>
+          <p class="group-note" data-reveal>2026'da okulun yanında yürüttüğüm uçuş verisi projeleri. Arşivlendi — sayfalar yayında, temiz veriye sabitlenmiş olarak.</p>
 
           <article class="card card-leaf" data-reveal>
-            <p class="card-tag">Havacılık Verisi · Boru Hattı · Temmuz 2026</p>
-            <h3>IST uçuş rötarı veri seti</h3>
-            <p>İstanbul Havalimanı için herkese açık tarihsel bir rötar veri seti yok — peki kendin kursan nasıl görünür?</p>
-            <ul><li>Çağrı koduyla birleştirilen OpenSky + aviationstack</li><li>Kalite bayraklı, yalnızca eklenen CSV'ler</li><li>Bakım gerektirmeyen bir GitHub Actions hattıyla her gün toplanıyor</li></ul>
-            <a class="card-link" href="/tr/ist-rotar">Durum panosunu aç →</a>
+            <p class="card-tag">Havacılık Verisi · Arşiv · Mayıs–Ekim 2026</p>
+            <h3>IST uçuş rötarı veri seti, modeli ve panosu</h3>
+            <p>Altı ay boyunca İstanbul Havalimanı'ndan her kalkışı topladım — ve iki dış veri kaynağı tek bir hata vermeden bozulunca neden kapattım.</p>
+            <div class="card-metrics">
+              <div><strong>136K</strong><span>Toplanan uçuş</span></div>
+              <div><strong>0,729</strong><span>1.067 uçuşta canlı AUC</span></div>
+              <div><strong>%11,8</strong><span>15+ dk rötarlı kalkış</span></div>
+            </div>
+            <a class="card-link" href="/tr/ist-shutdown">Yazıyı oku →</a>
+            <a class="card-link" href="/tr/ist-rotar">Veri seti →</a>
+            <a class="card-link" href="/tr/model">Model →</a>
+            <a class="card-link" href="/tr/three-hubs">3 havalimanı →</a>
           </article>
 
-          <article class="card card-gold" data-reveal>
-            <p class="card-tag">Havacılık Verisi · Tahmin · Temmuz–Ağustos 2026</p>
-            <h3>Aşama 2: rötar tahmini</h3>
-            <p>Bir model basit bir rötar referans tablosunu geçebilir mi — geçerse neden?</p>
+          <article class="card card-red" data-reveal>
+            <p class="card-tag">Havacılık Verisi · Çevrimdışı · Temmuz 2026</p>
+            <h3>Türk Hava Yolları uçuş küresi</h3>
+            <p>Şu anda her Türk Hava Yolları uçağı nerede ve ne uçuruyor? Canlı akış şu an kapalı; küre bir örnek olarak yayında kalıyor.</p>
             <div class="card-metrics">
-              <div><strong>0,742</strong><span>Model AUC</span></div>
-              <div><strong>0,711</strong><span>Referans tablo</span></div>
-              <div><strong>Körlemesine</strong><span>Temmuz verisiyle test edildi</span></div>
+              <div><strong>130+</strong><span>Aynı anda izlenen uçuş</span></div>
+              <div><strong>15s</strong><span>Güncelleme aralığı</span></div>
+              <div><strong>ADS-B</strong><span>Transponder verisi</span></div>
             </div>
-            <a class="card-link" href="/tr/model">Modeli aç →</a>
-            <a class="card-link" href="/tr/phase2">Aşama 2'nin tamamı →</a>
-          </article>
-
-          <article class="card card-teal" data-reveal>
-            <p class="card-tag">Havacılık Verisi · Karşılaştırma · Temmuz 2026</p>
-            <h3>3 havalimanı: kim gerçekten dakik?</h3>
-            <p>İstanbul'un Avrupa'nın en yoğun trafiği, Heathrow ya da Frankfurt'tan gerçekten daha mı az dakik?</p>
-            <div class="card-metrics">
-              <div><strong>172K+</strong><span>Karşılaştırılan kalkış</span></div>
-              <div><strong>3</strong><span>Aynı pencerede havalimanı</span></div>
-              <div><strong>86</strong><span>Aynı kaynaktan gün</span></div>
-            </div>
-            <a class="card-link" href="/tr/three-hubs">Karşılaştırmayı gör →</a>
+            <a class="card-link" href="/tr/thy-globe">Küreyi aç →</a>
           </article>
 
           <a class="offclock-card" href="/tr/ist-history" data-reveal>

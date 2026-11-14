@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Why I Switched Off the IST Pipeline | Ahmet Hamza Mülayim</title>
+    <meta name="description" content="Six months of collecting Istanbul Airport delay data every day — what it produced, the two quiet failures that ended it, and why I'm putting the time back into mechanical engineering." />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e81932'/%3E%3Ctext x='32' y='45' font-size='38' font-family='sans-serif' font-weight='700' text-anchor='middle' fill='%23fff'%3EA%3C/text%3E%3C/svg%3E" />
+    <link rel="canonical" href="https://ahmethmzamlym.engineer/ist-shutdown" />
+    <link rel="alternate" hreflang="en" href="https://ahmethmzamlym.engineer/ist-shutdown" />
+    <link rel="alternate" hreflang="tr" href="https://ahmethmzamlym.engineer/tr/ist-shutdown" />
+    <link rel="alternate" hreflang="x-default" href="https://ahmethmzamlym.engineer/ist-shutdown" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Why I Switched Off the IST Pipeline | Ahmet Hamza Mülayim" />
+    <meta property="og:description" content="Six months of collecting Istanbul Airport delay data every day — what it produced, the two quiet failures that ended it, and why I'm putting the time back into mechanical engineering." />
+    <meta property="og:url" content="https://ahmethmzamlym.engineer/ist-shutdown" />
+    <meta property="og:image" content="https://ahmethmzamlym.engineer/assets/img/og/ist-rotar.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://ahmethmzamlym.engineer/assets/img/og/ist-rotar.jpg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/i18n.js"></script>
+    <script defer src="/script.js"></script>
+    <style>
+      .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 26px; }
+      .stat, .panel {
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+      }
+      .stat { padding: 20px 22px; }
+      .stat strong { display: block; font-family: "Space Grotesk", sans-serif; font-size: 1.9rem; letter-spacing: -0.03em; }
+      .stat span { color: var(--muted); font-size: 0.88rem; line-height: 1.5; }
+      .panel { padding: 24px; margin-top: 22px; }
+      .panel h3 { font-family: "Space Grotesk", sans-serif; letter-spacing: -0.03em; margin: 0 0 10px; }
+      .panel p, .prose p, .prose li { color: var(--muted); line-height: 1.7; }
+      .prose { max-width: 760px; }
+      .prose strong { color: var(--text); }
+      .ptl { list-style: none; padding: 0; margin: 26px 0 0; border-left: 2px solid var(--line); }
+      .ptl li { position: relative; padding: 0 0 22px 24px; }
+      .ptl li::before {
+        content: ""; position: absolute; left: -7px; top: 6px; width: 12px; height: 12px;
+        border-radius: 50%; background: var(--bg); border: 2px solid var(--muted);
+      }
+      .ptl li.bad::before { border-color: var(--accent); background: var(--accent); }
+      .ptl li.ok::before { border-color: var(--leaf); background: var(--leaf); }
+      .ptl b { display: block; font-family: "Space Grotesk", sans-serif; }
+      .ptl span { color: var(--muted); line-height: 1.6; }
+      .shiftchart { width: 100%; height: auto; display: block; margin-top: 8px; }
+      .shiftchart .ct { font: 600 13px Manrope, sans-serif; fill: var(--text); }
+      .shiftchart .ax { font: 500 11px Manrope, sans-serif; fill: var(--muted); }
+      .shiftchart .bl { font: 600 11px Manrope, sans-serif; fill: var(--muted); }
+      .shiftchart .grid { stroke: var(--line); stroke-width: 1; }
+      .shiftchart .base { stroke: rgba(43, 39, 50, 0.3); stroke-width: 1; }
+      .shiftchart .band { fill: rgba(232, 25, 50, 0.06); }
+      .shiftchart .pt { cursor: default; }
+      .shiftchart .pt:hover circle:last-of-type { r: 6; }
+      .tblview { margin-top: 14px; }
+      .tblview summary { cursor: pointer; color: var(--muted); font-size: 0.9rem; }
+      .tbl-wrap { overflow-x: auto; margin-top: 10px; }
+      table { border-collapse: collapse; width: 100%; font-size: 0.86rem; }
+      th, td { text-align: right; padding: 6px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+      th:first-child, td:first-child { text-align: left; }
+      th { color: var(--muted); font-weight: 600; }
+      .callout { margin-top: 18px; padding: 14px 18px; border-radius: 14px; background: rgba(232, 25, 50, 0.07); border: 1px solid rgba(232, 25, 50, 0.18); line-height: 1.65; }
+      .links { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 22px; }
+      .links a { display: block; padding: 18px 20px; border-radius: 18px; background: var(--panel-strong); border: 1px solid var(--line); color: var(--text); text-decoration: none; }
+      .links a:hover { border-color: var(--muted); }
+      .links b { display: block; font-family: "Space Grotesk", sans-serif; }
+      .links span { color: var(--muted); font-size: 0.86rem; line-height: 1.5; }
+    </style>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="53acc321-a620-42d2-abf8-92a0c2813e8b"></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Why I switched off the IST delay pipeline",
+        "description": "Six months of collecting Istanbul Airport delay data every day — what it produced, the two quiet failures that ended it, and why I'm putting the time back into mechanical engineering.",
+        "url": "https://ahmethmzamlym.engineer/ist-shutdown",
+        "datePublished": "2026-11-14",
+        "dateModified": "2026-11-14",
+        "author": {
+          "@type": "Person",
+          "name": "Ahmet Hamza Mülayim",
+          "url": "https://ahmethmzamlym.engineer/"
+        },
+        "inLanguage": "en"
+      }
+    </script>
+  </head>
+  <body data-cursor="plane">
+    <div class="noise"></div>
+    <header class="site-header">
+      <a class="brand" href="/">
+        <span class="brand-mark">A</span>
+        <span>
+          <strong>Ahmet Hamza Mülayim</strong>
+          <small>Marmara University</small>
+        </span>
+      </a>
+      <nav class="site-nav">
+        <a href="/#projects">← Portfolio</a>
+        <a class="lang-toggle" href="/tr/ist-shutdown">TR</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Aviation Data · Retrospective · Nov 2026</p>
+          <h1>Why I switched off the IST delay pipeline.</h1>
+          <p class="hero-text">
+            For six months a small pipeline collected every departure from
+            Istanbul Airport, joined it with ADS-B tracks and weather, and
+            published a delay dataset, a model and a live prediction board
+            here. On 14 November 2026 I switched it off. It produced real
+            results, but it had stopped producing trustworthy data a month
+            before anyone noticed — including me. This page is what it found,
+            what broke it, and why I'm putting the time back into mechanical
+            engineering.
+          </p>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat"><strong>136,459</strong><span>flights collected over 134 clean days, May – Sep 2026</span></div>
+          <div class="stat"><strong>11.8%</strong><span>of passenger departures left the gate 15+ min late</span></div>
+          <div class="stat"><strong>0.729</strong><span>live AUC on 1,067 real flights scored before they flew — offline testing said 0.742</span></div>
+          <div class="stat"><strong>3</strong><span>outside services it depended on — and every one of them failed at least once</span></div>
+        </div>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Timeline</p>
+          <h2>Six months, three data sources, one person.</h2>
+        </div>
+        <ol class="ptl">
+          <li class="ok"><b>May 1 – Jul 26 · paid backfill</b><span>~1,500 flights a day. 96% of everything in the dataset comes from these 85 days.</span></li>
+          <li><b>Jul 27 · free tier</b><span>Down to ~100 flights a day — the free schedule API allows 100 requests a month. Enough for a live board, not for a full airport.</span></li>
+          <li class="bad"><b>Aug 17 – Sep 5 · three failures at once</b><span>OpenSky lost coverage of Istanbul, my OpenSky API account was disabled, and the token that publishes to this site expired. I fixed the account and the token by hand; the coverage came back on its own in early September.</span></li>
+          <li class="bad"><b>Sep 13 · the quiet one</b><span>The schedule provider changed what its "delay" field measures. Nothing errored. The delay rate on this site went from about 13% to 66% overnight. <a href="#shift">Details below.</a></span></li>
+          <li class="bad"><b>Oct 11 · the proxy dies</b><span>The relay that lets GitHub's servers reach OpenSky started answering every request with HTTP 502. Daily flight counts fell from ~100 to 0–2. Every run still reported success.</span></li>
+          <li><b>Nov 14 · switched off</b><span>Workflows disabled, pages frozen on the clean period (May 1 – Sep 12), this write-up published.</span></li>
+        </ol>
+      </section>
+
+      <section class="section" data-reveal id="shift">
+        <div class="section-heading">
+          <p class="eyebrow">The quiet failure</p>
+          <h2>Istanbul didn't suddenly get five times later. The definition did.</h2>
+        </div>
+        <div class="prose">
+          <p>
+            The delay label came from the schedule provider, which reports a
+            delay value only for some flights. I treated a blank as "on time"
+            and checked that once against an independent source — OpenSky's
+            ADS-B timestamps — and it held. Then, on 13 September, the provider
+            started filling in a value for <strong>98% of flights instead of
+            ~30%</strong>, and the share of departures labelled 15+ min late
+            jumped from about 13% to about 66%.
+          </p>
+          <p>
+            The independent timestamps show what actually changed. Before
+            13 September, the reported delay ended about <strong>25 minutes
+            before</strong> the aircraft was seen airborne — it measured the
+            pushback from the gate, and taxiing came after. From 13 September
+            it ended about <strong>1.5 minutes before</strong> airborne — it
+            now measured takeoff, so it included Istanbul's ~20-minute taxi.
+            Meanwhile the time from schedule to airborne didn't move at all.
+          </p>
+        </div>
+        <div class="panel">
+          <svg viewBox="0 0 700 336" role="img" aria-labelledby="chart-title chart-desc" class="shiftchart"><title id="chart-title">Reported delays vs. independent airborne times, weekly</title><desc id="chart-desc">From 13 September the reported late share jumps from about 13% to 65%, while the median time from schedule to airborne stays near 21 minutes.</desc><text x="44" y="14" class="ct">Share of departures reported 15+ min late</text><rect x="586.6" y="22" width="97.4" height="120" class="band"/><line x1="44" x2="684" y1="142.0" y2="142.0" class="base"/><text x="36" y="146.0" class="ax" text-anchor="end">0%</text><line x1="44" x2="684" y1="112.0" y2="112.0" class="grid"/><text x="36" y="116.0" class="ax" text-anchor="end">20%</text><line x1="44" x2="684" y1="82.0" y2="82.0" class="grid"/><text x="36" y="86.0" class="ax" text-anchor="end">40%</text><line x1="44" x2="684" y1="52.0" y2="52.0" class="grid"/><text x="36" y="56.0" class="ax" text-anchor="end">60%</text><line x1="44" x2="684" y1="22.0" y2="22.0" class="grid"/><text x="36" y="26.0" class="ax" text-anchor="end">80%</text><polyline fill="none" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" points="44.0,128.5 71.8,124.5 99.7,116.2 127.5,123.1 155.3,126.5 183.1,126.5 211.0,122.7 238.8,124.8 266.6,124.9 294.4,123.8 322.3,123.1 350.1,120.8 377.9,112.8 405.7,122.3 433.6,124.0 461.4,120.7 489.2,117.2 517.0,110.3 544.9,121.2 572.7,116.0 600.5,49.6 628.3,44.2 656.2,30.7 684.0,43.3"/><g class="pt"><circle cx="44.0" cy="128.5" r="12" fill="transparent"/><circle cx="44.0" cy="128.5" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>Week of 27 Apr: 9.0% · 532 departures</title></g><g class="pt"><circle cx="71.8" cy="124.5" r="12" fill="transparent"/><circle cx="71.8" cy="124.5" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>Week of 4 May: 11.7% · 3,914 departures</title></g><g class="pt"><circle cx="99.7" cy="116.2" r="12" fill="transparent"/><circle cx="99.7" cy="116.2" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>Week of 11 May: 17.2% · 4,377 departures</title></g><g class="pt"><circle cx="127.5" cy="123.1" r="12" fill="transparent"/><circle cx="127.5" cy="123.1" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>Week of 18 May: 12.6% · 4,731 departures</title></g><g class="pt"><circle cx="155.3" cy="126.5" r="12" fill="transparent"/><circle cx="155.3" cy="126.5" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>Week of 25 May: 10.3% · 4,956 departures</title></g><g class="pt"><circle cx="183.1" cy="126.5" r="12" fill="transparent"/><circle cx="183.1" cy="126.5" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>Week of 1 Jun: 10.3% · 4,658 departures</title></g><g class="pt"><circle cx="211.0" cy="122.7" r="12" fill="transparent"/><circle cx="211.0" cy="122.7" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>Week of 8 Jun: 12.9% · 2,688 departures</title></g><g class="pt"><circle cx="238.8" cy="124.8" r="12" fill="transparent"/><circle cx="238.8" cy="124.8" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>Week of 15 Jun: 11.5% · 5,275 departures</title></g><g class="pt"><circle cx="266.6" cy="124.9" r="12" fill="transparent"/><circle cx="266.6" cy="124.9" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>Week of 22 Jun: 11.4% · 5,264 departures</title></g><g class="pt"><circle cx="294.4" cy="123.8" r="12" fill="transparent"/><circle cx="294.4" cy="123.8" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>Week of 29 Jun: 12.1% · 5,912 departures</title></g><g class="pt"><circle cx="322.3" cy="123.1" r="12" fill="transparent"/><circle cx="322.3" cy="123.1" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>Week of 6 Jul: 12.6% · 5,543 departures</title></g><g class="pt"><circle cx="350.1" cy="120.8" r="12" fill="transparent"/><circle cx="350.1" cy="120.8" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>Week of 13 Jul: 14.1% · 5,663 departures</title></g><g class="pt"><circle cx="377.9" cy="112.8" r="12" fill="transparent"/><circle cx="377.9" cy="112.8" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>Week of 20 Jul: 19.5% · 5,668 departures</title></g><g class="pt"><circle cx="405.7" cy="122.3" r="12" fill="transparent"/><circle cx="405.7" cy="122.3" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>Week of 27 Jul: 13.1% · 1,196 departures</title></g><g class="pt"><circle cx="433.6" cy="124.0" r="12" fill="transparent"/><circle cx="433.6" cy="124.0" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>Week of 3 Aug: 12.0% · 736 departures</title></g><g class="pt"><circle cx="461.4" cy="120.7" r="12" fill="transparent"/><circle cx="461.4" cy="120.7" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>Week of 10 Aug: 14.2% · 688 departures</title></g><g class="pt"><circle cx="489.2" cy="117.2" r="12" fill="transparent"/><circle cx="489.2" cy="117.2" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>Week of 17 Aug: 16.5% · 568 departures</title></g><g class="pt"><circle cx="517.0" cy="110.3" r="12" fill="transparent"/><circle cx="517.0" cy="110.3" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>Week of 24 Aug: 21.1% · 740 departures</title></g><g class="pt"><circle cx="544.9" cy="121.2" r="12" fill="transparent"/><circle cx="544.9" cy="121.2" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>Week of 31 Aug: 13.9% · 323 departures</title></g><g class="pt"><circle cx="572.7" cy="116.0" r="12" fill="transparent"/><circle cx="572.7" cy="116.0" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>Week of 7 Sep: 17.3% · 693 departures</title></g><g class="pt"><circle cx="600.5" cy="49.6" r="12" fill="transparent"/><circle cx="600.5" cy="49.6" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>Week of 14 Sep: 61.6% · 644 departures</title></g><g class="pt"><circle cx="628.3" cy="44.2" r="12" fill="transparent"/><circle cx="628.3" cy="44.2" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>Week of 21 Sep: 65.2% · 664 departures</title></g><g class="pt"><circle cx="656.2" cy="30.7" r="12" fill="transparent"/><circle cx="656.2" cy="30.7" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>Week of 28 Sep: 74.2% · 640 departures</title></g><g class="pt"><circle cx="684.0" cy="43.3" r="12" fill="transparent"/><circle cx="684.0" cy="43.3" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>Week of 5 Oct: 65.8% · 579 departures</title></g><text x="44" y="180" class="ct">Median minutes from schedule to airborne (OpenSky, independent)</text><rect x="586.6" y="188" width="97.4" height="120" class="band"/><line x1="44" x2="684" y1="308.0" y2="308.0" class="base"/><text x="36" y="312.0" class="ax" text-anchor="end">0</text><line x1="44" x2="684" y1="278.0" y2="278.0" class="grid"/><text x="36" y="282.0" class="ax" text-anchor="end">20</text><line x1="44" x2="684" y1="248.0" y2="248.0" class="grid"/><text x="36" y="252.0" class="ax" text-anchor="end">40</text><line x1="44" x2="684" y1="218.0" y2="218.0" class="grid"/><text x="36" y="222.0" class="ax" text-anchor="end">60</text><line x1="44" x2="684" y1="188.0" y2="188.0" class="grid"/><text x="36" y="192.0" class="ax" text-anchor="end">80</text><polyline fill="none" stroke="var(--cobalt)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" points="155.3,274.4 183.1,274.6 211.0,273.4 238.8,275.1 266.6,274.4 294.4,274.2 322.3,274.4 350.1,273.1 377.9,271.4 405.7,270.5 433.6,276.5 461.4,272.6"/><polyline fill="none" stroke="var(--cobalt)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" points="544.9,278.3 572.7,270.5 600.5,278.4 628.3,276.2 656.2,274.1 684.0,277.4"/><g class="pt"><circle cx="155.3" cy="274.4" r="12" fill="transparent"/><circle cx="155.3" cy="274.4" r="4" fill="var(--cobalt)" stroke="#fff" stroke-width="2"/><title>Week of 25 May: 22.4 min · 4,956 departures</title></g><g class="pt"><circle cx="183.1" cy="274.6" r="12" fill="transparent"/><circle cx="183.1" cy="274.6" r="4" fill="var(--cobalt)" stroke="#fff" stroke-width="2"/><title>Week of 1 Jun: 22.3 min · 4,658 departures</title></g><g class="pt"><circle cx="211.0" cy="273.4" r="12" fill="transparent"/><circle cx="211.0" cy="273.4" r="4" fill="var(--cobalt)" stroke="#fff" stroke-width="2"/><title>Week of 8 Jun: 23.1 min · 2,688 departures</title></g><g class="pt"><circle cx="238.8" cy="275.1" r="12" fill="transparent"/><circle cx="238.8" cy="275.1" r="4" fill="var(--cobalt)" stroke="#fff" stroke-width="2"/><title>Week of 15 Jun: 21.9 min · 5,275 departures</title></g><g class="pt"><circle cx="266.6" cy="274.4" r="12" fill="transparent"/><circle cx="266.6" cy="274.4" r="4" fill="var(--cobalt)" stroke="#fff" stroke-width="2"/><title>Week of 22 Jun: 22.4 min · 5,264 departures</title></g><g class="pt"><circle cx="294.4" cy="274.2" r="12" fill="transparent"/><circle cx="294.4" cy="274.2" r="4" fill="var(--cobalt)" stroke="#fff" stroke-width="2"/><title>Week of 29 Jun: 22.5 min · 5,912 departures</title></g><g class="pt"><circle cx="322.3" cy="274.4" r="12" fill="transparent"/><circle cx="322.3" cy="274.4" r="4" fill="var(--cobalt)" stroke="#fff" stroke-width="2"/><title>Week of 6 Jul: 22.4 min · 5,543 departures</title></g><g class="pt"><circle cx="350.1" cy="273.1" r="12" fill="transparent"/><circle cx="350.1" cy="273.1" r="4" fill="var(--cobalt)" stroke="#fff" stroke-width="2"/><title>Week of 13 Jul: 23.3 min · 5,663 departures</title></g><g class="pt"><circle cx="377.9" cy="271.4" r="12" fill="transparent"/><circle cx="377.9" cy="271.4" r="4" fill="var(--cobalt)" stroke="#fff" stroke-width="2"/><title>Week of 20 Jul: 24.4 min · 5,668 departures</title></g><g class="pt"><circle cx="405.7" cy="270.5" r="12" fill="transparent"/><circle cx="405.7" cy="270.5" r="4" fill="var(--cobalt)" stroke="#fff" stroke-width="2"/><title>Week of 27 Jul: 25.0 min · 1,196 departures</title></g><g class="pt"><circle cx="433.6" cy="276.5" r="12" fill="transparent"/><circle cx="433.6" cy="276.5" r="4" fill="var(--cobalt)" stroke="#fff" stroke-width="2"/><title>Week of 3 Aug: 21.0 min · 736 departures</title></g><g class="pt"><circle cx="461.4" cy="272.6" r="12" fill="transparent"/><circle cx="461.4" cy="272.6" r="4" fill="var(--cobalt)" stroke="#fff" stroke-width="2"/><title>Week of 10 Aug: 23.6 min · 688 departures</title></g><g class="pt"><circle cx="544.9" cy="278.3" r="12" fill="transparent"/><circle cx="544.9" cy="278.3" r="4" fill="var(--cobalt)" stroke="#fff" stroke-width="2"/><title>Week of 31 Aug: 19.8 min · 323 departures</title></g><g class="pt"><circle cx="572.7" cy="270.5" r="12" fill="transparent"/><circle cx="572.7" cy="270.5" r="4" fill="var(--cobalt)" stroke="#fff" stroke-width="2"/><title>Week of 7 Sep: 25.0 min · 693 departures</title></g><g class="pt"><circle cx="600.5" cy="278.4" r="12" fill="transparent"/><circle cx="600.5" cy="278.4" r="4" fill="var(--cobalt)" stroke="#fff" stroke-width="2"/><title>Week of 14 Sep: 19.7 min · 644 departures</title></g><g class="pt"><circle cx="628.3" cy="276.2" r="12" fill="transparent"/><circle cx="628.3" cy="276.2" r="4" fill="var(--cobalt)" stroke="#fff" stroke-width="2"/><title>Week of 21 Sep: 21.2 min · 664 departures</title></g><g class="pt"><circle cx="656.2" cy="274.1" r="12" fill="transparent"/><circle cx="656.2" cy="274.1" r="4" fill="var(--cobalt)" stroke="#fff" stroke-width="2"/><title>Week of 28 Sep: 22.6 min · 640 departures</title></g><g class="pt"><circle cx="684.0" cy="277.4" r="12" fill="transparent"/><circle cx="684.0" cy="277.4" r="4" fill="var(--cobalt)" stroke="#fff" stroke-width="2"/><title>Week of 5 Oct: 20.4 min · 579 departures</title></g><text x="71.8" y="326" class="ax" text-anchor="middle">May</text><text x="183.1" y="326" class="ax" text-anchor="middle">Jun</text><text x="322.3" y="326" class="ax" text-anchor="middle">Jul</text><text x="433.6" y="326" class="ax" text-anchor="middle">Aug</text><text x="572.7" y="326" class="ax" text-anchor="middle">Sep</text><text x="684.0" y="326" class="ax" text-anchor="middle">Oct</text><text x="580.6" y="36" class="bl" text-anchor="end">13 Sep: definition change</text></svg>
+<details class="tblview"><summary>Show the numbers</summary><div class="tbl-wrap"><table><thead><tr><th>Week of</th><th>Departures</th><th>Delay value present</th><th>Reported 15+ late</th><th>Schedule→airborne (min)</th></tr></thead><tbody><tr><td>27 Apr</td><td>532</td><td>24%</td><td>9.0%</td><td>—</td></tr><tr><td>4 May</td><td>3,914</td><td>29%</td><td>11.7%</td><td>—</td></tr><tr><td>11 May</td><td>4,377</td><td>38%</td><td>17.2%</td><td>—</td></tr><tr><td>18 May</td><td>4,731</td><td>29%</td><td>12.6%</td><td>—</td></tr><tr><td>25 May</td><td>4,956</td><td>26%</td><td>10.3%</td><td>22.4</td></tr><tr><td>1 Jun</td><td>4,658</td><td>26%</td><td>10.3%</td><td>22.3</td></tr><tr><td>8 Jun</td><td>2,688</td><td>32%</td><td>12.9%</td><td>23.1</td></tr><tr><td>15 Jun</td><td>5,275</td><td>27%</td><td>11.5%</td><td>21.9</td></tr><tr><td>22 Jun</td><td>5,264</td><td>25%</td><td>11.4%</td><td>22.4</td></tr><tr><td>29 Jun</td><td>5,912</td><td>26%</td><td>12.1%</td><td>22.5</td></tr><tr><td>6 Jul</td><td>5,543</td><td>30%</td><td>12.6%</td><td>22.4</td></tr><tr><td>13 Jul</td><td>5,663</td><td>30%</td><td>14.1%</td><td>23.3</td></tr><tr><td>20 Jul</td><td>5,668</td><td>43%</td><td>19.5%</td><td>24.4</td></tr><tr><td>27 Jul</td><td>1,196</td><td>35%</td><td>13.1%</td><td>25.0</td></tr><tr><td>3 Aug</td><td>736</td><td>31%</td><td>12.0%</td><td>21.0</td></tr><tr><td>10 Aug</td><td>688</td><td>35%</td><td>14.2%</td><td>23.6</td></tr><tr><td>17 Aug</td><td>568</td><td>42%</td><td>16.5%</td><td>—</td></tr><tr><td>24 Aug</td><td>740</td><td>44%</td><td>21.1%</td><td>—</td></tr><tr><td>31 Aug</td><td>323</td><td>40%</td><td>13.9%</td><td>19.8</td></tr><tr><td>7 Sep</td><td>693</td><td>45%</td><td>17.3%</td><td>25.0</td></tr><tr><td>14 Sep</td><td>644</td><td>99%</td><td>61.6%</td><td>19.7</td></tr><tr><td>21 Sep</td><td>664</td><td>99%</td><td>65.2%</td><td>21.2</td></tr><tr><td>28 Sep</td><td>640</td><td>99%</td><td>74.2%</td><td>22.6</td></tr><tr><td>5 Oct</td><td>579</td><td>99%</td><td>65.8%</td><td>20.4</td></tr></tbody></table></div></details>
+        </div>
+        <div class="callout">
+          <b>What it cost:</b> four weeks of data that looked fine, a model
+          retrained on it, and a live board whose predictions said 16% while
+          the "actual" rate read 59%. The board kept ranking flights in a
+          sensible order (AUC 0.667), but its probabilities stopped meaning
+          anything. All of it is excluded from the archived pages.
+        </div>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Why I'm stopping</p>
+          <h2>Keeping it alive had become maintenance, not engineering.</h2>
+        </div>
+        <div class="prose">
+          <p>
+            A pipeline like this has to keep three outside services working
+            together — a flight-tracking network, a commercial schedule API and
+            a relay server — plus the tokens and accounts that connect them.
+            Each one changes on its own schedule, without telling you: coverage
+            disappears, an account gets disabled, a field quietly changes
+            meaning, a server starts returning errors. None of that is under my
+            control, and almost none of it shows up as a failed run. Over six
+            months I spent more time keeping the inputs honest than learning
+            anything new from them.
+          </p>
+          <p>
+            Both failures that ended it were <strong>silent</strong>: the
+            pipeline logged a warning and exited "successfully", so the site
+            kept serving numbers that looked plausible. If I kept it running,
+            the next fix would have to be monitoring — alerts on zero rows,
+            checks that the label still means what it meant. That is real work,
+            but it is not the work I want this portfolio to be about. I'm a
+            mechanical engineering student, and that is where the time is going
+            now.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">What survived</p>
+          <h2>The results from the clean period still stand.</h2>
+        </div>
+        <div class="stat-grid">
+          <div class="stat"><strong>0.729</strong><span>live AUC — predictions logged before departure, scored after, Aug 5 – Sep 12</span></div>
+          <div class="stat"><strong>10.2% vs 11.7%</strong><span>average predicted vs actual late rate on those 1,067 flights — close to calibrated</span></div>
+          <div class="stat"><strong>53.9%</strong><span>of departures with under 60 min on the ground ran late, vs 13.7% at 60–90 min — the strongest single signal</span></div>
+        </div>
+        <div class="panel">
+          <h3>How the live board's probabilities held up</h3>
+          <p>Each flight was given a delay probability before it departed. Grouped by that probability, here is how often they really were late:</p>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Predicted risk</th><th>Flights</th><th>Average predicted</th><th>Actually late</th></tr></thead>
+              <tbody>
+                <tr><td>0–8%</td><td>607</td><td>3.5%</td><td>6.1%</td></tr>
+                <tr><td>8–12%</td><td>181</td><td>9.8%</td><td>10.5%</td></tr>
+                <tr><td>12–20%</td><td>101</td><td>14.9%</td><td>17.8%</td></tr>
+                <tr><td>20–35%</td><td>136</td><td>26.7%</td><td>27.2%</td></tr>
+                <tr><td>35%+</td><td>42</td><td>43.4%</td><td>33.3%</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>The middle of the range is almost exactly right. The "safe" flights ran late about twice as often as predicted — the same weakness the offline tests showed: a bad day hits normally punctual flights, and nothing in their history warns of it.</p>
+        </div>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Lessons</p>
+          <h2>What I'd do differently.</h2>
+        </div>
+        <ul class="prose">
+          <li><strong>A run that collects nothing is a failed run.</strong> Zero flights should turn the job red, not log a warning.</li>
+          <li><strong>A label is someone else's definition.</strong> Checking it once against an independent source isn't enough — check it every day, automatically.</li>
+          <li><strong>Count every dependency as a cost.</strong> Each outside service is a separate thing that can break on its own schedule.</li>
+          <li><strong>Plan how it ends.</strong> A live project with no end date eventually becomes a stale page that still says "live".</li>
+        </ul>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">The archive</p>
+          <h2>The pages stay up, frozen on the clean data.</h2>
+        </div>
+        <div class="links">
+          <a href="/ist-rotar"><b>IST delay dataset →</b><span>The dashboard, frozen at 12 Sep 2026</span></a>
+          <a href="/model"><b>Delay model →</b><span>Lookup vs. model, turnaround, what it can't see</span></a>
+          <a href="/board"><b>Departure board →</b><span>The last clean board, with what actually happened</span></a>
+          <a href="/three-hubs"><b>Three hubs →</b><span>IST vs. LHR vs. FRA, same source, same window</span></a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Data: OpenSky Network + aviationstack + aviationweather.gov · collection ended Oct 2026</p>
+      <p id="year"></p>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>IST Veri Hattını Neden Kapattım | Ahmet Hamza Mülayim</title>
+    <meta name="description" content="Altı ay boyunca her gün İstanbul Havalimanı rötar verisi topladım — ne üretti, onu bitiren iki sessiz arıza ve zamanımı neden makine mühendisliğine geri veriyorum." />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e81932'/%3E%3Ctext x='32' y='45' font-size='38' font-family='sans-serif' font-weight='700' text-anchor='middle' fill='%23fff'%3EA%3C/text%3E%3C/svg%3E" />
+    <link rel="canonical" href="https://ahmethmzamlym.engineer/tr/ist-shutdown" />
+    <link rel="alternate" hreflang="en" href="https://ahmethmzamlym.engineer/ist-shutdown" />
+    <link rel="alternate" hreflang="tr" href="https://ahmethmzamlym.engineer/tr/ist-shutdown" />
+    <link rel="alternate" hreflang="x-default" href="https://ahmethmzamlym.engineer/ist-shutdown" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="IST Veri Hattını Neden Kapattım | Ahmet Hamza Mülayim" />
+    <meta property="og:description" content="Altı ay boyunca her gün İstanbul Havalimanı rötar verisi topladım — ne üretti, onu bitiren iki sessiz arıza ve zamanımı neden makine mühendisliğine geri veriyorum." />
+    <meta property="og:url" content="https://ahmethmzamlym.engineer/tr/ist-shutdown" />
+    <meta property="og:image" content="https://ahmethmzamlym.engineer/assets/img/og/ist-rotar.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://ahmethmzamlym.engineer/assets/img/og/ist-rotar.jpg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/i18n.js"></script>
+    <script defer src="/script.js"></script>
+    <style>
+      .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 26px; }
+      .stat, .panel {
+        background: var(--panel-strong);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+      }
+      .stat { padding: 20px 22px; }
+      .stat strong { display: block; font-family: "Space Grotesk", sans-serif; font-size: 1.9rem; letter-spacing: -0.03em; }
+      .stat span { color: var(--muted); font-size: 0.88rem; line-height: 1.5; }
+      .panel { padding: 24px; margin-top: 22px; }
+      .panel h3 { font-family: "Space Grotesk", sans-serif; letter-spacing: -0.03em; margin: 0 0 10px; }
+      .panel p, .prose p, .prose li { color: var(--muted); line-height: 1.7; }
+      .prose { max-width: 760px; }
+      .prose strong { color: var(--text); }
+      .ptl { list-style: none; padding: 0; margin: 26px 0 0; border-left: 2px solid var(--line); }
+      .ptl li { position: relative; padding: 0 0 22px 24px; }
+      .ptl li::before {
+        content: ""; position: absolute; left: -7px; top: 6px; width: 12px; height: 12px;
+        border-radius: 50%; background: var(--bg); border: 2px solid var(--muted);
+      }
+      .ptl li.bad::before { border-color: var(--accent); background: var(--accent); }
+      .ptl li.ok::before { border-color: var(--leaf); background: var(--leaf); }
+      .ptl b { display: block; font-family: "Space Grotesk", sans-serif; }
+      .ptl span { color: var(--muted); line-height: 1.6; }
+      .shiftchart { width: 100%; height: auto; display: block; margin-top: 8px; }
+      .shiftchart .ct { font: 600 13px Manrope, sans-serif; fill: var(--text); }
+      .shiftchart .ax { font: 500 11px Manrope, sans-serif; fill: var(--muted); }
+      .shiftchart .bl { font: 600 11px Manrope, sans-serif; fill: var(--muted); }
+      .shiftchart .grid { stroke: var(--line); stroke-width: 1; }
+      .shiftchart .base { stroke: rgba(43, 39, 50, 0.3); stroke-width: 1; }
+      .shiftchart .band { fill: rgba(232, 25, 50, 0.06); }
+      .shiftchart .pt { cursor: default; }
+      .shiftchart .pt:hover circle:last-of-type { r: 6; }
+      .tblview { margin-top: 14px; }
+      .tblview summary { cursor: pointer; color: var(--muted); font-size: 0.9rem; }
+      .tbl-wrap { overflow-x: auto; margin-top: 10px; }
+      table { border-collapse: collapse; width: 100%; font-size: 0.86rem; }
+      th, td { text-align: right; padding: 6px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+      th:first-child, td:first-child { text-align: left; }
+      th { color: var(--muted); font-weight: 600; }
+      .callout { margin-top: 18px; padding: 14px 18px; border-radius: 14px; background: rgba(232, 25, 50, 0.07); border: 1px solid rgba(232, 25, 50, 0.18); line-height: 1.65; }
+      .links { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 22px; }
+      .links a { display: block; padding: 18px 20px; border-radius: 18px; background: var(--panel-strong); border: 1px solid var(--line); color: var(--text); text-decoration: none; }
+      .links a:hover { border-color: var(--muted); }
+      .links b { display: block; font-family: "Space Grotesk", sans-serif; }
+      .links span { color: var(--muted); font-size: 0.86rem; line-height: 1.5; }
+    </style>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="53acc321-a620-42d2-abf8-92a0c2813e8b"></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "IST rötar veri hattını neden kapattım",
+        "description": "Altı ay boyunca her gün İstanbul Havalimanı rötar verisi topladım — ne üretti, onu bitiren iki sessiz arıza ve zamanımı neden makine mühendisliğine geri veriyorum.",
+        "url": "https://ahmethmzamlym.engineer/tr/ist-shutdown",
+        "datePublished": "2026-11-14",
+        "dateModified": "2026-11-14",
+        "author": {
+          "@type": "Person",
+          "name": "Ahmet Hamza Mülayim",
+          "url": "https://ahmethmzamlym.engineer/"
+        },
+        "inLanguage": "tr"
+      }
+    </script>
+  </head>
+  <body data-cursor="plane">
+    <div class="noise"></div>
+    <header class="site-header">
+      <a class="brand" href="/tr/">
+        <span class="brand-mark">A</span>
+        <span>
+          <strong>Ahmet Hamza Mülayim</strong>
+          <small>Marmara Üniversitesi</small>
+        </span>
+      </a>
+      <nav class="site-nav">
+        <a href="/tr/#projects">← Portfolyo</a>
+        <a class="lang-toggle" href="/ist-shutdown">EN</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Havacılık Verisi · Geriye Bakış · Kasım 2026</p>
+          <h1>IST rötar veri hattını neden kapattım.</h1>
+          <p class="hero-text">
+            Altı ay boyunca küçük bir veri hattı İstanbul Havalimanı'ndan her
+            kalkışı topladı, ADS-B izleri ve hava durumuyla birleştirdi; burada
+            bir rötar veri seti, bir model ve canlı bir tahmin panosu yayınladı.
+            14 Kasım 2026'da kapattım. Gerçek sonuçlar üretti, ama güvenilir veri
+            üretmeyi bırakalı bir ay olmuştu ve bunu kimse fark etmedi — ben de
+            dahil. Bu sayfa ne bulduğunu, onu neyin bozduğunu ve zamanımı neden
+            makine mühendisliğine geri verdiğimi anlatıyor.
+          </p>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat"><strong>136.459</strong><span>uçuş, Mayıs – Eylül 2026 arasındaki 134 temiz günde toplandı</span></div>
+          <div class="stat"><strong>%11,8</strong><span>yolcu kalkışı kapıdan 15+ dk geç ayrıldı</span></div>
+          <div class="stat"><strong>0,729</strong><span>canlı AUC — kalkıştan önce puanlanan 1.067 gerçek uçuşta; çevrimdışı test 0,742 demişti</span></div>
+          <div class="stat"><strong>3</strong><span>dış servise bağlıydı — ve her biri en az bir kez arıza verdi</span></div>
+        </div>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Zaman çizelgesi</p>
+          <h2>Altı ay, üç veri kaynağı, tek kişi.</h2>
+        </div>
+        <ol class="ptl">
+          <li class="ok"><b>1 May – 26 Tem · ücretli geçmiş veri</b><span>Günde ~1.500 uçuş. Veri setindeki her şeyin %96'sı bu 85 günden geliyor.</span></li>
+          <li><b>27 Tem · ücretsiz kota</b><span>Günde ~100 uçuşa düştü — ücretsiz tarife API'si ayda 100 isteğe izin veriyor. Canlı bir pano için yeterli, bütün bir havalimanı için değil.</span></li>
+          <li class="bad"><b>17 Ağu – 5 Eyl · aynı anda üç arıza</b><span>OpenSky İstanbul kapsamasını kaybetti, OpenSky API hesabım devre dışı kaldı ve bu siteye yayın yapan erişim anahtarının süresi doldu. Hesabı ve anahtarı elle düzelttim; kapsama Eylül başında kendiliğinden geri geldi.</span></li>
+          <li class="bad"><b>13 Eyl · sessiz olan</b><span>Tarife sağlayıcısı "delay" alanının neyi ölçtüğünü değiştirdi. Hiçbir hata çıkmadı. Bu sitedeki rötar oranı bir gecede yaklaşık %13'ten %66'ya çıktı. <a href="#shift">Ayrıntılar aşağıda.</a></span></li>
+          <li class="bad"><b>11 Eki · aracı sunucu çöküyor</b><span>GitHub sunucularının OpenSky'a ulaşmasını sağlayan aracı, her isteğe HTTP 502 ile cevap vermeye başladı. Günlük uçuş sayısı ~100'den 0–2'ye düştü. Her çalıştırma yine de "başarılı" göründü.</span></li>
+          <li><b>14 Kas · kapatıldı</b><span>İş akışları devre dışı bırakıldı, sayfalar temiz döneme (1 Mayıs – 12 Eylül) sabitlendi, bu yazı yayınlandı.</span></li>
+        </ol>
+      </section>
+
+      <section class="section" data-reveal id="shift">
+        <div class="section-heading">
+          <p class="eyebrow">Sessiz arıza</p>
+          <h2>İstanbul birden beş kat gecikmeli olmadı. Tanım değişti.</h2>
+        </div>
+        <div class="prose">
+          <p>
+            Rötar etiketi tarife sağlayıcısından geliyordu ve bu sağlayıcı
+            rötar değerini yalnızca bazı uçuşlar için bildiriyordu. Boş değeri
+            "zamanında" saydım ve bunu bir kez bağımsız bir kaynakla — OpenSky'ın
+            ADS-B zaman damgalarıyla — doğruladım; tuttu. Sonra 13 Eylül'de
+            sağlayıcı değeri <strong>uçuşların ~%30'u yerine %98'i için</strong>
+            doldurmaya başladı ve 15+ dk rötarlı sayılan kalkışların payı
+            yaklaşık %13'ten yaklaşık %66'ya sıçradı.
+          </p>
+          <p>
+            Bağımsız zaman damgaları neyin değiştiğini gösteriyor. 13 Eylül'den
+            önce bildirilen rötar, uçağın havada görülmesinden yaklaşık
+            <strong>25 dakika önce</strong> bitiyordu — kapıdan ayrılışı
+            ölçüyordu, taksi sonra geliyordu. 13 Eylül'den itibaren havalanmadan
+            yalnızca <strong>~1,5 dakika önce</strong> bitiyordu — artık kalkışı
+            ölçüyor, yani İstanbul'un ~20 dakikalık taksisini de içine alıyordu.
+            Bu arada tarifeden havalanmaya geçen süre hiç değişmedi.
+          </p>
+        </div>
+        <div class="panel">
+          <svg viewBox="0 0 700 336" role="img" aria-labelledby="chart-title chart-desc" class="shiftchart"><title id="chart-title">Bildirilen rötar ve bağımsız havalanma süreleri, haftalık</title><desc id="chart-desc">13 Eylül itibarıyla bildirilen rötar payı yaklaşık %13’ten %65’e sıçrıyor; tarifeden havalanmaya medyan süre ise 21 dakika civarında sabit kalıyor.</desc><text x="44" y="14" class="ct">15+ dk rötarlı bildirilen kalkış payı</text><rect x="586.6" y="22" width="97.4" height="120" class="band"/><line x1="44" x2="684" y1="142.0" y2="142.0" class="base"/><text x="36" y="146.0" class="ax" text-anchor="end">0%</text><line x1="44" x2="684" y1="112.0" y2="112.0" class="grid"/><text x="36" y="116.0" class="ax" text-anchor="end">20%</text><line x1="44" x2="684" y1="82.0" y2="82.0" class="grid"/><text x="36" y="86.0" class="ax" text-anchor="end">40%</text><line x1="44" x2="684" y1="52.0" y2="52.0" class="grid"/><text x="36" y="56.0" class="ax" text-anchor="end">60%</text><line x1="44" x2="684" y1="22.0" y2="22.0" class="grid"/><text x="36" y="26.0" class="ax" text-anchor="end">80%</text><polyline fill="none" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" points="44.0,128.5 71.8,124.5 99.7,116.2 127.5,123.1 155.3,126.5 183.1,126.5 211.0,122.7 238.8,124.8 266.6,124.9 294.4,123.8 322.3,123.1 350.1,120.8 377.9,112.8 405.7,122.3 433.6,124.0 461.4,120.7 489.2,117.2 517.0,110.3 544.9,121.2 572.7,116.0 600.5,49.6 628.3,44.2 656.2,30.7 684.0,43.3"/><g class="pt"><circle cx="44.0" cy="128.5" r="12" fill="transparent"/><circle cx="44.0" cy="128.5" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>27 Nis haftası: %9.0 · 532 kalkış</title></g><g class="pt"><circle cx="71.8" cy="124.5" r="12" fill="transparent"/><circle cx="71.8" cy="124.5" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>4 May haftası: %11.7 · 3,914 kalkış</title></g><g class="pt"><circle cx="99.7" cy="116.2" r="12" fill="transparent"/><circle cx="99.7" cy="116.2" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>11 May haftası: %17.2 · 4,377 kalkış</title></g><g class="pt"><circle cx="127.5" cy="123.1" r="12" fill="transparent"/><circle cx="127.5" cy="123.1" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>18 May haftası: %12.6 · 4,731 kalkış</title></g><g class="pt"><circle cx="155.3" cy="126.5" r="12" fill="transparent"/><circle cx="155.3" cy="126.5" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>25 May haftası: %10.3 · 4,956 kalkış</title></g><g class="pt"><circle cx="183.1" cy="126.5" r="12" fill="transparent"/><circle cx="183.1" cy="126.5" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>1 Haz haftası: %10.3 · 4,658 kalkış</title></g><g class="pt"><circle cx="211.0" cy="122.7" r="12" fill="transparent"/><circle cx="211.0" cy="122.7" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>8 Haz haftası: %12.9 · 2,688 kalkış</title></g><g class="pt"><circle cx="238.8" cy="124.8" r="12" fill="transparent"/><circle cx="238.8" cy="124.8" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>15 Haz haftası: %11.5 · 5,275 kalkış</title></g><g class="pt"><circle cx="266.6" cy="124.9" r="12" fill="transparent"/><circle cx="266.6" cy="124.9" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>22 Haz haftası: %11.4 · 5,264 kalkış</title></g><g class="pt"><circle cx="294.4" cy="123.8" r="12" fill="transparent"/><circle cx="294.4" cy="123.8" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>29 Haz haftası: %12.1 · 5,912 kalkış</title></g><g class="pt"><circle cx="322.3" cy="123.1" r="12" fill="transparent"/><circle cx="322.3" cy="123.1" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>6 Tem haftası: %12.6 · 5,543 kalkış</title></g><g class="pt"><circle cx="350.1" cy="120.8" r="12" fill="transparent"/><circle cx="350.1" cy="120.8" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>13 Tem haftası: %14.1 · 5,663 kalkış</title></g><g class="pt"><circle cx="377.9" cy="112.8" r="12" fill="transparent"/><circle cx="377.9" cy="112.8" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>20 Tem haftası: %19.5 · 5,668 kalkış</title></g><g class="pt"><circle cx="405.7" cy="122.3" r="12" fill="transparent"/><circle cx="405.7" cy="122.3" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>27 Tem haftası: %13.1 · 1,196 kalkış</title></g><g class="pt"><circle cx="433.6" cy="124.0" r="12" fill="transparent"/><circle cx="433.6" cy="124.0" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>3 Ağu haftası: %12.0 · 736 kalkış</title></g><g class="pt"><circle cx="461.4" cy="120.7" r="12" fill="transparent"/><circle cx="461.4" cy="120.7" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>10 Ağu haftası: %14.2 · 688 kalkış</title></g><g class="pt"><circle cx="489.2" cy="117.2" r="12" fill="transparent"/><circle cx="489.2" cy="117.2" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>17 Ağu haftası: %16.5 · 568 kalkış</title></g><g class="pt"><circle cx="517.0" cy="110.3" r="12" fill="transparent"/><circle cx="517.0" cy="110.3" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>24 Ağu haftası: %21.1 · 740 kalkış</title></g><g class="pt"><circle cx="544.9" cy="121.2" r="12" fill="transparent"/><circle cx="544.9" cy="121.2" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>31 Ağu haftası: %13.9 · 323 kalkış</title></g><g class="pt"><circle cx="572.7" cy="116.0" r="12" fill="transparent"/><circle cx="572.7" cy="116.0" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>7 Eyl haftası: %17.3 · 693 kalkış</title></g><g class="pt"><circle cx="600.5" cy="49.6" r="12" fill="transparent"/><circle cx="600.5" cy="49.6" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>14 Eyl haftası: %61.6 · 644 kalkış</title></g><g class="pt"><circle cx="628.3" cy="44.2" r="12" fill="transparent"/><circle cx="628.3" cy="44.2" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>21 Eyl haftası: %65.2 · 664 kalkış</title></g><g class="pt"><circle cx="656.2" cy="30.7" r="12" fill="transparent"/><circle cx="656.2" cy="30.7" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>28 Eyl haftası: %74.2 · 640 kalkış</title></g><g class="pt"><circle cx="684.0" cy="43.3" r="12" fill="transparent"/><circle cx="684.0" cy="43.3" r="4" fill="var(--accent)" stroke="#fff" stroke-width="2"/><title>5 Eki haftası: %65.8 · 579 kalkış</title></g><text x="44" y="180" class="ct">Tarifeden havalanmaya medyan dakika (OpenSky, bağımsız)</text><rect x="586.6" y="188" width="97.4" height="120" class="band"/><line x1="44" x2="684" y1="308.0" y2="308.0" class="base"/><text x="36" y="312.0" class="ax" text-anchor="end">0</text><line x1="44" x2="684" y1="278.0" y2="278.0" class="grid"/><text x="36" y="282.0" class="ax" text-anchor="end">20</text><line x1="44" x2="684" y1="248.0" y2="248.0" class="grid"/><text x="36" y="252.0" class="ax" text-anchor="end">40</text><line x1="44" x2="684" y1="218.0" y2="218.0" class="grid"/><text x="36" y="222.0" class="ax" text-anchor="end">60</text><line x1="44" x2="684" y1="188.0" y2="188.0" class="grid"/><text x="36" y="192.0" class="ax" text-anchor="end">80</text><polyline fill="none" stroke="var(--cobalt)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" points="155.3,274.4 183.1,274.6 211.0,273.4 238.8,275.1 266.6,274.4 294.4,274.2 322.3,274.4 350.1,273.1 377.9,271.4 405.7,270.5 433.6,276.5 461.4,272.6"/><polyline fill="none" stroke="var(--cobalt)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" points="544.9,278.3 572.7,270.5 600.5,278.4 628.3,276.2 656.2,274.1 684.0,277.4"/><g class="pt"><circle cx="155.3" cy="274.4" r="12" fill="transparent"/><circle cx="155.3" cy="274.4" r="4" fill="var(--cobalt)" stroke="#fff" stroke-width="2"/><title>25 May haftası: 22.4 dk · 4,956 kalkış</title></g><g class="pt"><circle cx="183.1" cy="274.6" r="12" fill="transparent"/><circle cx="183.1" cy="274.6" r="4" fill="var(--cobalt)" stroke="#fff" stroke-width="2"/><title>1 Haz haftası: 22.3 dk · 4,658 kalkış</title></g><g class="pt"><circle cx="211.0" cy="273.4" r="12" fill="transparent"/><circle cx="211.0" cy="273.4" r="4" fill="var(--cobalt)" stroke="#fff" stroke-width="2"/><title>8 Haz haftası: 23.1 dk · 2,688 kalkış</title></g><g class="pt"><circle cx="238.8" cy="275.1" r="12" fill="transparent"/><circle cx="238.8" cy="275.1" r="4" fill="var(--cobalt)" stroke="#fff" stroke-width="2"/><title>15 Haz haftası: 21.9 dk · 5,275 kalkış</title></g><g class="pt"><circle cx="266.6" cy="274.4" r="12" fill="transparent"/><circle cx="266.6" cy="274.4" r="4" fill="var(--cobalt)" stroke="#fff" stroke-width="2"/><title>22 Haz haftası: 22.4 dk · 5,264 kalkış</title></g><g class="pt"><circle cx="294.4" cy="274.2" r="12" fill="transparent"/><circle cx="294.4" cy="274.2" r="4" fill="var(--cobalt)" stroke="#fff" stroke-width="2"/><title>29 Haz haftası: 22.5 dk · 5,912 kalkış</title></g><g class="pt"><circle cx="322.3" cy="274.4" r="12" fill="transparent"/><circle cx="322.3" cy="274.4" r="4" fill="var(--cobalt)" stroke="#fff" stroke-width="2"/><title>6 Tem haftası: 22.4 dk · 5,543 kalkış</title></g><g class="pt"><circle cx="350.1" cy="273.1" r="12" fill="transparent"/><circle cx="350.1" cy="273.1" r="4" fill="var(--cobalt)" stroke="#fff" stroke-width="2"/><title>13 Tem haftası: 23.3 dk · 5,663 kalkış</title></g><g class="pt"><circle cx="377.9" cy="271.4" r="12" fill="transparent"/><circle cx="377.9" cy="271.4" r="4" fill="var(--cobalt)" stroke="#fff" stroke-width="2"/><title>20 Tem haftası: 24.4 dk · 5,668 kalkış</title></g><g class="pt"><circle cx="405.7" cy="270.5" r="12" fill="transparent"/><circle cx="405.7" cy="270.5" r="4" fill="var(--cobalt)" stroke="#fff" stroke-width="2"/><title>27 Tem haftası: 25.0 dk · 1,196 kalkış</title></g><g class="pt"><circle cx="433.6" cy="276.5" r="12" fill="transparent"/><circle cx="433.6" cy="276.5" r="4" fill="var(--cobalt)" stroke="#fff" stroke-width="2"/><title>3 Ağu haftası: 21.0 dk · 736 kalkış</title></g><g class="pt"><circle cx="461.4" cy="272.6" r="12" fill="transparent"/><circle cx="461.4" cy="272.6" r="4" fill="var(--cobalt)" stroke="#fff" stroke-width="2"/><title>10 Ağu haftası: 23.6 dk · 688 kalkış</title></g><g class="pt"><circle cx="544.9" cy="278.3" r="12" fill="transparent"/><circle cx="544.9" cy="278.3" r="4" fill="var(--cobalt)" stroke="#fff" stroke-width="2"/><title>31 Ağu haftası: 19.8 dk · 323 kalkış</title></g><g class="pt"><circle cx="572.7" cy="270.5" r="12" fill="transparent"/><circle cx="572.7" cy="270.5" r="4" fill="var(--cobalt)" stroke="#fff" stroke-width="2"/><title>7 Eyl haftası: 25.0 dk · 693 kalkış</title></g><g class="pt"><circle cx="600.5" cy="278.4" r="12" fill="transparent"/><circle cx="600.5" cy="278.4" r="4" fill="var(--cobalt)" stroke="#fff" stroke-width="2"/><title>14 Eyl haftası: 19.7 dk · 644 kalkış</title></g><g class="pt"><circle cx="628.3" cy="276.2" r="12" fill="transparent"/><circle cx="628.3" cy="276.2" r="4" fill="var(--cobalt)" stroke="#fff" stroke-width="2"/><title>21 Eyl haftası: 21.2 dk · 664 kalkış</title></g><g class="pt"><circle cx="656.2" cy="274.1" r="12" fill="transparent"/><circle cx="656.2" cy="274.1" r="4" fill="var(--cobalt)" stroke="#fff" stroke-width="2"/><title>28 Eyl haftası: 22.6 dk · 640 kalkış</title></g><g class="pt"><circle cx="684.0" cy="277.4" r="12" fill="transparent"/><circle cx="684.0" cy="277.4" r="4" fill="var(--cobalt)" stroke="#fff" stroke-width="2"/><title>5 Eki haftası: 20.4 dk · 579 kalkış</title></g><text x="71.8" y="326" class="ax" text-anchor="middle">May</text><text x="183.1" y="326" class="ax" text-anchor="middle">Haz</text><text x="322.3" y="326" class="ax" text-anchor="middle">Tem</text><text x="433.6" y="326" class="ax" text-anchor="middle">Ağu</text><text x="572.7" y="326" class="ax" text-anchor="middle">Eyl</text><text x="684.0" y="326" class="ax" text-anchor="middle">Eki</text><text x="580.6" y="36" class="bl" text-anchor="end">13 Eyl: tanım değişikliği</text></svg>
+<details class="tblview"><summary>Sayıları göster</summary><div class="tbl-wrap"><table><thead><tr><th>Hafta</th><th>Kalkış</th><th>Rötar değeri dolu</th><th>15+ rötarlı</th><th>Tarife→havalanma (dk)</th></tr></thead><tbody><tr><td>27 Nis</td><td>532</td><td>24%</td><td>9.0%</td><td>—</td></tr><tr><td>4 May</td><td>3.914</td><td>29%</td><td>11.7%</td><td>—</td></tr><tr><td>11 May</td><td>4.377</td><td>38%</td><td>17.2%</td><td>—</td></tr><tr><td>18 May</td><td>4.731</td><td>29%</td><td>12.6%</td><td>—</td></tr><tr><td>25 May</td><td>4.956</td><td>26%</td><td>10.3%</td><td>22.4</td></tr><tr><td>1 Haz</td><td>4.658</td><td>26%</td><td>10.3%</td><td>22.3</td></tr><tr><td>8 Haz</td><td>2.688</td><td>32%</td><td>12.9%</td><td>23.1</td></tr><tr><td>15 Haz</td><td>5.275</td><td>27%</td><td>11.5%</td><td>21.9</td></tr><tr><td>22 Haz</td><td>5.264</td><td>25%</td><td>11.4%</td><td>22.4</td></tr><tr><td>29 Haz</td><td>5.912</td><td>26%</td><td>12.1%</td><td>22.5</td></tr><tr><td>6 Tem</td><td>5.543</td><td>30%</td><td>12.6%</td><td>22.4</td></tr><tr><td>13 Tem</td><td>5.663</td><td>30%</td><td>14.1%</td><td>23.3</td></tr><tr><td>20 Tem</td><td>5.668</td><td>43%</td><td>19.5%</td><td>24.4</td></tr><tr><td>27 Tem</td><td>1.196</td><td>35%</td><td>13.1%</td><td>25.0</td></tr><tr><td>3 Ağu</td><td>736</td><td>31%</td><td>12.0%</td><td>21.0</td></tr><tr><td>10 Ağu</td><td>688</td><td>35%</td><td>14.2%</td><td>23.6</td></tr><tr><td>17 Ağu</td><td>568</td><td>42%</td><td>16.5%</td><td>—</td></tr><tr><td>24 Ağu</td><td>740</td><td>44%</td><td>21.1%</td><td>—</td></tr><tr><td>31 Ağu</td><td>323</td><td>40%</td><td>13.9%</td><td>19.8</td></tr><tr><td>7 Eyl</td><td>693</td><td>45%</td><td>17.3%</td><td>25.0</td></tr><tr><td>14 Eyl</td><td>644</td><td>99%</td><td>61.6%</td><td>19.7</td></tr><tr><td>21 Eyl</td><td>664</td><td>99%</td><td>65.2%</td><td>21.2</td></tr><tr><td>28 Eyl</td><td>640</td><td>99%</td><td>74.2%</td><td>22.6</td></tr><tr><td>5 Eki</td><td>579</td><td>99%</td><td>65.8%</td><td>20.4</td></tr></tbody></table></div></details>
+        </div>
+        <div class="callout">
+          <b>Bedeli:</b> sorunsuz görünen dört haftalık veri, bunun üzerinde
+          yeniden eğitilen bir model ve tahminleri %16 derken "gerçek" oranı
+          %59 gösteren canlı bir pano. Pano uçuşları hâlâ makul bir sırayla
+          diziyordu (AUC 0,667), ama olasılıkları anlamını yitirmişti. Bunların
+          hepsi arşivlenmiş sayfaların dışında bırakıldı.
+        </div>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Neden bırakıyorum</p>
+          <h2>Ayakta tutmak mühendislik değil, bakım olmuştu.</h2>
+        </div>
+        <div class="prose">
+          <p>
+            Böyle bir veri hattı üç dış servisin birlikte çalışmasına bağlı: bir
+            uçuş takip ağı, ticari bir tarife API'si ve bir aracı sunucu — bir de
+            bunları birbirine bağlayan anahtarlar ve hesaplar. Her biri kendi
+            takviminde, haber vermeden değişiyor: kapsama kayboluyor, bir hesap
+            kapatılıyor, bir alanın anlamı sessizce değişiyor, bir sunucu hata
+            döndürmeye başlıyor. Bunların hiçbiri benim kontrolümde değil ve
+            neredeyse hiçbiri başarısız bir çalıştırma olarak görünmüyor. Altı
+            ayda girdileri dürüst tutmaya, onlardan yeni bir şey öğrenmekten
+            daha çok zaman harcadım.
+          </p>
+          <p>
+            Onu bitiren iki arıza da <strong>sessizdi</strong>: veri hattı bir
+            uyarı yazıp "başarıyla" çıktı, site de makul görünen sayılar
+            sunmaya devam etti. Devam ettirseydim sıradaki iş izleme olurdu —
+            sıfır satırda alarm, etiketin hâlâ aynı şeyi ölçtüğünü denetleyen
+            kontroller. Bu gerçek bir iş, ama bu portfolyonun anlatmasını
+            istediğim iş değil. Ben bir makine mühendisliği öğrencisiyim ve
+            zaman artık oraya gidiyor.
+          </p>
+        </div>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Geriye kalan</p>
+          <h2>Temiz dönemin sonuçları hâlâ geçerli.</h2>
+        </div>
+        <div class="stat-grid">
+          <div class="stat"><strong>0,729</strong><span>canlı AUC — tahminler kalkıştan önce kaydedildi, sonra puanlandı, 5 Ağu – 12 Eyl</span></div>
+          <div class="stat"><strong>%10,2 / %11,7</strong><span>bu 1.067 uçuşta ortalama tahmin edilen ve gerçekleşen rötar oranı — kalibrasyona yakın</span></div>
+          <div class="stat"><strong>%53,9</strong><span>yerde 60 dakikadan az kalan kalkışların rötar oranı; 60–90 dk'da %13,7 — tek başına en güçlü sinyal</span></div>
+        </div>
+        <div class="panel">
+          <h3>Canlı panonun olasılıkları ne kadar tuttu</h3>
+          <p>Her uçuşa kalkıştan önce bir rötar olasılığı verildi. Bu olasılığa göre gruplandığında, gerçekte ne sıklıkla rötar yaptıkları:</p>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Tahmin edilen risk</th><th>Uçuş</th><th>Ortalama tahmin</th><th>Gerçekte rötarlı</th></tr></thead>
+              <tbody>
+                <tr><td>%0–8</td><td>607</td><td>%3,5</td><td>%6,1</td></tr>
+                <tr><td>%8–12</td><td>181</td><td>%9,8</td><td>%10,5</td></tr>
+                <tr><td>%12–20</td><td>101</td><td>%14,9</td><td>%17,8</td></tr>
+                <tr><td>%20–35</td><td>136</td><td>%26,7</td><td>%27,2</td></tr>
+                <tr><td>%35+</td><td>42</td><td>%43,4</td><td>%33,3</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Aralığın ortası neredeyse tam isabetli. "Güvenli" uçuşlar ise tahminin yaklaşık iki katı sıklıkla rötar yaptı — çevrimdışı testlerin gösterdiği zayıflığın aynısı: kötü bir gün normalde dakik uçuşları da vuruyor ve geçmişlerinde bunu haber veren hiçbir şey yok.</p>
+        </div>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Dersler</p>
+          <h2>Neyi farklı yapardım.</h2>
+        </div>
+        <ul class="prose">
+          <li><strong>Hiçbir şey toplamayan bir çalıştırma başarısız bir çalıştırmadır.</strong> Sıfır uçuş, uyarı yazmak yerine işi kırmızıya çevirmeli.</li>
+          <li><strong>Etiket, başkasının tanımıdır.</strong> Bağımsız bir kaynakla bir kez doğrulamak yetmez — her gün, otomatik olarak doğrulanmalı.</li>
+          <li><strong>Her bağımlılığı bir maliyet say.</strong> Her dış servis, kendi takviminde bozulabilecek ayrı bir parçadır.</li>
+          <li><strong>Nasıl biteceğini baştan planla.</strong> Bitiş tarihi olmayan canlı bir proje, sonunda hâlâ "canlı" yazan bayat bir sayfaya dönüşür.</li>
+        </ul>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Arşiv</p>
+          <h2>Sayfalar yayında kalıyor, temiz veriye sabitlenmiş olarak.</h2>
+        </div>
+        <div class="links">
+          <a href="/tr/ist-rotar"><b>IST rötar veri seti →</b><span>Pano, 12 Eylül 2026'ya sabitlendi</span></a>
+          <a href="/tr/model"><b>Rötar modeli →</b><span>Tablo ve model, dönüş süresi, göremedikleri</span></a>
+          <a href="/tr/board"><b>Kalkış panosu →</b><span>Son temiz pano ve gerçekte ne olduğu</span></a>
+          <a href="/tr/three-hubs"><b>Üç merkez →</b><span>IST, LHR ve FRA — aynı kaynak, aynı dönem</span></a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Veri: OpenSky Network + aviationstack + aviationweather.gov · toplama Ekim 2026'da sona erdi</p>
+      <p id="year"></p>
+    </footer>
+  </body>
+</html>
