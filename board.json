@@ -1,11 +1,11 @@
 {
- "generated_utc": "2026-11-13T19:53:33+00:00",
+ "generated_utc": "2026-11-14T01:31:12+00:00",
  "airport": "IST",
  "board_date": "2026-11-14",
- "window_start_utc": "2026-11-13T19:53:23+00:00",
- "window_end_utc": "2026-11-14T07:53:23+00:00",
+ "window_start_utc": "2026-11-13T13:00:00+00:00",
+ "window_end_utc": "2026-11-14T01:00:00+00:00",
  "window_hours": 12,
- "window_mode": "upcoming",
+ "window_mode": "recent",
  "late_threshold_min": 15,
  "baseline": 0.1374,
  "trained_on": {
