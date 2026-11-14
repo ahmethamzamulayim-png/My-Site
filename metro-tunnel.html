@@ -62,6 +62,7 @@
       </a>
       <nav class="site-nav">
         <a href="/#projects">← Portfolio</a>
+        <a href="/wimr">WhereisMyRide →</a>
         <a class="lang-toggle" href="/tr/metro-tunnel">TR</a>
       </nav>
     </header>
@@ -176,7 +177,7 @@
         </div>
       </section>
 
-      <section class="section" data-reveal>
+      <section class="section" data-reveal id="energy">
         <div class="section-heading">
           <p class="eyebrow">Brakes</p>
           <h2>Where the brakes work hardest — and where gravity helps.</h2>
@@ -199,7 +200,7 @@
             <p>Here the stop is 39 m above the start, so gravity takes about 380 J/kg off the train over the run, for free. If the slope is even, the train starts slowing at 75 km/h (218 J/kg) while still climbing 10.5 m (103 J/kg), so the brakes handle about 115 J/kg — roughly a fifth of the downhill stop.</p>
           </div>
         </div>
-        <p class="mt-note">The split between motion and height assumes an even slope between stations, which the barometer can't confirm (see Limits); the total height between two stops is measured. These are upper bounds for the brakes: rolling resistance and air drag also take a share while slowing. It is also the energy a regenerative drive could try to win back — how much it actually recovers depends on the drive and on whether another train on the line can use it at that moment.</p>
+        <p class="mt-note">The split between motion and height assumes an even slope between stations, which the barometer can't confirm (see Limits); the total height between two stops is measured. Motion energies use the measured peak speeds, which run up to ~10% high (see Limits). These are upper bounds for the brakes: rolling resistance and air drag also take a share while slowing. It is also the energy a regenerative drive could try to win back — how much it actually recovers depends on the drive and on whether another train on the line can use it at that moment.</p>
       </section>
 
       <section class="section" data-reveal>
@@ -243,6 +244,7 @@
         <ul class="mt-limits">
           <li><strong>How deep the tunnel is.</strong> The barometer gives height changes, not depth below ground.</li>
           <li><strong>The shape of the slope between stations.</strong> Moving air hides it; the straight lines between stations are drawn, not measured.</li>
+          <li><strong>Exact top speeds.</strong> The line's published top speed is 80 km/h, yet two stretches peak at 87–89. Pinning the speed to the stops and the distance fixes its average, not its shape, so peaks can be ~10% high — and motion energy, which goes with v², up to ~20%. The height figures don't depend on speed.</li>
           <li><strong>A precise plan view.</strong> It follows the mapped track to within 30–130 m at worst; good enough to see every curve, not to survey one.</li>
           <li><strong>Statistics.</strong> Each stretch is drawn from one run. This is a case study of what a phone can measure, not an average of the line.</li>
           <li><strong>Smooth joins.</strong> Each stretch is fitted between its two stations on its own, so the line can show small kinks where stretches meet.</li>
@@ -261,7 +263,7 @@
         <div>
           <p class="eyebrow">Where it came from</p>
           <h2>A by-product of an app I've stopped building.</h2>
-          <p>This started inside WhereisMyRide, an app I built to measure Istanbul's rail system with a phone — Tekir the cat was its mascot. I've stopped developing the app; plenty of good transit apps already exist. The measurements were the part worth keeping.</p>
+          <p>This is one chapter of <a href="/wimr">WhereisMyRide</a>, an app I built to measure Istanbul's rail system with a phone — Tekir the cat was its mascot. The other chapters: what the barometer feels while moving, and how a compass reads the motors. I've stopped developing the app; plenty of good transit apps already exist. The measurements were the part worth keeping.</p>
         </div>
         <div class="mt-footcat" data-tekir="sleep1,sleep2" data-hold="900,900" data-size="96" data-label="Tekir asleep"></div>
       </section>

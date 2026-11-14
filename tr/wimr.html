@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>WhereisMyRide | Ahmet Hamza Mülayim</title>
+    <meta name="description" content="İstanbul metrosunda bir laboratuvar aleti olarak telefon: ivmeölçer, jiroskop, barometre ve manyetometrenin bir tren hakkında gösterdikleri — her sayının arkasındaki matematikle." />
+    <link rel="icon" type="image/svg+xml" href="/metro/tekir-favicon.svg" />
+    <link rel="canonical" href="https://ahmethmzamlym.engineer/tr/wimr" />
+    <link rel="alternate" hreflang="en" href="https://ahmethmzamlym.engineer/wimr" />
+    <link rel="alternate" hreflang="tr" href="https://ahmethmzamlym.engineer/tr/wimr" />
+    <link rel="alternate" hreflang="x-default" href="https://ahmethmzamlym.engineer/wimr" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="WhereisMyRide | Ahmet Hamza Mülayim" />
+    <meta property="og:description" content="İstanbul metrosunda bir laboratuvar aleti olarak telefon: ivmeölçer, jiroskop, barometre ve manyetometrenin bir tren hakkında gösterdikleri — her sayının arkasındaki matematikle." />
+    <meta property="og:url" content="https://ahmethmzamlym.engineer/tr/wimr" />
+    <meta name="twitter:card" content="summary" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/metro/tunnel.css" />
+    <link rel="stylesheet" href="/metro/wimr.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+    <script src="/i18n.js"></script>
+    <script defer src="/script.js"></script>
+    <script defer src="/metro/tekir.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"
+      onload="renderMathInElement(document.body, { delimiters: [{ left: '$$', right: '$$', display: true }, { left: '\\(', right: '\\)', display: false }], throwOnError: false })"></script>
+    <script type="module" src="/metro/wimr.js"></script>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="53acc321-a620-42d2-abf8-92a0c2813e8b"></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "WhereisMyRide: metroda bir laboratuvar aleti olarak telefon",
+        "description": "İstanbul metrosunda bir laboratuvar aleti olarak telefon: ivmeölçer, jiroskop, barometre ve manyetometrenin bir tren hakkında gösterdikleri — her sayının arkasındaki matematikle.",
+        "url": "https://ahmethmzamlym.engineer/tr/wimr",
+        "datePublished": "2026-11-15",
+        "dateModified": "2026-11-15",
+        "author": { "@type": "Person", "name": "Ahmet Hamza Mülayim", "url": "https://ahmethmzamlym.engineer/" },
+        "inLanguage": "tr"
+      }
+    </script>
+  </head>
+  <body>
+    <div class="noise"></div>
+    <header class="site-header">
+      <a class="brand" href="/tr/">
+        <span class="brand-mark">A</span>
+        <span>
+          <strong>Ahmet Hamza Mülayim</strong>
+          <small>Marmara Üniversitesi</small>
+        </span>
+      </a>
+      <nav class="site-nav">
+        <a href="/tr/#projects">← Portfolyo</a>
+        <a class="lang-toggle" href="/wimr">EN</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="section" data-reveal>
+        <div class="mt-hero">
+          <div class="section-heading">
+            <p class="eyebrow">WhereisMyRide · telefon sensörleri · Ekim – Kasım 2026</p>
+            <h1>Telefonumu İstanbul metrosu için bir laboratuvar aletine çevirdim.</h1>
+            <p class="hero-text">
+              WhereisMyRide, "trenim şu an nerede?" sorusunu yanıtlamak için bir
+              uygulama olarak başladı — İstanbul metrosu için canlı konum
+              yayımlanmıyor. Yanıtlamak için uygulama, ben yolculuk ederken
+              telefonun bütün sensörlerini kaydetti. Uygulama artık bitti; zaten
+              pek çok iyi ulaşım uygulaması var. Ama asıl ilginç kısım kayıtlar
+              çıktı: tren koltuğundaki bir telefon tünelin tepelerini, trenin
+              ittiği havayı ve motorlarındaki akımı görebiliyor. Bu sayfa onun
+              gördükleri ve ham sensör okumalarından her sayıya giden
+              matematik.
+            </p>
+          </div>
+          <div class="mt-cat" data-tekir="sit,blink,sit,alert,sit,happy" data-hold="2400,160,1800,900,1600,900" data-size="150" data-label="Uygulamanın maskotu kedi Tekir"></div>
+        </div>
+        <div class="stat-grid">
+          <div class="stat"><strong><span data-k="derived.km" data-d="0">12</span> km</strong><span>tünel, tek bir telefonun sensörleriyle 3B olarak yeniden kuruldu</span></div>
+          <div class="stat"><strong><span data-k="sample.dist_linear_m">6</span> m</strong><span>— Android'in kendi "doğrusal ivmesine" göre trenin gittiği yol; gerçek mesafe <span data-k="sample.track_m">1,937</span> m</span></div>
+          <div class="stat"><strong>r = <span data-k="magnet.r_av.median" data-d="2">0.85</span></strong><span>pusula okuması ile trenin gücü arasında — telefon motor akımını görüyor</span></div>
+          <div class="stat"><strong>8</strong><span>ilk yolculuktan önce veri sayfalarından yazılan ve sonra notlandırılan tahmin</span></div>
+        </div>
+        <nav class="wm-chapters" aria-label="Bölümler">
+          <a href="#speed"><b>1</b>Kayan bir sensörden hız</a>
+          <a href="#tunnel"><b>2</b>3B tünel</a>
+          <a href="#air"><b>3</b>Tünelde Bernoulli</a>
+          <a href="#motors"><b>4</b>Motorları okuyan pusula</a>
+          <a href="#brakes"><b>5</b>Frenler, yerçekimi ve konfor</a>
+          <a href="#graded"><b>✓</b>Tahminler, notlandırılmış</a>
+        </nav>
+      </section>
+
+      <section class="section" data-reveal id="speed">
+        <div class="section-heading">
+          <p class="eyebrow">Bölüm 1 · ivmeölçer</p>
+          <h2>Kayan bir sensörden hız.</h2>
+          <p class="hero-text">Hız, ivmenin integrali. Sorun şu: telefon, trenin itişini küçük bir eğiklikten sızan yerçekiminden ayıramıyor ve bir integral hiçbir hatayı unutmuyor.</p>
+        </div>
+        <div class="wm-math">
+          <p>\(\delta\theta\) kadar bir eğiklik hatası, ölçülen ivmeye yerçekiminden bir dilim ekliyor:</p>
+          $$\delta a = g\,\sin\delta\theta \;\approx\; g\,\delta\theta, \qquad \delta\theta = 0.1^\circ \;\Rightarrow\; \delta a \approx 0.017\ \mathrm{m/s^2} \;\Rightarrow\; \delta v \approx 1.5\ \mathrm{m/s}\ \text{after } 90\ \mathrm{s}$$
+          <p>Bu yüzden hata bir sapma artı yavaş bir kayma olarak modellenip, \(e(t) = c_0 + c_1 t\), integralden çıkarılıyor:</p>
+          $$v(t) = A(t) - c_0\,t - \tfrac{1}{2}\,c_1\,t^2, \qquad A(t) = \int_0^{t} a_{\mathrm{m}}(\tau)\,\mathrm{d}\tau$$
+          <p>Aralarında \(L\) mesafe olan istasyonlar arasındaki \(T\) süreli her sefer için iki gerçek biliniyor: tren iki uçta da duruyor ve hat mesafesini kat ediyor. Bunlar \(c_0\) ve \(c_1\)'i tam olarak belirliyor:</p>
+          $$v(T) = 0, \qquad \int_0^{T} v(t)\,\mathrm{d}t = L \quad\Longrightarrow\quad \begin{bmatrix} T & \tfrac{1}{2}T^2 \\[2pt] \tfrac{1}{2}T^2 & \tfrac{1}{6}T^3 \end{bmatrix} \begin{bmatrix} c_0 \\ c_1 \end{bmatrix} = \begin{bmatrix} A(T) \\ \int_0^{T} A\,\mathrm{d}t - L \end{bmatrix}$$
+          <p>\(|c_1|\,T\) — hatanın sefer boyunca ne kadar değişmesi gerektiği — onu notlandırıyor: \(0.15\ \mathrm{m/s^2}\) altı iyi, \(0.6\) altı kaba, üstünde telefon oynamış demektir ve sefer atılıyor. Aşağıdaki seferde değeri <span data-k="sample.drift_ms2" data-d="3">0.082</span>.</p>
+        </div>
+        <div class="mt-panel">
+          <div id="c-speed" class="mt-chart"></div>
+          <p class="mt-note">Tek sefer, aralık <span data-k="sample.stretch">S5 → S6</span>. Android'in hazır "doğrusal ivmesi", uzun ve sabit bir itişi yavaşça telefonun eğilmesi sanan bir sensör füzyonu — integrali alınınca treni başladığı yerden <span data-k="sample.dist_linear_m">6</span> m öteye koyuyor (mesafenin %<span data-k="derived.lin_pct" data-d="1">0.3</span>'ü). Yukarıdaki gibi sabitlenmiş ham ivmeölçer mavi çizgi.</p>
+        </div>
+        <div class="wm-check">
+          <p><b>Sınır.</b> Sabitleme eğrinin başını, sonunu ve altındaki alanı belirliyor, şeklini değil. Hattın azami hızı <span data-k="speed_limit_kmh">80</span> <span data-unit="kmh">km/h</span>, ama <span data-k="stretches_over_limit">2</span> aralıkta tepe bunun üstünde (<span data-k="max_peak_kmh" data-d="1">88.9</span>'a kadar) — yaklaşık %10'luk bir şekil hatası, ilk yolculuktan önce tahmin edilen ±%5–10'un tam içinde.</p>
+        </div>
+      </section>
+
+      <section class="section" data-reveal id="tunnel">
+        <div class="section-heading">
+          <p class="eyebrow">Bölüm 2 · jiroskop + barometre</p>
+          <h2>3B tünel.</h2>
+          <p class="hero-text">Dönüş hızı virajları, her perondaki hava basıncı yüksekliği veriyor. Birlikte tüneli yeniden kuruyorlar — kendi sayfasında, çevirebileceğin bir 3B modelle.</p>
+        </div>
+        <div class="wm-math">
+          <p>Jiroskop, telefonun kendi eksenlerinde dönmeyi, \(\boldsymbol{\omega}\), ölçüyor. Ölçülen "yukarı" yönüne, \(\hat{\mathbf{g}}\), izdüşürülüp tren dururken okunan sapma \(b\) çıkarılınca trenin dönüş hızı oluyor. Hızla birlikte integrali alınınca planı çiziyor:</p>
+          $$\psi(t) = \int_0^{t} \big(\boldsymbol{\omega}\cdot\hat{\mathbf{g}} - b\big)\,\mathrm{d}\tau, \qquad x(t) = \int_0^{t} v\cos\psi\,\mathrm{d}\tau, \qquad y(t) = \int_0^{t} v\sin\psi\,\mathrm{d}\tau$$
+          <p>Yükseklik hidrostatikten geliyor; yalnızca peronun durgun havasında okunuyor:</p>
+          $$\Delta h = -\frac{\Delta p}{\rho\,g}, \qquad \rho \approx 1.2\ \mathrm{kg/m^3} \;\Rightarrow\; 1\ \mathrm{m} \leftrightarrow 11.8\ \mathrm{Pa}$$
+        </div>
+        <a class="wm-feature" href="/tr/metro-tunnel">
+          <span class="wm-feature-cat" data-tekir="walk1,walk2" data-hold="320,320" data-size="72"></span>
+          <span><b>3B tüneli aç →</b><br />Virajlar çoğu aralıkta haritayla yaklaşık 1° içinde örtüşüyor; istasyon yükseklikleri <span data-k="derived.repeat" data-d="1">0.6</span> m içinde tekrarlanıyor; tünel üstündeki tepeleri izliyor.</span>
+        </a>
+      </section>
+
+      <section class="section" data-reveal id="air">
+        <div class="section-heading">
+          <p class="eyebrow">Bölüm 3 · barometre</p>
+          <h2>Tünelde Bernoulli.</h2>
+          <p class="hero-text">Barometre neden yalnızca peronda okunuyor? Çünkü tren hareket ederken vagondaki basınç herhangi bir tepeden daha fazla oynuyor. Bu oynama gürültü değil — trenin hızını izliyor.</p>
+        </div>
+        <div class="wm-math">
+          <p>Hareket eden trenin yanından akan havanın bir dinamik basıncı, \(q\), var. Bernoulli'ye göre daha hızlı hava daha düşük statik basınç demek; yani vagonun basıncı \(q\) ile orantılı düşmeli:</p>
+          $$q = \tfrac{1}{2}\,\rho\,v^2, \qquad p_{\mathrm{car}}(t) - p_{\mathrm{line}}(t) \;\approx\; -\,C\,q(t)$$
+          <p>Burada \(p_{\mathrm{line}}\), iki peron okuması arasındaki düz çizgi. Hattın azami hızında \(q\) zaten <span data-k="derived.q80">296</span> Pa — <span data-k="derived.q80_m">25</span> m yüksekliğe eşit. İstasyonlar arasındaki eğim bu yüzden hareket eden bir trende barometreden okunamıyor.</p>
+        </div>
+        <div class="mt-panel">
+          <div id="c-pressure" class="mt-chart"></div>
+          <p class="mt-note">Yukarıdakiyle aynı sefer. Bu seferdeki korelasyon: <span data-k="sample.r_q" data-d="2">−0.71</span>.</p>
+        </div>
+        <div class="wm-check">
+          <p><b>Kontrol.</b> Her sefer durarak başlayıp durarak bitiyor, arada bir tümsek var; yani tümsek biçimli her şey korele çıkardı. <span data-k="n_runs">12</span> temiz seferde düşüş \(q\)'yu medyan <span data-k="pressure.r_q.median" data-d="2">−0.63</span> korelasyonla izliyor; düz bir tümsek için bu <span data-k="pressure.r_hump.median" data-d="2">−0.32</span>. Tümsek şekli çıkarılınca \(q\) yine <span data-k="pressure.r_q_partial.median" data-d="2">−0.74</span> veriyor. Belirleyen hız.</p>
+          <p><b>Sınır.</b> \(C\) seferden sefere değişiyor (korelasyonda <span data-k="pressure.r_q.min" data-d="2">−0.92</span> ile <span data-k="pressure.r_q.max" data-d="2">−0.16</span> arası): trenin tünellere girip çıkarken yarattığı basınç dalgaları, diğer trenler ve açık havalandırma bacaları kendi oynamalarını ekliyor.</p>
+        </div>
+      </section>
+
+      <section class="section" data-reveal id="motors">
+        <div class="section-heading">
+          <p class="eyebrow">Bölüm 4 · manyetometre</p>
+          <h2>Motorları okuyan pusula.</h2>
+          <p class="hero-text">Motorlar vagondaki kablolardan yüzlerce amper çekiyor. Akım manyetik alan yaratır — ve telefonun pusulası o alanın içinde.</p>
+        </div>
+        <div class="wm-math">
+          <p>Uzun düz bir \(I\) akımının \(r\) uzaklıktaki alanı:</p>
+          $$B = \frac{\mu_0\, I}{2\pi\, r}, \qquad \mu_0 = 4\pi\times10^{-7}\ \mathrm{T\,m/A}$$
+          <p>Besleme gerilimi \(U\) sabit; bu yüzden akım motorların verdiği gücü izliyor ve güç, kuvvet çarpı hız:</p>
+          $$I = \frac{P}{U} = \frac{F\,v}{U}, \qquad F \approx m\,a \quad\Longrightarrow\quad B \;\propto\; a\,v$$
+          <p>Çekişteki tipik tepe <span data-k="magnet.push_uT.median">158</span> µT — Dünya'nın alanının üç katından fazla. Kabloların \(r \approx 1\) m uzakta olduğu varsayılırsa (bir varsayım; gerçek geometri bilinmiyor) bu, şu mertebede bir akım:</p>
+          $$I = \frac{2\pi\, r\, B}{\mu_0} \approx \frac{2\pi \times 1\ \mathrm{m} \times 158\ \mu\mathrm{T}}{4\pi\times10^{-7}\ \mathrm{T\,m/A}} \approx 800\ \mathrm{A}$$
+        </div>
+        <div class="mt-panel">
+          <div id="c-magnet" class="mt-chart"></div>
+          <p class="mt-note">Aynı sefer. Tren frenlediğinde alan negatife dönüyor: akım ters yöne akıyor, yani motorlar jeneratör olarak çalışıyor. Bu enerjinin hatta mı yoksa trendeki dirençlere mi gittiğini bir pusula söyleyemez.</p>
+        </div>
+        <div class="wm-check">
+          <p><b>Kontrol.</b> \(B \propto a\,v\) ise alan gücü yalnız ivmeden daha iyi izlemeli. <span data-k="n_runs">12</span> seferde: \(a\,v\) ile medyan korelasyon <span data-k="magnet.r_av.median" data-d="2">0.85</span>, \(a\) ile <span data-k="magnet.r_a.median" data-d="2">0.75</span>; güç <span data-k="n_runs">12</span> seferin <span data-k="magnet.av_better">10</span>'unda önde.</p>
+          <p><b>Sınır.</b> Akım tahmini bir mertebe: \(r\) tahmin edildi ve kablolar tek bir düz tel değil. \(F \approx m\,a\) ayrıca eğimi ve yuvarlanma direncini yok sayıyor.</p>
+        </div>
+      </section>
+
+      <section class="section" data-reveal id="brakes">
+        <div class="section-heading">
+          <p class="eyebrow">Bölüm 5 · enerji ve konfor</p>
+          <h2>Frenler, yerçekimi ve konfor.</h2>
+        </div>
+        <div class="wm-math">
+          <p>A ve B istasyonlarındaki iki duruş arasında motorların verdiği her şey, artı kaybedilen yükseklik, frenlerden ve dirençten çıkmak zorunda:</p>
+          $$W_{\mathrm{brakes}} + W_{\mathrm{drag}} = W_{\mathrm{motors}} + m\,g\,(h_A - h_B)$$
+          <p>En dik inişte yalnızca bu yükseklik trenin her kilogramı için <span data-k="derived.drop_jkg">398</span> J. Eğim düzgünse çoğu son duruşa düşüyor; frenleme başladığı andaki hareket enerjisinin, \(\tfrac{1}{2}v^2\), üstüne.</p>
+          <p>Sürüş konforu ISO 2631-1'e göre: her eksen bir frekans ağırlığıyla süzülüyor — yatayda \(W_d\), dikeyde \(W_k\) — sonra birleştiriliyor:</p>
+          $$a_w = \sqrt{\frac{1}{T}\int_0^{T} a_W^2(t)\,\mathrm{d}t}, \qquad a_v = \sqrt{a_{w,x}^2 + a_{w,y}^2 + a_{w,z}^2}$$
+        </div>
+        <a class="wm-feature" href="/tr/metro-tunnel#energy">
+          <span class="wm-feature-cat" data-tekir="alert" data-size="72"></span>
+          <span><b>Her aralığın fren enerjisi ve konfor sayıları →</b><br />Tünel sayfasında: yerçekiminin bedavaya frenlediği yerler ve frenlerin trenin hareket enerjisinin neredeyse iki katını emdiği yer.</span>
+        </a>
+      </section>
+
+      <section class="section" data-reveal id="graded">
+        <div class="section-heading">
+          <p class="eyebrow">Tahminler, notlandırılmış</p>
+          <h2>İlk yolculuktan önce veri sayfalarından yazıldı. Sonra yolculuklar notlandırdı.</h2>
+          <p class="hero-text">İlk kayıttan önce her sensörün neyi çözebilmesi gerektiğini tipik veri sayfası değerlerinden yazdım. Bunlar verinin notlandırabildikleri.</p>
+        </div>
+        <div class="mt-panel">
+          <div class="tbl-wrap">
+            <table class="mt-table wm-graded">
+              <thead><tr><th>Sensör</th><th>Tahmin</th><th>Ölçülen</th><th>Not</th></tr></thead>
+              <tbody>
+                <tr><td>İvmeölçer</td><td>Hız ±%5–10 içinde, Android'in sensör füzyonu yüzünden muhtemelen düşük</td><td>Füzyon itişin neredeyse tamamını yuttu (<span data-k="sample.track_m">1,937</span> m'nin <span data-k="sample.dist_linear_m">6</span> m'si); ham + sabitleme çalışıyor, tepeler ~%10 yüksek</td><td><span class="g g-yes">doğru, daha da kötü</span></td></tr>
+                <tr><td>Jiroskop</td><td>Virajlar evet, harita doğruluğu hayır: aralık başına 1–4,5° kayma, 10–60 m yanal</td><td>Sapma dururken okununca 8 aralığın 6'sında dönüşler yaklaşık 1° içinde; en kötü haritadan 30–130 m uzak</td><td><span class="g g-yes">doğru</span></td></tr>
+                <tr><td>Barometre, dururken</td><td>İstasyon yükseklik farkları yaklaşık 0,5 m'ye kadar</td><td>Ayrı yolculuklarda <span data-k="derived.repeat" data-d="1">0.6</span> m içinde tekrarlanıyor</td><td><span class="g g-yes">doğru</span></td></tr>
+                <tr><td>Barometre, hareket hâlinde</td><td>Eğimi değil tünel aerodinamiğini ölçer (20 m/s'de \(q \approx 240\) Pa)</td><td>Düşüş \(\tfrac{1}{2}\rho v^2\)'yi izliyor — medyan korelasyon <span data-k="pressure.r_q.median" data-d="2">−0.63</span></td><td><span class="g g-yes">doğru</span></td></tr>
+                <tr><td>Manyetometre</td><td>Çekiş akımı görünür, gürültünün 100 katı üstünde</td><td>~0,2 µT gürültüye karşı <span data-k="magnet.push_uT.max">217</span> µT'ye kadar; gücü izliyor</td><td><span class="g g-yes">doğru</span></td></tr>
+                <tr><td>Konfor (ISO 2631)</td><td>Yalnızca aynı telefon konumunda karşılaştırılabilir</td><td>Test edilmedi — hiçbir yolculuk aynı anda iki konumda kaydedilmedi. Kural olarak korundu: konfor yalnızca telefon aynı konumdayken karşılaştırılıyor</td><td><span class="g g-part">test edilmedi</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Burada olmayanlar</p>
+          <h2>Gizlilik ve dışarıda bıraktıklarım.</h2>
+          <p class="hero-text">Bunlar kendi yolculuklarım. İstasyon adları, tarihler ve bir aralıktan ne sıklıkla geçtiğim nereye gittiğimin kaydına dönüşürdü; bu yüzden sayfalar yalnızca ölçümleri tutuyor: istasyonlar numaralı, sayılar seferler üzerinden toplanmış ve uygulamanın yaptığı otobüs, yürüyüş ve Bluetooth kayıtları gizli kalıyor.</p>
+        </div>
+      </section>
+
+      <section class="section contact" data-reveal>
+        <div>
+          <p class="eyebrow">Neden bitti</p>
+          <h2>Uygulama bitti. Asıl mesele ölçümlerdi.</h2>
+          <p>Pek çok iyi ulaşım uygulaması var ve onlarla yarışmak zaman harcamak istediğim şey değildi. İstediğim, her gün kullandığım bir sistemi cebimdeki araçlarla parçalarına ayırmaktı — ve telefon şaşırtıcı derecede iyi bir laboratuvar çıktı.</p>
+        </div>
+        <div class="mt-footcat" data-tekir="sleep1,sleep2" data-hold="900,900" data-size="96" data-label="Tekir uyuyor"></div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Telefon sensörleri · matematik için KaTeX · hat kontrolü © OpenStreetMap katkıcıları · hat hızı: Wikipedia, OpenStreetMap</p>
+      <p id="year"></p>
+    </footer>
+  </body>
+</html>

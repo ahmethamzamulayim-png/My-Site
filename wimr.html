@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>WhereisMyRide | Ahmet Hamza Mülayim</title>
+    <meta name="description" content="A phone as a lab instrument on Istanbul's metro: what its accelerometer, gyroscope, barometer and magnetometer reveal about a train — with the maths behind every number." />
+    <link rel="icon" type="image/svg+xml" href="/metro/tekir-favicon.svg" />
+    <link rel="canonical" href="https://ahmethmzamlym.engineer/wimr" />
+    <link rel="alternate" hreflang="en" href="https://ahmethmzamlym.engineer/wimr" />
+    <link rel="alternate" hreflang="tr" href="https://ahmethmzamlym.engineer/tr/wimr" />
+    <link rel="alternate" hreflang="x-default" href="https://ahmethmzamlym.engineer/wimr" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="WhereisMyRide | Ahmet Hamza Mülayim" />
+    <meta property="og:description" content="A phone as a lab instrument on Istanbul's metro: what its accelerometer, gyroscope, barometer and magnetometer reveal about a train — with the maths behind every number." />
+    <meta property="og:url" content="https://ahmethmzamlym.engineer/wimr" />
+    <meta name="twitter:card" content="summary" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/metro/tunnel.css" />
+    <link rel="stylesheet" href="/metro/wimr.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" />
+    <script src="/i18n.js"></script>
+    <script defer src="/script.js"></script>
+    <script defer src="/metro/tekir.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"
+      onload="renderMathInElement(document.body, { delimiters: [{ left: '$$', right: '$$', display: true }, { left: '\\(', right: '\\)', display: false }], throwOnError: false })"></script>
+    <script type="module" src="/metro/wimr.js"></script>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="53acc321-a620-42d2-abf8-92a0c2813e8b"></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "WhereisMyRide: a phone as a lab instrument on the metro",
+        "description": "A phone as a lab instrument on Istanbul's metro: what its accelerometer, gyroscope, barometer and magnetometer reveal about a train — with the maths behind every number.",
+        "url": "https://ahmethmzamlym.engineer/wimr",
+        "datePublished": "2026-11-15",
+        "dateModified": "2026-11-15",
+        "author": { "@type": "Person", "name": "Ahmet Hamza Mülayim", "url": "https://ahmethmzamlym.engineer/" },
+        "inLanguage": "en"
+      }
+    </script>
+  </head>
+  <body>
+    <div class="noise"></div>
+    <header class="site-header">
+      <a class="brand" href="/">
+        <span class="brand-mark">A</span>
+        <span>
+          <strong>Ahmet Hamza Mülayim</strong>
+          <small>Marmara University</small>
+        </span>
+      </a>
+      <nav class="site-nav">
+        <a href="/#projects">← Portfolio</a>
+        <a class="lang-toggle" href="/tr/wimr">TR</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="section" data-reveal>
+        <div class="mt-hero">
+          <div class="section-heading">
+            <p class="eyebrow">WhereisMyRide · phone sensors · Oct – Nov 2026</p>
+            <h1>I turned my phone into a lab instrument for Istanbul's metro.</h1>
+            <p class="hero-text">
+              WhereisMyRide started as an app to answer "where is my train right
+              now?" — no live positions are published for Istanbul's metro. To
+              answer it, the app recorded every sensor a phone has while I rode.
+              The app is finished now; plenty of good transit apps already
+              exist. But the recordings turned out to be the interesting part:
+              a phone on a train seat can see the tunnel's hills, the air the
+              train pushes, and the current in its motors. This page is what it
+              saw, and the maths that gets from raw sensor readings to each
+              number.
+            </p>
+          </div>
+          <div class="mt-cat" data-tekir="sit,blink,sit,alert,sit,happy" data-hold="2400,160,1800,900,1600,900" data-size="150" data-label="Tekir the cat, the app's mascot"></div>
+        </div>
+        <div class="stat-grid">
+          <div class="stat"><strong><span data-k="derived.km" data-d="0">12</span> km</strong><span>of tunnel rebuilt in 3D from one phone's sensors</span></div>
+          <div class="stat"><strong><span data-k="sample.dist_linear_m">6</span> m</strong><span>— how far Android's own "linear acceleration" says the train went, on a run of <span data-k="sample.track_m">1,937</span> m</span></div>
+          <div class="stat"><strong>r = <span data-k="magnet.r_av.median" data-d="2">0.85</span></strong><span>between the compass reading and the train's power — the phone sees the motor current</span></div>
+          <div class="stat"><strong>8</strong><span>predictions written from datasheets before the first ride, then graded against it</span></div>
+        </div>
+        <nav class="wm-chapters" aria-label="Chapters">
+          <a href="#speed"><b>1</b>Speed from a sensor that drifts</a>
+          <a href="#tunnel"><b>2</b>The tunnel in 3D</a>
+          <a href="#air"><b>3</b>Bernoulli in a tunnel</a>
+          <a href="#motors"><b>4</b>A compass that reads the motors</a>
+          <a href="#brakes"><b>5</b>Brakes, gravity and comfort</a>
+          <a href="#graded"><b>✓</b>The predictions, graded</a>
+        </nav>
+      </section>
+
+      <section class="section" data-reveal id="speed">
+        <div class="section-heading">
+          <p class="eyebrow">Chapter 1 · accelerometer</p>
+          <h2>Speed from a sensor that drifts.</h2>
+          <p class="hero-text">Speed is the integral of acceleration. The catch: the phone can't separate the train's push from gravity leaking in through a tiny tilt, and an integral never forgets an error.</p>
+        </div>
+        <div class="wm-math">
+          <p>A tilt error \(\delta\theta\) puts a slice of gravity into the measured acceleration:</p>
+          $$\delta a = g\,\sin\delta\theta \;\approx\; g\,\delta\theta, \qquad \delta\theta = 0.1^\circ \;\Rightarrow\; \delta a \approx 0.017\ \mathrm{m/s^2} \;\Rightarrow\; \delta v \approx 1.5\ \mathrm{m/s}\ \text{after } 90\ \mathrm{s}$$
+          <p>So the error is modelled as an offset plus a slow drift, \(e(t) = c_0 + c_1 t\), and taken out of the integral:</p>
+          $$v(t) = A(t) - c_0\,t - \tfrac{1}{2}\,c_1\,t^2, \qquad A(t) = \int_0^{t} a_{\mathrm{m}}(\tau)\,\mathrm{d}\tau$$
+          <p>Two facts are known for every run of length \(T\) between stations \(L\) apart: the train is stopped at both ends, and it covers the track distance. They fix \(c_0\) and \(c_1\) exactly:</p>
+          $$v(T) = 0, \qquad \int_0^{T} v(t)\,\mathrm{d}t = L \quad\Longrightarrow\quad \begin{bmatrix} T & \tfrac{1}{2}T^2 \\[2pt] \tfrac{1}{2}T^2 & \tfrac{1}{6}T^3 \end{bmatrix} \begin{bmatrix} c_0 \\ c_1 \end{bmatrix} = \begin{bmatrix} A(T) \\ \int_0^{T} A\,\mathrm{d}t - L \end{bmatrix}$$
+          <p>\(|c_1|\,T\) — how much the error had to change over the run — grades it: under \(0.15\ \mathrm{m/s^2}\) is good, under \(0.6\) rough, above that the phone moved and the run is thrown out. On the run below it is <span data-k="sample.drift_ms2" data-d="3">0.082</span>.</p>
+        </div>
+        <div class="mt-panel">
+          <div id="c-speed" class="mt-chart"></div>
+          <p class="mt-note">One run, stretch <span data-k="sample.stretch">S5 → S6</span>. Android's ready-made "linear acceleration" is a sensor fusion that slowly mistakes a long, steady push for the phone tilting — integrated, it puts the train <span data-k="sample.dist_linear_m">6</span> m from where it started (<span data-k="derived.lin_pct" data-d="1">0.3</span>% of the distance). The raw accelerometer, pinned as above, is the blue line.</p>
+        </div>
+        <div class="wm-check">
+          <p><b>Limit.</b> The pin fixes the start, end and area under the curve, not its shape. The line's top speed is <span data-k="speed_limit_kmh">80</span> <span data-unit="kmh">km/h</span>, yet <span data-k="stretches_over_limit">2</span> stretches peak above it (up to <span data-k="max_peak_kmh" data-d="1">88.9</span>) — a shape error of about 10%, right inside the ±5–10% predicted before the first ride.</p>
+        </div>
+      </section>
+
+      <section class="section" data-reveal id="tunnel">
+        <div class="section-heading">
+          <p class="eyebrow">Chapter 2 · gyroscope + barometer</p>
+          <h2>The tunnel in 3D.</h2>
+          <p class="hero-text">Turn rate gives the bends; air pressure at each platform gives the height. Together they rebuild the tunnel — its own page, with a 3D model you can turn around.</p>
+        </div>
+        <div class="wm-math">
+          <p>The gyroscope measures rotation \(\boldsymbol{\omega}\) in the phone's own axes. Projected on the measured "up" \(\hat{\mathbf{g}}\), and minus the bias \(b\) read while the train stands still, it is the train's turn rate. Integrated with speed, it draws the plan:</p>
+          $$\psi(t) = \int_0^{t} \big(\boldsymbol{\omega}\cdot\hat{\mathbf{g}} - b\big)\,\mathrm{d}\tau, \qquad x(t) = \int_0^{t} v\cos\psi\,\mathrm{d}\tau, \qquad y(t) = \int_0^{t} v\sin\psi\,\mathrm{d}\tau$$
+          <p>Height comes from hydrostatics, read only in the calm air of a platform:</p>
+          $$\Delta h = -\frac{\Delta p}{\rho\,g}, \qquad \rho \approx 1.2\ \mathrm{kg/m^3} \;\Rightarrow\; 1\ \mathrm{m} \leftrightarrow 11.8\ \mathrm{Pa}$$
+        </div>
+        <a class="wm-feature" href="/metro-tunnel">
+          <span class="wm-feature-cat" data-tekir="walk1,walk2" data-hold="320,320" data-size="72"></span>
+          <span><b>Open the 3D tunnel →</b><br />Bends match the map to about 1° on most stretches; station heights repeat within <span data-k="derived.repeat" data-d="1">0.6</span> m; the tunnel rides the hills above it.</span>
+        </a>
+      </section>
+
+      <section class="section" data-reveal id="air">
+        <div class="section-heading">
+          <p class="eyebrow">Chapter 3 · barometer</p>
+          <h2>Bernoulli in a tunnel.</h2>
+          <p class="hero-text">Why read the barometer only at platforms? Because while the train moves, the pressure in the car swings by more than any hill. The swing isn't noise — it follows the train's speed.</p>
+        </div>
+        <div class="wm-math">
+          <p>Air rushing past a moving train has dynamic pressure \(q\). By Bernoulli, faster air means lower static pressure, so the car's pressure should dip in proportion to \(q\):</p>
+          $$q = \tfrac{1}{2}\,\rho\,v^2, \qquad p_{\mathrm{car}}(t) - p_{\mathrm{line}}(t) \;\approx\; -\,C\,q(t)$$
+          <p>where \(p_{\mathrm{line}}\) is the straight line between the two platform readings. At the line's top speed, \(q\) is already <span data-k="derived.q80">296</span> Pa — the same as <span data-k="derived.q80_m">25</span> m of height. That is why the slope between stations can't be read from a barometer on a moving train.</p>
+        </div>
+        <div class="mt-panel">
+          <div id="c-pressure" class="mt-chart"></div>
+          <p class="mt-note">Same run as above. Correlation on this run: <span data-k="sample.r_q" data-d="2">−0.71</span>.</p>
+        </div>
+        <div class="wm-check">
+          <p><b>Check.</b> Any run starts and ends at rest with a hump between, so anything hump-shaped would correlate. Across <span data-k="n_runs">12</span> clean runs, the dip follows \(q\) with a median correlation of <span data-k="pressure.r_q.median" data-d="2">−0.63</span>, against <span data-k="pressure.r_hump.median" data-d="2">−0.32</span> for a plain hump; with the hump shape taken out, \(q\) still gives <span data-k="pressure.r_q_partial.median" data-d="2">−0.74</span>. It is the speed.</p>
+          <p><b>Limit.</b> \(C\) changes from run to run (range <span data-k="pressure.r_q.min" data-d="2">−0.92</span> to <span data-k="pressure.r_q.max" data-d="2">−0.16</span> in correlation): pressure waves from the train entering and leaving tunnels, other trains, and open ventilation shafts all add their own swings.</p>
+        </div>
+      </section>
+
+      <section class="section" data-reveal id="motors">
+        <div class="section-heading">
+          <p class="eyebrow">Chapter 4 · magnetometer</p>
+          <h2>A compass that reads the motors.</h2>
+          <p class="hero-text">The motors draw hundreds of amperes through cables in the car. A current makes a magnetic field — and the phone's compass is sitting in it.</p>
+        </div>
+        <div class="wm-math">
+          <p>The field of a long straight current \(I\) at distance \(r\):</p>
+          $$B = \frac{\mu_0\, I}{2\pi\, r}, \qquad \mu_0 = 4\pi\times10^{-7}\ \mathrm{T\,m/A}$$
+          <p>The supply voltage \(U\) is fixed, so the current follows the power the motors deliver, and power is force times speed:</p>
+          $$I = \frac{P}{U} = \frac{F\,v}{U}, \qquad F \approx m\,a \quad\Longrightarrow\quad B \;\propto\; a\,v$$
+          <p>The typical peak while pulling is <span data-k="magnet.push_uT.median">158</span> µT — more than three times Earth's field. Taking the cables \(r \approx 1\) m away (an assumption; the real geometry is unknown), that is a current of order</p>
+          $$I = \frac{2\pi\, r\, B}{\mu_0} \approx \frac{2\pi \times 1\ \mathrm{m} \times 158\ \mu\mathrm{T}}{4\pi\times10^{-7}\ \mathrm{T\,m/A}} \approx 800\ \mathrm{A}$$
+        </div>
+        <div class="mt-panel">
+          <div id="c-magnet" class="mt-chart"></div>
+          <p class="mt-note">Same run. When the train brakes, the field turns negative: the current reverses, so the motors are working as generators. Whether that energy goes back into the line or into on-board resistors, a compass can't tell.</p>
+        </div>
+        <div class="wm-check">
+          <p><b>Check.</b> If \(B \propto a\,v\), the field should follow power better than acceleration alone. Across <span data-k="n_runs">12</span> runs: median correlation <span data-k="magnet.r_av.median" data-d="2">0.85</span> with \(a\,v\) against <span data-k="magnet.r_a.median" data-d="2">0.75</span> with \(a\), and power wins on <span data-k="magnet.av_better">10</span> of <span data-k="n_runs">12</span>.</p>
+          <p><b>Limit.</b> The current estimate is an order of magnitude: \(r\) is guessed, and the cables are not one straight wire. \(F \approx m\,a\) also ignores slope and rolling resistance.</p>
+        </div>
+      </section>
+
+      <section class="section" data-reveal id="brakes">
+        <div class="section-heading">
+          <p class="eyebrow">Chapter 5 · energy and comfort</p>
+          <h2>Brakes, gravity and comfort.</h2>
+        </div>
+        <div class="wm-math">
+          <p>Between two standstills at stations A and B, everything the motors put in, plus the height lost, must leave through the brakes and drag:</p>
+          $$W_{\mathrm{brakes}} + W_{\mathrm{drag}} = W_{\mathrm{motors}} + m\,g\,(h_A - h_B)$$
+          <p>On the steepest downhill that height alone is <span data-k="derived.drop_jkg">398</span> J per kg of train. If the slope is even, most of it lands on the final stop, on top of the motion energy \(\tfrac{1}{2}v^2\) at the moment braking starts.</p>
+          <p>Ride comfort follows ISO 2631-1: each axis is filtered with a frequency weighting — \(W_d\) horizontal, \(W_k\) vertical — then combined:</p>
+          $$a_w = \sqrt{\frac{1}{T}\int_0^{T} a_W^2(t)\,\mathrm{d}t}, \qquad a_v = \sqrt{a_{w,x}^2 + a_{w,y}^2 + a_{w,z}^2}$$
+        </div>
+        <a class="wm-feature" href="/metro-tunnel#energy">
+          <span class="wm-feature-cat" data-tekir="alert" data-size="72"></span>
+          <span><b>See every stretch's brake energy and comfort numbers →</b><br />On the tunnel page: where gravity brakes for free, and where the brakes absorb almost twice the train's motion energy.</span>
+        </a>
+      </section>
+
+      <section class="section" data-reveal id="graded">
+        <div class="section-heading">
+          <p class="eyebrow">The predictions, graded</p>
+          <h2>Written from datasheets before the first ride. Then the rides graded them.</h2>
+          <p class="hero-text">Before the first recording, I wrote down what each sensor should be able to resolve, from typical datasheet figures. These are the ones the data can grade.</p>
+        </div>
+        <div class="mt-panel">
+          <div class="tbl-wrap">
+            <table class="mt-table wm-graded">
+              <thead><tr><th>Sensor</th><th>Predicted</th><th>Measured</th><th>Grade</th></tr></thead>
+              <tbody>
+                <tr><td>Accelerometer</td><td>Speed within ±5–10%, probably biased low by Android's sensor fusion</td><td>Fusion absorbed nearly the whole push (<span data-k="sample.dist_linear_m">6</span> m of <span data-k="sample.track_m">1,937</span>); raw + pinned works, peaks ~10% high</td><td><span class="g g-yes">right, and worse</span></td></tr>
+                <tr><td>Gyroscope</td><td>Curves yes, map accuracy no: 1–4.5° drift, 10–60 m sideways per stretch</td><td>Turns within about 1° on 6 of 8 stretches once the bias is read at rest; 30–130 m off the map at worst</td><td><span class="g g-yes">right</span></td></tr>
+                <tr><td>Barometer, standing</td><td>Station height differences to about 0.5 m</td><td>Repeat within <span data-k="derived.repeat" data-d="1">0.6</span> m on separate rides</td><td><span class="g g-yes">right</span></td></tr>
+                <tr><td>Barometer, moving</td><td>Measures tunnel aerodynamics, not slope (\(q \approx 240\) Pa at 20 m/s)</td><td>The dip follows \(\tfrac{1}{2}\rho v^2\) — median correlation <span data-k="pressure.r_q.median" data-d="2">−0.63</span></td><td><span class="g g-yes">right</span></td></tr>
+                <tr><td>Magnetometer</td><td>Traction current visible, 100× above noise</td><td>Up to <span data-k="magnet.push_uT.max">217</span> µT against ~0.2 µT noise; follows power</td><td><span class="g g-yes">right</span></td></tr>
+                <tr><td>Comfort (ISO 2631)</td><td>Only comparable within one phone position</td><td>Not tested — no ride was recorded in two positions at once. Kept as a rule: comfort is only compared between runs with the phone in the same position</td><td><span class="g g-part">untested</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">What's not here</p>
+          <h2>Privacy, and the parts I left out.</h2>
+          <p class="hero-text">These are my own rides. Station names, dates and how often I rode a stretch would add up to where I go, so the pages keep only measurements: stations are numbered, numbers are pooled across runs, and the bus, walking and Bluetooth recordings the app also made stay private.</p>
+        </div>
+      </section>
+
+      <section class="section contact" data-reveal>
+        <div>
+          <p class="eyebrow">Why it ended</p>
+          <h2>The app is done. The measurements were the point.</h2>
+          <p>There are plenty of good transit apps, and competing with them wasn't what I wanted to spend time on. What I wanted was to take a system I use every day apart with the tools I had in my pocket — and a phone turned out to be a surprisingly good lab.</p>
+        </div>
+        <div class="mt-footcat" data-tekir="sleep1,sleep2" data-hold="900,900" data-size="96" data-label="Tekir asleep"></div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Phone sensors · KaTeX for the maths · track check © OpenStreetMap contributors · line speed: Wikipedia, OpenStreetMap</p>
+      <p id="year"></p>
+    </footer>
+  </body>
+</html>
