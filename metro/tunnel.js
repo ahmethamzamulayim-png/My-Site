@@ -11,6 +11,7 @@ const PHASE = {
 const SPEED_RAMP = ["#dbe4f7", "#9fb3e6", "#5f7fd3", "#2f4fb8", "#1b2f7a"]; // one hue, light -> dark
 const UNIT = 100; // metres per scene unit
 const KMH = (window.getLang && getLang() === "tr") ? "km/s" : "km/h";
+const pc = (s) => (window.getLang && getLang() === "tr" ? "%" + s : s + "%");
 const lang = () => (window.getLang ? getLang() : "en");
 const tt = (en, tr) => (window.t ? t(en, tr) : en);
 const nf = (v, d = 0) => Number(v).toLocaleString(lang() === "tr" ? "tr-TR" : "en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
@@ -74,6 +75,12 @@ if (renderer) {
   const sampled = P.filter((p, i) => i % 3 === 0 || i === P.length - 1);
 
   function build() {
+    // free the previous geometry and materials: the slider rebuilds the whole tube on every step
+    world.traverse((o) => {
+      if (o === train) return;
+      if (o.geometry) o.geometry.dispose();
+      if (o.material) o.material.dispose();
+    });
     world.clear();
     rings = []; stationPos = [];
     const pts = sampled.map(toV);
@@ -126,7 +133,7 @@ if (renderer) {
     world.add(train);
   }
 
-  const train = new THREE.Mesh(new THREE.CapsuleGeometry(0.42, 1.8, 6, 12), new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0xe81e77, emissiveIntensity: 0.35 }));
+  const train = new THREE.Mesh(new THREE.CapsuleGeometry(0.42, 1.8, 6, 12), new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0x8a5a2b, emissiveIntensity: 0.3 }));
   build();
   // frame the whole line for the current aspect ratio: horizontal half-width / tan(horizontal half-fov)
   const halfW = (Math.max(...P.map((p) => p.x)) - Math.min(...P.map((p) => p.x))) / UNIT / 2 + 3;
@@ -181,7 +188,7 @@ if (renderer) {
       tip.style.top = e.clientY - r.top + 14 + "px";
       tip.innerHTML = `<b>${sr.frm} → ${sr.to}</b> · ${nf(hoverS / 1000, 2)} km<br>` +
         `${nf(q.v)} ${KMH} · ${q.a >= 0 ? "+" : ""}${nf(q.a, 2)} m/s² · ${tt(PHASE[q.ph].en, PHASE[q.ph].tr)}<br>` +
-        `${tt("height", "yükseklik")} ${nf(q.z, 1)} m ${tt("vs S1", "(S1'e göre)")} · ${tt("grade", "eğim")} ${nf(sr.grade_pct, 1)}%`;
+        `${tt("height", "yükseklik")} ${nf(q.z, 1)} m ${tt("vs S1", "(S1'e göre)")} · ${tt("grade", "eğim")} ${pc(nf(sr.grade_pct, 1))}`;
     } else { tip.hidden = true; hoverS = null; }
   });
   renderer.domElement.addEventListener("pointerleave", () => { tip.hidden = true; });
@@ -230,7 +237,7 @@ if (renderer) {
     document.getElementById("hudtxt").innerHTML = stopped
       ? `<b>${(ST.find((x) => Math.abs(x.s - s) < 1) || ST[0]).id}</b> · ${tt("standing at the platform", "perona yanaşmış")}`
       : `<b>${nf(q.v)} ${KMH}</b> · <span class="ph ph-${q.ph}">${tt(PHASE[q.ph].en, PHASE[q.ph].tr)}</span><br>` +
-        `${q.a >= 0 ? "+" : ""}${nf(q.a, 2)} m/s² · ${sr.frm} → ${sr.to} · ${tt("grade", "eğim")} ${nf(sr.grade_pct, 1)}%`;
+        `${q.a >= 0 ? "+" : ""}${nf(q.a, 2)} m/s² · ${sr.frm} → ${sr.to} · ${tt("grade", "eğim")} ${pc(nf(sr.grade_pct, 1))}`;
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
@@ -282,7 +289,7 @@ function axisX(h) {
   g += `<polyline class="ground" points="${ST.map((s) => `${xs(s.s)},${ys(s.z_ground)}`).join(" ")}"/>`;
   g += `<polyline class="rail" points="${ST.map((s) => `${xs(s.s)},${ys(s.z_rail)}`).join(" ")}"/>`;
   ST.forEach((s, i) => {
-    const est = i > 0 && SR[i - 1].dz_source !== "calm";
+    const est = !!s.est;
     g += `<g><circle cx="${xs(s.s)}" cy="${ys(s.z_rail)}" r="5" class="${est ? "dot est" : "dot"}"/><circle cx="${xs(s.s)}" cy="${ys(s.z_rail)}" r="13" fill="transparent"/>` +
       `<title>${s.id}: ${tt("rail", "ray")} ${s.z_rail > 0 ? "+" : ""}${nf(s.z_rail, 1)} m${est ? tt(" (estimated)", " (tahmini)") : ""} · ${tt("ground", "zemin")} ${s.z_ground > 0 ? "+" : ""}${nf(s.z_ground)} m</title></g>`;
   });
@@ -337,6 +344,6 @@ function axisX(h) {
 // tables
 (function tables() {
   const q = (s) => s === "good" ? tt("good", "iyi") : tt("rough", "kaba");
-  document.getElementById("vtab").innerHTML = SR.map((r) => `<tr><td>${r.frm} → ${r.to}</td><td>${nf(r.gyro_turn_deg, 1)}°</td><td>${nf(r.osm_turn_deg, 1)}°</td><td>${nf(r.max_offset_m)} m</td><td>${r.dz_m > 0 ? "+" : ""}${nf(r.dz_m, 1)} m${r.dz_spread_m != null ? ` <span class="muted">±${nf(r.dz_spread_m, 1)}</span>` : r.dz_source !== "calm" ? ` <span class="muted">${tt("est.", "tah.")}</span>` : ""}</td><td>${q(r.quality)}</td></tr>`).join("");
-  document.getElementById("mtab").innerHTML = SR.map((r) => `<tr><td>${r.frm} → ${r.to}</td><td>${nf(r.length_m)} m</td><td>${r.grade_pct > 0 ? "+" : ""}${nf(r.grade_pct, 1)}%</td><td>${nf(r.peak_kmh)}</td><td>${nf(r.traction_peak, 2)}</td><td>${nf(r.braking_peak, 2)}</td><td>${nf(r.jerk_start, 1)} / ${nf(r.jerk_stop, 1)}</td><td>${nf(r.vib_aw, 2)}</td></tr>`).join("");
+  document.getElementById("vtab").innerHTML = SR.map((r) => `<tr><td>${r.frm} → ${r.to}</td><td>${nf(r.gyro_turn_deg, 1)}°</td><td>${nf(r.osm_turn_deg, 1)}°</td><td>${nf(r.max_offset_m)} m</td><td>${r.dz_m > 0 ? "+" : ""}${nf(r.dz_m, 1)} m${ST.find((s) => s.id === r.to).est ? ` <span class="muted">${tt("est.", "tah.")}</span>` : ""}</td><td>${q(r.quality)}</td></tr>`).join("");
+  document.getElementById("mtab").innerHTML = SR.map((r) => `<tr><td>${r.frm} → ${r.to}</td><td>${nf(r.length_m)} m</td><td>${pc((r.grade_pct > 0 ? "+" : "") + nf(r.grade_pct, 1))}</td><td>${nf(r.peak_kmh)}</td><td>${nf(r.traction_peak, 2)}</td><td>${nf(r.braking_peak, 2)}</td><td>${nf(r.jerk_start, 1)} / ${nf(r.jerk_stop, 1)}</td><td>${nf(r.vib_aw, 2)}</td></tr>`).join("");
 })();

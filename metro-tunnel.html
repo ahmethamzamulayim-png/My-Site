@@ -87,9 +87,9 @@
 
         <div class="stat-grid">
           <div class="stat"><strong>12 km</strong><span>of tunnel and 9 stations rebuilt from one phone</span></div>
-          <div class="stat"><strong>&lt; 1°</strong><span>gap between the gyroscope's turns and the mapped track on 6 of 8 stretches (8° on the sharpest curve)</span></div>
+          <div class="stat"><strong>≈ 1°</strong><span>or better: gap between the gyroscope's turns and the mapped track on 6 of 8 stretches (8° on the sharpest curve)</span></div>
           <div class="stat"><strong>±1 m</strong><span>station heights repeat to within this across separate rides</span></div>
-          <div class="stat"><strong>534 J/kg</strong><span>absorbed by the brakes on the steepest downhill — almost twice the train's motion energy</span></div>
+          <div class="stat"><strong>≈ 400 J/kg</strong><span>of height shed between two stops on the steepest downhill — the brakes and air drag have to absorb all of it</span></div>
         </div>
       </section>
 
@@ -158,14 +158,14 @@
         </div>
         <div class="mt-panel"><div id="hchart" class="mt-chart"></div>
           <div class="mt-legend"><span><i class="sw-rail"></i>rail height (barometer)</span><span><i class="sw-ground"></i>ground above each station (elevation model)</span></div>
-          <p class="mt-note">Filled dots: measured in calm air at the platform. Hollow dot (S7): the recording stopped as the train did, so that one height comes from the moving air, corrected by the 4.5 m offset seen on the five runs where both were available.</p>
+          <p class="mt-note">Filled dots: measured in calm air at the platform. Hollow dot (S7): estimated from the pressure while moving, corrected by the steady 4.5 m offset that moving air showed on the other stretches.</p>
         </div>
       </section>
 
       <section class="section" data-reveal>
         <div class="section-heading">
           <p class="eyebrow">Speed</p>
-          <h2>Pull, cruise, slow, stop — nine times.</h2>
+          <h2>Pull, cruise, slow, stop — eight times.</h2>
         </div>
         <div class="mt-panel"><div id="vchart" class="mt-chart"></div>
           <div class="mt-legend">
@@ -191,15 +191,15 @@
         </div>
         <div class="mt-steps two">
           <div class="mt-step">
-            <h3><small>S3 → S4 · 2.7% downhill</small>534 J/kg</h3>
-            <p>The train starts slowing at 88 km/h while still running downhill. Its motion energy is 300 J/kg; the 24 m it drops on the way adds another 234. The brakes absorb nearly twice what flat track would ask of them — every tonne of train sheds over half a megajoule.</p>
+            <h3><small>S3 → S4 · 2.7% downhill</small>40.6 m lower</h3>
+            <p>The train leaves S3 at rest and stops at S4 at rest, 40.6 m lower. That height — about 400 J/kg — can only go into the brakes and air drag, on top of whatever the motors add. If the slope is even between the stations, most of it lands on the final stop: the train starts slowing at 88 km/h (300 J/kg of motion) with 24 m still to drop (another 234) — about 534 J/kg, nearly twice what flat track would ask.</p>
           </div>
           <div class="mt-step">
-            <h3><small>S2 → S3 · 2.9% uphill</small>115 J/kg</h3>
-            <p>Here the train starts slowing at 75 km/h, but it is climbing: 10.5 m of rise takes 103 J/kg off its speed for free. The brakes only handle about half the motion energy — roughly a fifth of what the downhill stop costs them.</p>
+            <h3><small>S2 → S3 · 2.9% uphill</small>39 m higher</h3>
+            <p>Here the stop is 39 m above the start, so gravity takes about 380 J/kg off the train over the run, for free. If the slope is even, the train starts slowing at 75 km/h (218 J/kg) while still climbing 10.5 m (103 J/kg), so the brakes handle about 115 J/kg — roughly a fifth of the downhill stop.</p>
           </div>
         </div>
-        <p class="mt-note">These are upper bounds for the brakes: rolling resistance and air drag also take a share while slowing. It is also the energy a regenerative drive could try to win back — how much it actually recovers depends on the drive and on whether another train on the line can use it at that moment.</p>
+        <p class="mt-note">The split between motion and height assumes an even slope between stations, which the barometer can't confirm (see Limits); the total height between two stops is measured. These are upper bounds for the brakes: rolling resistance and air drag also take a share while slowing. It is also the energy a regenerative drive could try to win back — how much it actually recovers depends on the drive and on whether another train on the line can use it at that moment.</p>
       </section>
 
       <section class="section" data-reveal>
@@ -222,7 +222,7 @@
         <div class="section-heading">
           <p class="eyebrow">Checks</p>
           <h2>How I know it isn't made up.</h2>
-          <p class="hero-text">The phone never saw a map. So the map is the test: how much the track really turns between stations (OpenStreetMap), against how much the gyroscope says it turned. And where a stretch was ridden more than once, how much its height change moved between rides.</p>
+          <p class="hero-text">The phone never saw a map. So the map is the test: how much the track really turns between stations (OpenStreetMap), against how much the gyroscope says it turned. And station heights measured again on separate rides agree to within 0.6 m.</p>
         </div>
         <div class="mt-panel">
           <div class="tbl-wrap">
@@ -231,7 +231,7 @@
               <tbody id="vtab"></tbody>
             </table>
           </div>
-          <p class="mt-note">"±" is the spread across repeated rides of the same stretch, in both directions. Speed fit: how little the accelerometer needed correcting to meet the station distance ("good" &lt; 0.15 m/s², "rough" &lt; 0.6).</p>
+          <p class="mt-note">Speed fit: how little the accelerometer needed correcting to meet the station distance ("good" &lt; 0.15 m/s², "rough" &lt; 0.6).</p>
         </div>
       </section>
 
@@ -244,7 +244,8 @@
           <li><strong>How deep the tunnel is.</strong> The barometer gives height changes, not depth below ground.</li>
           <li><strong>The shape of the slope between stations.</strong> Moving air hides it; the straight lines between stations are drawn, not measured.</li>
           <li><strong>A precise plan view.</strong> It follows the mapped track to within 30–130 m at worst; good enough to see every curve, not to survey one.</li>
-          <li><strong>Statistics.</strong> Most stretches are drawn from one clean run. This is a case study of what a phone can measure, not an average of the line.</li>
+          <li><strong>Statistics.</strong> Each stretch is drawn from one run. This is a case study of what a phone can measure, not an average of the line.</li>
+          <li><strong>Smooth joins.</strong> Each stretch is fitted between its two stations on its own, so the line can show small kinks where stretches meet.</li>
         </ul>
       </section>
 
