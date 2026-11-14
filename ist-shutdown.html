@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Why I Switched Off the IST Pipeline | Ahmet Hamza Mülayim</title>
-    <meta name="description" content="Six months of collecting Istanbul Airport delay data every day — what it produced, the two quiet failures that ended it, and why I'm putting the time back into mechanical engineering." />
+    <meta name="description" content="Six months of building an Istanbul Airport delay dataset — what it produced, the two quiet failures that ended it, and why I'm putting the time back into mechanical engineering." />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e81932'/%3E%3Ctext x='32' y='45' font-size='38' font-family='sans-serif' font-weight='700' text-anchor='middle' fill='%23fff'%3EA%3C/text%3E%3C/svg%3E" />
     <link rel="canonical" href="https://ahmethmzamlym.engineer/ist-shutdown" />
     <link rel="alternate" hreflang="en" href="https://ahmethmzamlym.engineer/ist-shutdown" />
@@ -12,7 +12,7 @@
     <link rel="alternate" hreflang="x-default" href="https://ahmethmzamlym.engineer/ist-shutdown" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="Why I Switched Off the IST Pipeline | Ahmet Hamza Mülayim" />
-    <meta property="og:description" content="Six months of collecting Istanbul Airport delay data every day — what it produced, the two quiet failures that ended it, and why I'm putting the time back into mechanical engineering." />
+    <meta property="og:description" content="Six months of building an Istanbul Airport delay dataset — what it produced, the two quiet failures that ended it, and why I'm putting the time back into mechanical engineering." />
     <meta property="og:url" content="https://ahmethmzamlym.engineer/ist-shutdown" />
     <meta property="og:image" content="https://ahmethmzamlym.engineer/assets/img/og/ist-rotar.jpg" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -81,7 +81,7 @@
         "@context": "https://schema.org",
         "@type": "Article",
         "headline": "Why I switched off the IST delay pipeline",
-        "description": "Six months of collecting Istanbul Airport delay data every day — what it produced, the two quiet failures that ended it, and why I'm putting the time back into mechanical engineering.",
+        "description": "Six months of building an Istanbul Airport delay dataset — what it produced, the two quiet failures that ended it, and why I'm putting the time back into mechanical engineering.",
         "url": "https://ahmethmzamlym.engineer/ist-shutdown",
         "datePublished": "2026-11-14",
         "dateModified": "2026-11-14",
@@ -116,12 +116,13 @@
           <p class="eyebrow">Aviation Data · Retrospective · Nov 2026</p>
           <h1>Why I switched off the IST delay pipeline.</h1>
           <p class="hero-text">
-            For six months a small pipeline collected every departure from
-            Istanbul Airport, joined it with ADS-B tracks and weather, and
+            From May to October 2026 a small pipeline built a flight-delay
+            dataset for Istanbul Airport — a paid backfill of May to July, then
+            nightly collection — joined it with ADS-B tracks and weather, and
             published a delay dataset, a model and a live prediction board
             here. On 14 November 2026 I switched it off. It produced real
-            results, but it had stopped producing trustworthy data a month
-            before anyone noticed — including me. This page is what it found,
+            results, but it had stopped producing trustworthy data two
+            months before anyone noticed — including me. This page is what it found,
             what broke it, and why I'm putting the time back into mechanical
             engineering.
           </p>
@@ -130,8 +131,8 @@
         <div class="stat-grid">
           <div class="stat"><strong>136,459</strong><span>flights collected over 134 clean days, May – Sep 2026</span></div>
           <div class="stat"><strong>11.8%</strong><span>of passenger departures left the gate 15+ min late</span></div>
-          <div class="stat"><strong>0.729</strong><span>live AUC on 1,067 real flights scored before they flew — offline testing said 0.742</span></div>
-          <div class="stat"><strong>3</strong><span>outside services it depended on — and every one of them failed at least once</span></div>
+          <div class="stat"><strong>0.729</strong><span>live AUC on 1,067 real flights scored before they flew — offline tests of the same method said 0.711–0.716</span></div>
+          <div class="stat"><strong>3</strong><span>outside services it depended on, plus the accounts and tokens linking them</span></div>
         </div>
       </section>
 
@@ -145,7 +146,7 @@
           <li><b>Jul 27 · free tier</b><span>Down to ~100 flights a day — the free schedule API allows 100 requests a month. Enough for a live board, not for a full airport.</span></li>
           <li class="bad"><b>Aug 17 – Sep 5 · three failures at once</b><span>OpenSky lost coverage of Istanbul, my OpenSky API account was disabled, and the token that publishes to this site expired. I fixed the account and the token by hand; the coverage came back on its own in early September.</span></li>
           <li class="bad"><b>Sep 13 · the quiet one</b><span>The schedule provider changed what its "delay" field measures. Nothing errored. The delay rate on this site went from about 13% to 66% overnight. <a href="#shift">Details below.</a></span></li>
-          <li class="bad"><b>Oct 11 · the proxy dies</b><span>The relay that lets GitHub's servers reach OpenSky started answering every request with HTTP 502. Daily flight counts fell from ~100 to 0–2. Every run still reported success.</span></li>
+          <li class="bad"><b>Oct 11 · OpenSky stops answering</b><span>Every request through the relay that lets GitHub's servers reach OpenSky started coming back as HTTP 502. Daily flight counts fell from ~100 to 0–2. Every run still reported success.</span></li>
           <li><b>Nov 14 · switched off</b><span>Workflows disabled, pages frozen on the clean period (May 1 – Sep 12), this write-up published.</span></li>
         </ol>
       </section>
@@ -201,9 +202,9 @@
             Each one changes on its own schedule, without telling you: coverage
             disappears, an account gets disabled, a field quietly changes
             meaning, a server starts returning errors. None of that is under my
-            control, and almost none of it shows up as a failed run. Over six
-            months I spent more time keeping the inputs honest than learning
-            anything new from them.
+            control, and almost none of it shows up as a failed run. Keeping up
+            with all of it is hard for one person — and the moment I stopped
+            watching closely, it drifted for two months without anyone knowing.
           </p>
           <p>
             Both failures that ended it were <strong>silent</strong>: the

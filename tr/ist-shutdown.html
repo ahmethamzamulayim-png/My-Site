@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>IST Veri Hattını Neden Kapattım | Ahmet Hamza Mülayim</title>
-    <meta name="description" content="Altı ay boyunca her gün İstanbul Havalimanı rötar verisi topladım — ne üretti, onu bitiren iki sessiz arıza ve zamanımı neden makine mühendisliğine geri veriyorum." />
+    <meta name="description" content="Altı ay boyunca bir İstanbul Havalimanı rötar veri seti kurdum — ne üretti, onu bitiren iki sessiz arıza ve zamanımı neden makine mühendisliğine geri veriyorum." />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23e81932'/%3E%3Ctext x='32' y='45' font-size='38' font-family='sans-serif' font-weight='700' text-anchor='middle' fill='%23fff'%3EA%3C/text%3E%3C/svg%3E" />
     <link rel="canonical" href="https://ahmethmzamlym.engineer/tr/ist-shutdown" />
     <link rel="alternate" hreflang="en" href="https://ahmethmzamlym.engineer/ist-shutdown" />
@@ -12,7 +12,7 @@
     <link rel="alternate" hreflang="x-default" href="https://ahmethmzamlym.engineer/ist-shutdown" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="IST Veri Hattını Neden Kapattım | Ahmet Hamza Mülayim" />
-    <meta property="og:description" content="Altı ay boyunca her gün İstanbul Havalimanı rötar verisi topladım — ne üretti, onu bitiren iki sessiz arıza ve zamanımı neden makine mühendisliğine geri veriyorum." />
+    <meta property="og:description" content="Altı ay boyunca bir İstanbul Havalimanı rötar veri seti kurdum — ne üretti, onu bitiren iki sessiz arıza ve zamanımı neden makine mühendisliğine geri veriyorum." />
     <meta property="og:url" content="https://ahmethmzamlym.engineer/tr/ist-shutdown" />
     <meta property="og:image" content="https://ahmethmzamlym.engineer/assets/img/og/ist-rotar.jpg" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -81,7 +81,7 @@
         "@context": "https://schema.org",
         "@type": "Article",
         "headline": "IST rötar veri hattını neden kapattım",
-        "description": "Altı ay boyunca her gün İstanbul Havalimanı rötar verisi topladım — ne üretti, onu bitiren iki sessiz arıza ve zamanımı neden makine mühendisliğine geri veriyorum.",
+        "description": "Altı ay boyunca bir İstanbul Havalimanı rötar veri seti kurdum — ne üretti, onu bitiren iki sessiz arıza ve zamanımı neden makine mühendisliğine geri veriyorum.",
         "url": "https://ahmethmzamlym.engineer/tr/ist-shutdown",
         "datePublished": "2026-11-14",
         "dateModified": "2026-11-14",
@@ -116,11 +116,12 @@
           <p class="eyebrow">Havacılık Verisi · Geriye Bakış · Kasım 2026</p>
           <h1>IST rötar veri hattını neden kapattım.</h1>
           <p class="hero-text">
-            Altı ay boyunca küçük bir veri hattı İstanbul Havalimanı'ndan her
-            kalkışı topladı, ADS-B izleri ve hava durumuyla birleştirdi; burada
+            Mayıs – Ekim 2026 arasında küçük bir veri hattı İstanbul Havalimanı
+            için bir rötar veri seti kurdu — Mayıs–Temmuz için ücretli geçmiş veri,
+            sonra her gece toplama — ADS-B izleri ve hava durumuyla birleştirdi; burada
             bir rötar veri seti, bir model ve canlı bir tahmin panosu yayınladı.
             14 Kasım 2026'da kapattım. Gerçek sonuçlar üretti, ama güvenilir veri
-            üretmeyi bırakalı bir ay olmuştu ve bunu kimse fark etmedi — ben de
+            üretmeyi bırakalı iki ay olmuştu ve bunu kimse fark etmedi — ben de
             dahil. Bu sayfa ne bulduğunu, onu neyin bozduğunu ve zamanımı neden
             makine mühendisliğine geri verdiğimi anlatıyor.
           </p>
@@ -129,8 +130,8 @@
         <div class="stat-grid">
           <div class="stat"><strong>136.459</strong><span>uçuş, Mayıs – Eylül 2026 arasındaki 134 temiz günde toplandı</span></div>
           <div class="stat"><strong>%11,8</strong><span>yolcu kalkışı kapıdan 15+ dk geç ayrıldı</span></div>
-          <div class="stat"><strong>0,729</strong><span>canlı AUC — kalkıştan önce puanlanan 1.067 gerçek uçuşta; çevrimdışı test 0,742 demişti</span></div>
-          <div class="stat"><strong>3</strong><span>dış servise bağlıydı — ve her biri en az bir kez arıza verdi</span></div>
+          <div class="stat"><strong>0,729</strong><span>canlı AUC — kalkıştan önce puanlanan 1.067 gerçek uçuşta; aynı yöntemin çevrimdışı testi 0,711–0,716 demişti</span></div>
+          <div class="stat"><strong>3</strong><span>dış servise bağlıydı — artı onları bağlayan hesaplar ve anahtarlar</span></div>
         </div>
       </section>
 
@@ -144,7 +145,7 @@
           <li><b>27 Tem · ücretsiz kota</b><span>Günde ~100 uçuşa düştü — ücretsiz tarife API'si ayda 100 isteğe izin veriyor. Canlı bir pano için yeterli, bütün bir havalimanı için değil.</span></li>
           <li class="bad"><b>17 Ağu – 5 Eyl · aynı anda üç arıza</b><span>OpenSky İstanbul kapsamasını kaybetti, OpenSky API hesabım devre dışı kaldı ve bu siteye yayın yapan erişim anahtarının süresi doldu. Hesabı ve anahtarı elle düzelttim; kapsama Eylül başında kendiliğinden geri geldi.</span></li>
           <li class="bad"><b>13 Eyl · sessiz olan</b><span>Tarife sağlayıcısı "delay" alanının neyi ölçtüğünü değiştirdi. Hiçbir hata çıkmadı. Bu sitedeki rötar oranı bir gecede yaklaşık %13'ten %66'ya çıktı. <a href="#shift">Ayrıntılar aşağıda.</a></span></li>
-          <li class="bad"><b>11 Eki · aracı sunucu çöküyor</b><span>GitHub sunucularının OpenSky'a ulaşmasını sağlayan aracı, her isteğe HTTP 502 ile cevap vermeye başladı. Günlük uçuş sayısı ~100'den 0–2'ye düştü. Her çalıştırma yine de "başarılı" göründü.</span></li>
+          <li class="bad"><b>11 Eki · OpenSky yanıt vermiyor</b><span>GitHub sunucularının OpenSky'a ulaşmasını sağlayan aracı üzerinden giden her istek HTTP 502 ile dönmeye başladı. Günlük uçuş sayısı ~100'den 0–2'ye düştü. Her çalıştırma yine de "başarılı" göründü.</span></li>
           <li><b>14 Kas · kapatıldı</b><span>İş akışları devre dışı bırakıldı, sayfalar temiz döneme (1 Mayıs – 12 Eylül) sabitlendi, bu yazı yayınlandı.</span></li>
         </ol>
       </section>
@@ -200,9 +201,9 @@
             takviminde, haber vermeden değişiyor: kapsama kayboluyor, bir hesap
             kapatılıyor, bir alanın anlamı sessizce değişiyor, bir sunucu hata
             döndürmeye başlıyor. Bunların hiçbiri benim kontrolümde değil ve
-            neredeyse hiçbiri başarısız bir çalıştırma olarak görünmüyor. Altı
-            ayda girdileri dürüst tutmaya, onlardan yeni bir şey öğrenmekten
-            daha çok zaman harcadım.
+            neredeyse hiçbiri başarısız bir çalıştırma olarak görünmüyor. Hepsine yetişmek tek
+            kişi için zor — ve yakından izlemeyi bıraktığım anda iki ay boyunca
+            kimse fark etmeden saptı.
           </p>
           <p>
             Onu bitiren iki arıza da <strong>sessizdi</strong>: veri hattı bir

@@ -187,8 +187,8 @@
           <h1>Bir uçuşun geç kalkacağını, kalkışa saatler kala bilmek.</h1>
           <p class="hero-text">
             ABD havalimanlarının aksine İstanbul Havalimanı geçmiş rötar verisini
-            yayımlamıyor. Bu yüzden veri setini kendim topladım: Mayıs 2026'dan
-            beri her gün, uçuş tarifesi + ADS-B hareketleri + METAR. Bu sayfa o
+            yayımlamıyor. Bu yüzden veri setini kendim topladım: Mayıs – Ekim
+            2026 arasında, uçuş tarifesi + ADS-B hareketleri + METAR. Bu sayfa o
             veri üzerine kurulan modeli anlatıyor — nasıl kurulduğunu, neden bu
             şekilde kurulduğunu ve nerede durduğunu.
           </p>
@@ -359,7 +359,7 @@
             <strong>24 saat önceden %0'ı</strong> bilinebiliyor. Modelin bütün
             üstünlüğü bu iki öznitelikten geldiği için, yarının panosunu
             puanlarken elde 0,716 kalıyor — çıtanın 0,711'inin hemen üstü. Bu
-            yüzden canlı pano hâlâ arama tablosunu kullanıyor. Doğru çözüm modeli
+            yüzden canlı pano arama tablosunda ve bu hava durumlu hibritte kaldı. Doğru çözüm modeli
             panoya koymak değil, panoyu gün içinde yeniden puanlamak.
           </li>
           <li>
@@ -401,10 +401,12 @@
           <p class="eyebrow">Çalışan yarısı</p>
           <h2>Kalkış rötar panosu.</h2>
           <p class="hero-text">
-            Ağustos – Ekim 2026 arasında canlı çalışan kısım: planlanan her kalkış,
+            Ağustos 2026'dan kapanışa kadar canlı çalışan kısım: planlanan her kalkış,
             uçmadan önce kendi geçmişine göre puanlandı ve sonra gerçekte ne
             olduğuyla karşılaştırıldı. Yukarıdaki sınır gereği pano arama tablosunu
-            kullandı — ve tuttu: veri bozulmadan önce 1.067 gerçek uçuşta AUC 0,729.
+            ve hava durumunu da kullanan bir hibriti kullandı — ve tuttular: veri
+            bozulmadan önce 1.067 gerçek uçuşta AUC 0,729, çevrimdışı testlerinden
+            (0,711–0,716) biraz daha iyi.
           </p>
         </div>
         <div class="contact-actions">

@@ -185,7 +185,7 @@
         <div class="section-heading">
           <p class="eyebrow">Main quest · delay prediction model · Aug 2026</p>
           <h1>Knowing a flight will leave late, hours before it does.</h1>
-          <p class="hero-text">Unlike US airports, Istanbul Airport publishes no historical delay data. So I collected the dataset myself: every day since May 2026 — schedules, ADS-B movements and METARs. This page is about the model built on it: how it was built, why it was built that way, and where it stops.</p>
+          <p class="hero-text">Unlike US airports, Istanbul Airport publishes no historical delay data. So I collected the dataset myself, from May to October 2026 — schedules, ADS-B movements and METARs. This page is about the model built on it: how it was built, why it was built that way, and where it stops.</p>
         </div>
         <div class="stat-grid">
           <div class="stat"><strong>0,742</strong><span>AUC — against my own lookup table's 0.711</span></div>
@@ -292,7 +292,7 @@
           <h2>Where the model does not work.</h2>
         </div>
         <ul class="limits">
-          <li><strong>A day ahead, this model is no better.</strong> Measured: a turnaround becomes known a median of 2.3 hours before departure, and <strong>0% of them 24 hours ahead</strong>. Since the model's entire advantage comes from those two features, scoring tomorrow's board leaves 0.716 — barely above the bar's 0.711. That is why the live board still uses the lookup table. The fix is not to put the model on the board, but to re-score the board through the day.</li>
+          <li><strong>A day ahead, this model is no better.</strong> Measured: a turnaround becomes known a median of 2.3 hours before departure, and <strong>0% of them 24 hours ahead</strong>. Since the model's entire advantage comes from those two features, scoring tomorrow's board leaves 0.716 — barely above the bar's 0.711. That is why the live board stayed on the lookup table and this weather-aware hybrid. The fix is not to put the model on the board, but to re-score the board through the day.</li>
           <li><strong>The inbound delay sits at the noise floor.</strong> A single run shows +0.003; measured across four random seeds it averages <strong>+0.002</strong> and goes negative on one of the four. The baseline's own seed spread (0.0027) is larger than the effect. I kept the feature because it is the right mechanism — but it cannot be presented as a gain.</li>
           <li><strong>I can only identify 34% of the aircraft.</strong> Turnaround exists only for flights whose airframe I catch on ADS-B. OpenSky sees ~554 departure movements a day against ~877 scheduled departures, so even perfect matching stops at 63%.</li>
           <li><strong>Weather is not learnable yet.</strong> The training months contain five thunderstorm hours in total, and in those the delay rate ran normal. A model cannot learn an effect its sample does not contain. At IST winter brings 10x the fog and 10x the sub-3km visibility — February is the worst month, not December. So the weather terms wait for winter.</li>
@@ -305,7 +305,7 @@
         <div class="section-heading">
           <p class="eyebrow">The working half</p>
           <h2>The departure delay board.</h2>
-          <p class="hero-text">The part that ran live from August to October 2026: every scheduled departure, scored against its own history before it flew, then compared with what actually happened. Because of the limitation above, the board used the lookup table — and it held up: AUC 0.729 on 1,067 real flights before the data went bad.</p>
+          <p class="hero-text">The part that ran live from August 2026 until the shutdown: every scheduled departure, scored against its own history before it flew, then compared with what actually happened. Because of the limitation above, the board used the lookup table and a weather-aware hybrid — and they held up: AUC 0.729 on 1,067 real flights before the data went bad, slightly better than their offline tests (0.711–0.716).</p>
         </div>
         <div class="contact-actions">
           <a class="button primary" href="/board">Open the archived board →</a>
