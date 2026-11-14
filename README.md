@@ -12,6 +12,7 @@ Static portfolio for GitHub Pages, live at [ahmethmzamlym.engineer](https://ahme
 | `ist-rotar.html` | Archived dashboard for the Istanbul Airport (IST) delay dataset, frozen on 1 May – 12 Sep 2026 |
 | `board.html` | Archived IST departure board — last clean window (12 Sep 2026) with outcomes and the full live record |
 | `route-delay-globe.html` | IST's riskiest outbound routes, plotted on a 3D globe |
+| `metro-tunnel.html` | A 12 km metro tunnel rebuilt in 3D from phone sensors (gyroscope, barometer, accelerometer); three.js view, braking-energy analysis. Data: `metro/tube.json`, built by `analysis/tube.py` in the WhereisMyRide repo — stations anonymised (S1–S9) on purpose |
 | `bearing.html` | Bearing failure prediction on NASA's IMS vibration dataset |
 | `bearing-universal.html` | Part 2 — does the model generalize across 3 rigs / 36 bearings (IMS, XJTU-SY, FEMTO)? |
 | `phase2.html` | Roadmap and findings for an IST delay-prediction model |

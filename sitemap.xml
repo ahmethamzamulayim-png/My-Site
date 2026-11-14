@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://ahmethmzamlym.engineer/</loc><lastmod>2026-11-14</lastmod></url>
+  <url><loc>https://ahmethmzamlym.engineer/</loc><lastmod>2026-11-15</lastmod></url>
   <url><loc>https://ahmethmzamlym.engineer/about</loc><lastmod>2026-08-13</lastmod></url>
   <url><loc>https://ahmethmzamlym.engineer/bearing</loc><lastmod>2026-08-13</lastmod></url>
   <url><loc>https://ahmethmzamlym.engineer/bearing-universal</loc><lastmod>2026-08-13</lastmod></url>
@@ -15,7 +15,7 @@
   <url><loc>https://ahmethmzamlym.engineer/route-delay-globe</loc><lastmod>2026-08-13</lastmod></url>
   <url><loc>https://ahmethmzamlym.engineer/three-hubs</loc><lastmod>2026-11-14</lastmod></url>
   <url><loc>https://ahmethmzamlym.engineer/thy-globe</loc><lastmod>2026-11-14</lastmod></url>
-  <url><loc>https://ahmethmzamlym.engineer/tr/</loc><lastmod>2026-11-14</lastmod></url>
+  <url><loc>https://ahmethmzamlym.engineer/tr/</loc><lastmod>2026-11-15</lastmod></url>
   <url><loc>https://ahmethmzamlym.engineer/tr/about</loc><lastmod>2026-08-13</lastmod></url>
   <url><loc>https://ahmethmzamlym.engineer/tr/bearing</loc><lastmod>2026-08-13</lastmod></url>
   <url><loc>https://ahmethmzamlym.engineer/tr/bearing-universal</loc><lastmod>2026-08-13</lastmod></url>
@@ -32,4 +32,6 @@
   <url><loc>https://ahmethmzamlym.engineer/tr/thy-globe</loc><lastmod>2026-11-14</lastmod></url>
   <url><loc>https://ahmethmzamlym.engineer/ist-shutdown</loc><lastmod>2026-11-14</lastmod></url>
   <url><loc>https://ahmethmzamlym.engineer/tr/ist-shutdown</loc><lastmod>2026-11-14</lastmod></url>
+  <url><loc>https://ahmethmzamlym.engineer/metro-tunnel</loc><lastmod>2026-11-15</lastmod></url>
+  <url><loc>https://ahmethmzamlym.engineer/tr/metro-tunnel</loc><lastmod>2026-11-15</lastmod></url>
 </urlset>

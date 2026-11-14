@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Metro Tunnel from a Phone | Ahmet Hamza Mülayim</title>
+    <meta name="description" content="A 12 km stretch of Istanbul metro tunnel rebuilt in 3D from a phone's gyroscope, barometer and accelerometer — checked against the map, and used to show where the brakes work hardest." />
+    <link rel="icon" type="image/svg+xml" href="/metro/tekir-favicon.svg" />
+    <link rel="canonical" href="https://ahmethmzamlym.engineer/metro-tunnel" />
+    <link rel="alternate" hreflang="en" href="https://ahmethmzamlym.engineer/metro-tunnel" />
+    <link rel="alternate" hreflang="tr" href="https://ahmethmzamlym.engineer/tr/metro-tunnel" />
+    <link rel="alternate" hreflang="x-default" href="https://ahmethmzamlym.engineer/metro-tunnel" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Metro Tunnel from a Phone | Ahmet Hamza Mülayim" />
+    <meta property="og:description" content="A 12 km stretch of Istanbul metro tunnel rebuilt in 3D from a phone's gyroscope, barometer and accelerometer — checked against the map, and used to show where the brakes work hardest." />
+    <meta property="og:url" content="https://ahmethmzamlym.engineer/metro-tunnel" />
+    <meta name="twitter:card" content="summary" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/metro/tunnel.css" />
+    <script src="/i18n.js"></script>
+    <script defer src="/script.js"></script>
+    <script defer src="/metro/tekir.js"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+        }
+      }
+    </script>
+    <script type="module" src="/metro/tunnel.js"></script>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="53acc321-a620-42d2-abf8-92a0c2813e8b"></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "A metro tunnel rebuilt in 3D from a phone's sensors",
+        "description": "A 12 km stretch of Istanbul metro tunnel rebuilt in 3D from a phone's gyroscope, barometer and accelerometer — checked against the map, and used to show where the brakes work hardest.",
+        "url": "https://ahmethmzamlym.engineer/metro-tunnel",
+        "datePublished": "2026-11-15",
+        "dateModified": "2026-11-15",
+        "author": { "@type": "Person", "name": "Ahmet Hamza Mülayim", "url": "https://ahmethmzamlym.engineer/" },
+        "inLanguage": "en"
+      }
+    </script>
+  </head>
+  <body>
+    <div class="noise"></div>
+    <header class="site-header">
+      <a class="brand" href="/">
+        <span class="brand-mark">A</span>
+        <span>
+          <strong>Ahmet Hamza Mülayim</strong>
+          <small>Marmara University</small>
+        </span>
+      </a>
+      <nav class="site-nav">
+        <a href="/#projects">← Portfolio</a>
+        <a class="lang-toggle" href="/tr/metro-tunnel">TR</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="section" data-reveal>
+        <div class="mt-hero">
+          <div class="section-heading">
+            <p class="eyebrow">Vehicle dynamics · phone sensors · Nov 2026</p>
+            <h1>I rebuilt a metro tunnel in 3D from the sensors in my phone.</h1>
+            <p class="hero-text">
+              Nobody publishes what the inside of a metro tunnel looks like —
+              where it climbs, where it bends, where the train has to fight
+              gravity to stop. So I measured it. A phone lying on the seat
+              records which way it turns, how the air pressure changes and
+              how hard it's pushed. Put those together and you get the tunnel:
+              12 km of it, nine stations, every hill and curve — and with it,
+              exactly where the brakes do the most work.
+            </p>
+          </div>
+          <div class="mt-cat" data-tekir="sit,blink,sit,happy" data-hold="2600,160,2200,900" data-size="150" data-label="Tekir the cat, the project's mascot"></div>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat"><strong>12 km</strong><span>of tunnel and 9 stations rebuilt from one phone</span></div>
+          <div class="stat"><strong>&lt; 1°</strong><span>gap between the gyroscope's turns and the mapped track on 6 of 8 stretches (8° on the sharpest curve)</span></div>
+          <div class="stat"><strong>±1 m</strong><span>station heights repeat to within this across separate rides</span></div>
+          <div class="stat"><strong>534 J/kg</strong><span>absorbed by the brakes on the steepest downhill — almost twice the train's motion energy</span></div>
+        </div>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">The tunnel</p>
+          <h2>Drag to look around. The train replays the real run.</h2>
+          <p class="hero-text">Colour shows what the train was doing at each point. Height is stretched so the hills are visible — use the slider to see it closer to true scale. The tube is drawn far thicker than the real tunnel.</p>
+        </div>
+        <div class="mt-controls">
+          <fieldset>
+            <legend>Colour by</legend>
+            <label><input type="radio" name="colorby" value="phase" checked /> what the train is doing</label>
+            <label><input type="radio" name="colorby" value="speed" /> speed</label>
+          </fieldset>
+          <label class="mt-range">Height stretched <b id="exagval">×15</b>
+            <input id="exag" type="range" min="1" max="30" step="1" value="15" />
+          </label>
+          <button class="button secondary" id="playpause" type="button" aria-pressed="false">Pause</button>
+        </div>
+        <div class="mt-legend" id="legend-phase">
+          <span><i style="background:#c2410c"></i>pulling (traction)</span>
+          <span><i style="background:#b08a1e"></i>cruising / coasting</span>
+          <span><i style="background:#1d4ed8"></i>slowing (braking)</span>
+        </div>
+        <div class="mt-legend" id="legend-speed" hidden>
+          <span class="ramp"><i></i></span><span>0 km/h → 90 km/h</span>
+        </div>
+        <div class="mt-stage">
+          <div id="tube3d" aria-label="3D model of the tunnel; the same data is in the charts and tables below"></div>
+          <div id="tubetip" class="mt-tip" hidden></div>
+          <div class="mt-hud" id="hud" aria-live="off">
+            <span id="hudcat"></span>
+            <span id="hudtxt">loading…</span>
+          </div>
+        </div>
+        <p class="mt-note">Station labels are S1–S9 on purpose — see <a href="#names">why the stations have no names</a>. The view is turned so S1 → S9 runs left to right; it is not a map, so there is no north.</p>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Method</p>
+          <h2>How a phone sees a tunnel.</h2>
+        </div>
+        <div class="mt-steps">
+          <div class="mt-step">
+            <h3><small>Bends</small>Gyroscope</h3>
+            <p>It measures how fast the phone rotates. The part around the vertical is the train turning. Multiply by speed, add it up, and you get the tunnel's path seen from above. The gyroscope's own drift is measured while the train stands in a station — where it can't be turning — and taken out.</p>
+          </div>
+          <div class="mt-step">
+            <h3><small>Height</small>Barometer</h3>
+            <p>Air pressure drops about 0.12 hPa for every metre you climb. I read it only while the train stands at a platform: while it moves, the air it pushes through the tunnel swings the pressure by more than the climb itself. Between stations the height is drawn as a straight line — interpolated, not measured.</p>
+          </div>
+          <div class="mt-step">
+            <h3><small>Speed</small>Accelerometer</h3>
+            <p>Integrating acceleration gives speed, but a tilt of half a degree adds up to metres per second within a minute. Two facts fix it: the train is stopped at both ends of each run, and the distance between stations is known. A run that needs a big correction to meet both is thrown out.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Height</p>
+          <h2>The tunnel rides the hills above it.</h2>
+          <p class="hero-text">Rail height from the barometer against ground height above each station from an elevation model. Both are measured from S1, so only their shapes compare — not how deep the tunnel is. Between S2 and S3 the rail climbs 39 m in 1.4 km; the hill above it climbs 50.</p>
+        </div>
+        <div class="mt-panel"><div id="hchart" class="mt-chart"></div>
+          <div class="mt-legend"><span><i class="sw-rail"></i>rail height (barometer)</span><span><i class="sw-ground"></i>ground above each station (elevation model)</span></div>
+          <p class="mt-note">Filled dots: measured in calm air at the platform. Hollow dot (S7): the recording stopped as the train did, so that one height comes from the moving air, corrected by the 4.5 m offset seen on the five runs where both were available.</p>
+        </div>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Speed</p>
+          <h2>Pull, cruise, slow, stop — nine times.</h2>
+        </div>
+        <div class="mt-panel"><div id="vchart" class="mt-chart"></div>
+          <div class="mt-legend">
+            <span><i style="background:#c2410c"></i>pulling</span>
+            <span><i style="background:#b08a1e"></i>cruising / coasting</span>
+            <span><i style="background:#1d4ed8"></i>slowing</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Brakes</p>
+          <h2>Where the brakes work hardest — and where gravity helps.</h2>
+          <p class="hero-text">To stop, the brakes have to take away the train's motion energy, ½v², plus any height it loses on the way down, g·Δh — per kilogram of train. On flat track that's the motion alone. On a slope, the tunnel decides.</p>
+        </div>
+        <div class="mt-panel"><div id="echart" class="mt-chart"></div>
+          <div class="mt-legend">
+            <span><i style="background:#1d4ed8"></i>motion energy when slowing starts</span>
+            <span><i style="background:#c2410c"></i>height lost while slowing (downhill)</span>
+            <span><i style="background:#b08a1e"></i>height gained while slowing (uphill — gravity brakes for free)</span>
+          </div>
+        </div>
+        <div class="mt-steps two">
+          <div class="mt-step">
+            <h3><small>S3 → S4 · 2.7% downhill</small>534 J/kg</h3>
+            <p>The train starts slowing at 88 km/h while still running downhill. Its motion energy is 300 J/kg; the 24 m it drops on the way adds another 234. The brakes absorb nearly twice what flat track would ask of them — every tonne of train sheds over half a megajoule.</p>
+          </div>
+          <div class="mt-step">
+            <h3><small>S2 → S3 · 2.9% uphill</small>115 J/kg</h3>
+            <p>Here the train starts slowing at 75 km/h, but it is climbing: 10.5 m of rise takes 103 J/kg off its speed for free. The brakes only handle about half the motion energy — roughly a fifth of what the downhill stop costs them.</p>
+          </div>
+        </div>
+        <p class="mt-note">These are upper bounds for the brakes: rolling resistance and air drag also take a share while slowing. It is also the energy a regenerative drive could try to win back — how much it actually recovers depends on the drive and on whether another train on the line can use it at that moment.</p>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Ride numbers</p>
+          <h2>Each stretch, as the passenger feels it.</h2>
+        </div>
+        <div class="mt-panel">
+          <div class="tbl-wrap">
+            <table class="mt-table">
+              <thead><tr><th>Stretch</th><th>Length</th><th>Grade</th><th>Top km/h</th><th>Pull m/s²</th><th>Slow m/s²</th><th>Jerk start / stop m/s³</th><th>Vibration a<sub>w</sub> m/s²</th></tr></thead>
+              <tbody id="mtab"></tbody>
+            </table>
+          </div>
+          <p class="mt-note">Pull and slow are the peaks of the speed-derived acceleration (smoothed to 0.3 Hz). Jerk is how abruptly the push changes. Vibration is the ISO 2631-1 frequency-weighted value; a phone on a seat reads differently from a seat-mounted sensor, so compare these with each other, not with published ISO limits.</p>
+        </div>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Checks</p>
+          <h2>How I know it isn't made up.</h2>
+          <p class="hero-text">The phone never saw a map. So the map is the test: how much the track really turns between stations (OpenStreetMap), against how much the gyroscope says it turned. And where a stretch was ridden more than once, how much its height change moved between rides.</p>
+        </div>
+        <div class="mt-panel">
+          <div class="tbl-wrap">
+            <table class="mt-table">
+              <thead><tr><th>Stretch</th><th>Turn, gyroscope</th><th>Turn, map</th><th>Worst gap to map</th><th>Height change</th><th>Speed fit</th></tr></thead>
+              <tbody id="vtab"></tbody>
+            </table>
+          </div>
+          <p class="mt-note">"±" is the spread across repeated rides of the same stretch, in both directions. Speed fit: how little the accelerometer needed correcting to meet the station distance ("good" &lt; 0.15 m/s², "rough" &lt; 0.6).</p>
+        </div>
+      </section>
+
+      <section class="section" data-reveal>
+        <div class="section-heading">
+          <p class="eyebrow">Limits</p>
+          <h2>What this can't tell you.</h2>
+        </div>
+        <ul class="mt-limits">
+          <li><strong>How deep the tunnel is.</strong> The barometer gives height changes, not depth below ground.</li>
+          <li><strong>The shape of the slope between stations.</strong> Moving air hides it; the straight lines between stations are drawn, not measured.</li>
+          <li><strong>A precise plan view.</strong> It follows the mapped track to within 30–130 m at worst; good enough to see every curve, not to survey one.</li>
+          <li><strong>Statistics.</strong> Most stretches are drawn from one clean run. This is a case study of what a phone can measure, not an average of the line.</li>
+        </ul>
+      </section>
+
+      <section class="section" data-reveal id="names">
+        <div class="section-heading">
+          <p class="eyebrow">Privacy</p>
+          <h2>Why the stations have no names.</h2>
+          <p class="hero-text">These are rides I actually took. Named stations and dates would add up to a record of where I go, so the page keeps only the measurements: stations are numbered, the view isn't tied to north, and nothing here says when or how often a stretch was ridden.</p>
+        </div>
+      </section>
+
+      <section class="section contact" data-reveal>
+        <div>
+          <p class="eyebrow">Where it came from</p>
+          <h2>A by-product of an app I've stopped building.</h2>
+          <p>This started inside WhereisMyRide, an app I built to measure Istanbul's rail system with a phone — Tekir the cat was its mascot. I've stopped developing the app; plenty of good transit apps already exist. The measurements were the part worth keeping.</p>
+        </div>
+        <div class="mt-footcat" data-tekir="sleep1,sleep2" data-hold="900,900" data-size="96" data-label="Tekir asleep"></div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Phone sensors (gyroscope, barometer, accelerometer) · track check: © OpenStreetMap contributors · ground: Copernicus DEM via Open-Meteo · three.js</p>
+      <p id="year"></p>
+    </footer>
+  </body>
+</html>
