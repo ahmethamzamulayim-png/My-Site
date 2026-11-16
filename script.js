@@ -113,33 +113,6 @@ if (contactForm) {
   });
 }
 
-// Homepage hero tiles: swap the static blurb for a live number once it arrives.
-function setLiveTileText(id, en, tr) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  el.textContent = window.t ? window.t(en, tr) : en;
-}
-
-const globeNote = document.getElementById("live-globe-note");
-if (globeNote) {
-  fetch("https://civil-nightingale-6719.ahmethamzamulayim-png.deno.net/api/states")
-    .then((res) => (res.ok ? res.json() : null))
-    .then((data) => {
-      if (!data) return;
-      const count = (data.states || []).filter(
-        (s) => s[1] && s[1].trim().startsWith("THY") && !s[8] && s[5] != null && s[6] != null
-      ).length;
-      if (count > 0) {
-        setLiveTileText(
-          "live-globe-note",
-          `${count} flights on a 3D globe, live`,
-          `3B kürede ${count} uçuş, canlı`
-        );
-      }
-    })
-    .catch(() => {});
-}
-
 // Easter egg: type "concorde" anywhere on the site to fly a plane across the screen.
 (() => {
   const TARGET = "concorde";

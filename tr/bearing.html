@@ -189,25 +189,25 @@
 
         <div class="fig">
           <h3>Bir rulman havalanıyor, üçü düz kalıyor</h3>
-          <img src="/bearing/test2_overview.png" alt="Test 2 overview: RMS and kurtosis of all four bearings; bearing 1 rises sharply near day 7 while the others stay flat" loading="lazy" />
+          <img src="/bearing/test2_overview.png" alt="Test 2 overview: RMS and kurtosis of all four bearings; bearing 1 rises sharply near day 7 while the others stay flat" loading="lazy" width="1430" height="910" />
           <p>Test 2, dört rulman birden. Rulman 1 (dış bilezik kusuru) 4. gün civarında sağlıklı banttan çıkıyor ve 6,8. günde arızaya doğru ivmeleniyor — NASA'nın sökümde hasarlı bulduğu rulmanın ta kendisi. Diğer üçü bütün hafta taban çizgilerinde uğulduyor.</p>
         </div>
 
         <div class="fig">
           <h3>Tespit + yakınsayan bir arıza öngörüsü</h3>
-          <img src="/bearing/test2_bearing1_prediction.png" alt="Test 2 bearing 1: degradation detected at 3.8 days; predicted failure dates converge onto the actual failure at 6.8 days" loading="lazy" />
+          <img src="/bearing/test2_bearing1_prediction.png" alt="Test 2 bearing 1: degradation detected at 3.8 days; predicted failure dates converge onto the actual failure at 6.8 days" loading="lazy" width="1430" height="1040" />
           <p>Üstte: alarm 3,8. günde çalıyor — arızadan 3 gün önce. Altta: her günün üzerinde durup üstel uydurmayla arıza tarihi tahmin ediliyor (mavi noktalar); hasar büyüdükçe tahmin gerçeğe (kırmızı çizgi) yakınsıyor, daralan bir kasırga tahmin konisi gibi.</p>
         </div>
 
         <div class="fig">
           <h3>Meşhur "iyileşen" rulman</h3>
-          <img src="/bearing/test1_bearing3_prediction.png" alt="Test 1 bearing 3: health curve temporarily recovers before worsening, making early forecasts wander before converging" loading="lazy" />
+          <img src="/bearing/test1_bearing3_prediction.png" alt="Test 1 bearing 3: health curve temporarily recovers before worsening, making early forecasts wander before converging" loading="lazy" width="1430" height="1040" />
           <p>Test 1 rulman 3 geçici olarak "iyileşiyor" — hasar devam etmeden önce dökülme kenarları düzleniyor — bu yüzden erken tahminler yakınsamadan önce geziniyor. Bozulmanın düzgün bir üstel değil, fizik olduğunu hatırlatan iyi bir örnek.</p>
         </div>
 
         <div class="fig">
           <h3>Hiç görmediği rulmanda rastgele orman</h3>
-          <img src="/bearing/ml_rul_test3.png" alt="Random forest predicting remaining useful life of test 3 bearing 3, versus the true remaining life; feature importance dominated by smoothed RMS" loading="lazy" />
+          <img src="/bearing/ml_rul_test3.png" alt="Random forest predicting remaining useful life of test 3 bearing 3, versus the true remaining life; feature importance dominated by smoothed RMS" loading="lazy" width="1430" height="1040" />
           <p>Model, test 3'te kalan faydalı ömrü saat saat tahmin ediyor. Etiketler 120&nbsp;saatte kırpılıyor çünkü sağlıklı titreşim gelecek hakkında bilgi taşımaz — düz kırmızı çizgi hata değil, dürüstlük. 40. gün civarında bozulma başlayınca geri sayım kilitleniyor: son günde ortalama hata 7,4 saat. Öznitelik önemi ~%75'i yumuşatılmış RMS'e, ~%15'i yumuşatılmış basıklığa veriyor — orman, fiziğin işaret ettiği göstergeleri kendi başına yeniden keşfetti.</p>
         </div>
       </section>

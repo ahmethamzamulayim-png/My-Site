@@ -262,7 +262,7 @@
 
         <div class="fig">
           <h3>First, prove the physics feature works</h3>
-          <img src="/bearing-universal/envelope_validation_ims_test2.png" alt="Envelope spectrum of IMS test 2 bearing 1 near failure showing sharp peaks at exactly BPFO ×1, ×2, ×3, and the BPFO band energy trend rising 21.7× over the test" loading="lazy" />
+          <img src="/bearing-universal/envelope_validation_ims_test2.png" alt="Envelope spectrum of IMS test 2 bearing 1 near failure showing sharp peaks at exactly BPFO ×1, ×2, ×3, and the BPFO band energy trend rising 21.7× over the test" loading="lazy" width="1430" height="910" />
           <p>
             A unit test, but for physics. IMS test 2 bearing 1 died of a
             documented outer-race defect, so its envelope spectrum must drum at
@@ -275,7 +275,7 @@
 
         <div class="fig">
           <h3>The headline: bearing unseen vs whole rig unseen</h3>
-          <img src="/bearing-universal/fig3_lobo_vs_lodo.png" alt="Bar chart comparing LOBO and LODO median life-fraction error per dataset; FEMTO is hardest in both, IMS shows only a modest gap" loading="lazy" />
+          <img src="/bearing-universal/fig3_lobo_vs_lodo.png" alt="Bar chart comparing LOBO and LODO median life-fraction error per dataset; FEMTO is hardest in both, IMS shows only a modest gap" loading="lazy" width="1040" height="650" />
           <p>
             The headline: hiding the entire rig barely moves the median error
             (0.188 → 0.169). Two surprises. The roller-vs-ball wall we expected
@@ -285,6 +285,7 @@
             every diagnosis is made from a finger-snap of audio. Recording
             quality beat bearing-type physics as the dominant difficulty.
           </p>
+          <div class="rtable-scroll" style="overflow-x:auto">
           <table class="rtable">
             <thead><tr><th>Protocol</th><th>Median error</th><th>Late-stage (Q4)</th><th>Worst bearing</th></tr></thead>
             <tbody>
@@ -294,6 +295,7 @@
               <tr><td>LODO — FEMTO held out</td><td>0.249</td><td>0.318</td><td>0.434</td></tr>
             </tbody>
           </table>
+          </div>
           <p>
             Both rows here share the same preprocessing on purpose. Comparing a
             model that got a helping hand against one that didn't would measure
@@ -309,7 +311,7 @@
 
         <div class="fig">
           <h3>Best, median — and the worst, on purpose</h3>
-          <img src="/bearing-universal/fig2_trajectories.png" alt="Three predicted-versus-true life fraction trajectories with 5th to 95th percentile uncertainty bands: an accurate best case, a noisy FEMTO median case, and a failed worst case where the model calls the bearing nearly dead from onset" loading="lazy" />
+          <img src="/bearing-universal/fig2_trajectories.png" alt="Three predicted-versus-true life fraction trajectories with 5th to 95th percentile uncertainty bands: an accurate best case, a noisy FEMTO median case, and a failed worst case where the model calls the bearing nearly dead from onset" loading="lazy" width="1920" height="576" />
           <p>
             Predicted vs true life fraction; the shaded band is where 90% of
             the forest's 300 trees land. Two things explain what you see.
@@ -338,7 +340,7 @@
 
         <div class="fig">
           <h3>Curve extrapolation only answers the easy questions</h3>
-          <img src="/bearing-universal/fig4_error_vs_stage.png" alt="Error versus post-onset life stage for the random forest, exponential extrapolation, and a fusion; forest error is U-shaped, extrapolation appears flat but only answers on a minority of snapshots" loading="lazy" />
+          <img src="/bearing-universal/fig4_error_vs_stage.png" alt="Error versus post-onset life stage for the random forest, exponential extrapolation, and a fusion; forest error is U-shaped, extrapolation appears flat but only answers on a minority of snapshots" loading="lazy" width="1040" height="650" />
           <p>
             Literature says curve extrapolation fails early and shines late, so
             the population model should win early and hand over the baton. Our
@@ -355,7 +357,7 @@
 
         <div class="fig">
           <h3>Leakage guard: dataset identity carries 0.3% of the importance</h3>
-          <img src="/bearing-universal/fig6_feature_importance.png" alt="Top 20 feature importances led by smoothed RMS and kurtosis with envelope band features spread throughout; absolute-time rate features carry 0.3 percent" loading="lazy" />
+          <img src="/bearing-universal/fig6_feature_importance.png" alt="Top 20 feature importances led by smoothed RMS and kurtosis with envelope band features spread throughout; absolute-time rate features carry 0.3 percent" loading="lazy" width="1040" height="780" />
           <p>
             The cheating check. The easiest way to look smart here is to
             recognize which dataset a snapshot came from — like grading exam
@@ -439,6 +441,7 @@
             were right, but the ball centres sit on a 26.0 mm circle, not the
             25.6 mm that had been assumed.
           </p>
+          <div class="rtable-scroll" style="overflow-x:auto">
           <table class="rtable">
             <thead><tr><th>Quantity</th><th>Published</th><th>Datasheet</th><th>Consequence</th></tr></thead>
             <tbody>
@@ -447,6 +450,7 @@
               <tr><td>Every result on this page</td><td>—</td><td>—</td><td>unchanged</td></tr>
             </tbody>
           </table>
+          </div>
           <p>
             Recomputing the whole FEMTO dataset from raw signal moved only the
             ball-spin features, left IMS and XJTU bit-for-bit identical, and
@@ -458,7 +462,7 @@
 
         <div class="fig">
           <h3>Chasing the wrong cause, and the halving that came from finding the right one</h3>
-          <img src="/bearing-universal/fig7_smoothing.png" alt="Two bar charts. Left: late-stage error per held-out rig, as published versus after correction — FEMTO falls from 0.318 to 0.153 while IMS and XJTU rise slightly. Right: FEMTO late-stage error under four conditions — steadying neither 0.318, test rows only 0.332, training rows only 0.095, both 0.094." loading="lazy" />
+          <img src="/bearing-universal/fig7_smoothing.png" alt="Two bar charts. Left: late-stage error per held-out rig, as published versus after correction — FEMTO falls from 0.318 to 0.153 while IMS and XJTU rise slightly. Right: FEMTO late-stage error under four conditions — steadying neither 0.318, test rows only 0.332, training rows only 0.095, both 0.094." loading="lazy" width="1755" height="676" />
           <p>
             This page blamed FEMTO's difficulty on its finger-snap recordings.
             The obvious remedy follows from that: steady the incoming readings
@@ -467,6 +471,7 @@
             treatment applied to the textbook cases instead. The result inverts
             the intuition.
           </p>
+          <div class="rtable-scroll" style="overflow-x:auto">
           <table class="rtable">
             <thead><tr><th>What gets steadied</th><th>Late-stage error</th><th>Verdict</th></tr></thead>
             <tbody>
@@ -476,6 +481,7 @@
               <tr><td>Both</td><td>0.094</td><td>no better than training alone</td></tr>
             </tbody>
           </table>
+          </div>
           <p>
             Cleaning the patient's chart does nothing. Cleaning the textbook
             fixes almost everything. The mechanism: when the worked examples
@@ -517,7 +523,7 @@
 
         <div class="fig">
           <h3>What it improved</h3>
-          <img src="/bearing-universal/fig9_fix_visible.png" alt="Three panels of FEMTO bearings judged by a model that never saw their rig. A grey dashed line taught from jittery examples sits near 0.6 across the middle and right panels while true life falls to zero; a blue line taught from steadied examples tracks the truth far more closely." loading="lazy" />
+          <img src="/bearing-universal/fig9_fix_visible.png" alt="Three panels of FEMTO bearings judged by a model that never saw their rig. A grey dashed line taught from jittery examples sits near 0.6 across the middle and right panels while true life falls to zero; a blue line taught from steadied examples tracks the truth far more closely." loading="lazy" width="1870" height="641" />
           <p>
             The same fix, shown where it actually operates. Every curve here is a
             FEMTO bearing judged by a model that never saw its rig. The test
@@ -548,7 +554,7 @@
 
         <div class="fig">
           <h3>What did not improve</h3>
-          <img src="/bearing-universal/fig8_before_after.png" alt="Six trajectory panels in two rows: best, median and worst bearing as published on top, after correction below. Best and median are the same bearing in both rows with visually identical curves; only the worst slot changes hands." loading="lazy" />
+          <img src="/bearing-universal/fig8_before_after.png" alt="Six trajectory panels in two rows: best, median and worst bearing as published on top, after correction below. Best and median are the same bearing in both rows with visually identical curves; only the worst slot changes hands." loading="lazy" width="1885" height="962" />
           <p>
             The clearest picture of a correction that changed nothing. Best and
             median are the <em>same bearing</em> in both rows, with curves you

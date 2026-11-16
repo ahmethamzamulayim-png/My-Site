@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="/styles.css" />
     <script src="/i18n.js"></script>
     <script defer src="/script.js"></script>
-    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <script type="module" src="https://unpkg.com/@google/model-viewer@4.4.0/dist/model-viewer.min.js"></script>
     <script defer src="/reducer/configurator.js"></script>
     <style>
       /* page-local additions on top of the site tokens — rust/steel is this project's color */
@@ -208,6 +208,7 @@
         "inLanguage": "en"
       }
     </script>
+      <script defer src="https://cloud.umami.is/script.js" data-website-id="53acc321-a620-42d2-abf8-92a0c2813e8b"></script>
   </head>
   <body>
     <div class="noise"></div>
@@ -320,7 +321,7 @@
 
         <div class="fig">
           <h3>Concentric: velocity climbs as the bore narrows</h3>
-          <img src="/reducer/flow-concentric.png" alt="SolidWorks Flow Simulation cut plot showing velocity increasing smoothly from the large end to the small end of a concentric reducer, blue to red" loading="lazy" />
+          <img src="/reducer/flow-concentric.png" alt="SolidWorks Flow Simulation cut plot showing velocity increasing smoothly from the large end to the small end of a concentric reducer, blue to red" loading="lazy" width="891" height="684" />
           <p>
             Continuity says it has to: as the flow area shrinks, velocity
             rises to match. This is exactly that — a clean, smooth gradient
@@ -331,7 +332,7 @@
 
         <div class="fig">
           <h3>Eccentric: the flush side changes the picture</h3>
-          <img src="/reducer/flow-eccentric.png" alt="SolidWorks Flow Simulation cut plot of an eccentric reducer showing velocity concentrated near the flush-side corner rather than distributed evenly" loading="lazy" />
+          <img src="/reducer/flow-eccentric.png" alt="SolidWorks Flow Simulation cut plot of an eccentric reducer showing velocity concentrated near the flush-side corner rather than distributed evenly" loading="lazy" width="892" height="650" />
           <p>
             Same idea, different shape. The eccentric offset that makes one
             side "flush" (see the limitations below) also means the flow

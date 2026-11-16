@@ -209,14 +209,15 @@
 
         <div class="fig">
           <h3>Önce fizik özniteliğinin çalıştığını kanıtla</h3>
-          <img src="/bearing-universal/envelope_validation_ims_test2.png" alt="Envelope spectrum of IMS test 2 bearing 1 near failure showing sharp peaks at exactly BPFO ×1, ×2, ×3, and the BPFO band energy trend rising 21.7× over the test" loading="lazy" />
+          <img src="/bearing-universal/envelope_validation_ims_test2.png" alt="Envelope spectrum of IMS test 2 bearing 1 near failure showing sharp peaks at exactly BPFO ×1, ×2, ×3, and the BPFO band energy trend rising 21.7× over the test" loading="lazy" width="1430" height="910" />
           <p>Bir birim testi, ama fizik için. IMS test 2 rulman 1, belgelenmiş bir dış bilezik kusuruyla arızalandı; öyleyse zarf spektrumu hesaplanan dış bilezik temposunda (BPFO, 236 Hz) ve harmoniklerinde davul çalmalı — ve çalıyor, hem de keskin biçimde; iç bilezik ve makara ritimleri sessiz kalıyor. Davulun enerjisi test boyunca 21,7 kat büyüyor. Zarf öznitelikleri modele ancak bu kontrolden sonra girdi.</p>
         </div>
 
         <div class="fig">
           <h3>Ana sonuç: rulman görülmemiş vs düzeneğin tamamı görülmemiş</h3>
-          <img src="/bearing-universal/fig3_lobo_vs_lodo.png" alt="Bar chart comparing LOBO and LODO median life-fraction error per dataset; FEMTO is hardest in both, IMS shows only a modest gap" loading="lazy" />
+          <img src="/bearing-universal/fig3_lobo_vs_lodo.png" alt="Bar chart comparing LOBO and LODO median life-fraction error per dataset; FEMTO is hardest in both, IMS shows only a modest gap" loading="lazy" width="1040" height="650" />
           <p>Ana sonuç: düzeneğin tamamını saklamak medyan hatayı neredeyse kımıldatmıyor (0,188 → 0,169). İki sürpriz. Beklediğimiz makaralı-bilyeli duvarı hiç çıkmadı — yalnızca bilyeli rulmanlarla eğitilen modeller makaralı düzeneği gayet idare etti (0,168). Ve iki yönde de en zor veri seti FEMTO; sebebi sıradan: kesitleri 0,1 saniye sürüyor, yani her teşhis parmak şıklatması kadar bir sesten konuyor. Baskın zorluk olarak kayıt kalitesi, rulman tipi fiziğini yendi.</p>
+          <div class="rtable-scroll" style="overflow-x:auto">
           <table class="rtable">
             <thead><tr><th>Protokol</th><th>Medyan hata</th><th>Geç evre (Q4)</th><th>En kötü rulman</th></tr></thead>
             <tbody>
@@ -226,24 +227,25 @@
               <tr><td>LODO — FEMTO dışarıda</td><td>0.249</td><td>0.318</td><td>0.434</td></tr>
             </tbody>
           </table>
+          </div>
           <p>Buradaki iki satır bilerek aynı ön işlemeyi paylaşıyor. Yardım almış bir modeli almamış bir modelle kıyaslamak genellemeyi değil, o yardımı ölçerdi; bu yüzden açık eşit koşullarda veriliyor. O yardım var ve FEMTO satırını hatırı sayılır biçimde iyileştiriyor: geç evre hatası 0,318 → 0,153. Bu tablodan dışarıda tutulup, sayfanın FEMTO'nun neden en zor olduğuna dair ilk verdiği ve yalnızca yarısı doğru çıkan açıklamayla birlikte aşağıdaki <a href="#correction">Düzeltme ve inceleme</a> bölümünde ele alınıyor.</p>
         </div>
 
         <div class="fig">
           <h3>En iyi, medyan — ve bilerek gösterilen en kötü</h3>
-          <img src="/bearing-universal/fig2_trajectories.png" alt="Three predicted-versus-true life fraction trajectories with 5th to 95th percentile uncertainty bands: an accurate best case, a noisy FEMTO median case, and a failed worst case where the model calls the bearing nearly dead from onset" loading="lazy" />
+          <img src="/bearing-universal/fig2_trajectories.png" alt="Three predicted-versus-true life fraction trajectories with 5th to 95th percentile uncertainty bands: an accurate best case, a noisy FEMTO median case, and a failed worst case where the model calls the bearing nearly dead from onset" loading="lazy" width="1920" height="576" />
           <p>Tahmin vs gerçek ömür oranı; gölgeli bant, ormanın 300 ağacının %90'ının nereye düştüğünü gösteriyor. Gördüklerini iki şey açıklıyor. Birincisi, modelin hafızası yok — her kesit taze bir teşhis alıyor; aralarda hafızası silinen, tek bir kan tahlilinden çalışan bir doktor gibi. Titreme bundan. İkincisi, ömrün ortası gerçekten belirsizdir ("biraz hasta", ömrün %30'unda da %50'sinde de %70'inde de aynı görünür); sonu ise şaşmaz — bu yüzden bant ortada geniş, sonda kapanıyor. En iyi durum kısmen kolay bir sınav: alarmı ömrün %93'ünde çaldı, geriye izlenecek yalnızca son, apaçık bölüm kaldı. En kötü durum ise dürüst olan ve tehlikeli yönde hata yapıyor: alarm geç, ömrün %88'inde çalıyor ve model, geriye ancak onda biri kalmışken rulmanı ömrünün %40–70'i duruyormuş gibi okuyor. Gerçeğe ancak son dakikalarda oturuyor. Canını yakan, <em>iyimser</em> kaçırmadır — kötümser bir model sizi sağlam bir rulmanı boşuna kontrol etmeye yollar, bu model ise çalışmaya devam edin derdi. Yine de fazla anlam yüklememeli: ikinci en kötü rulman tam <em>tersi</em> yönde hata yapıyor; ömrünün büyük kısmı dururken sıfıra yapışık gidiyor ve ikisi arasında 0,004 var. Modelin sistematik bir hata yönü yok — iki türlü şaşırma biçimi var ve hangisinin tabloda başa güreçeceği neredeyse yazı tura. Medyanlar böyle rulmanları saklar; bu rapor saklamıyor.</p>
         </div>
 
         <div class="fig">
           <h3>Eğri ekstrapolasyonu yalnızca kolay sorulara cevap veriyor</h3>
-          <img src="/bearing-universal/fig4_error_vs_stage.png" alt="Error versus post-onset life stage for the random forest, exponential extrapolation, and a fusion; forest error is U-shaped, extrapolation appears flat but only answers on a minority of snapshots" loading="lazy" />
+          <img src="/bearing-universal/fig4_error_vs_stage.png" alt="Error versus post-onset life stage for the random forest, exponential extrapolation, and a fusion; forest error is U-shaped, extrapolation appears flat but only answers on a minority of snapshots" loading="lazy" width="1040" height="650" />
           <p>Literatür, eğri ekstrapolasyonunun erken dönemde çuvallayıp geç dönemde parladığını söyler; yani popülasyon modeli erken kazanmalı, sonra bayrağı devretmeli. Verimiz bu temiz hikâyeyi reddetti — çünkü ekstrapolatör yalnızca emin olduğu sorulara cevap veren bir öğrenci: sadece hasar gerçekten üstel büyürken tahmin üretiyor (erken kesitlerin %17–33'ü), dolayısıyla gösterişli erken notu kendi seçtiği kolay bir alt kümede veriliyor. Orman her soruya cevap veriyor; hatası U şeklinde (en kötüsü başlangıçtan hemen sonra). 36 ömürle, kesişme ilan etmek yerine eğrileri ve kapsama oranını raporluyoruz.</p>
         </div>
 
         <div class="fig">
           <h3>Sızıntı kontrolü: veri seti kimliği toplam önemin %0,3'ü</h3>
-          <img src="/bearing-universal/fig6_feature_importance.png" alt="Top 20 feature importances led by smoothed RMS and kurtosis with envelope band features spread throughout; absolute-time rate features carry 0.3 percent" loading="lazy" />
+          <img src="/bearing-universal/fig6_feature_importance.png" alt="Top 20 feature importances led by smoothed RMS and kurtosis with envelope band features spread throughout; absolute-time rate features carry 0.3 percent" loading="lazy" width="1040" height="780" />
           <p>Kopya kontrolü. Burada zeki görünmenin en kolay yolu, kesitin hangi veri setinden geldiğini tanımak — sınav kâğıtlarını el yazısından tanıyarak notlamak gibi — ve en bariz parmak izi, düzenekler arasında 100 kat farklı olan duvar-saati bozulma hızı. O hız öznitelikleri toplam önemin %0,3'ünü taşıyor: orman yumuşatılmış RMS'e (%27), yumuşatılmış basıklığa ve geometriden türetilen zarf bantlarının geniş bir yelpazesine yaslanıyor. Veri seti kimliği değil, hasar sinyali. İki ablasyon denetimi tamamlıyor: makaralı rulman verisini çıkarmak bilyeli tahminleri <em>kötüleştiriyor</em> (0,190 → 0,200 — aykırı düzenek aslında yardım ediyormuş) ve kafes arızalı rulmanları dışlamak hiçbir şeyi değiştirmiyor (0,190'lık temele karşı 0,188).</p>
         </div>
       </section>
@@ -277,6 +279,7 @@
         <div class="fig">
           <h3>Güvenerek aldığımız ölçü — kontrol edildi, zararsız çıktı</h3>
           <p>Bu çalışmanın dinlediği arıza ritimleri rulmanın iç ölçülerinden hesaplanıyor; dolayısıyla yanlış bir ölçü, yanlış frekansı dinlemek demek. FEMTO'nun NSK 6804 değeri üreticiden değil, ikincil literatürden gelmişti. Gerçek veri sayfasını çekmek meseleyi kapattı: 13 bilya ve 3,5 mm bilya çapı doğruymuş, ama bilya merkezleri varsayılan 25,6 mm'lik değil, 26,0 mm'lik bir daire üzerinde duruyor.</p>
+          <div class="rtable-scroll" style="overflow-x:auto">
           <table class="rtable">
             <thead><tr><th>Büyüklük</th><th>Yayımlanan</th><th>Veri sayfası</th><th>Sonucu</th></tr></thead>
             <tbody>
@@ -285,13 +288,15 @@
               <tr><td>Bu sayfadaki her sonuç</td><td>—</td><td>—</td><td>değişmedi</td></tr>
             </tbody>
           </table>
+          </div>
           <p>Tüm FEMTO veri setini ham sinyalden yeniden hesaplamak yalnızca bilya dönme özniteliklerini oynattı, IMS ve XJTU'yu bit düzeyinde aynı bıraktı ve hiçbir sonucu değiştirmedi. Bu sıkıcı bir sonuç ve yine de yayımlanmayı hak ediyor: "kontrol ettik, fark etmedi" ile "hiç kontrol etmedik" aynı cümle değil.</p>
         </div>
 
         <div class="fig">
           <h3>Yanlış nedeni kovalamak — ve doğrusunu bulunca gelen yarılanma</h3>
-          <img src="/bearing-universal/fig7_smoothing.png" alt="Two bar charts. Left: late-stage error per held-out rig, as published versus after correction — FEMTO falls from 0.318 to 0.153 while IMS and XJTU rise slightly. Right: FEMTO late-stage error under four conditions — steadying neither 0.318, test rows only 0.332, training rows only 0.095, both 0.094." loading="lazy" />
+          <img src="/bearing-universal/fig7_smoothing.png" alt="Two bar charts. Left: late-stage error per held-out rig, as published versus after correction — FEMTO falls from 0.318 to 0.153 while IMS and XJTU rise slightly. Right: FEMTO late-stage error under four conditions — steadying neither 0.318, test rows only 0.332, training rows only 0.095, both 0.094." loading="lazy" width="1755" height="676" />
           <p>Bu sayfa FEMTO'nun zorluğunu parmak şıklatması kadar süren kayıtlarına bağlamıştı. Bundan çıkan bariz çare şu: gelen ölçümleri değerlendirmeden önce sabitle — her birine tepki vermek yerine son beşinin ortancasını al. Bu doğrudan test edildi; aynı işlem bir de ders kitabı vakalarına uygulandı. Sonuç sezgiyi tersine çeviriyor.</p>
+          <div class="rtable-scroll" style="overflow-x:auto">
           <table class="rtable">
             <thead><tr><th>Neye sabitleme uygulandı</th><th>Geç evre hatası</th><th>Hüküm</th></tr></thead>
             <tbody>
@@ -301,6 +306,7 @@
               <tr><td>İkisine birden</td><td>0.094</td><td>tek başına eğitimden iyi değil</td></tr>
             </tbody>
           </table>
+          </div>
           <p>Hastanın dosyasını temizlemek hiçbir işe yaramıyor. Ders kitabını temizlemek neredeyse her şeyi düzeltiyor. Mekanizma şu: çözülmüş örnekler zıplıyorsa model asıl çöküşü değil, o zıplamayı öğreniyor — o düzeneklere özgü ölçüm saçılmasına uyum sağlıyor. Örnekleri sabitleyin, arızanın gerçek şeklini öğreniyor; öğrendikten sonra da yeni ve gürültülü bir sinyali hiçbir temizlik olmadan gayet iyi okuyor. Birine bulanık ders kitabı fotoğraflarıyla eğitim verirseniz bulanıklığı öğrenir; sonradan hastanın röntgenini netleştirmek bunu geri almaz.</p>
           <p>En çok FEMTO'yu vurmasının gösterişsiz bir sebebi var. FEMTO'yu dışarıda bırakmak, öğrenilecek en küçük örnek yığınını geriye bırakıyor — 4.610 satır; diğer iki dönüşümde 14.220 ve 15.536. Örneğin az olduğu durum, tam da modelin gürültüyü ezberlediği durumdur; dolayısıyla örnekleri temizlemek en çok orada işe yarıyor. Bu, gürültü giderme değil düzenlileştirme — ve şu anlama geliyor: ilk teşhis olan "FEMTO zor, çünkü kayıtları kötü" bir belirtiyi tarif ediyormuş. Kayıtlar gerçekten daha kötü. Ama cezanın büyük kısmı mikrofondan değil, modelden geliyormuş.</p>
           <p>Bir itiraf daha; çünkü bu, özete hangi sayının gireceğini değiştiriyor. O 0,095, her seçeneğin dışarıda bırakılan düzeneğe karşı nasıl not aldığını <em>gördükten sonra</em> seçilen bir sabitleme miktarıyla elde edildi — yani gizlice bakarak. Bu, tartıyı birazdan tartacağınız cismin kendisiyle kalibre etmenin okumayı güzelleştirmesi gibi sonucu güzelleştirir. Kurallara uygun biçimde yeniden yapıldığında — miktar yalnızca modelin eğitildiği düzeneklere bakılarak seçilip, dışarıdaki düzeneğe en sonda bir kez dokunulduğunda — geç evre hatası <strong>0,153</strong>'e oturuyor. 0,318'e karşı yine %52'lik bir azalma ve alıntılanmayı hak eden sayı bu. 0,153 ile 0,095 arasındaki farkın da söylenmeye değer bir sebebi var: ayar, görebildiğiniz düzeneklerden seçilmek zorunda ve onlar da tam olarak bu ayara ihtiyacı olmayanlar. Hiç tanışmadığınız bir makine için gürültü ayarı yapamazsınız.</p>
@@ -308,14 +314,14 @@
 
         <div class="fig">
           <h3>Neyi iyileştirdi</h3>
-          <img src="/bearing-universal/fig9_fix_visible.png" alt="Three panels of FEMTO bearings judged by a model that never saw their rig. A grey dashed line taught from jittery examples sits near 0.6 across the middle and right panels while true life falls to zero; a blue line taught from steadied examples tracks the truth far more closely." loading="lazy" />
+          <img src="/bearing-universal/fig9_fix_visible.png" alt="Three panels of FEMTO bearings judged by a model that never saw their rig. A grey dashed line taught from jittery examples sits near 0.6 across the middle and right panels while true life falls to zero; a blue line taught from steadied examples tracks the truth far more closely." loading="lazy" width="1870" height="641" />
           <p>Aynı düzeltme, gerçekten işlediği yerde gösteriliyor. Buradaki her eğri, düzeneğini hiç görmemiş bir model tarafından değerlendirilen bir FEMTO rulmanı. Test sinyali iki çizgide de <em>aynı</em> — ham, dokunulmamış — dolayısıyla aralarındaki tek fark, modelin neyden öğrendiği. Gri, zıplayan örneklerden öğrendi; mavi, sabitlenmiş örneklerden. Ortadaki ve sağdaki panellerde gri çizgiye bakın: 0,6 civarına park edip orada kalıyor; altında rulman ölürken sakin sakin ömrün büyük kısmının durduğunu bildiriyor. Mavi ise gerçeği aşağı doğru takip ediyor. On yedi FEMTO rulmanının tamamında medyan hata 0,249 → 0,214 düşüyor, geç evre hatası yarıya iniyor: 0,318 → 0,153; tek başına en çok kazanan 0,409 → 0,107.</p>
           <p>Sağdaki panel bilerek orada; çünkü medyan çok şey saklar: <strong>17 rulmanın 7'si kötüleşti</strong>, biri fena halde (0,103 → 0,307). Gösterilen en kötü durum, kötüleşenlerden biri — 0,266 → 0,338 — ve ona ne olduğu görülüyor: mavi artık tüm koşu boyunca sıfıra yapışıyor, yani rulmanı daha baştan ölmüş sayıyor. Dolayısıyla dürüst tarif şu değil: “model iyileşti”; şu: “model bir hatayı başka bir hatayla takas etti”. Eskiden balıklama iyimserdi; şimdi zaman zaman fazla kötümser. Gerçekten aksiyon alacağınız bir makinede bu, bariz biçimde daha küçük bir hata değil, farklı bir hatadır. Medyan iyileşti, hataların karakteri değişti ve özete ikisi de girmeli.</p>
         </div>
 
         <div class="fig">
           <h3>Ne düzelmedi</h3>
-          <img src="/bearing-universal/fig8_before_after.png" alt="Six trajectory panels in two rows: best, median and worst bearing as published on top, after correction below. Best and median are the same bearing in both rows with visually identical curves; only the worst slot changes hands." loading="lazy" />
+          <img src="/bearing-universal/fig8_before_after.png" alt="Six trajectory panels in two rows: best, median and worst bearing as published on top, after correction below. Best and median are the same bearing in both rows with visually identical curves; only the worst slot changes hands." loading="lazy" width="1885" height="962" />
           <p>Hiçbir şeyi değiştirmemiş bir düzeltmenin en net resmi. En iyi ve medyan, iki satırda da <em>aynı rulman</em> ve eğrileri birbirinden ayırt edemiyorsunuz — ki bu tam da olması gereken: bunlar rulman-görülmemiş eğrileri ve o protokol bilerek yumuşatılmadan bırakılıyor. Yalnızca en kötü slotu el değiştiriyor, o da iki rulman dört binde bir fark ile sıra değiştirdiği için. FEMTO'nun geç evre hatasını yarıya indiren düzeltme, düzeneğin-tamamı-görülmemiş protokolünde yaşıyor ve burada görünmüyor; onu yukarıdaki grafikte görüyorsunuz.</p>
           <p>Tüm bunlardan etkilenmeyen dört şey var ve aksini ima etmek bu işin amacını ortadan kaldırırdı. <strong>Aynı düzenekten kardeş bir rulman varken örnekleri sabitlemek hiçbir şey yapmıyor</strong> — doğrudan test edildiğinde rulman-görülmemiş sınavı 0,002 kadar oynadı, yani değişmedi; fayda yalnızca düzeneğin tamamı yabancıyken ortaya çıkıyor, ki asıl önemli durum da o. <strong>IMS az da olsa kötüleşti</strong> (0,160 → 0,187). <strong>FEMTO'nun frekans çözünürlüğü kalıcı</strong>: 0,1 saniyelik bir kaydın hiç yakalamadığı ayrıntıyı hiçbir işlem geri getirmez. Ve <strong>"arıza zamanı" hâlâ seçilmiş bir tanım</strong>, FEMTO'nun arıza tipleri hâlâ belgesiz, 36 ömür hâlâ küçük bir sayı. Dürüst özet şu: büyük hatalardan biri kabaca üçte iki oranında azaldı, bu sayfadaki diğer her şey olduğu gibi duruyor.</p>
         </div>
