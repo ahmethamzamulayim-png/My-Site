@@ -5,7 +5,8 @@ const TR = () => window.getLang && getLang() === "tr";
 const nf = (v, d = 0) => Number(v).toLocaleString(TR() ? "tr-TR" : "en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
 const KMH = () => (TR() ? "km/s" : "km/h");
 
-const [W, TB] = await Promise.all([fetch("/metro/wimr.json").then((r) => r.json()), fetch("/metro/tube.json").then((r) => r.json())]);
+const [W, TB, BUS] = await Promise.all(["/metro/wimr.json", "/metro/tube.json", "/metro/bus.json"].map((u) => fetch(u).then((r) => r.json())));
+const F1 = BUS.lines.frequent["1"], F2 = BUS.lines.frequent["2"], I1 = BUS.lines.infrequent["1"];
 const S = W.sample;
 const col = (name) => S.rows.map((r) => r[S.cols.indexOf(name)]);
 const tS = col("t");
@@ -20,10 +21,16 @@ const derived = {
   "derived.repeat": TB.height_repeat_m,
   "derived.km": TB.stations[TB.stations.length - 1].s / 1000,
   "derived.drop_jkg": 9.81 * Math.max(...TB.stretches.map((s) => -s.dz_m)),
+  // bus chapter: percentages and the feedback model's predicted pair slope e^(K beta)
+  "bus.pct.f1s": 100 * F1.bunched_start, "bus.pct.f1e": 100 * F1.bunched_end, "bus.pct.i1e": 100 * I1.bunched_end,
+  "bus.pct.direct": 100 * F1.direct, "bus.pct.direct_lo": 100 * F1.direct_lo, "bus.pct.direct_hi": 100 * F1.direct_hi,
+  "bus.pct.fb1": 100 * F1.share.feedback, "bus.pct.fb2": 100 * F2.share.feedback, "bus.pct.ov2": 100 * F2.overtook,
+  "bus.pred.f1": Math.exp(F1.beta_total), "bus.pred.f2": Math.exp(F2.beta_total),
 };
 function get(path) {
   if (path in derived) return derived[path];
-  return path.split(".").reduce((o, k) => (o == null ? o : o[k]), W);
+  const [root, rest] = path.startsWith("bus.") ? [BUS, path.slice(4)] : [W, path];
+  return rest.split(".").reduce((o, k) => (o == null ? o : o[k]), root);
 }
 document.querySelectorAll("[data-k]").forEach((el) => {
   const v = get(el.dataset.k);
@@ -109,6 +116,52 @@ function hover(H, T, B, fmtRow) {
   document.getElementById("c-magnet").innerHTML =
     `<svg viewBox="0 0 ${CW} ${H1}" role="img" aria-label="${tt("Magnetic field from the motors over one run", "Bir seferde motorlardan gelen manyetik alan")}">${s1}</svg>` +
     `<svg viewBox="0 0 ${CW} ${H2}" role="img" aria-label="${tt("Power per kilogram over the same run", "Aynı seferde kilogram başına güç")}">${s2}</svg>`;
+})();
+
+// 4. buses: spread of normalised gaps along the route (same unit for every series, one axis)
+(function busSpread() {
+  const H = 260, T = 22, B = 34, G = BUS.grid;
+  const xg = (f) => L + f * (CW - L - R);
+  const series = [
+    [F1, "#c2410c", "", tt("frequent, dir. 1", "sık, 1. yön")], [F2, "#c2410c", "6 5", tt("frequent, dir. 2", "sık, 2. yön")],
+    [I1, "#1d4ed8", "", tt("infrequent, dir. 1", "seyrek, 1. yön")], [BUS.lines.infrequent["2"], "#1d4ed8", "6 5", tt("infrequent, dir. 2", "seyrek, 2. yön")],
+  ];
+  const hi = Math.ceil(Math.max(...series.flatMap((s) => s[0].spread)) * 5) / 5;
+  const ys = (v) => T + (1 - v / hi) * (H - T - B);
+  let g = "";
+  for (let v = 0; v <= hi + 1e-9; v += 0.2) g += `<line x1="${L}" x2="${CW - R}" y1="${ys(v)}" y2="${ys(v)}" class="${v ? "grid" : "base"}"/><text x="${L - 8}" y="${ys(v) + 4}" class="ax" text-anchor="end">${nf(v, 1)}</text>`;
+  for (let f = 0; f <= 1.001; f += 0.25) g += `<text x="${xg(f)}" y="${H - B + 18}" class="ax" text-anchor="middle">${nf(f * 100)}%</text>`;
+  g += `<text x="${CW - R}" y="${H - 4}" class="ax" text-anchor="end">${tt("position along the route", "güzergâhtaki konum")}</text>`;
+  g += `<text x="${L - 8}" y="${T - 10}" class="ax" text-anchor="end">${tt("variance", "varyans")}</text>`;
+  for (const [s, c, dash, name] of series) {
+    g += `<polyline fill="none" stroke="${c}" stroke-width="2.2" stroke-dasharray="${dash}" stroke-linejoin="round" points="${s.spread.map((v, i) => `${xg(G[i]).toFixed(1)},${ys(v).toFixed(1)}`).join(" ")}"/>`;
+    s.spread.forEach((v, i) => (g += `<circle cx="${xg(G[i])}" cy="${ys(v)}" r="9" fill="transparent"><title>${name} · ${nf(G[i] * 100)}% · ${nf(v, 2)}</title></circle>`));
+  }
+  const mid = Math.round(G.length * 0.3);
+  g += `<text x="${xg(G[mid])}" y="${ys(Math.max(F1.spread[mid], F2.spread[mid])) - 14}" class="lbl" text-anchor="middle">${tt("frequent line", "sık hat")}</text>`;
+  g += `<text x="${xg(G[mid])}" y="${ys(Math.min(I1.spread[mid], BUS.lines.infrequent["2"].spread[mid])) + 22}" class="lbl" text-anchor="middle">${tt("infrequent line", "seyrek hat")}</text>`;
+  document.getElementById("c-spread").innerHTML = `<svg viewBox="0 0 ${CW} ${H}" role="img" aria-label="${tt("How uneven the gaps between buses get along the route, for both lines", "İki hatta otobüsler arasındaki araların güzergâh boyunca ne kadar düzensizleştiği")}">${g}</svg>`;
+})();
+
+// 5. buses: where the end-of-route spread comes from (shares add to 100%)
+(function busShare() {
+  const rows = [[F1, tt("frequent, direction 1", "sık hat, 1. yön")], [F2, tt("frequent, direction 2", "sık hat, 2. yön")]];
+  const H = rows.length * 46 + 34, x0 = 170, x1 = CW - 20, wbar = x1 - x0;
+  const parts = [["start", "#b08a1e", tt("at the start", "başta")], ["feedback", "#c2410c", tt("feedback", "geri besleme")], ["noise", "#1d4ed8", tt("random delays", "rastgele gecikmeler")]];
+  let g = "";
+  rows.forEach(([s, name], r) => {
+    const y = 14 + r * 46;
+    g += `<text x="${x0 - 12}" y="${y + 19}" class="ax" text-anchor="end">${name}</text>`;
+    let x = x0;
+    const tot = parts.reduce((a, [k]) => a + s.share[k], 0);
+    for (const [k, c, label] of parts) {
+      const w = (s.share[k] / tot) * wbar;
+      if (w > 0.5) g += `<rect x="${x}" y="${y + 4}" width="${Math.max(0, w - 2)}" height="22" rx="4" fill="${c}"><title>${name} · ${label}: ${nf((100 * s.share[k]) / tot)}%</title></rect>`;
+      if (w > 46) g += `<text x="${x + w / 2}" y="${y + 19}" class="val" text-anchor="middle" fill="#fff" style="fill:#fff">${nf((100 * s.share[k]) / tot)}%</text>`;
+      x += w;
+    }
+  });
+  document.getElementById("c-share").innerHTML = `<svg viewBox="0 0 ${CW} ${H}" role="img" aria-label="${tt("Share of the end-of-route spread already present at the start, grown by feedback, and added by random delays", "Güzergâh sonundaki saçılmanın baştan gelen, geri beslemenin büyüttüğü ve rastgele gecikmelerin eklediği payları")}">${g}</svg>`;
 })();
 
 document.documentElement.classList.add("wimr-ready");

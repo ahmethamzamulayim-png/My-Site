@@ -12,7 +12,7 @@ Static portfolio for GitHub Pages, live at [ahmethmzamlym.engineer](https://ahme
 | `ist-rotar.html` | Archived dashboard for the Istanbul Airport (IST) delay dataset, frozen on 1 May – 12 Sep 2026 |
 | `board.html` | Archived IST departure board — last clean window (12 Sep 2026) with outcomes and the full live record |
 | `route-delay-globe.html` | IST's riskiest outbound routes, plotted on a 3D globe |
-| `wimr.html` | WhereisMyRide hub: what a phone's sensors reveal about a metro train (speed integration, Bernoulli in the tunnel, the motors' magnetic field), with KaTeX maths and a graded prediction table. Data: `metro/wimr.json`, built by `analysis/hub.py` in the WhereisMyRide repo |
+| `wimr.html` | WhereisMyRide hub: what a phone's sensors reveal about a metro train (speed integration, Bernoulli in the tunnel, the motors' magnetic field, why buses come in pairs), with KaTeX maths and a graded prediction table. Data: `metro/wimr.json` (`analysis/hub.py`) and `metro/bus.json` (`analysis/buses.py`, lines anonymised) in the WhereisMyRide repo |
 | `metro-tunnel.html` | A 12 km metro tunnel rebuilt in 3D from phone sensors (gyroscope, barometer, accelerometer); three.js view, braking-energy analysis. Data: `metro/tube.json`, built by `analysis/tube.py` in the WhereisMyRide repo — stations anonymised (S1–S9) on purpose |
 | `bearing.html` | Bearing failure prediction on NASA's IMS vibration dataset |
 | `bearing-universal.html` | Part 2 — does the model generalize across 3 rigs / 36 bearings (IMS, XJTU-SY, FEMTO)? |

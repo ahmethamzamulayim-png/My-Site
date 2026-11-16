@@ -37,3 +37,4 @@
   .wm-feature { flex-direction: column; align-items: flex-start; }
 }
 .stat strong span { font-size: inherit; color: inherit; line-height: inherit; }
+.mt-legend i.sw-dash { height: 0; border-top: 2px dashed var(--muted); border-radius: 0; background: none; }

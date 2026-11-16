@@ -95,6 +95,7 @@
           <a href="#air"><b>3</b>Tünelde Bernoulli</a>
           <a href="#motors"><b>4</b>Motorları okuyan pusula</a>
           <a href="#brakes"><b>5</b>Frenler, yerçekimi ve konfor</a>
+          <a href="#buses"><b>6</b>Otobüsler neden çift gelir</a>
           <a href="#graded"><b>✓</b>Tahminler, notlandırılmış</a>
         </nav>
       </section>
@@ -204,6 +205,55 @@
         </a>
       </section>
 
+      <section class="section" data-reveal id="buses">
+        <div class="section-heading">
+          <p class="eyebrow">Bölüm 6 · otobüs GPS</p>
+          <h2>Otobüsler neden çift gelir?</h2>
+          <p class="hero-text">Yirmi dakika hiçbir şey, sonra aynı anda iki tane. Ders kitabı bunu bir geri besleme döngüsüne bağlar. Uygulama <span data-k="bus.window_days">15</span> gün boyunca iki hattaki her otobüsü yaklaşık dakikada bir kaydetti — döngünün gerçekten sorumlu olup olmadığını kontrol etmeye yetecek kadar.</p>
+        </div>
+        <div class="wm-math">
+          <p>Model: \(i\) otobüsü \(k\) durağına \(t_{i,k}\) anında varıyor. Öndeki otobüsle arası \(h_{i,k} = t_{i,k} - t_{i-1,k}\). Daha uzun ara daha çok bekleyen yolcu, yani daha uzun duruş demek — aranın her saniyesi için \(\beta\) saniye duruş — artı bir sonraki durağa yolculuk \(r_k\) ve rastgele bir gecikme \(\varepsilon_{i,k}\):</p>
+          $$t_{i,k+1} = t_{i,k} + r_k + \beta\,h_{i,k} + \varepsilon_{i,k}$$
+          <p>Aynı denklemi öndeki otobüs için çıkarınca bir aranın duraktan durağa nasıl değiştiği çıkıyor:</p>
+          $$h_{i,k+1} = (1+\beta)\,h_{i,k} - \beta\,h_{i-1,k} + \big(\varepsilon_{i,k} - \varepsilon_{i-1,k}\big)$$
+          <p>Buradan araların açılmasının çok farklı iki yolu çıkıyor. <b>Yalnız geri besleme</b> (\(\varepsilon = 0\)): uzun ve kısa araların sırayla dizildiği bir desen, \(x\), her durakta çarpılıyor — geometrik büyüyor. <b>Yalnız gürültü</b> (\(\beta = 0\)): rastgele gecikmeler yalnızca toplanıyor, yani varyans düz bir çizgi gibi büyüyor:</p>
+          $$x_{k} = (1+2\beta)^{k}\,x_0 \qquad\text{vs.}\qquad \operatorname{Var}[h_k] = \operatorname{Var}[h_0] + 2k\,\sigma^2$$
+          <p>Veri bunları üç yoldan ayırabiliyor. \(K\) durak boyunca geri besleme, önünde daha uzun ara olan otobüsü yavaşlatır ve sondaki arayı baştaki aynı aranın büyütülmüş bir kopyası yapar:</p>
+          $$\frac{\partial T_{\mathrm{run}}}{\partial h_0} \approx K\beta, \qquad \frac{\partial h_K}{\partial h_0} \approx (1+\beta)^{K} \approx e^{K\beta}$$
+        </div>
+        <div class="mt-panel">
+          <div id="c-spread" class="mt-chart"></div>
+          <div class="mt-legend">
+            <span><i style="background:#c2410c"></i>sık sefer yapan hat</span>
+            <span><i style="background:#1d4ed8"></i>seyrek sefer yapan hat</span>
+            <span><i class="sw-dash"></i>2. yön (kesikli)</span>
+          </div>
+          <p class="mt-note">Güzergâh boyunca, her aranın o durak ve saatteki tipik araya bölümünün varyansı. Sık sefer yapan hatta kabaca üç katına çıkıyor ve onu üstel bir eğriden çok düz bir çizgi açıklıyor (R² <span data-k="bus.lines.frequent.1.r2_linear" data-d="2">0.87</span> ve <span data-k="bus.lines.frequent.1.r2_exponential" data-d="2">0.77</span>; diğer yönde <span data-k="bus.lines.frequent.2.r2_linear" data-d="2">0.92</span> ve <span data-k="bus.lines.frequent.2.r2_exponential" data-d="2">0.88</span>). Çiftleşmiş aralar — tipik aranın 0,3'ünden kısa — %<span data-k="bus.pct.f1s" data-d="0">2</span>'den %<span data-k="bus.pct.f1e" data-d="0">19</span>'a çıkıyor.</p>
+        </div>
+        <div class="wm-check">
+          <p><b>Kontrol 1 — mekanizmanın kendisi.</b> Sık hatta, 1. yönde, önünde olağanın iki katı ara olan bir otobüs güzergâhı %<span data-k="bus.pct.direct" data-d="1">5.1</span> daha uzun sürede tamamlıyor (%90 aralık %<span data-k="bus.pct.direct_lo" data-d="1">1.7</span>–<span data-k="bus.pct.direct_hi" data-d="1">8.5</span>): \(K\beta \approx\) <span data-k="bus.lines.frequent.1.beta_total" data-d="2">0.32</span>. 2. yönde <span data-k="bus.lines.frequent.2.beta_total" data-d="2">0.17</span> ve aralık sıfıra değiyor. Döngü var — ama zayıf.</p>
+          <p><b>Kontrol 2 — aynı iki otobüs, baştan sona</b> (<span data-k="bus.lines.frequent.1.n_pairs">322</span> ve <span data-k="bus.lines.frequent.2.n_pairs">1,159</span> çift, sollamalar dahil, ~1 dk'lık sorgulama hatasına göre düzeltilmiş). Sondaki ara, 1. yönde baştakinin <span data-k="bus.lines.frequent.1.pair_slope" data-d="2">1.23</span> katı (geri besleme \(e^{K\beta} \approx\) <span data-k="bus.pred.f1" data-d="2">1.38</span> öngörüyor), 2. yönde <span data-k="bus.lines.frequent.2.pair_slope" data-d="2">1.03</span> katı (öngörü <span data-k="bus.pred.f2" data-d="2">1.19</span>). Aynı yönde, ama döngünün tek başına vereceğinden biraz zayıf.</p>
+        </div>
+        <div class="wm-math">
+          <p>Sondaki aranın baştakine göre eğimi \(b\) ile sondaki saçılma üç parçaya ayrılıyor — zaten var olan, geri beslemenin büyüttüğü ve gürültünün eklediği:</p>
+          $$\operatorname{Var}[h_K] = \underbrace{\operatorname{Var}[h_0]}_{\text{başta}} + \underbrace{(b^2 - 1)\operatorname{Var}[h_0]}_{\text{geri besleme}} + \underbrace{\sigma^2_{\mathrm{gürültü}}}_{\text{yolda eklenen}}, \qquad b = \frac{b_{\mathrm{raw}}}{1 - \dfrac{2\,\Delta t^2/12}{\operatorname{Var}[h_0]}}$$
+          <p>Burada \(\Delta t \approx\) <span data-k="bus.poll_s">61</span> sn sorgulama aralığı: düzeltilmezse baştaki aradaki zamanlama hatası eğimi düzleştirirdi.</p>
+        </div>
+        <div class="mt-panel">
+          <div id="c-share" class="mt-chart"></div>
+          <div class="mt-legend">
+            <span><i style="background:#b08a1e"></i>başta zaten var olan</span>
+            <span><i style="background:#c2410c"></i>geri beslemenin büyüttüğü</span>
+            <span><i style="background:#1d4ed8"></i>rastgele gecikmelerin eklediği</span>
+          </div>
+        </div>
+        <div class="wm-check">
+          <p><b>Yanıt.</b> Otobüsler burada gerçekten çift geliyor — sık hatta güzergâhın sonunda yaklaşık her beş aradan biri çiftleşmiş. Ama ünlü geri besleme döngüsü bu saçılmanın bir yönde yalnızca %<span data-k="bus.pct.fb1" data-d="0">14</span>'ünü, diğer yönde %<span data-k="bus.pct.fb2" data-d="0">2</span>'sini oluşturuyor. Çoğu sıradan rastgelelik — trafik ışıkları, yavaş bir biniş, bir sıkışıklık — duraktan durağa toplanıyor; üstelik aralar güzergâhın başında zaten düzensiz.</p>
+          <p><b>Seyrek hat</b> neredeyse hiç çiftleşmiyor (sonda %<span data-k="bus.pct.i1e" data-d="0">3</span>) ve hiç geri besleme göstermiyor; bir yönde araları tarifeye doğru geri bile daralıyor (eğim <span data-k="bus.lines.infrequent.2.pair_slope" data-d="2">0.70</span>) — sürücüler kontrol noktalarında bekliyorsa beklenecek şey.</p>
+          <p><b>Sınır.</b> İki hat, <span data-k="bus.window_days">15</span> gün, dakikada bir konum. Bir dakikadan kısa bir ara çözülemiyor, \(\beta\) bütün duraklar ve saatler üzerinden bir ortalama ve model sollamaları yok sayıyor (çiftlerin %<span data-k="bus.pct.ov2" data-d="0">6</span>'sı solladı). Hat numaraları ve duraklar bilerek dışarıda bırakıldı.</p>
+        </div>
+      </section>
+
       <section class="section" data-reveal id="graded">
         <div class="section-heading">
           <p class="eyebrow">Tahminler, notlandırılmış</p>
@@ -231,7 +281,7 @@
         <div class="section-heading">
           <p class="eyebrow">Burada olmayanlar</p>
           <h2>Gizlilik ve dışarıda bıraktıklarım.</h2>
-          <p class="hero-text">Bunlar kendi yolculuklarım. İstasyon adları, tarihler ve bir aralıktan ne sıklıkla geçtiğim nereye gittiğimin kaydına dönüşürdü; bu yüzden sayfalar yalnızca ölçümleri tutuyor: istasyonlar numaralı, sayılar seferler üzerinden toplanmış ve uygulamanın yaptığı otobüs, yürüyüş ve Bluetooth kayıtları gizli kalıyor.</p>
+          <p class="hero-text">Bunlar kendi yolculuklarım. İstasyon adları, tarihler ve bir aralıktan ne sıklıkla geçtiğim nereye gittiğimin kaydına dönüşürdü; bu yüzden sayfalar yalnızca ölçümleri tutuyor: istasyonlar numaralı, sayılar seferler üzerinden toplanmış otobüs verisi yalnızca hat numarası ve durak olmadan, toplu olarak yer alıyor; uygulamanın yaptığı yürüyüş ve Bluetooth kayıtları gizli kalıyor.</p>
         </div>
       </section>
 
@@ -246,7 +296,7 @@
     </main>
 
     <footer class="footer">
-      <p>Telefon sensörleri · matematik için KaTeX · hat kontrolü © OpenStreetMap katkıcıları · hat hızı: Wikipedia, OpenStreetMap</p>
+      <p>Telefon sensörleri · otobüs konumları: İETT, İBB Açık Veri üzerinden · matematik için KaTeX · hat kontrolü © OpenStreetMap katkıcıları · hat hızı: Wikipedia, OpenStreetMap</p>
       <p id="year"></p>
     </footer>
   </body>

@@ -95,6 +95,7 @@
           <a href="#air"><b>3</b>Bernoulli in a tunnel</a>
           <a href="#motors"><b>4</b>A compass that reads the motors</a>
           <a href="#brakes"><b>5</b>Brakes, gravity and comfort</a>
+          <a href="#buses"><b>6</b>Why buses come in pairs</a>
           <a href="#graded"><b>✓</b>The predictions, graded</a>
         </nav>
       </section>
@@ -204,6 +205,55 @@
         </a>
       </section>
 
+      <section class="section" data-reveal id="buses">
+        <div class="section-heading">
+          <p class="eyebrow">Chapter 6 · bus GPS</p>
+          <h2>Why do buses come in pairs?</h2>
+          <p class="hero-text">Nothing for twenty minutes, then two at once. The textbook blames a feedback loop. For <span data-k="bus.window_days">15</span> days the app logged every bus on two lines about once a minute — enough to check whether the loop is really what does it.</p>
+        </div>
+        <div class="wm-math">
+          <p>The model: bus \(i\) reaches stop \(k\) at \(t_{i,k}\). Its gap to the bus ahead is \(h_{i,k} = t_{i,k} - t_{i-1,k}\). A longer gap means more people waiting, so a longer stop — say \(\beta\) seconds of dwell per second of gap — plus the ride to the next stop \(r_k\) and a random delay \(\varepsilon_{i,k}\):</p>
+          $$t_{i,k+1} = t_{i,k} + r_k + \beta\,h_{i,k} + \varepsilon_{i,k}$$
+          <p>Subtracting the same equation for the bus ahead gives how a gap evolves from stop to stop:</p>
+          $$h_{i,k+1} = (1+\beta)\,h_{i,k} - \beta\,h_{i-1,k} + \big(\varepsilon_{i,k} - \varepsilon_{i-1,k}\big)$$
+          <p>Two very different ways for gaps to spread follow from it. <b>Feedback alone</b> (\(\varepsilon = 0\)): a pattern of alternating long and short gaps, \(x\), is multiplied every stop — it grows geometrically. <b>Noise alone</b> (\(\beta = 0\)): random delays just add up, so the variance grows in a straight line:</p>
+          $$x_{k} = (1+2\beta)^{k}\,x_0 \qquad\text{vs.}\qquad \operatorname{Var}[h_k] = \operatorname{Var}[h_0] + 2k\,\sigma^2$$
+          <p>The data can tell them apart three ways. Over \(K\) stops, feedback makes a bus with a longer gap run slower, and makes a gap at the end a magnified copy of the same gap at the start:</p>
+          $$\frac{\partial T_{\mathrm{run}}}{\partial h_0} \approx K\beta, \qquad \frac{\partial h_K}{\partial h_0} \approx (1+\beta)^{K} \approx e^{K\beta}$$
+        </div>
+        <div class="mt-panel">
+          <div id="c-spread" class="mt-chart"></div>
+          <div class="mt-legend">
+            <span><i style="background:#c2410c"></i>frequent line</span>
+            <span><i style="background:#1d4ed8"></i>infrequent line</span>
+            <span><i class="sw-dash"></i>direction 2 (dashed)</span>
+          </div>
+          <p class="mt-note">Variance of each gap divided by the typical gap for that stop and hour, along the route. On the frequent line it roughly triples, and a straight line fits it better than an exponential (R² <span data-k="bus.lines.frequent.1.r2_linear" data-d="2">0.87</span> vs <span data-k="bus.lines.frequent.1.r2_exponential" data-d="2">0.77</span>; the other direction <span data-k="bus.lines.frequent.2.r2_linear" data-d="2">0.92</span> vs <span data-k="bus.lines.frequent.2.r2_exponential" data-d="2">0.88</span>). Bunched gaps — under 0.3 of the typical — go from <span data-k="bus.pct.f1s" data-d="0">2</span>% to <span data-k="bus.pct.f1e" data-d="0">19</span>%.</p>
+        </div>
+        <div class="wm-check">
+          <p><b>Check 1 — the mechanism itself.</b> On the frequent line, direction 1, a bus with twice the usual gap ahead takes <span data-k="bus.pct.direct" data-d="1">5.1</span>% longer over the route (90% interval <span data-k="bus.pct.direct_lo" data-d="1">1.7</span>–<span data-k="bus.pct.direct_hi" data-d="1">8.5</span>%): \(K\beta \approx\) <span data-k="bus.lines.frequent.1.beta_total" data-d="2">0.32</span>. In direction 2 it is <span data-k="bus.lines.frequent.2.beta_total" data-d="2">0.17</span> and the interval touches zero. The loop is there — weakly.</p>
+          <p><b>Check 2 — the same two buses, start to end</b> (<span data-k="bus.lines.frequent.1.n_pairs">322</span> and <span data-k="bus.lines.frequent.2.n_pairs">1,159</span> pairs, overtakes kept, corrected for the ~1 min polling error). The end gap is <span data-k="bus.lines.frequent.1.pair_slope" data-d="2">1.23</span>× the start gap in direction 1 (feedback predicts \(e^{K\beta} \approx\) <span data-k="bus.pred.f1" data-d="2">1.38</span>) and <span data-k="bus.lines.frequent.2.pair_slope" data-d="2">1.03</span>× in direction 2 (predicted <span data-k="bus.pred.f2" data-d="2">1.19</span>). Same direction, a little weaker than the loop alone would give.</p>
+        </div>
+        <div class="wm-math">
+          <p>With the slope \(b\) of the end gap on the start gap, the spread at the end splits into three parts — what was already there, what feedback grew, and what noise added:</p>
+          $$\operatorname{Var}[h_K] = \underbrace{\operatorname{Var}[h_0]}_{\text{at the start}} + \underbrace{(b^2 - 1)\operatorname{Var}[h_0]}_{\text{feedback}} + \underbrace{\sigma^2_{\mathrm{noise}}}_{\text{added on the way}}, \qquad b = \frac{b_{\mathrm{raw}}}{1 - \dfrac{2\,\Delta t^2/12}{\operatorname{Var}[h_0]}}$$
+          <p>where \(\Delta t \approx\) <span data-k="bus.poll_s">61</span> s is the polling interval: a timing error in the start gap would otherwise flatten the slope.</p>
+        </div>
+        <div class="mt-panel">
+          <div id="c-share" class="mt-chart"></div>
+          <div class="mt-legend">
+            <span><i style="background:#b08a1e"></i>already there at the start</span>
+            <span><i style="background:#c2410c"></i>grown by feedback</span>
+            <span><i style="background:#1d4ed8"></i>added by random delays</span>
+          </div>
+        </div>
+        <div class="wm-check">
+          <p><b>Answer.</b> Buses do come in pairs here — on the frequent line about one gap in five is bunched by the end of the route. But the famous feedback loop builds only about <span data-k="bus.pct.fb1" data-d="0">14</span>% of that spread in one direction and <span data-k="bus.pct.fb2" data-d="0">2</span>% in the other. Most of it is ordinary randomness — traffic lights, a slow boarding, a jam — adding up stop after stop, on top of gaps that were already uneven where the route begins.</p>
+          <p><b>The infrequent line</b> barely bunches (<span data-k="bus.pct.i1e" data-d="0">3</span>% at the end) and shows no feedback at all; in one direction its gaps even shrink back toward the timetable (slope <span data-k="bus.lines.infrequent.2.pair_slope" data-d="2">0.70</span>) — what you'd expect if drivers wait at timing points.</p>
+          <p><b>Limit.</b> Two lines, <span data-k="bus.window_days">15</span> days, one position a minute. A gap under a minute can't be resolved, \(\beta\) is an average over every stop and hour, and the model ignores buses overtaking (<span data-k="bus.pct.ov2" data-d="0">6</span>% of pairs did). Line numbers and stops are left out on purpose.</p>
+        </div>
+      </section>
+
       <section class="section" data-reveal id="graded">
         <div class="section-heading">
           <p class="eyebrow">The predictions, graded</p>
@@ -231,7 +281,7 @@
         <div class="section-heading">
           <p class="eyebrow">What's not here</p>
           <h2>Privacy, and the parts I left out.</h2>
-          <p class="hero-text">These are my own rides. Station names, dates and how often I rode a stretch would add up to where I go, so the pages keep only measurements: stations are numbered, numbers are pooled across runs, and the bus, walking and Bluetooth recordings the app also made stay private.</p>
+          <p class="hero-text">These are my own rides. Station names, dates and how often I rode a stretch would add up to where I go, so the pages keep only measurements: stations are numbered, numbers are pooled across runs, the bus data appears only pooled, with no line numbers or stops, and the walking and Bluetooth recordings the app also made stay private.</p>
         </div>
       </section>
 
@@ -246,7 +296,7 @@
     </main>
 
     <footer class="footer">
-      <p>Phone sensors · KaTeX for the maths · track check © OpenStreetMap contributors · line speed: Wikipedia, OpenStreetMap</p>
+      <p>Phone sensors · bus positions: İETT via İBB Açık Veri · KaTeX for the maths · track check © OpenStreetMap contributors · line speed: Wikipedia, OpenStreetMap</p>
       <p id="year"></p>
     </footer>
   </body>
