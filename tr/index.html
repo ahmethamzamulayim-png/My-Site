@@ -81,7 +81,7 @@
       <section class="hero">
         <div class="hero-copy" data-reveal>
           <h1>Tasarım, analiz ve kanıt üzerine kurulu makine mühendisliği.</h1>
-          <p class="hero-text">Ben Ahmet Hamza Mülayim, Marmara Üniversitesi'nde makine mühendisliği öğrencisiyim. Fiziksel sistemler kuruyorum, nasıl davrandıklarını analiz ediyorum ve onları daha iyi anlamak için giderek daha çok veriye — titreşim sinyallerine, uçuş kayıtlarına — dayanıyorum. Bu portföy, bunun arkasındaki gerçek projeler; bir özgeçmiş değil.</p>
+          <p class="hero-text">Ben Ahmet Hamza Mülayim, Marmara Üniversitesi'nde makine mühendisliği öğrencisiyim. Parça tasarlıyorum, makinelerin nasıl davrandığını analiz ediyorum ve bir fikrin tutup tutmadığını görmek için ölçüyorum — gerçek parçalarla karşılaştırılan bir boru redüksiyonu, test düzeneklerinde arızaya kadar çalıştırılan rulmanlar, bir telefonla ölçülen bir metro treni. Bu portföy, bunun arkasındaki gerçek projeler; bir özgeçmiş değil.</p>
           <div class="hero-actions">
             <a class="button primary" href="#projects">Projelere bak</a>
             <a class="button secondary" href="/tr/about">Hakkımda</a>
@@ -97,17 +97,8 @@
             <div class="treemap">
               <a class="tile t-xds" href="/tr/bearing-universal">
                 <span class="tile-tag">Durum İzleme · Öne çıkan</span>
-                <strong>Evrensel rulman RUL</strong>
-                <span class="tile-note">3 düzenek · 36 rulman</span>
-              </a>
-              <a class="tile t-globe" href="/tr/thy-globe">
-                <span class="tile-tag">Web · çevrimdışı</span>
-                <strong>THY uçuş küresi</strong>
-                <span class="tile-note" id="live-globe-note">3B kürede 130+ uçuş</span>
-              </a>
-              <a class="tile t-ml" href="/tr/bearing">
-                <span class="tile-tag">Durum İzleme</span>
                 <strong>Rulman arızası tahmini</strong>
+                <span class="tile-note">4 / 4 arıza erken yakalandı · 3 test düzeneği</span>
               </a>
               <a class="tile t-reducer" href="/tr/reducer">
                 <span class="tile-tag">CAD Otomasyonu</span>
@@ -134,27 +125,16 @@
           <p class="group-note" data-reveal>Tam vaka çalışmaları — gerçek sayılar, sınırlamalar dahil.</p>
 
           <article class="card card-plum card-hero" data-reveal>
-            <p class="card-tag">Durum İzleme · Bölüm 2 · Öne çıkan · Temmuz 2026</p>
-            <h3>Evrensel rulman RUL — veri setleri arası çalışma</h3>
-            <p>Bir düzenekte eğitilen bir prognostik model, hiç görmediği bir düzeneğe taşınır mı?</p>
+            <p class="card-tag">Durum İzleme · İki bölümlü çalışma · Öne çıkan · Temmuz 2026</p>
+            <h3>Rulman arızası tahmini — tek düzenekten üç düzeneğe</h3>
+            <p>Titreşim tek başına bir rulmanın arızalanmak üzere olduğunu haber verebilir mi — ve bir düzenekte eğitilen model, hiç görmediği bir düzenekte hâlâ çalışır mı?</p>
             <div class="card-metrics">
-              <div><strong>36</strong><span>İncelenen rulman</span></div>
-              <div><strong>3</strong><span>Düzenek — IMS, XJTU-SY, FEMTO</span></div>
-              <div><strong>LOBO / LODO</strong><span>Veri setleri arası doğrulama</span></div>
+              <div><strong>4 / 4</strong><span>Arızalanan rulman 2,5–17 gün önceden yakalandı</span></div>
+              <div><strong>36</strong><span>3 farklı test düzeneğinden rulman</span></div>
+              <div><strong>≈ aynı hata</strong><span>Modelin hiç görmediği düzenekte</span></div>
             </div>
-            <a class="card-link" href="/tr/bearing-universal">Çalışmayı aç →</a>
-          </article>
-
-          <article class="card card-cobalt" data-reveal>
-            <p class="card-tag">Durum İzleme · Bölüm 1 · Temmuz 2026</p>
-            <h3>IMS rulman arızası tahmini</h3>
-            <p>Titreşim tek başına bir rulmanın arızadan önce kalan ömrünü öngörebilir mi?</p>
-            <div class="card-metrics">
-              <div><strong>3</strong><span>Bozulana-kadar-çalıştırma testi</span></div>
-              <div><strong>20 kHz</strong><span>Titreşim örnekleme hızı</span></div>
-              <div><strong>20.480</strong><span>Kesit başına örnek</span></div>
-            </div>
-            <a class="card-link" href="/tr/bearing">Vaka çalışmasını aç →</a>
+            <a class="card-link" href="/tr/bearing">1. Bölüm: tek düzenek →</a>
+            <a class="card-link" href="/tr/bearing-universal">2. Bölüm: üç düzenek →</a>
           </article>
 
           <article class="card card-rust" data-reveal>
@@ -175,7 +155,7 @@
             <p>Tren koltuğundaki bir telefon neyi ölçebilir? Tünelin tepelerini, trenin ittiği havayı ve motorlarındaki akımı — her sayının arkasındaki matematikle.</p>
             <div class="card-metrics">
               <div><strong>12 km</strong><span>3B olarak yeniden kurulan tünel</span></div>
-              <div><strong>r = 0,85</strong><span>Pusula ve motor gücü</span></div>
+              <div><strong>Pusula</strong><span>Motor akımını manyetik alanından okuyor</span></div>
               <div><strong>8</strong><span>Yolculuklarla notlandırılan tahmin</span></div>
             </div>
             <a class="card-link" href="/tr/wimr">Projeyi aç →</a>

@@ -82,11 +82,7 @@
         <div class="hero-copy" data-reveal>
           <h1>Mechanical engineering, built around design, analysis, and proof.</h1>
           <p class="hero-text">
-            I’m Ahmet Hamza Mülayim, a mechanical engineering student at Marmara
-            University. I build physical systems, analyze how they behave, and
-            increasingly lean on data — vibration signals, flight records — to
-            understand them better. This portfolio is the real projects behind
-            that, not a résumé.
+            I’m Ahmet Hamza Mülayim, a mechanical engineering student at Marmara University. I design parts, analyse how machines behave, and measure them to see whether an idea holds up — a pipe reducer checked against real parts, bearings run to failure on test rigs, a metro train measured with a phone. This portfolio is the real projects behind that, not a résumé.
           </p>
           <div class="hero-actions">
             <a class="button primary" href="#projects">View projects</a>
@@ -103,17 +99,8 @@
             <div class="treemap">
               <a class="tile t-xds" href="/bearing-universal">
                 <span class="tile-tag">Condition Monitoring · Flagship</span>
-                <strong>Universal bearing RUL</strong>
-                <span class="tile-note">3 rigs · 36 bearings</span>
-              </a>
-              <a class="tile t-globe" href="/thy-globe">
-                <span class="tile-tag">Web · offline</span>
-                <strong>THY flight globe</strong>
-                <span class="tile-note" id="live-globe-note">130+ flights on a 3D globe</span>
-              </a>
-              <a class="tile t-ml" href="/bearing">
-                <span class="tile-tag">Condition Monitoring</span>
                 <strong>Bearing failure prediction</strong>
+                <span class="tile-note">4 / 4 failures caught early · 3 test rigs</span>
               </a>
               <a class="tile t-reducer" href="/reducer">
                 <span class="tile-tag">CAD Automation</span>
@@ -140,27 +127,16 @@
           <p class="group-note" data-reveal>Full case studies — real numbers, honest limitations included.</p>
 
           <article class="card card-plum card-hero" data-reveal>
-            <p class="card-tag">Condition Monitoring · Part 2 · Flagship · Jul 2026</p>
-            <h3>Universal bearing RUL — cross-dataset study</h3>
-            <p>Does a prognostics model trained on one rig transfer to a rig it has never seen?</p>
+            <p class="card-tag">Condition Monitoring · Two-part study · Flagship · Jul 2026</p>
+            <h3>Bearing failure prediction — from one test rig to three</h3>
+            <p>Can vibration alone warn that a rolling bearing is about to fail — and does a model trained on one test rig still work on a rig it has never seen?</p>
             <div class="card-metrics">
-              <div><strong>36</strong><span>Bearings analyzed</span></div>
-              <div><strong>3</strong><span>Rigs — IMS, XJTU-SY, FEMTO</span></div>
-              <div><strong>LOBO / LODO</strong><span>Cross-dataset validation</span></div>
+              <div><strong>4 / 4</strong><span>Failing bearings caught 2.5–17 days early</span></div>
+              <div><strong>36</strong><span>Bearings from 3 different test rigs</span></div>
+              <div><strong>≈ same error</strong><span>On a rig the model never saw</span></div>
             </div>
-            <a class="card-link" href="/bearing-universal">Open the study →</a>
-          </article>
-
-          <article class="card card-cobalt" data-reveal>
-            <p class="card-tag">Condition Monitoring · Part 1 · Jul 2026</p>
-            <h3>IMS bearing failure prediction</h3>
-            <p>Can vibration alone forecast a rolling-element bearing's remaining life before it fails?</p>
-            <div class="card-metrics">
-              <div><strong>3</strong><span>Run-to-failure tests</span></div>
-              <div><strong>20 kHz</strong><span>Vibration sampling rate</span></div>
-              <div><strong>20,480</strong><span>Points per snapshot</span></div>
-            </div>
-            <a class="card-link" href="/bearing">Open the case study →</a>
+            <a class="card-link" href="/bearing">Part 1: one rig →</a>
+            <a class="card-link" href="/bearing-universal">Part 2: three rigs →</a>
           </article>
 
           <article class="card card-rust" data-reveal>
@@ -181,7 +157,7 @@
             <p>What can a phone on a train seat measure? The tunnel's hills, the air the train pushes and the current in its motors — with the maths behind every number.</p>
             <div class="card-metrics">
               <div><strong>12 km</strong><span>Tunnel rebuilt in 3D</span></div>
-              <div><strong>r = 0.85</strong><span>Compass vs. motor power</span></div>
+              <div><strong>Compass</strong><span>Reads the motors' current through its field</span></div>
               <div><strong>8</strong><span>Predictions, graded by the rides</span></div>
             </div>
             <a class="card-link" href="/wimr">Open the project →</a>
