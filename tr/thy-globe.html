@@ -35,11 +35,7 @@
         height: 100vh;
         height: 100dvh; /* mobile browser chrome */
       }
-      #globe {
-        position: fixed;
-        inset: 0;
-        z-index: 0;
-      }
+      
       .site-header {
         position: relative;
         z-index: 2;
@@ -71,7 +67,7 @@
         color: var(--muted);
         max-width: 240px;
       }
-      #tip b { color: var(--text); font-family: "Space Grotesk", sans-serif; }
+      
       .globe-panel {
         position: fixed;
         left: 24px;
@@ -85,7 +81,7 @@
         box-shadow: var(--shadow);
         backdrop-filter: blur(14px);
       }
-      .globe-panel .eyebrow { margin-bottom: 8px; }
+      
       .big-count {
         font-family: "Space Grotesk", sans-serif;
         font-size: 3.4rem;
@@ -180,34 +176,12 @@
         letter-spacing: -0.02em;
       }
       .detail .dmodel { margin: 0 0 12px; font-size: 0.9rem; color: var(--muted); }
-      .detail .droute {
-        padding: 12px 0;
-        border-top: 1px solid rgba(43, 39, 50, 0.1);
-        font-size: 0.9rem;
-        line-height: 1.6;
-        color: var(--muted);
-      }
-      .detail .droute b { color: var(--text); font-family: "Space Grotesk", sans-serif; }
-      .detail .dstats {
-        padding-top: 10px;
-        border-top: 1px solid rgba(43, 39, 50, 0.1);
-        font-size: 0.85rem;
-        color: var(--muted);
-        line-height: 1.7;
-      }
-      .detail .dstats b { color: var(--text); }
-      #dclose {
-        position: absolute;
-        top: 12px;
-        right: 14px;
-        background: none;
-        border: 0;
-        color: var(--muted);
-        font-size: 1.3rem;
-        cursor: pointer;
-        line-height: 1;
-      }
-      #dclose:hover { color: var(--text); }
+      
+      
+      
+      
+      
+      
       @media (max-width: 900px) {
         .globe-panel {
           left: 12px;
