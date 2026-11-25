@@ -130,6 +130,7 @@
     </script>
   </head>
   <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     <div class="noise"></div>
     <header class="site-header">
       <a class="brand" href="/">
@@ -145,7 +146,7 @@
       </nav>
     </header>
 
-    <main>
+    <main id="main">
       <section class="section" data-reveal>
         <div class="section-heading">
           <p class="eyebrow">Web / Interactive · off the clock · Aug 2026</p>
@@ -484,7 +485,6 @@
       function setPlayLabel(playing) {
         playBtn.textContent = playing ? t("⏸ Pause", "⏸ Duraklat") : t("▶ Play", "▶ Çal");
       }
-      document.addEventListener("langchange", () => setPlayLabel(Tone.Transport.state === "started"));
 
       let currentMidi = null;
 
@@ -709,7 +709,6 @@
           btn.addEventListener("click", () => playFeatured(FEATURED[+btn.dataset.i]));
         });
       }
-      document.addEventListener("langchange", renderFeatured);
 
       async function playFeatured(piece) {
         try {

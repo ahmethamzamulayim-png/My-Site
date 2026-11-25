@@ -108,9 +108,11 @@ if (contactForm) {
       .catch(() => showFailed(FALLBACK_MSG));
   });
 
-  resultFrame.addEventListener("load", () => {
-    if (submitted) showSent();
-  });
+  if (resultFrame) {
+    resultFrame.addEventListener("load", () => {
+      if (submitted) showSent();
+    });
+  }
 }
 
 // Easter egg: type "concorde" anywhere on the site to fly a plane across the screen.
@@ -133,6 +135,7 @@ if (contactForm) {
   function flyConcorde() {
     const plane = document.createElement("div");
     plane.className = "easter-plane";
+    plane.setAttribute("aria-hidden", "true");
     // Concorde silhouette: needle nose, delta wing, tail fin — nose points right (+x)
     plane.innerHTML =
       '<svg viewBox="0 0 200 60" fill="currentColor" width="100%" height="100%">' +
@@ -142,6 +145,7 @@ if (contactForm) {
       "</svg>";
     const boom = document.createElement("div");
     boom.className = "easter-boom";
+    boom.setAttribute("aria-hidden", "true");
     document.body.append(plane, boom);
     setTimeout(() => {
       plane.remove();
@@ -200,6 +204,7 @@ if (contactForm) {
   const cursorEl = document.createElement("div");
   cursorEl.className = "custom-cursor";
   cursorEl.dataset.mode = mode;
+  cursorEl.setAttribute("aria-hidden", "true");
   cursorEl.innerHTML = icon;
   document.body.appendChild(cursorEl);
 
@@ -213,7 +218,17 @@ if (contactForm) {
     angle = 0,
     angVel = 0,
     stretch = 1,
-    flame = 0;
+    flame = 0,
+    rafId = 0;
+
+  function renderCursor() {
+    const scale = Math.abs(stretch - 1) > 0.001 ? ` scale(${(2 - stretch).toFixed(3)}, ${stretch.toFixed(3)})` : "";
+    cursorEl.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%) rotate(${angle.toFixed(2)}deg)${scale}`;
+  }
+
+  function wake() {
+    if (!rafId) rafId = requestAnimationFrame(tick);
+  }
 
   document.addEventListener("mousemove", (event) => {
     cursorEl.classList.add("active");
@@ -226,29 +241,51 @@ if (contactForm) {
     x = event.clientX;
     y = event.clientY;
     lastX = event.clientX;
+    wake();
+  });
+
+  document.documentElement.addEventListener("mouseleave", () => {
+    cursorEl.classList.remove("active");
   });
 
   // webOS Magic Remote-style squash/stretch: scrolling elongates the bearing
   // vertically, like it's rolling on the scrollbar, easing back to round after.
   if (spinEnabled) {
-    window.addEventListener("wheel", () => { stretch = 1.6; }, { passive: true });
+    window.addEventListener("wheel", () => { stretch = 1.6; wake(); }, { passive: true });
   }
   if (flameEl && motionOK) {
-    window.addEventListener("wheel", () => { flame = 1; }, { passive: true });
+    window.addEventListener("wheel", () => { flame = 1; wake(); }, { passive: true });
   }
 
-  (function tick() {
+  function tick() {
+    rafId = 0;
+    let animating = false;
     if (spinEnabled) {
-      angle += angVel;
-      angVel *= 0.94;
-      stretch += (1 - stretch) * 0.12;
+      if (Math.abs(angVel) > 0.02) {
+        angle += angVel;
+        angVel *= 0.94;
+        animating = true;
+      } else {
+        angVel = 0;
+      }
+      if (Math.abs(stretch - 1) > 0.002) {
+        stretch += (1 - stretch) * 0.12;
+        animating = true;
+      } else {
+        stretch = 1;
+      }
     }
     if (flameEl) {
-      flame += (0 - flame) * 0.06;
-      flameEl.setAttribute("opacity", flame.toFixed(3));
+      if (flame > 0.005) {
+        flame += (0 - flame) * 0.06;
+        flameEl.setAttribute("opacity", flame.toFixed(3));
+        animating = true;
+      } else if (flame !== 0) {
+        flame = 0;
+        flameEl.setAttribute("opacity", "0");
+      }
     }
-    const scale = stretch !== 1 ? ` scale(${(2 - stretch).toFixed(3)}, ${stretch.toFixed(3)})` : "";
-    cursorEl.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%) rotate(${angle}deg)${scale}`;
-    requestAnimationFrame(tick);
-  })();
+    renderCursor();
+    if (animating) rafId = requestAnimationFrame(tick);
+  }
 })();

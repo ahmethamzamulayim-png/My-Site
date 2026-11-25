@@ -33,8 +33,7 @@
     <style>
       /* page-local, on top of the site tokens — same panel/callout classes as
          phase2.html and ist-rotar.html so the project pages read as one family */
-      
-      
+
       .callout {
         margin-top: 16px;
         padding: 14px 16px;
@@ -45,7 +44,6 @@
         font-size: 0.9rem;
         line-height: 1.65;
       }
-      
 
       /* hero tiles: one number per hub, identity carried by the colour chip */
       .hub-grid {
@@ -115,6 +113,7 @@
     </script>
   </head>
   <body data-cursor="plane">
+    <a class="skip-link" href="#main">Skip to content</a>
     <div class="noise"></div>
     <header class="site-header">
       <a class="brand" href="/">
@@ -131,7 +130,7 @@
       </nav>
     </header>
 
-    <main>
+    <main id="main">
       <section class="section" data-reveal>
         <div class="archive-banner"><b>Archived</b><span>Part of the archived IST project. This comparison uses 3 May – 27 Jul 2026 data and is unaffected by the problems that ended it. <a href="/ist-shutdown">Why I shut it down →</a></span></div>
         <div class="section-heading">
@@ -377,7 +376,6 @@
       }
 
       build();
-      document.addEventListener("langchange", build);
     </script>
   </body>
 </html>

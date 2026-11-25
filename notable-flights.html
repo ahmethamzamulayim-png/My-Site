@@ -208,7 +208,6 @@
         border-radius: 12px; padding: 8px 12px;
         font-size: 0.82rem; color: var(--muted); max-width: 220px;
       }
-      
 
       /* model attribution — shown only when the real .glb loads (CC BY) */
       #modelCredit {
@@ -288,6 +287,7 @@
     </script>
   </head>
   <body data-cursor="concorde">
+    <a class="skip-link" href="#main">Skip to content</a>
     <div class="noise"></div>
     <p id="modelCredit" hidden></p>
 
@@ -305,7 +305,7 @@
       </nav>
     </header>
 
-    <main>
+    <main id="main">
       <div id="globe" role="group" aria-label="3D globe for flying Concorde's notable routes - see the mission list for the same flights as text"></div>
       <div id="tip"></div>
 
@@ -320,7 +320,7 @@
       </aside>
 
       <aside class="briefing" id="briefing" hidden aria-live="polite">
-        <button id="bclose" aria-label="Close briefing">×</button>
+        <button id="bclose" type="button" aria-label="Close briefing">×</button>
         <p class="eyebrow" id="btag"></p>
         <h2 id="btitle"></h2>
         <p class="bdate" id="bdate"></p>
@@ -1194,34 +1194,6 @@
         const expanded = !$("roster").classList.toggle("collapsed");
         $("rosterToggle").setAttribute("aria-expanded", expanded);
       };
-
-      // re-render text on language switch
-      document.addEventListener("langchange", () => {
-        // rebuild roster labels
-        [...rosterList.children].forEach((c, i) => {
-          const f = FLIGHTS[i];
-          c.querySelector(".mtitle").textContent = t(f.name, f.nameTr);
-          c.querySelector(".mmeta").textContent = `${t(f.date, f.dateTr)} · ${label(f.paths[0])}`;
-        });
-        if (current) selectFlightTextRefresh();
-        if (modelLoaded) showModelCredit();
-        refreshBubbles(); // pin aria-labels follow the language
-      });
-      function selectFlightTextRefresh() {
-        const f = current;
-        $("btag").innerHTML = f.memorial ? t("In memory", "Anısına")
-          : `<span class="tulip" aria-hidden="true"></span> ${t("Mission", "Görev")} ${f.num}`;
-        $("btitle").textContent = t(f.name, f.nameTr);
-        $("bdate").textContent = t(f.date, f.dateTr);
-        $("bcraft").innerHTML = `<b>${f.craft}</b>${f.reg ? " · " + f.reg : ""}<br>${label(f.paths[0])}`;
-        $("bdesc").textContent = t(f.desc, f.descTr);
-        [...$("bchips").children].forEach((c, i) => {
-          c.querySelector("b").textContent = t(f.stats[i].v, f.stats[i].vTr || f.stats[i].v);
-          c.querySelector("span").textContent = t(f.stats[i].l, f.stats[i].lTr);
-        });
-        if (f.memorial) $("bmemorial").textContent = t(f.memorialNote, f.memorialNoteTr);
-        if (flying) renderFrame();
-      }
     </script>
   </body>
 </html>

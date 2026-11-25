@@ -33,8 +33,7 @@
     <style>
       /* page-local, on top of the site tokens — same panel/callout classes as
          phase2.html and ist-rotar.html so the project pages read as one family */
-      
-      
+
       .callout {
         margin-top: 16px;
         padding: 14px 16px;
@@ -45,7 +44,6 @@
         font-size: 0.9rem;
         line-height: 1.65;
       }
-      
 
       /* hero tiles: one number per hub, identity carried by the colour chip */
       .hub-grid {
@@ -115,13 +113,14 @@
     </script>
   </head>
   <body data-cursor="plane">
+    <a class="skip-link" href="#main">İçeriğe geç</a>
     <div class="noise"></div>
     <header class="site-header">
       <a class="brand" href="/tr/">
         <span class="brand-mark">A</span>
         <span>
           <strong>Ahmet Hamza Mülayim</strong>
-          <small>Marmara University</small>
+          <small>Marmara Üniversitesi</small>
         </span>
       </a>
       <nav class="site-nav">
@@ -131,7 +130,7 @@
       </nav>
     </header>
 
-    <main>
+    <main id="main">
       <section class="section" data-reveal>
         <div class="archive-banner"><b>Arşiv</b><span>Arşivlenmiş IST projesinin parçası. Bu karşılaştırma 3 Mayıs – 27 Temmuz 2026 verisini kullanıyor ve projeyi bitiren sorunlardan etkilenmedi. <a href="/tr/ist-shutdown">Neden kapattım →</a></span></div>
         <div class="section-heading">
@@ -427,7 +426,6 @@
       }
 
       build();
-      document.addEventListener("langchange", build);
     </script>
   </body>
 </html>

@@ -184,6 +184,7 @@
     </script>
   </head>
   <body class="hist" data-cursor="plane">
+    <a class="skip-link" href="#main">Skip to content</a>
     <div class="noise"></div>
     <header class="site-header">
       <a class="brand" href="/">
@@ -202,7 +203,7 @@
       </nav>
     </header>
 
-    <main>
+    <main id="main">
       <section class="section" data-reveal>
         <div class="ph-hero">
           <img src="/assets/img/ist-hero.jpg" alt="Istanbul Airport terminal" width="1600" height="663" />
@@ -272,7 +273,7 @@
         </article>
 
         <article class="chapter flip" data-reveal>
-          <div class="ch-media"><img src="/assets/img/ist-terminal.jpg" alt="Istanbul Airport terminal interior" loading="lazy" width="1600" height="1067" /></div>
+          <div class="ch-media"><img src="/assets/img/ist-terminal.jpg" alt="Istanbul Airport terminal interior" loading="lazy" width="1200" height="800" /></div>
           <div class="ch-body">
             <p class="when">5–6 April 2019 · the Big Move</p>
             <h3>45 hours allowed, finished in 29</h3>
@@ -347,7 +348,7 @@
         <article class="chapter" data-reveal style="margin-top: 22px">
           <div class="ch-media" style="background: linear-gradient(135deg,#1b1f2a,#2b2132 55%,#3a1d24); display: grid; place-items: center;">
             <span style="font-family:'Space Grotesk',sans-serif; color:#fff; text-align:center; line-height:1.1;">
-              <span style="display:block; font-size:2.6rem; font-weight:700; letter-spacing:-0.03em;">18,95 → 11,90</span>
+              <span style="display:block; font-size:2.6rem; font-weight:700; letter-spacing:-0.03em;">18.95 → 11.90</span>
               <span style="display:block; font-size:0.8rem; opacity:0.6; margin-top:8px;">minutes · per departure</span>
             </span>
           </div>
@@ -526,8 +527,24 @@
         const ul = document.getElementById("credits");
         c.forEach(x => {
           const li = document.createElement("li");
-          li.innerHTML = x.title + " — " + x.author + ", <a href=\"" + x.licenseUrl + "\">" +
-            x.license + "</a> (<a href=\"" + x.sourcePage + "\">Wikimedia Commons</a>)";
+          li.append(x.title + " — " + x.author + ", ");
+          if (x.licenseUrl) {
+            const la = document.createElement("a");
+            la.href = x.licenseUrl;
+            la.target = "_blank";
+            la.rel = "noreferrer";
+            la.textContent = x.license;
+            li.append(la);
+          } else {
+            li.append(x.license);
+          }
+          li.append(" (");
+          const sa = document.createElement("a");
+          sa.href = x.sourcePage;
+          sa.target = "_blank";
+          sa.rel = "noreferrer";
+          sa.textContent = "Wikimedia Commons";
+          li.append(sa, ")");
           ul.appendChild(li);
         });
       }).catch(() => {});

@@ -43,12 +43,7 @@
       }
       .dash-badge.ok { color: var(--leaf); border-color: var(--leaf); }
       .dash-badge.stale { color: var(--accent-2); border-color: var(--accent-2); }
-      .stat-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 16px;
-        margin-top: 16px;
-      }
+      .stat-grid { margin-top: 16px; }
       .stat-head {
         font-family: "Space Grotesk", sans-serif;
         letter-spacing: -0.02em;
@@ -56,20 +51,7 @@
         margin: 30px 0 0;
       }
       .stat-head span { color: var(--muted); font-weight: 500; font-size: 0.9rem; }
-      .stat {
-        background: var(--panel-strong);
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        box-shadow: var(--shadow);
-        padding: 20px 22px;
-      }
-      .stat strong {
-        display: block;
-        font-family: "Space Grotesk", sans-serif;
-        font-size: 1.9rem;
-        letter-spacing: -0.03em;
-      }
-      .stat span { color: var(--muted); font-size: 0.88rem; }
+
       .stat.late strong { color: var(--accent); }
       .stat.ontime strong { color: var(--leaf); }
       .warmup {
@@ -99,17 +81,13 @@
         margin-top: 22px;
         color: var(--muted);
       }
-      
-      
+
       .quest h3 {
         font-family: "Space Grotesk", sans-serif;
         letter-spacing: -0.02em;
         margin: 8px 0;
       }
-      
-      
-      
-      
+
       .daypick-label {
         display: inline-flex;
         align-items: center;
@@ -151,6 +129,7 @@
     </script>
   </head>
   <body data-cursor="plane">
+    <a class="skip-link" href="#main">Skip to content</a>
     <div class="noise"></div>
     <header class="site-header">
       <a class="brand" href="/">
@@ -166,7 +145,7 @@
       </nav>
     </header>
 
-    <main>
+    <main id="main">
       <section class="section" data-reveal>
         <div class="archive-banner"><b>Archived</b><span>This project was switched off in November 2026. The figures below are frozen on the clean period, 1 May – 12 Sep 2026. <a href="/ist-shutdown">Why I shut it down →</a></span></div>
         <div class="section-heading">
@@ -284,7 +263,6 @@
         }
 
         const badge = document.getElementById("badge");
-        badge.removeAttribute("data-i18n"); // dynamic from here on
         if (S.archived) {
           badge.textContent = t(`archived · data through ${S.last_date}`, `arşiv · veri ${S.last_date} tarihine kadar`);
           badge.className = "dash-badge stale";
@@ -347,7 +325,6 @@
 
       function renderFail() {
         const badge = document.getElementById("badge");
-        badge.removeAttribute("data-i18n");
         badge.textContent = t("couldn't load", "yüklenemedi");
         badge.className = "dash-badge stale";
         document.getElementById("charts").style.display = "none";
@@ -416,14 +393,6 @@
         })
         .catch(() => { failed = true; renderFail(); });
 
-      document.addEventListener("langchange", () => {
-        if (S) { renderStats(); renderBoard(); }
-        else if (failed) renderFail();
-        if (chart2) {
-          chart2.options.scales.y.title.text = t("min", "dk");
-          chart2.update();
-        }
-      });
     </script>
   </body>
 </html>

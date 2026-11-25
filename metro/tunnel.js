@@ -16,7 +16,9 @@ const lang = () => (window.getLang ? getLang() : "en");
 const tt = (en, tr) => (window.t ? t(en, tr) : en);
 const nf = (v, d = 0) => Number(v).toLocaleString(lang() === "tr" ? "tr-TR" : "en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
 
-const D = await (await fetch("/metro/tube.json")).json();
+const res = await fetch("/metro/tube.json");
+if (!res.ok) throw new Error("tube.json: HTTP " + res.status);
+const D = await res.json();
 const P = D.path.map((p) => ({ x: p[0], y: p[1], z: p[2], s: p[3], v: p[4], a: p[5], ph: p[6] }));
 const ST = D.stations;
 const SR = D.stretches;

@@ -31,30 +31,8 @@
     <script defer src="/script.js"></script>
     <style>
       /* page-local additions on top of the site tokens — cobalt is this project's color */
-      .stat-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 16px;
-        margin-top: 26px;
-      }
-      .stat {
-        background: var(--panel-strong);
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        box-shadow: var(--shadow);
-        padding: 20px 22px;
-      }
-      .stat strong {
-        display: block;
-        font-family: "Space Grotesk", sans-serif;
-        font-size: 1.9rem;
-        letter-spacing: -0.03em;
-        color: var(--cobalt);
-      }
-      .stat span { color: var(--muted); font-size: 0.88rem; }
-      
-      
-      
+      .stat strong { color: var(--cobalt); }
+
       .step h3 small {
         display: block;
         color: var(--cobalt);
@@ -63,17 +41,13 @@
         text-transform: uppercase;
         margin-bottom: 6px;
       }
-      
-      
+
       .fig h3 {
         font-family: "Space Grotesk", sans-serif;
         letter-spacing: -0.03em;
         margin: 0 0 14px;
       }
-      
-      
-      
-      
+
     </style>
     <script defer src="https://cloud.umami.is/script.js" data-website-id="53acc321-a620-42d2-abf8-92a0c2813e8b"></script>
     <script type="application/ld+json">
@@ -96,6 +70,7 @@
     </script>
   </head>
   <body data-cursor="bearing">
+    <a class="skip-link" href="#main">Skip to content</a>
     <div class="noise"></div>
     <header class="site-header">
       <a class="brand" href="/">
@@ -112,7 +87,7 @@
       </nav>
     </header>
 
-    <main>
+    <main id="main">
       <section class="section" data-reveal>
         <div class="section-heading">
           <p class="eyebrow">Data / ML project · Jul 2026</p>

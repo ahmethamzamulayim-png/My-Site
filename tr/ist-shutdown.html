@@ -14,9 +14,12 @@
     <meta property="og:title" content="IST Veri Hattını Neden Kapattım | Ahmet Hamza Mülayim" />
     <meta property="og:description" content="Altı ay boyunca bir İstanbul Havalimanı rötar veri seti kurdum — ne üretti, onu bitiren iki sessiz arıza ve zamanımı neden makine mühendisliğine geri veriyorum." />
     <meta property="og:url" content="https://ahmethmzamlym.engineer/tr/ist-shutdown" />
-    <meta property="og:image" content="https://ahmethmzamlym.engineer/assets/img/og/ist-rotar.jpg" />
+    <meta property="og:image" content="https://ahmethmzamlym.engineer/assets/img/og/ist-shutdown.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="IST Veri Hattını Neden Kapattım | Ahmet Hamza Mülayim" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="https://ahmethmzamlym.engineer/assets/img/og/ist-rotar.jpg" />
+    <meta name="twitter:image" content="https://ahmethmzamlym.engineer/assets/img/og/ist-shutdown.jpg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -27,16 +30,12 @@
     <script src="/i18n.js"></script>
     <script defer src="/script.js"></script>
     <style>
-      .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 26px; }
-      .stat, .panel {
+      .panel {
         background: var(--panel-strong);
         border: 1px solid var(--line);
         border-radius: var(--radius);
         box-shadow: var(--shadow);
       }
-      .stat { padding: 20px 22px; }
-      .stat strong { display: block; font-family: "Space Grotesk", sans-serif; font-size: 1.9rem; letter-spacing: -0.03em; }
-      .stat span { color: var(--muted); font-size: 0.88rem; line-height: 1.5; }
       .panel { padding: 24px; margin-top: 22px; }
       .panel h3 { font-family: "Space Grotesk", sans-serif; letter-spacing: -0.03em; margin: 0 0 10px; }
       .panel p, .prose p, .prose li { color: var(--muted); line-height: 1.7; }
@@ -95,6 +94,7 @@
     </script>
   </head>
   <body data-cursor="plane">
+    <a class="skip-link" href="#main">İçeriğe geç</a>
     <div class="noise"></div>
     <header class="site-header">
       <a class="brand" href="/tr/">
@@ -110,7 +110,7 @@
       </nav>
     </header>
 
-    <main>
+    <main id="main">
       <section class="section" data-reveal>
         <div class="section-heading">
           <p class="eyebrow">Havacılık Verisi · Geriye Bakış · Kasım 2026</p>

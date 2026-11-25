@@ -7,6 +7,8 @@ Static portfolio for GitHub Pages, live at [ahmethmzamlym.engineer](https://ahme
 | Page | What it is |
 |---|---|
 | `index.html` | The portfolio: about, projects, skills, timeline, contact form |
+| `about.html` | Background, SolidWorks CSWA badge, skills, and education timeline |
+| `reducer.html` | Parametric CadQuery ASME B16.9 pipe reducer generator — 128 validated B-rep STEP solids with an interactive 3D configurator |
 | `thy-globe.html` | Every airborne Turkish Airlines flight on a live 3D globe (ADS-B, 15s refresh) — feed offline since late 2026, page kept as a demo |
 | `ist-shutdown.html` | Write-up: why the IST pipeline was switched off (Nov 2026), and what it produced |
 | `ist-rotar.html` | Archived dashboard for the Istanbul Airport (IST) delay dataset, frozen on 1 May – 12 Sep 2026 |
@@ -22,6 +24,7 @@ Static portfolio for GitHub Pages, live at [ahmethmzamlym.engineer](https://ahme
 | `concorde.html` | Fan tribute to Concorde — biography timeline + notable-flights globe |
 | `notable-flights.html` | The Concorde notable-flights globe, standalone |
 | `ist-history.html` | How Istanbul built the world's 8th-busiest airport, with a 2017–2025 satellite timelapse |
+| `piano.html` | Interactive 88-key browser piano with sampled audio, falling-note visualizer, Web MIDI input, and built-in `.mid` pieces |
 | `404.html` | Branded not-found page (GitHub Pages serves this for any dead link) |
 
 ## Live Turkish Airlines flight globe
@@ -56,5 +59,8 @@ Every airborne Turkish Airlines flight on an interactive 3D globe ([globe.gl](ht
 | `countries-110m.geojson` | Vector world map used by the globe pages |
 | `board.json` / `summary.json` | Pre-scored IST flight data read by `board.html`, `route-delay-globe.html`, etc. |
 | `data-ist-history.json` / `data-ist-satellite.json` | Data behind `ist-history.html`'s timeline and satellite timelapse |
+| `metro/` | WhereisMyRide hub & 3D metro tunnel data (`wimr.json`, `tube.json`, `bus.json`), scripts, styles, and Tekir mascot |
+| `reducer/` | Pipe reducer configurator script, `manifest.json`, flow visuals, and 128 `.glb` preview models |
 | `assets/img/og/` | Per-page social preview images |
+| `scripts/audit.py` | Automated static audit (UTF-8 JSON, EN/TR parity, links, OG, CLS dimensions, JS syntax), also run in GitHub Actions (`.github/workflows/audit.yml`) |
 | `CNAME` | Custom domain for GitHub Pages |

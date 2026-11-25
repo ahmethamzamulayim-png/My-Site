@@ -14,9 +14,12 @@
     <meta property="og:title" content="Boru Redüksiyon Üretici | Ahmet Hamza Mülayim" />
     <meta property="og:description" content="ASME B16.9 boru redüksiyonları için parametrik bir CadQuery üretici — gerçek B-rep STEP katıları, kaynaklı boyutlar, üretici parçalarına karşı doğrulanmış." />
     <meta property="og:url" content="https://ahmethmzamlym.engineer/tr/reducer" />
-    <meta property="og:image" content="https://ahmethmzamlym.engineer/reducer/flow-concentric.png" />
+    <meta property="og:image" content="https://ahmethmzamlym.engineer/assets/img/og/reducer.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Boru Redüksiyon Üretici | Ahmet Hamza Mülayim" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="https://ahmethmzamlym.engineer/reducer/flow-concentric.png" />
+    <meta name="twitter:image" content="https://ahmethmzamlym.engineer/assets/img/og/reducer.jpg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -30,30 +33,8 @@
     <script defer src="/reducer/configurator.js"></script>
     <style>
       /* page-local additions on top of the site tokens — rust/steel is this project's color */
-      .stat-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 16px;
-        margin-top: 26px;
-      }
-      .stat {
-        background: var(--panel-strong);
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        box-shadow: var(--shadow);
-        padding: 20px 22px;
-      }
-      .stat strong {
-        display: block;
-        font-family: "Space Grotesk", sans-serif;
-        font-size: 1.9rem;
-        letter-spacing: -0.03em;
-        color: var(--rust);
-      }
-      .stat span { color: var(--muted); font-size: 0.88rem; }
-      
-      
-      
+      .stat strong { color: var(--rust); }
+
       .step h3 small {
         display: block;
         color: var(--rust);
@@ -62,17 +43,12 @@
         text-transform: uppercase;
         margin-bottom: 6px;
       }
-      
-      
+
       .fig h3 {
         font-family: "Space Grotesk", sans-serif;
         letter-spacing: -0.03em;
         margin: 0 0 14px;
       }
-      
-      
-      
-      
 
       .configurator { margin-top: 26px; }
       #rv-viewer {
@@ -121,6 +97,10 @@
         pointer-events: none;
         z-index: 2;
       }
+      .wheel:focus-visible {
+        outline: 2px solid var(--rust);
+        outline-offset: 2px;
+      }
       .wheel-item {
         height: 44px;
         display: flex;
@@ -131,6 +111,8 @@
         font-family: "Space Grotesk", sans-serif;
         font-size: 1rem;
         opacity: 0.5;
+        cursor: pointer;
+        user-select: none;
         transition: opacity 120ms ease, color 120ms ease;
       }
       .wheel-item.is-selected {
@@ -179,9 +161,10 @@
       <script defer src="https://cloud.umami.is/script.js" data-website-id="53acc321-a620-42d2-abf8-92a0c2813e8b"></script>
   </head>
   <body>
+    <a class="skip-link" href="#main">İçeriğe geç</a>
     <div class="noise"></div>
     <header class="site-header">
-      <a class="brand" href="/">
+      <a class="brand" href="/tr/">
         <span class="brand-mark">A</span>
         <span>
           <strong>Ahmet Hamza Mülayim</strong>
@@ -189,13 +172,13 @@
         </span>
       </a>
       <nav class="site-nav">
-        <a href="/#projects">← Portfolyo</a>
-        <a href="https://github.com/ahmethamzamulayim-png/pipe-reducer-generator">GitHub →</a>
+        <a href="/tr/#projects">← Portfolyo</a>
+        <a href="https://github.com/ahmethamzamulayim-png/pipe-reducer-generator" target="_blank" rel="noreferrer">GitHub →</a>
         <a class="lang-toggle" href="/reducer">EN</a>
       </nav>
     </header>
 
-    <main>
+    <main id="main">
       <section class="section" data-reveal>
         <div class="section-heading">
           <p class="eyebrow">CAD Otomasyonu · Ağu 2026</p>
@@ -331,20 +314,20 @@
         </p>
 
         <div class="configurator">
-          <model-viewer id="rv-viewer" camera-controls auto-rotate shadow-intensity="1"></model-viewer>
+          <model-viewer id="rv-viewer" alt="Seçili ASME B16.9 boru redüksiyonunun 3B modeli" camera-controls auto-rotate shadow-intensity="1"></model-viewer>
 
           <div class="wheel-row">
             <div class="wheel-col">
-              <label>Tip</label>
-              <div class="wheel" id="wheel-type"></div>
+              <label id="lbl-type">Tip</label>
+              <div class="wheel" id="wheel-type" aria-labelledby="lbl-type"></div>
             </div>
             <div class="wheel-col">
-              <label>Büyük uç (DN)</label>
-              <div class="wheel" id="wheel-large"></div>
+              <label id="lbl-large">Büyük uç (DN)</label>
+              <div class="wheel" id="wheel-large" aria-labelledby="lbl-large"></div>
             </div>
             <div class="wheel-col">
-              <label>Küçük uç (DN)</label>
-              <div class="wheel" id="wheel-small"></div>
+              <label id="lbl-small">Küçük uç (DN)</label>
+              <div class="wheel" id="wheel-small" aria-labelledby="lbl-small"></div>
             </div>
           </div>
 
@@ -401,8 +384,8 @@
           </p>
         </div>
         <div class="contact-actions">
-          <a class="button primary" href="https://github.com/ahmethamzamulayim-png/pipe-reducer-generator">Depoyu aç</a>
-          <a class="button secondary" href="/#projects">Projelere dön</a>
+          <a class="button primary" href="https://github.com/ahmethamzamulayim-png/pipe-reducer-generator" target="_blank" rel="noreferrer">Depoyu aç</a>
+          <a class="button secondary" href="/tr/#projects">Projelere dön</a>
         </div>
       </section>
     </main>

@@ -1,9 +1,7 @@
 /* Metro tunnel page. Site tokens from /styles.css; phase colours validated for colour-vision deficiency
    (rust / gold / blue, all checks pass) and always paired with text labels. */
-.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 16px; margin-top: 26px; }
-.stat { background: var(--panel-strong); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 20px 22px; }
-.stat strong { display: block; font-family: "Space Grotesk", sans-serif; font-size: 1.85rem; letter-spacing: -0.03em; color: #8a5a2b; }
-.stat span { color: var(--muted); font-size: 0.88rem; line-height: 1.5; }
+.stat-grid { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+.stat strong { font-size: 1.85rem; color: #8a5a2b; }
 
 .mt-hero { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: end; }
 .mt-cat svg, .mt-footcat svg, .mt-hud svg { image-rendering: pixelated; display: block; }

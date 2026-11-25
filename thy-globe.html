@@ -176,12 +176,7 @@
         letter-spacing: -0.02em;
       }
       .detail .dmodel { margin: 0 0 12px; font-size: 0.9rem; color: var(--muted); }
-      
-      
-      
-      
-      
-      
+
       @media (max-width: 900px) {
         .globe-panel {
           left: 12px;
@@ -221,6 +216,7 @@
     </script>
   </head>
   <body data-cursor="plane">
+    <a class="skip-link" href="#main">Skip to content</a>
     <div class="noise"></div>
 
     <header class="site-header">
@@ -237,7 +233,7 @@
       </nav>
     </header>
 
-    <main>
+    <main id="main">
       <div id="globe" role="group" aria-label="3D globe showing the live position of every tracked Turkish Airlines flight - see the text list below for the same data"></div>
       <div id="tip"></div>
 
@@ -257,7 +253,7 @@
       </aside>
 
       <aside class="detail" id="detail" hidden>
-        <button id="dclose" aria-label="Close">×</button>
+        <button id="dclose" type="button" aria-label="Close">×</button>
         <p class="eyebrow" id="dtag">Passenger</p>
         <h2 id="dcallsign"></h2>
         <p class="dmodel" id="dmodel"></p>
@@ -357,7 +353,7 @@
           el.firstChild.style.transform = `rotate(${p.hdg}deg)`;
           el.tabIndex = 0;
           el.setAttribute("role", "button");
-          el.setAttribute("aria-label", `Flight ${p.callsign}`);
+          el.setAttribute("aria-label", `${t("Flight", "Uçuş")} ${p.callsign}`);
           el.onclick = e => { e.stopPropagation(); select(p); };
           el.onkeydown = e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(p); } };
           // planes swallow wheel events; re-dispatch to the canvas so zoom works over them
@@ -402,12 +398,13 @@
 
       // --- tooltip ---
       const $ = id => document.getElementById(id);
+      const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
       const tip = $("tip");
       function showTip(p, e) {
         const ac = AC[p.hex];
-        tip.innerHTML = `<b>${p.callsign}</b> · ${p.cargo ? t("Cargo", "Kargo") : t("Passenger", "Yolcu")}<br>` +
-          (ac ? `${ac.model}<br>` : "") +
-          `${Math.round(p.alt_m * M_TO_FT).toLocaleString()} ft · ${Math.round(p.spd_ms * MS_TO_KT)} kts`;
+        tip.innerHTML = `<b>${esc(p.callsign)}</b> · ${p.cargo ? t("Cargo", "Kargo") : t("Passenger", "Yolcu")}<br>` +
+          (ac ? `${esc(ac.model)}<br>` : "") +
+          `${fmt(Math.round(p.alt_m * M_TO_FT))} ft · ${fmt(Math.round(p.spd_ms * MS_TO_KT))} kts`;
         tip.style.display = "block";
         moveTip(e);
       }
@@ -435,7 +432,7 @@
         getRoute(p.callsign).then(rt => {
           if (selected !== p.callsign) return;
           if (!rt) { $("droute").textContent = t("Route not in database (common for letter-suffix callsigns)", "Rota veritabanında yok (harf ekli çağrı kodlarında sık görülür)"); return; }
-          $("droute").innerHTML = `<b>${rt.oi}</b> ${rt.om || rt.on} <br>→ <b>${rt.di}</b> ${rt.dm || rt.dn}`;
+          $("droute").innerHTML = `<b>${esc(rt.oi)}</b> ${esc(rt.om || rt.on)} <br>→ <b>${esc(rt.di)}</b> ${esc(rt.dm || rt.dn)}`;
           globe.arcsData([{ startLat: rt.olat, startLng: rt.olng, endLat: rt.dlat, endLng: rt.dlng }]);
           globe.labelsData([
             { lat: rt.olat, lng: rt.olng, text: rt.oi },
@@ -445,8 +442,8 @@
       }
       function updStats(p) {
         $("dstats").innerHTML =
-          `${t("Altitude", "İrtifa")} <b>${Math.round(p.alt_m * M_TO_FT).toLocaleString()} ft</b><br>` +
-          `${t("Speed", "Hız")} <b>${Math.round(p.spd_ms * MS_TO_KT)} kts</b> · ${t("Heading", "Yön")} <b>${Math.round(p.hdg)}°</b>`;
+          `${t("Altitude", "İrtifa")} <b>${fmt(Math.round(p.alt_m * M_TO_FT))} ft</b><br>` +
+          `${t("Speed", "Hız")} <b>${fmt(Math.round(p.spd_ms * MS_TO_KT))} kts</b> · ${t("Heading", "Yön")} <b>${Math.round(p.hdg)}°</b>`;
       }
       function deselect() {
         selected = null;
@@ -462,7 +459,6 @@
         lastStatus = [cls, en, tr];
         $("statusrow").className = "status-row " + cls;
         const el = $("statustext");
-        el.removeAttribute("data-i18n"); // dynamic from here on
         el.textContent = t(en, tr);
       }
 
@@ -474,7 +470,6 @@
         globe.htmlElementsData(shown);
         $("count").textContent = planes.length;
         const cl = $("countlabel");
-        cl.removeAttribute("data-i18n");
         cl.textContent = q
           ? t(`airborne · ${shown.length} match filter`, `havada · ${shown.length} filtreyle eşleşiyor`)
           : t("aircraft airborne", "uçak havada");
@@ -484,8 +479,8 @@
         list.innerHTML = shown.map(p => {
           const ac = AC[p.hex];
           const kind = p.cargo ? t("cargo", "kargo") : t("passenger", "yolcu");
-          const model = ac && ac.model ? `, ${ac.model}` : "";
-          return `<li>${p.callsign} (${kind}${model})</li>`;
+          const model = ac && ac.model ? `, ${esc(ac.model)}` : "";
+          return `<li>${esc(p.callsign)} (${kind}${model})</li>`;
         }).join("");
       }
       $("search").addEventListener("input", render);
@@ -519,7 +514,6 @@
           lastUpd = data.time ? new Date(data.time * 1000) : new Date();
           const ageS = data.time ? Date.now() / 1000 - data.time : 0;
           const upd = $("updated");
-          upd.removeAttribute("data-i18n");
           upd.textContent = t("updated ", "güncellendi: ") +
             lastUpd.toLocaleTimeString(getLang() === "tr" ? "tr-TR" : "en-US");
           if (ageS > STALE_AFTER_S) {
@@ -541,20 +535,8 @@
         }
       }
       poll();
-      setInterval(poll, 15000);
+      setInterval(() => { if (!document.hidden) poll(); }, 15000);
 
-      // re-render the dynamic texts when the language toggles
-      document.addEventListener("langchange", () => {
-        render();
-        if (lastStatus) setStatus(...lastStatus);
-        if (lastUpd) $("updated").textContent = t("updated ", "güncellendi: ") +
-          lastUpd.toLocaleTimeString(getLang() === "tr" ? "tr-TR" : "en-US");
-        const sel = planes.find(p => p.callsign === selected);
-        if (sel) {
-          $("dtag").textContent = sel.cargo ? t("Cargo", "Kargo") : t("Passenger", "Yolcu");
-          updStats(sel);
-        }
-      });
     </script>
   </body>
 </html>

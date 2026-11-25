@@ -3,9 +3,14 @@
 const tt = (en, tr) => (window.t ? t(en, tr) : en);
 const TR = () => window.getLang && getLang() === "tr";
 const nf = (v, d = 0) => Number(v).toLocaleString(TR() ? "tr-TR" : "en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
+const pc = (s) => (TR() ? "%" + s : s + "%");
 const KMH = () => (TR() ? "km/s" : "km/h");
 
-const [W, TB, BUS] = await Promise.all(["/metro/wimr.json", "/metro/tube.json", "/metro/bus.json"].map((u) => fetch(u).then((r) => r.json())));
+const [W, TB, BUS] = await Promise.all(
+  ["/metro/wimr.json", "/metro/tube.json", "/metro/bus.json"].map((u) =>
+    fetch(u).then((r) => { if (!r.ok) throw new Error(`${u}: HTTP ${r.status}`); return r.json(); })
+  )
+);
 const F1 = BUS.lines.frequent["1"], F2 = BUS.lines.frequent["2"], I1 = BUS.lines.infrequent["1"];
 const S = W.sample;
 const col = (name) => S.rows.map((r) => r[S.cols.indexOf(name)]);
@@ -101,7 +106,7 @@ function hover(H, T, B, fmtRow) {
 
 // 3. magnet: two panels, shared time axis - field (uT) on top, power per kg a*v (W/kg) below
 (function magnet() {
-  const B = col("B"), av = col("av"), a = col("a");
+  const B = col("B"), av = col("av"), a = col("a"), vKmh = col("v_kmh");
   const H1 = 190, H2 = 190;
   const m1 = Math.ceil(Math.max(...B.map(Math.abs)) / 50) * 50;
   const f1 = frame(H1, 22, 18, -m1, m1, 50, "µT");
@@ -112,7 +117,7 @@ function hover(H, T, B, fmtRow) {
   const f2 = frame(H2, 22, 30, -m2, m2, 5, "W/kg");
   let s2 = f2.g + xAxis(H2, 30) + line(f2.ys, av, "", "#1d4ed8");
   s2 += `<text x="${CW - R}" y="${f2.ys(m2) + 14}" class="lbl" text-anchor="end">${tt("power per kg, a·v (accelerometer)", "kg başına güç, a·v (ivmeölçer)")}</text>`;
-  s2 += hover(H2, 22, 30, (i) => `${nf(tS[i])} s · a·v ${nf(av[i], 1)} W/kg · a ${nf(a[i], 2)} m/s² · v ${nf(col("v_kmh")[i])} ${KMH()}`);
+  s2 += hover(H2, 22, 30, (i) => `${nf(tS[i])} s · a·v ${nf(av[i], 1)} W/kg · a ${nf(a[i], 2)} m/s² · v ${nf(vKmh[i])} ${KMH()}`);
   document.getElementById("c-magnet").innerHTML =
     `<svg viewBox="0 0 ${CW} ${H1}" role="img" aria-label="${tt("Magnetic field from the motors over one run", "Bir seferde motorlardan gelen manyetik alan")}">${s1}</svg>` +
     `<svg viewBox="0 0 ${CW} ${H2}" role="img" aria-label="${tt("Power per kilogram over the same run", "Aynı seferde kilogram başına güç")}">${s2}</svg>`;
@@ -130,12 +135,12 @@ function hover(H, T, B, fmtRow) {
   const ys = (v) => T + (1 - v / hi) * (H - T - B);
   let g = "";
   for (let v = 0; v <= hi + 1e-9; v += 0.2) g += `<line x1="${L}" x2="${CW - R}" y1="${ys(v)}" y2="${ys(v)}" class="${v ? "grid" : "base"}"/><text x="${L - 8}" y="${ys(v) + 4}" class="ax" text-anchor="end">${nf(v, 1)}</text>`;
-  for (let f = 0; f <= 1.001; f += 0.25) g += `<text x="${xg(f)}" y="${H - B + 18}" class="ax" text-anchor="middle">${nf(f * 100)}%</text>`;
+  for (let f = 0; f <= 1.001; f += 0.25) g += `<text x="${xg(f)}" y="${H - B + 18}" class="ax" text-anchor="middle">${pc(nf(f * 100))}</text>`;
   g += `<text x="${CW - R}" y="${H - 4}" class="ax" text-anchor="end">${tt("position along the route", "güzergâhtaki konum")}</text>`;
   g += `<text x="${L - 8}" y="${T - 10}" class="ax" text-anchor="end">${tt("variance", "varyans")}</text>`;
   for (const [s, c, dash, name] of series) {
     g += `<polyline fill="none" stroke="${c}" stroke-width="2.2" stroke-dasharray="${dash}" stroke-linejoin="round" points="${s.spread.map((v, i) => `${xg(G[i]).toFixed(1)},${ys(v).toFixed(1)}`).join(" ")}"/>`;
-    s.spread.forEach((v, i) => (g += `<circle cx="${xg(G[i])}" cy="${ys(v)}" r="9" fill="transparent"><title>${name} · ${nf(G[i] * 100)}% · ${nf(v, 2)}</title></circle>`));
+    s.spread.forEach((v, i) => (g += `<circle cx="${xg(G[i])}" cy="${ys(v)}" r="9" fill="transparent"><title>${name} · ${pc(nf(G[i] * 100))} · ${nf(v, 2)}</title></circle>`));
   }
   const mid = Math.round(G.length * 0.3);
   g += `<text x="${xg(G[mid])}" y="${ys(Math.max(F1.spread[mid], F2.spread[mid])) - 14}" class="lbl" text-anchor="middle">${tt("frequent line", "sık hat")}</text>`;
@@ -156,8 +161,8 @@ function hover(H, T, B, fmtRow) {
     const tot = parts.reduce((a, [k]) => a + s.share[k], 0);
     for (const [k, c, label] of parts) {
       const w = (s.share[k] / tot) * wbar;
-      if (w > 0.5) g += `<rect x="${x}" y="${y + 4}" width="${Math.max(0, w - 2)}" height="22" rx="4" fill="${c}"><title>${name} · ${label}: ${nf((100 * s.share[k]) / tot)}%</title></rect>`;
-      if (w > 46) g += `<text x="${x + w / 2}" y="${y + 19}" class="val" text-anchor="middle" fill="#fff" style="fill:#fff">${nf((100 * s.share[k]) / tot)}%</text>`;
+      if (w > 0.5) g += `<rect x="${x}" y="${y + 4}" width="${Math.max(0, w - 2)}" height="22" rx="4" fill="${c}"><title>${name} · ${label}: ${pc(nf((100 * s.share[k]) / tot))}</title></rect>`;
+      if (w > 46) g += `<text x="${x + w / 2}" y="${y + 19}" class="val" text-anchor="middle" fill="#fff" style="fill:#fff">${pc(nf((100 * s.share[k]) / tot))}</text>`;
       x += w;
     }
   });

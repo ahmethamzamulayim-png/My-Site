@@ -31,30 +31,8 @@
     <script defer src="/script.js"></script>
     <style>
       /* page-local additions on top of the site tokens — cobalt is this project's color */
-      .stat-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 16px;
-        margin-top: 26px;
-      }
-      .stat {
-        background: var(--panel-strong);
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        box-shadow: var(--shadow);
-        padding: 20px 22px;
-      }
-      .stat strong {
-        display: block;
-        font-family: "Space Grotesk", sans-serif;
-        font-size: 1.9rem;
-        letter-spacing: -0.03em;
-        color: var(--cobalt);
-      }
-      .stat span { color: var(--muted); font-size: 0.88rem; }
-      
-      
-      
+      .stat strong { color: var(--cobalt); }
+
       .step h3 small {
         display: block;
         color: var(--cobalt);
@@ -63,17 +41,13 @@
         text-transform: uppercase;
         margin-bottom: 6px;
       }
-      
-      
+
       .fig h3 {
         font-family: "Space Grotesk", sans-serif;
         letter-spacing: -0.03em;
         margin: 0 0 14px;
       }
-      
-      
-      
-      
+
     </style>
     <script defer src="https://cloud.umami.is/script.js" data-website-id="53acc321-a620-42d2-abf8-92a0c2813e8b"></script>
     <script type="application/ld+json">
@@ -96,13 +70,14 @@
     </script>
   </head>
   <body data-cursor="bearing">
+    <a class="skip-link" href="#main">İçeriğe geç</a>
     <div class="noise"></div>
     <header class="site-header">
       <a class="brand" href="/tr/">
         <span class="brand-mark">A</span>
         <span>
           <strong>Ahmet Hamza Mülayim</strong>
-          <small>Marmara University</small>
+          <small>Marmara Üniversitesi</small>
         </span>
       </a>
       <nav class="site-nav">
@@ -112,7 +87,7 @@
       </nav>
     </header>
 
-    <main>
+    <main id="main">
       <section class="section" data-reveal>
         <div class="section-heading">
           <p class="eyebrow">Veri / ML projesi · Temmuz 2026</p>
@@ -157,25 +132,25 @@
 
         <div class="fig">
           <h3>Bir rulman havalanıyor, üçü düz kalıyor</h3>
-          <img src="/bearing/test2_overview.png" alt="Test 2 overview: RMS and kurtosis of all four bearings; bearing 1 rises sharply near day 7 while the others stay flat" loading="lazy" width="1430" height="910" />
+          <img src="/bearing/test2_overview.png" alt="Test 2 genel görünüm: dört rulmanın RMS ve basıklık değerleri; 1. rulman 7. gün civarında keskin yükselirken diğerleri düz kalıyor" loading="lazy" width="1430" height="910" />
           <p>Test 2, dört rulman birden. Rulman 1 (dış bilezik kusuru) 4. gün civarında sağlıklı banttan çıkıyor ve 6,8. günde arızaya doğru ivmeleniyor — NASA'nın sökümde hasarlı bulduğu rulmanın ta kendisi. Diğer üçü bütün hafta taban çizgilerinde uğulduyor.</p>
         </div>
 
         <div class="fig">
           <h3>Tespit + yakınsayan bir arıza öngörüsü</h3>
-          <img src="/bearing/test2_bearing1_prediction.png" alt="Test 2 bearing 1: degradation detected at 3.8 days; predicted failure dates converge onto the actual failure at 6.8 days" loading="lazy" width="1430" height="1040" />
+          <img src="/bearing/test2_bearing1_prediction.png" alt="Test 2 rulman 1: bozulma 3,8. günde tespit edildi; tahmini arıza tarihleri 6,8. gündeki gerçek arızaya yakınsıyor" loading="lazy" width="1430" height="1040" />
           <p>Üstte: alarm 3,8. günde çalıyor — arızadan 3 gün önce. Altta: her günün üzerinde durup üstel uydurmayla arıza tarihi tahmin ediliyor (mavi noktalar); hasar büyüdükçe tahmin gerçeğe (kırmızı çizgi) yakınsıyor, daralan bir kasırga tahmin konisi gibi.</p>
         </div>
 
         <div class="fig">
           <h3>Meşhur "iyileşen" rulman</h3>
-          <img src="/bearing/test1_bearing3_prediction.png" alt="Test 1 bearing 3: health curve temporarily recovers before worsening, making early forecasts wander before converging" loading="lazy" width="1430" height="1040" />
+          <img src="/bearing/test1_bearing3_prediction.png" alt="Test 1 rulman 3: sağlık eğrisi kötüleşmeden önce geçici olarak toparlanıyor; bu da erken tahminlerin yakınsamadan önce sapmasına yol açıyor" loading="lazy" width="1430" height="1040" />
           <p>Test 1 rulman 3 geçici olarak "iyileşiyor" — hasar devam etmeden önce dökülme kenarları düzleniyor — bu yüzden erken tahminler yakınsamadan önce geziniyor. Bozulmanın düzgün bir üstel değil, fizik olduğunu hatırlatan iyi bir örnek.</p>
         </div>
 
         <div class="fig">
           <h3>Hiç görmediği rulmanda rastgele orman</h3>
-          <img src="/bearing/ml_rul_test3.png" alt="Random forest predicting remaining useful life of test 3 bearing 3, versus the true remaining life; feature importance dominated by smoothed RMS" loading="lazy" width="1430" height="1040" />
+          <img src="/bearing/ml_rul_test3.png" alt="Test 3 rulman 3 için rastgele orman kalan faydalı ömür tahmini ve gerçek kalan ömür; özellik önemine yumuşatılmış RMS hâkim" loading="lazy" width="1430" height="1040" />
           <p>Model, test 3'te kalan faydalı ömrü saat saat tahmin ediyor. Etiketler 120&nbsp;saatte kırpılıyor çünkü sağlıklı titreşim gelecek hakkında bilgi taşımaz — düz kırmızı çizgi hata değil, dürüstlük. 40. gün civarında bozulma başlayınca geri sayım kilitleniyor: son günde ortalama hata 7,4 saat. Öznitelik önemi ~%75'i yumuşatılmış RMS'e, ~%15'i yumuşatılmış basıklığa veriyor — orman, fiziğin işaret ettiği göstergeleri kendi başına yeniden keşfetti.</p>
         </div>
       </section>

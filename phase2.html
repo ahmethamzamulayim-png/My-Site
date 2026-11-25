@@ -41,12 +41,9 @@
         letter-spacing: -0.02em;
         margin: 8px 0;
       }
-      
-      
-      
+
       .quest-tag.done { color: var(--leaf); }
-      
-      
+
       .chart-panel h3 {
         font-family: "Space Grotesk", sans-serif;
         letter-spacing: -0.03em;
@@ -96,6 +93,7 @@
     </script>
   </head>
   <body data-cursor="plane">
+    <a class="skip-link" href="#main">Skip to content</a>
     <div class="noise"></div>
     <header class="site-header">
       <a class="brand" href="/">
@@ -112,7 +110,7 @@
       </nav>
     </header>
 
-    <main>
+    <main id="main">
       <section class="section" data-reveal>
         <div class="archive-banner"><b>Archived</b><span>This roadmap ended when the IST pipeline was switched off in November 2026. What was finished is linked below; the rest won't be built. <a href="/ist-shutdown">Why I shut it down →</a></span></div>
         <div class="section-heading">
@@ -275,16 +273,6 @@
       });
 
       // keep chart text (legend, axis category labels) in sync with the
-      // site-wide language toggle
-      document.addEventListener("langchange", () => {
-        hourlyChart.data.datasets[0].label = t("Departures", "Kalkışlar");
-        hourlyChart.data.datasets[1].label = t("Landed arrivals", "İnişler");
-        weeklyChart.data.labels = weekdayLabels[getLang()];
-        monthlyChart.data.labels = monthLabels[getLang()];
-        hourlyChart.update();
-        weeklyChart.update();
-        monthlyChart.update();
-      });
     </script>
   </body>
 </html>

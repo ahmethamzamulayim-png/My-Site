@@ -30,9 +30,7 @@
     <script src="/i18n.js"></script>
     <script defer src="/script.js"></script>
     <style>
-      
-      
-      
+
       .callout {
         margin-top: 16px;
         padding: 14px 16px;
@@ -42,7 +40,6 @@
         font-size: 0.9rem;
         line-height: 1.65;
       }
-      
 
       /* ---- Solari split-flap board -------------------------------------
          Dark panel inside the light page, the way a real hall board is. The
@@ -233,6 +230,7 @@
     </script>
   </head>
   <body data-cursor="plane">
+    <a class="skip-link" href="#main">Skip to content</a>
     <div class="noise"></div>
     <header class="site-header">
       <a class="brand" href="/">
@@ -249,7 +247,7 @@
       </nav>
     </header>
 
-    <main>
+    <main id="main">
       <section class="section" data-reveal>
         <div class="archive-banner"><b>Archived</b><span>This board stopped updating in November 2026. It shows the last clean window (11–12 Sep 2026) with what actually happened to each flight, and the board's full live record: AUC 0.729 on 1,067 flights. <a href="/ist-shutdown">Why I shut it down →</a></span></div>
         <div class="section-heading">
@@ -691,7 +689,6 @@
             `<p class="empty">${key("empty")}</p>`;
         });
 
-      document.addEventListener("langchange", render);
     </script>
   </body>
 </html>
